@@ -23,6 +23,7 @@ public class Main extends Application {
 			primaryStage.show();
 			
 			// Adding a comment
+			// Adding a sec comment
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
