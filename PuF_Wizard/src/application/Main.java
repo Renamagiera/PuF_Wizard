@@ -26,7 +26,7 @@ public class Main extends Application {
 		}
 	}
 
-	public void testMethod2(){
+	public void testMethod3(){
 		System.out.println("Hello");
 	}
 	
