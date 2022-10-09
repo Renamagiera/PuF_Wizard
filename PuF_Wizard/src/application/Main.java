@@ -25,6 +25,10 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+
+	public void testMethod2(){
+		System.out.println("Hello");
+	}
 	
 	public static void main(String[] args) {
 		launch(args);
