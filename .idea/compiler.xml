@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="demoNewMain" />
+        <module name="DuckyTheWizard" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="demoNewMain" target="19" />
+      <module name="DuckyTheWizard" target="19" />
     </bytecodeTargetLevel>
   </component>
 </project>
