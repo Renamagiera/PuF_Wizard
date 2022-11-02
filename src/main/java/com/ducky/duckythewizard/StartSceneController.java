@@ -13,34 +13,40 @@ import javafx.stage.Stage;
 
 public class StartSceneController {
     private Stage stage;
-    private Scene scene;
     private Parent root;
+
+    String css = Objects.requireNonNull(this.getClass().getResource("/style.css")).toExternalForm();
 
     public StartSceneController() {
     }
 
-    public void switchToHelpScene1(ActionEvent event) throws IOException {
-        Parent root = (Parent)FXMLLoader.load((URL)Objects.requireNonNull(this.getClass().getResource("helpScene1.fxml")));
+    private void getWindowStage(ActionEvent event, Parent root) {
         this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        this.scene = new Scene(root);
-        this.stage.setScene(this.scene);
+        Scene scene = new Scene(root);
+        setCss(scene);
+        this.stage.setScene(scene);
         this.stage.show();
     }
 
+    private void setCss(Scene scene) {
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(css);
+    }
+
+    public void switchToHelpScene1(ActionEvent event) throws IOException {
+        Parent root = (Parent)FXMLLoader.load((URL)Objects.requireNonNull(this.getClass().getResource("helpScenes/helpScene1.fxml")));
+        getWindowStage(event, root);
+    }
+
+
     public void switchToHelpScene2(ActionEvent event) throws IOException {
-        Parent root = (Parent)FXMLLoader.load((URL)Objects.requireNonNull(this.getClass().getResource("helpScene2.fxml")));
-        this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        this.scene = new Scene(root);
-        this.stage.setScene(this.scene);
-        this.stage.show();
+        Parent root = (Parent)FXMLLoader.load((URL)Objects.requireNonNull(this.getClass().getResource("helpScenes/helpScene2.fxml")));
+        getWindowStage(event, root);
     }
 
     public void switchToHelpScene3(ActionEvent event) throws IOException {
-        Parent root = (Parent)FXMLLoader.load((URL)Objects.requireNonNull(this.getClass().getResource("helpScene3.fxml")));
-        this.stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        this.scene = new Scene(root);
-        this.stage.setScene(this.scene);
-        this.stage.show();
+        Parent root = (Parent)FXMLLoader.load((URL)Objects.requireNonNull(this.getClass().getResource("helpScenes/helpScene3.fxml")));
+        getWindowStage(event, root);
     }
 
     public void endHelpScene(ActionEvent event) throws IOException {

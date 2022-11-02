@@ -3,7 +3,17 @@
     src: url('assets/fonts/alagard.ttf');
 }
 
-.button .text {
+.button .text{
     -fx-font-family: 'Alagard';
-    -fx-font-size: 20px;
+    -fx-font-size: 30px;
+}
+
+.label{
+    -fx-font-family: 'Alagard';
+    -fx-font-size: 30px;
+    -fx-text-fill: #ffffff;
+}
+
+.text-area *.content {
+    -fx-background-color: #072130;
 }

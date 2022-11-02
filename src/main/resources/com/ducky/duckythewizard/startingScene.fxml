@@ -3,23 +3,25 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="737.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.StartSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.StartSceneController">
    <center>
-      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+      <ImageView fitHeight="479.0" fitWidth="813.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@../../../assets/start_bg.png" />
+            <Image url="@../../../assets/bg.png" />
          </image>
       </ImageView>
    </center>
    <bottom>
-      <Button mnemonicParsing="false" onAction="#switchToHelpScene1" prefHeight="81.0" prefWidth="162.0" text="Help" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="38.0" />
-         </font>
-      </Button>
+      <AnchorPane prefHeight="124.0" prefWidth="800.0" style="-fx-background-color: #072130;" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="422.0" layoutY="35.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="142.0" style="-fx-background-color: d68139;" text="Controls" textFill="WHITE" />
+            <Button layoutX="237.0" layoutY="36.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="142.0" style="-fx-background-color: d68139; -fx-border-radius: 0;" text="Play" textFill="WHITE" />
+            <Button layoutX="607.0" layoutY="37.0" mnemonicParsing="false" onAction="#switchToHelpScene1" prefHeight="51.0" prefWidth="142.0" style="-fx-background-color: d68139;" text="Help" textFill="WHITE" />
+            <Button layoutX="51.0" layoutY="35.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="142.0" style="-fx-background-color: d68139; -fx-border-radius: 0;" text="Score" textFill="WHITE" />
+         </children>
+      </AnchorPane>
    </bottom>
 </BorderPane>
