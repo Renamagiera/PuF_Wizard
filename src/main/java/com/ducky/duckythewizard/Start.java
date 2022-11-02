@@ -15,8 +15,11 @@ public class Start extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = (Parent)FXMLLoader.load((URL)Objects.requireNonNull(this.getClass().getResource("startingScene.fxml")));
         Scene scene = new Scene(root);
-        stage.setScene(scene);
         stage.setTitle("Ducky the wizard");
+        String css = Objects.requireNonNull(this.getClass().getResource("/style.css")).toExternalForm();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
         stage.show();
     }
 

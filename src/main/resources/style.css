@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Alagard';
+    src: url('assets/fonts/alagard.ttf');
+}
+
+.button .text {
+    -fx-font-family: 'Alagard';
+    -fx-font-size: 20px;
+}
