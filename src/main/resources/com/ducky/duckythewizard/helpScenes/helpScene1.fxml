@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #001b30;" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.StartSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #001b30;" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.HelpSceneController">
     <top>
-        <ImageView fitHeight="524.0" fitWidth="788.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+        <ImageView fitHeight="481.0" fitWidth="816.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
             <image>
-                <Image url="@../../../../assets/image7850.png" />
+                <Image url="@../images/helpScenes/bg.png" />
             </image>
         </ImageView>
     </top>
@@ -19,7 +19,7 @@
             <children>
                 <ImageView fitHeight="92.0" fitWidth="574.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../assets/image7849.png" />
+                        <Image url="@../../../../images/helpScenes/image7849.png" />
                     </image>
                 </ImageView>
                 <Button layoutX="683.0" layoutY="39.0" mnemonicParsing="false" onAction="#switchToHelpScene2" prefHeight="39.0" prefWidth="102.0" text="next" />

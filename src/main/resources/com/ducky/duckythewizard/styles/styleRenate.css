@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'Alagard';
+    src: url('com/ducky/duckythewizard/fonts/alagard.ttf');
+}
+
+.button .text{
+    -fx-font-family: 'Alagard';
+    -fx-font-size: 30px;
+}
+
+.label{
+    -fx-font-family: 'Alagard';
+    -fx-font-size: 30px;
+    -fx-text-fill: #ffffff;
+}
+
+.text-area *.content {
+    -fx-background-color: #072130;
+}
