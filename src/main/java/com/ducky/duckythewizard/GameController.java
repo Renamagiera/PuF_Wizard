@@ -5,9 +5,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -29,15 +31,15 @@ public class GameController {
     @FXML
     private GridPane levelGrid;
 
-    private int bgWidth = 400;
-    private int bgHeight = 350;
+    private int bgWidth = 800;
+    private int bgHeight = 650;
 
     private ArrayList<String> input = new ArrayList<>();
 
     @FXML
     public void initialize() {
-        mainCanvas.setHeight(350);
-        mainCanvas.setWidth(400);
+        mainCanvas.setHeight(bgHeight);
+        mainCanvas.setWidth(bgWidth);
 
         GraphicsContext gc = mainCanvas.getGraphicsContext2D();
 
@@ -50,12 +52,18 @@ public class GameController {
         Image[] imageArrayFly = new Image[6];
         Image[] imageArrayIdle = new Image[4];
         Image[] imageArrayWalk = new Image[6];
-        for (int i = 0; i < imageArrayFly.length; i++)
-            imageArrayFly[i] = new Image( this.getClass().getResourceAsStream("images/ducky/fly/fly_" + i + ".png" ));
-        for (int i = 0; i < imageArrayIdle.length; i++)
-            imageArrayIdle[i] = new Image( this.getClass().getResourceAsStream("images/ducky/idle/idle_" + i + ".png" ));
-        for (int i = 0; i < imageArrayWalk.length; i++)
-            imageArrayWalk[i] = new Image( this.getClass().getResourceAsStream("images/ducky/walk/walk_" + i + ".png" ));
+        for (int i = 0; i < imageArrayFly.length; i++) {
+            Image image = new Image(this.getClass().getResourceAsStream("images/ducky/fly/fly_" + i + ".png"));
+            imageArrayFly[i] = scaleImage(image, 60, 60, true);
+        }
+        for (int i = 0; i < imageArrayIdle.length; i++) {
+            Image image = new Image( this.getClass().getResourceAsStream("images/ducky/idle/idle_" + i + ".png" ));
+            imageArrayIdle[i] = scaleImage(image, 60, 60, true);
+        }
+        for (int i = 0; i < imageArrayWalk.length; i++) {
+            Image image = new Image( this.getClass().getResourceAsStream("images/ducky/walk/walk_" + i + ".png" ));
+            imageArrayWalk[i] = scaleImage(image, 60, 60, true);
+        }
 
         ducky.frames = imageArrayFly;
         ducky.duration = 0.1;
@@ -75,25 +83,34 @@ public class GameController {
                 lastNanoTime.value = currentNanoTime;
                 if (input.contains("LEFT"))
                     ducky.addVelocity(-100,0);
+                    //ducky.update(elapsedTime);
+//                    if( intersectsWithLevel(ducky)){//ducky.getBoundary().intersects(0, bgHeight, bgWidth, 100)){
+//                        ducky.setVelocity(100, 0);
+//                    }
                 if (input.contains("RIGHT"))
                     ducky.addVelocity(100,0);
+                    //ducky.update(elapsedTime);
+//                    if( intersectsWithLevel(ducky)){//ducky.getBoundary().intersects(0, bgHeight, bgWidth, 100)){
+//                        ducky.setVelocity(-100, 0);
+//                    }
                 if (input.contains("UP"))
                     ducky.addVelocity(0,-200);
 
+                // left level boundary
                 if(ducky.getPositionX() <= 0 ){
                     ducky.setVelocity(100,0);
                     System.out.println("LEFT");
                 }
+                // right level boundary
                 if(ducky.getPositionX() >= bgWidth - ducky.getFrame(t).getWidth()){
                     ducky.setVelocity(-100,0);
                     System.out.println("RIGHT");
                 }
+                // upper level boundary
                 if(ducky.getPositionY() <= 0){
                     ducky.setVelocity(0,100);
                     System.out.println("UPPER");
                 }
-
-
 
                 ducky.update(elapsedTime);
                 ducky.reduceHealthPoints();
@@ -104,7 +121,9 @@ public class GameController {
 //                for(Node node : backgroundImageGroup.getChildren()){
 //                    gc.drawImage(((ImageView)node).getImage(), 0, 0);
 //                }
-                gc.clearRect(0,0,400,350);
+
+                // clear prior ducky image
+                gc.clearRect(0,0,bgWidth,bgHeight);
 
                 String healthText = "Health: " + ducky.getHealthPoints();
                 gc.fillText( healthText, bgWidth/3, bgHeight/4 );
@@ -121,7 +140,7 @@ public class GameController {
                     ducky.resetHealthPoints();
                 }
                 else {
-                    ducky.setVelocity(0,100);
+                    ducky.setVelocity(0,100); // falling ducky
                 }
 
                 if (ducky.getVelocityY() == 0 && (input.contains("LEFT") || input.contains("RIGHT"))) {
@@ -164,11 +183,21 @@ public class GameController {
 
     public boolean intersectsWithLevel(DuckySprite ducky) {
         for (Node node : levelGrid.getChildren()) {
-            if (ducky.intersects(levelGrid.getRowIndex(node), levelGrid.getColumnIndex(node), 50.0, 50.0)){
+            if (ducky.intersects(levelGrid.getRowIndex(node), levelGrid.getColumnIndex(node), 100.0, 100.0)){
                 System.out.println("==> COLLISION");
                 return true;
             }
         }
         return false;
+    }
+
+    public Image scaleImage(Image source, int targetWidth, int targetHeight, boolean preserveRatio) {
+        SnapshotParameters parameters = new SnapshotParameters();
+        parameters.setFill(Color.TRANSPARENT);
+        ImageView imageView = new ImageView(source);
+        imageView.setPreserveRatio(preserveRatio);
+        imageView.setFitWidth(targetWidth);
+        imageView.setFitHeight(targetHeight);
+        return imageView.snapshot(parameters, null);
     }
 }
