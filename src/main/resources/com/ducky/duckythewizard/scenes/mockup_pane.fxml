@@ -13,7 +13,7 @@
     <children>
         <ImageView id="background_img" fitHeight="425.0" fitWidth="633.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@images/background_examp.png" />
+                <Image url="@../images/background_examp.png" />
             </image>
         </ImageView>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1933c357" height="22.0" layoutX="187.0" layoutY="243.0" stroke="TRANSPARENT" strokeType="INSIDE" width="21.0" />
@@ -29,42 +29,42 @@
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a1692c" height="92.0" layoutX="5.0" layoutY="12.0" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
                 <ImageView id="left_top_corner" fitHeight="64.0" fitWidth="64.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/steampunkcorner_gold.png" />
+                        <Image url="@../images/steampunkcorner_gold.png" />
                     </image>
                 </ImageView>
                 <ImageView id="right_top_corner" fitHeight="64.0" fitWidth="64.0" layoutX="144.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
                     <image>
-                        <Image url="@images/steampunkcorner_gold.png" />
+                        <Image url="@../images/steampunkcorner_gold.png" />
                     </image>
                 </ImageView>
                 <ImageView id="right_bottom_corner" fitHeight="64.0" fitWidth="64.0" layoutX="144.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                     <image>
-                        <Image url="@images/steampunkcorner_gold.png" />
+                        <Image url="@../images/steampunkcorner_gold.png" />
                     </image>
                 </ImageView>
                 <ImageView id="left_bottom_corner" fitHeight="64.0" fitWidth="64.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" rotate="270.0">
                     <image>
-                        <Image url="@images/steampunkcorner_gold.png" />
+                        <Image url="@../images/steampunkcorner_gold.png" />
                     </image>
                 </ImageView>
                 <ImageView id="upper_border_1" fitWidth="64.0" layoutX="65.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/steampunkside_gold.png" />
+                        <Image url="@../images/steampunkside_gold.png" />
                     </image>
                 </ImageView>
                 <ImageView id="upper_border_2" fitWidth="64.0" layoutX="81.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/steampunkside_gold.png" />
+                        <Image url="@../images/steampunkside_gold.png" />
                     </image>
                 </ImageView>
                 <ImageView id="lower_border_1" fitWidth="64.0" layoutX="63.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                     <image>
-                        <Image url="@images/steampunkside_gold.png" />
+                        <Image url="@../images/steampunkside_gold.png" />
                     </image>
                 </ImageView>
                 <ImageView id="lower_border_2" fitWidth="64.0" layoutX="89.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
                     <image>
-                        <Image url="@images/steampunkside_gold.png" />
+                        <Image url="@../images/steampunkside_gold.png" />
                     </image>
                 </ImageView>
                 <Group layoutX="32.0" layoutY="28.0">
@@ -99,7 +99,7 @@
         </Group>
         <ImageView id="backpack" fitHeight="64.0" fitWidth="64.0" layoutX="8.0" layoutY="333.0" pickOnBounds="true" preserveRatio="true" rotate="6.5">
             <image>
-                <Image url="@images/backpack.png" />
+                <Image url="@../images/backpack.png" />
             </image>
         </ImageView>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00ff0257" height="22.0" layoutX="289.0" layoutY="14.0" stroke="TRANSPARENT" strokeType="INSIDE" width="21.0" />

@@ -6,10 +6,30 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
 
 public class WizardMainApplication extends Application {
 
     @Override
+    public void start(Stage stage) throws IOException {
+        Parent root = (Parent)FXMLLoader.load((URL) Objects.requireNonNull(this.getClass().getResource("scenes/startingScene.fxml")));
+        Scene scene = new Scene(root);
+        stage.setTitle("Ducky the wizard");
+        String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/styleRenate.css")).toExternalForm();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+}
+
+    /*@Override
     public void start(Stage stage) throws IOException {
         // FXMLLoader fxmlLoader = new FXMLLoader(GroundApplication.class.getResource("ground-forest-view.fxml"));
         // Image fxmlImage = new Scene(FXMLLoader.load(getClass().getResource("ground-forest-view.fxml"))).snapshot(null);
@@ -24,9 +44,4 @@ public class WizardMainApplication extends Application {
 
         stage.show();
         root.requestFocus();
-    }
-
-    public static void main(String[] args) {
-        launch();
-    }
-}
+    }*/
