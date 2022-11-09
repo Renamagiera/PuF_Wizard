@@ -54,15 +54,18 @@ public class GameController {
         Image[] imageArrayWalk = new Image[6];
         for (int i = 0; i < imageArrayFly.length; i++) {
             Image image = new Image(this.getClass().getResourceAsStream("images/ducky/fly/fly_" + i + ".png"));
-            imageArrayFly[i] = scaleImage(image, 60, 60, true);
+            imageArrayFly[i] = scaleImage(image, 40 , 40, true);
+//            imageArrayFly[i] = new Image(this.getClass().getResourceAsStream("images/ducky/fly/fly_" + i + ".png"));
         }
         for (int i = 0; i < imageArrayIdle.length; i++) {
             Image image = new Image( this.getClass().getResourceAsStream("images/ducky/idle/idle_" + i + ".png" ));
-            imageArrayIdle[i] = scaleImage(image, 60, 60, true);
+            imageArrayIdle[i] = scaleImage(image, 40, 40, true);
+//            imageArrayIdle[i] = new Image( this.getClass().getResourceAsStream("images/ducky/idle/idle_" + i + ".png" ));
         }
         for (int i = 0; i < imageArrayWalk.length; i++) {
             Image image = new Image( this.getClass().getResourceAsStream("images/ducky/walk/walk_" + i + ".png" ));
-            imageArrayWalk[i] = scaleImage(image, 60, 60, true);
+            imageArrayWalk[i] = scaleImage(image, 40, 40, true);
+//            imageArrayWalk[i] = new Image( this.getClass().getResourceAsStream("images/ducky/walk/walk_" + i + ".png" ));
         }
 
         ducky.frames = imageArrayFly;
@@ -183,7 +186,7 @@ public class GameController {
 
     public boolean intersectsWithLevel(DuckySprite ducky) {
         for (Node node : levelGrid.getChildren()) {
-            if (ducky.intersects(levelGrid.getRowIndex(node), levelGrid.getColumnIndex(node), 100.0, 100.0)){
+            if (ducky.intersects(levelGrid.getRowIndex(node), levelGrid.getColumnIndex(node), 50.0, 50.0)){
                 System.out.println("==> COLLISION");
                 return true;
             }
