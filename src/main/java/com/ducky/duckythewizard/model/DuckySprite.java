@@ -1,4 +1,4 @@
-package com.ducky.duckythewizard;
+package com.ducky.duckythewizard.model;
 
 public class DuckySprite extends AnimatedSprite{
     public enum MovementState {

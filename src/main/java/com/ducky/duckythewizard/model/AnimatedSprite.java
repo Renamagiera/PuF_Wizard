@@ -1,18 +1,18 @@
-package com.ducky.duckythewizard;
+package com.ducky.duckythewizard.model;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
-public class AnimatedSprite
+public class AnimatedSprite extends Sprite
 {
     public Image[] frames;
     public double duration;
-    private double positionX;
-    private double positionY;
-    private double velocityX;
-    private double velocityY;
-    private double width;
-    private double height;
+//    private double positionX;
+//    private double positionY;
+//    private double velocityX;
+//    private double velocityY;
+//    private double width;
+//    private double height;
 
     public Image getFrame(double time)
     {
@@ -32,38 +32,38 @@ public class AnimatedSprite
         return positionY;
     }
 
-    public double getVelocityX() {
-        return velocityX;
-    }
+//    public double getVelocityX() {
+//        return velocityX;
+//    }
+//
+//    public double getVelocityY() {
+//        return velocityY;
+//    }
 
-    public double getVelocityY() {
-        return velocityY;
-    }
+//    public void setPosition(double x, double y)
+//    {
+//        positionX = x;
+//        positionY = y;
+//    }
 
-    public void setPosition(double x, double y)
-    {
-        positionX = x;
-        positionY = y;
-    }
+//    public void setVelocity(double x, double y)
+//    {
+//        velocityX = x;
+//        velocityY = y;
+//    }
 
-    public void setVelocity(double x, double y)
-    {
-        velocityX = x;
-        velocityY = y;
-    }
+//    public void addVelocity(double x, double y)
+//    {
+//        velocityX += x;
+//        velocityY += y;
+//        //System.out.println("addVelocity, x: " + velocityX);
+//    }
 
-    public void addVelocity(double x, double y)
-    {
-        velocityX += x;
-        velocityY += y;
-        //System.out.println("addVelocity, x: " + velocityX);
-    }
-
-    public void update(double time)
-    {
-        positionX += velocityX * time;
-        positionY += velocityY * time;
-    }
+//    public void update(double time)
+//    {
+//        positionX += velocityX * time;
+//        positionY += velocityY * time;
+//    }
 
     public Rectangle2D getBoundary()
     {

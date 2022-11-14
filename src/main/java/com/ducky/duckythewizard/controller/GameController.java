@@ -1,8 +1,11 @@
-package com.ducky.duckythewizard;
+package com.ducky.duckythewizard.controller;
 
+import com.ducky.duckythewizard.model.DuckySprite;
+import com.ducky.duckythewizard.model.LongValue;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
@@ -53,17 +56,17 @@ public class GameController {
         Image[] imageArrayIdle = new Image[4];
         Image[] imageArrayWalk = new Image[6];
         for (int i = 0; i < imageArrayFly.length; i++) {
-            Image image = new Image(this.getClass().getResourceAsStream("images/ducky/fly/fly_" + i + ".png"));
+            Image image = new Image(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/fly/fly_" + i + ".png"));
             imageArrayFly[i] = scaleImage(image, 40 , 40, true);
 //            imageArrayFly[i] = new Image(this.getClass().getResourceAsStream("images/ducky/fly/fly_" + i + ".png"));
         }
         for (int i = 0; i < imageArrayIdle.length; i++) {
-            Image image = new Image( this.getClass().getResourceAsStream("images/ducky/idle/idle_" + i + ".png" ));
+            Image image = new Image( this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/idle/idle_" + i + ".png" ));
             imageArrayIdle[i] = scaleImage(image, 40, 40, true);
 //            imageArrayIdle[i] = new Image( this.getClass().getResourceAsStream("images/ducky/idle/idle_" + i + ".png" ));
         }
         for (int i = 0; i < imageArrayWalk.length; i++) {
-            Image image = new Image( this.getClass().getResourceAsStream("images/ducky/walk/walk_" + i + ".png" ));
+            Image image = new Image( this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/walk/walk_" + i + ".png" ));
             imageArrayWalk[i] = scaleImage(image, 40, 40, true);
 //            imageArrayWalk[i] = new Image( this.getClass().getResourceAsStream("images/ducky/walk/walk_" + i + ".png" ));
         }
@@ -84,20 +87,34 @@ public class GameController {
                 // calculate time since last update.
                 double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
                 lastNanoTime.value = currentNanoTime;
-                if (input.contains("LEFT"))
-                    ducky.addVelocity(-100,0);
-                    //ducky.update(elapsedTime);
-//                    if( intersectsWithLevel(ducky)){//ducky.getBoundary().intersects(0, bgHeight, bgWidth, 100)){
-//                        ducky.setVelocity(100, 0);
-//                    }
-                if (input.contains("RIGHT"))
-                    ducky.addVelocity(100,0);
-                    //ducky.update(elapsedTime);
-//                    if( intersectsWithLevel(ducky)){//ducky.getBoundary().intersects(0, bgHeight, bgWidth, 100)){
-//                        ducky.setVelocity(-100, 0);
-//                    }
-                if (input.contains("UP"))
-                    ducky.addVelocity(0,-200);
+
+                if (input.contains("UP")){
+                    if(wouldIntersectWithLevel(ducky, 0, -1)){
+                        ducky.setVelocityY(100);
+                    }
+                    else {
+                        ducky.setVelocityY(-100);
+                    }
+
+                }
+                else if (!wouldIntersectWithLevel(ducky, 0, 1)) {
+                    ducky.setVelocity(0,100); // falling ducky
+                }
+                else {
+                    ducky.setVelocityY(0);
+                }
+                if (input.contains("LEFT")) {
+                    if (!wouldIntersectWithLevel(ducky, -1, 0)) {
+                        ducky.setVelocityX(-100);
+                    }
+                }
+
+                if (input.contains("RIGHT")) {
+                    if(!wouldIntersectWithLevel(ducky, 1, 0)) {
+                        ducky.setVelocityX(100);
+                    }
+                }
+
 
                 // left level boundary
                 if(ducky.getPositionX() <= 0 ){
@@ -114,6 +131,19 @@ public class GameController {
                     ducky.setVelocity(0,100);
                     System.out.println("UPPER");
                 }
+
+//                if( intersectsWithLevel(ducky)){//ducky.getBoundary().intersects(0, bgHeight, bgWidth, 100)){
+////                    ducky.setVelocity(0, 0);
+////                    ducky.resetHealthPoints();
+//                    if(!(input.contains("UP") || input.contains("LEFT") || input.contains("RIGHT"))){
+//                        ducky.setVelocity(0,0);
+//                    }
+//                    else {
+//                        ducky.invertVelocity();
+//                    }
+//                }
+
+
 
                 ducky.update(elapsedTime);
                 ducky.reduceHealthPoints();
@@ -138,13 +168,8 @@ public class GameController {
                     gc.strokeText( pointsText, bgWidth/2, bgHeight/3 );
                 }
 
-                if( intersectsWithLevel(ducky)){//ducky.getBoundary().intersects(0, bgHeight, bgWidth, 100)){
-                    ducky.setVelocity(0, 0);
-                    ducky.resetHealthPoints();
-                }
-                else {
-                    ducky.setVelocity(0,100); // falling ducky
-                }
+
+
 
                 if (ducky.getVelocityY() == 0 && (input.contains("LEFT") || input.contains("RIGHT"))) {
                     //System.out.println("WALK");
@@ -188,6 +213,24 @@ public class GameController {
         for (Node node : levelGrid.getChildren()) {
             if (ducky.intersects(levelGrid.getRowIndex(node), levelGrid.getColumnIndex(node), 50.0, 50.0)){
                 System.out.println("==> COLLISION");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean wouldIntersectWithLevel(DuckySprite ducky, double x, double y) {
+        double xBegin = ducky.getPositionX() + x;
+        double duckyWidth = ducky.getFrame(0).getWidth();
+        double yBegin = ducky.getPositionY() + y;
+        double duckyHeight = ducky.getFrame(0).getHeight();
+        //System.out.println("Ducky: x: " + xBegin + ", y: " + yBegin + ", width: " + duckyWidth + ", height: " + duckyHeight);
+        Rectangle2D duckyBoundary = new Rectangle2D(xBegin,yBegin,duckyWidth,duckyHeight);
+        for (Node node : levelGrid.getChildren()) {
+           // System.out.println("node: x: " + levelGrid.getColumnIndex(node)*50.0 + ", y: " + levelGrid.getRowIndex(node)*50.0 );
+            Rectangle2D imageBoundary = new Rectangle2D(levelGrid.getColumnIndex(node)*50.0, levelGrid.getRowIndex(node)*50.0, 50.0, 50.0);
+            if (duckyBoundary.intersects(imageBoundary)){
+                System.out.println(" ! COLLISION !");
                 return true;
             }
         }

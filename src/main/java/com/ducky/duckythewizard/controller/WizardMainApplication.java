@@ -1,4 +1,4 @@
-package com.ducky.duckythewizard;
+package com.ducky.duckythewizard.controller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +13,7 @@ public class WizardMainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = (Parent)FXMLLoader.load((URL) Objects.requireNonNull(this.getClass().getResource("scenes/startingScene.fxml")));
+        Parent root = (Parent)FXMLLoader.load((URL) Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/startingScene.fxml")));
         Scene scene = new Scene(root);
         stage.setTitle("Ducky the wizard");
         String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/styleRenate.css")).toExternalForm();

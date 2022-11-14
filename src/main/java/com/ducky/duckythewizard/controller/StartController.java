@@ -1,4 +1,4 @@
-package com.ducky.duckythewizard;
+package com.ducky.duckythewizard.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,14 +9,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MenuController {
+public class StartController {
 
     @FXML
-    Button closeBtn;
-    public void handleCloseBtnClicked(ActionEvent actionEvent) throws IOException {
+    private Button startBtn;
+    public void startButtonClicked(ActionEvent actionEvent) throws IOException {
         AnchorPane newRoot = FXMLLoader.load(getClass().getResource("game-view.fxml"));
-        Stage primaryStage = (Stage) closeBtn.getScene().getWindow();
+        Stage primaryStage = (Stage) startBtn.getScene().getWindow();
         primaryStage.getScene().setRoot(newRoot);
         newRoot.requestFocus();
+
     }
 }
