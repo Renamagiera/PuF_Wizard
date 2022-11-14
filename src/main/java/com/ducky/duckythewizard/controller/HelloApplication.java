@@ -1,4 +1,4 @@
-package com.ducky.duckythewizard;
+package com.ducky.duckythewizard.controller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

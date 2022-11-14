@@ -1,4 +1,4 @@
-package com.ducky.duckythewizard;
+package com.ducky.duckythewizard.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
