@@ -26,7 +26,15 @@ import java.util.ArrayList;
 
 public class GameController {
     @FXML
-    private Group backgroundImageGroup;
+    private ImageView rock1;
+    @FXML
+    private ImageView rock2;
+    @FXML
+    private ImageView rock3;
+    @FXML
+    private ImageView rock4;
+    @FXML
+    private ImageView rock5;
     @FXML
     private Canvas mainCanvas;
     @FXML
@@ -36,6 +44,9 @@ public class GameController {
 
     private int bgWidth = 800;
     private int bgHeight = 650;
+    private double cellWidth = 50.0;
+    private double cellHeight = 50.0;
+    private ArrayList<Rectangle2D> earthTiles = new ArrayList<>();
 
     private ArrayList<String> input = new ArrayList<>();
 
@@ -45,6 +56,19 @@ public class GameController {
         mainCanvas.setWidth(bgWidth);
 
         GraphicsContext gc = mainCanvas.getGraphicsContext2D();
+
+        for (Node node : levelGrid.getChildren()) {
+            if (node.getStyleClass().contains("earth-tile")){
+                System.out.println("EARTHTILE");
+                Rectangle2D tile = new Rectangle2D(
+                        levelGrid.getColumnIndex(node)*cellWidth,
+                        levelGrid.getRowIndex(node)*cellHeight,
+                        cellWidth,
+                        cellHeight);
+                earthTiles.add(tile);
+                System.out.println("x: " + tile.getMinX() + ", y: " + tile.getMinY());
+            }
+        }
 
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 24 );
         gc.setFont( theFont );
