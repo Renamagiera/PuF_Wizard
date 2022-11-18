@@ -3,6 +3,7 @@ package com.ducky.duckythewizard.controller;
 import com.ducky.duckythewizard.model.DuckySprite;
 import com.ducky.duckythewizard.model.LongValue;
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -11,9 +12,11 @@ import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -41,6 +44,8 @@ public class GameController {
     private AnchorPane rootBox;
     @FXML
     private GridPane levelGrid;
+    @FXML
+    private ImageView firstCard;
 
     private int bgWidth = 800;
     private int bgHeight = 650;
@@ -254,7 +259,7 @@ public class GameController {
            // System.out.println("node: x: " + levelGrid.getColumnIndex(node)*50.0 + ", y: " + levelGrid.getRowIndex(node)*50.0 );
             Rectangle2D imageBoundary = new Rectangle2D(levelGrid.getColumnIndex(node)*50.0, levelGrid.getRowIndex(node)*50.0, 50.0, 50.0);
             if (duckyBoundary.intersects(imageBoundary)){
-                System.out.println(" ! COLLISION !");
+                //System.out.println(" ! COLLISION !");
                 return true;
             }
         }
@@ -269,5 +274,14 @@ public class GameController {
         imageView.setFitWidth(targetWidth);
         imageView.setFitHeight(targetHeight);
         return imageView.snapshot(parameters, null);
+    }
+
+    public void setImages() {
+
+    }
+
+    public void cardClicked(MouseEvent event) {
+        String clickedCard = ((ImageView)event.getSource()).getId();
+        System.out.println(clickedCard);
     }
 }

@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/styleRenate.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/styleRenate.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
    <children>
       <ImageView fitHeight="650.0" fitWidth="800.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/helpScenes/help_img_3.png" />
          </image>
       </ImageView>
-      <Button layoutX="640.0" layoutY="550.0" mnemonicParsing="false" onAction="#startGame" prefHeight="100.0" prefWidth="200.0" text="Play">
+      <Button fx:id="play" layoutX="640.0" layoutY="550.0" mnemonicParsing="false" onAction="#startGame" prefHeight="100.0" prefWidth="200.0" text="Play">
          <font>
             <Font size="1.0" />
          </font>
@@ -24,7 +24,7 @@
             <String fx:value="buttonTransparentAndFont" />
          </styleClass>
       </Button>
-      <Button layoutX="710.0" layoutY="-30.0" mnemonicParsing="false" onAction="#endHelpScenes" prefHeight="100.0" prefWidth="112.0" text="x">
+      <Button fx:id="exit3" layoutX="710.0" layoutY="-30.0" mnemonicParsing="false" onAction="#endHelpScenes" prefHeight="100.0" prefWidth="112.0" text="x">
          <font>
             <Font size="1.0" />
          </font>
@@ -33,7 +33,7 @@
             <String fx:value="exitButton" />
          </styleClass>
       </Button>
-      <Button layoutX="600.0" layoutY="550.0" mnemonicParsing="false" onAction="#switchToHelpScene2" prefHeight="100.0" prefWidth="30.0" text="&lt;">
+      <Button fx:id="backTo2" layoutX="600.0" layoutY="550.0" mnemonicParsing="false" onAction="#switchToScene" prefHeight="100.0" prefWidth="30.0" text="&lt;">
          <font>
             <Font size="1.0" />
          </font>
