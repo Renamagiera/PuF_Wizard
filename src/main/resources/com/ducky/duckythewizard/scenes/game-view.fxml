@@ -59,10 +59,10 @@
          <children>
              <!-- row 0 -->
              <!-- row 1 -->
-             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
+             <ImageView fx:id="rock1" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
                  <Image url="@../images/forest/rock_50px.png" />
              </ImageView>
-             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="14" GridPane.rowIndex="1">
+             <ImageView styleClass="earth-tile" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="14" GridPane.rowIndex="1">
                  <Image url="@../images/forest/earth-tile.png" />
              </ImageView>
              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="15" GridPane.rowIndex="1">
@@ -82,7 +82,7 @@
              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                  <Image url="@../images/forest/earth-tile_earth_only.png" />
              </ImageView>
-             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="3">
+             <ImageView fx:id="rock2" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="3">
                 <Image url="@../images/forest/rock_50px.png" />
              </ImageView>
              <!-- row 4 -->
@@ -121,7 +121,7 @@
              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="6">
                  <Image url="@../images/forest/earth-tile_earth_only.png" />
              </ImageView>
-             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="10" GridPane.rowIndex="6">
+             <ImageView fx:id="rock3" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="10" GridPane.rowIndex="6">
                  <Image url="@../images/forest/rock_50px.png" />
              </ImageView>
              <!-- row 7 -->
@@ -150,7 +150,7 @@
              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="8">
                  <Image url="@../images/forest/earth-tile_earth_only.png" />
              </ImageView>
-             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="8">
+             <ImageView fx:id="rock4" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="8">
                  <Image url="@../images/forest/rock_50px.png" />
              </ImageView>
              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="10" GridPane.rowIndex="8">
@@ -165,7 +165,7 @@
              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="8">
                  <Image url="@../images/forest/earth-tile_earth_only.png" />
              </ImageView>
-             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="14" GridPane.rowIndex="8">
+             <ImageView fx:id="rock5" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="14" GridPane.rowIndex="8">
                  <Image url="@../images/forest/rock_50px.png" />
              </ImageView>
              <!-- row 9 -->
