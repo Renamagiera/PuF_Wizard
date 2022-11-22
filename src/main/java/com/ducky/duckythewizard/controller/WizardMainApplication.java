@@ -1,6 +1,8 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.CardDeck;
+import com.ducky.duckythewizard.model.Game;
+import com.ducky.duckythewizard.model.GameConfig;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,12 +30,6 @@ public class WizardMainApplication extends Application {
     }
 
     public static void main(String[] args) {
-
-        CardDeck testDeck = new CardDeck();
-        //testDeck.showAllCardDeckInfo();
-        testDeck.takeCardsFromDeck(5);
-        testDeck.showAllCardDeckInfo();
-
         launch();
     }
 }

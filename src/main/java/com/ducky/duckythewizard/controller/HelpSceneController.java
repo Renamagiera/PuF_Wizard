@@ -1,7 +1,6 @@
 package com.ducky.duckythewizard.controller;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -1,31 +1,24 @@
 package com.ducky.duckythewizard.model;
 
-import javafx.geometry.Rectangle2D;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class CardDeck {
 
-    // private int deckSize = GameConfig.getDeckSize(); ???
-    private ArrayList<Card> cardDeck = new ArrayList<>();
-    private ArrayList<Color> colors = new ArrayList<>();
-    private ArrayList<Card> handedCards = new ArrayList<>();
+    private static final ArrayList<Card> cardDeck = new ArrayList<>();
 
     public CardDeck() {
-
-        colors.add(GameConfig.blue);
-        colors.add(GameConfig.red);
-        colors.add(GameConfig.yellow);
-        colors.add(GameConfig.green);
+        ArrayList<_Color> colors = new ArrayList<>();
+        colors.add(GameConfig.BLUE);
+        colors.add(GameConfig.RED);
+        colors.add(GameConfig.YELLOW);
+        colors.add(GameConfig.GREEN);
         // generate CardDeck
-        for (Color color : colors) {
-            for (int i = 0; i <= 12; i++) {
-                Image cardImg = new Image("C:\\Users\\reuba\\IdeaProjects\\PuF_Wizard\\src\\main\\resources\\com\\ducky\\duckythewizard\\images\\forest\\rock_50px.png");
-                cardDeck.add(new Card(color, i+1, cardImg));
+        for (_Color color : colors) {
+            for (int i = GameConfig.MIN_CARD_VALUE; i <= GameConfig.MAX_CARD_VALUE; i++) {
+                String colorName = color.getName();
+                String imgFileName = "/com/ducky/duckythewizard/images/cards/"+colorName+"/"+colorName+i+".png";
+                cardDeck.add(new Card(color, i+1, imgFileName));
             }
         }
         shuffleCards();
@@ -35,22 +28,44 @@ public class CardDeck {
         Collections.shuffle(cardDeck);
     }
 
-    public void takeCardsFromDeck(int amount) {
-        shuffleCards();
-        for (int i = 0; i < amount; i++) {
-            handedCards.add(cardDeck.remove(i));
+    public ArrayList<Card> takeCardsFromDeck(int amount) {
+        ArrayList<Card> takenCards = new ArrayList<>();
+        if (!(amount == 1)){
+            for (int i = GameConfig.MIN_CARD_VALUE; i < amount; i++) {
+                Card takenCard = cardDeck.remove(i);
+                takenCard.setSlot(i);
+                takenCards.add(takenCard);
+            }
+        } else {
+            for (int i = GameConfig.MIN_CARD_VALUE; i < amount; i++) {
+                takenCards.add(cardDeck.remove(i));
+            }
         }
+        return takenCards;
     }
 
-    public void showAllCardDeckInfo() {
+    public Card findCard(String colorName, int value) {
+        for (Card card : cardDeck) {
+            if (card.getColor().getName().equals(colorName) && card.getValue() == value) {
+                System.out.println("Card found: "+card.getColor().getName()+", "+card.getValue());
+                return card;
+            }
+        }
+        return null;
+    }
+
+    // DELETE ME LATER
+    public static void showAllCardDeckInfo() {
         for (Card card : cardDeck) {
             System.out.println(card.getValue() + ", " + card.getColor().getName());
         }
         System.out.println("Cards: " + cardDeck.size());
-        System.out.println("");
-        for (Card card : handedCards) {
+    }
+
+    public static void showHandCards(ArrayList<Card> handCards) {
+        for (Card card : handCards) {
             System.out.println(card.getValue() + ", " + card.getColor().getName());
         }
-        System.out.println("Handed Cards: " + handedCards.size());
     }
+    // DELETE ME LATER
 }
