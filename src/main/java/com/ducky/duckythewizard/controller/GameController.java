@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class GameController {
+public class GameController{
     @FXML
     public AnchorPane emptyCardSlots;
 
@@ -302,6 +302,8 @@ public class GameController {
         String clickedCard = ((ImageView)event.getSource()).getId();
         System.out.println("Do some stuff with this card: " + clickedCard);
         System.out.println((ImageView)event.getSource());
-        CardDeck.showAllCardDeckInfo();
+        CardDeck.showHandCards(handedCards);
+        System.out.println(emptyCardSlots.getChildren().size());
+        System.out.println(GameConfig.CARD_SLOTS.size());
     }
 }

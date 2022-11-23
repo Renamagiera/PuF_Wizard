@@ -30,6 +30,7 @@ public class WizardMainApplication extends Application {
     }
 
     public static void main(String[] args) {
+        GameConfig.setCardSlotNumbers();
         launch();
     }
 }

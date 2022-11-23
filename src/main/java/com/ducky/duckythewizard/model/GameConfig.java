@@ -1,6 +1,7 @@
 package com.ducky.duckythewizard.model;
 
-import javafx.fxml.FXML;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameConfig {
 
@@ -19,6 +20,15 @@ public class GameConfig {
     public static final int CARD_HEIGHT = 104;
     public static final int CARD_WIDTH = 65;
 
+    public static Map<String, Integer> CARD_SLOTS = new HashMap<>();
+
+    public static void setCardSlotNumbers() {
+        GameConfig.CARD_SLOTS.put("firstCard", 1);
+        GameConfig.CARD_SLOTS.put("secondCard", 2);
+        GameConfig.CARD_SLOTS.put("thirdCard", 3);
+        GameConfig.CARD_SLOTS.put("fourthCard", 4);
+        GameConfig.CARD_SLOTS.put("fifthCard", 5);
+    }
 
     /*
     // Singleton configuration class
