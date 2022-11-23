@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/styleRenate.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+   <children>
+      <ImageView fitHeight="650.0" fitWidth="800.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/helpScenes/help_img_3.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="640.0" layoutY="550.0" mnemonicParsing="false" onAction="#startGame" prefHeight="100.0" prefWidth="200.0" text="Play">
+         <font>
+            <Font size="1.0" />
+         </font>
+         <styleClass>
+            <String fx:value="nextButton" />
+            <String fx:value="playButtonGreen" />
+            <String fx:value="buttonTransparentAndFont" />
+         </styleClass>
+      </Button>
+      <Button layoutX="710.0" layoutY="-30.0" mnemonicParsing="false" onAction="#endHelpScenes" prefHeight="100.0" prefWidth="112.0" text="x">
+         <font>
+            <Font size="1.0" />
+         </font>
+         <styleClass>
+            <String fx:value="buttonTransparentAndFont" />
+            <String fx:value="exitButton" />
+         </styleClass>
+      </Button>
+      <Button layoutX="600.0" layoutY="550.0" mnemonicParsing="false" onAction="#switchToHelpScene2" prefHeight="100.0" prefWidth="30.0" text="&lt;">
+         <font>
+            <Font size="1.0" />
+         </font>
+         <styleClass>
+            <String fx:value="buttonTransparentAndFont" />
+            <String fx:value="nextButton" />
+         </styleClass>
+      </Button>
+   </children>
+   <styleClass>
+      <String fx:value="bg-blue" />
+      <String fx:value="buttonTransparentAndFont" />
+   </styleClass>
+</AnchorPane>

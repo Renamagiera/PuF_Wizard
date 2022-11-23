@@ -1,0 +1,11 @@
+.root{
+    -fx-background-size: cover, cover, cover, cover;
+    -fx-background-position: top, top, top, top;
+    -fx-background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+
+    -fx-background-image:
+            url("../images/forest/parallax-forest-back-trees_800px.png"),
+            url("../images/forest/parallax-forest-lights_800px.png"),
+            url("../images/forest/parallax-forest-middle-trees_800px.png"),
+            url("../images/forest/parallax-forest-front-trees_800px.png")
+}
