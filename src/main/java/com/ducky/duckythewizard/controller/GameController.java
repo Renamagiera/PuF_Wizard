@@ -277,33 +277,20 @@ public class GameController{
         return imageView.snapshot(parameters, null);
     }
 
-    // TO-DO-RENATE: in Card-Controller auslagern, wenn es als "Overlay" auf dem Spiel liegt
-
     public void cardStuff() {
-        // create new card deck, take 5 cards from deck, then render the card image for those 5
-        CardDeck newDeck = new CardDeck();
-        handedCards = newDeck.takeCardsFromDeck(GameConfig.HAND_CARDS);
-        renderCardImages(handedCards);
-    }
-
-    public void renderCardImages(ArrayList<Card> handedCards) {
-        // every Node in AnchorPane: every empty ImageView, as a child from AnchorPane
-        int index = 0;
-        for (Node imageView : emptyCardSlots.getChildren()) {
-            ImageView castedImgView = (ImageView) imageView;
-            Image handCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(handedCards.get(index).getImgFileName())));
-            castedImgView.setImage(handCardImage);
-            index++;
-        }
+        // TO-DO-RENATE: passt das hierher oder wo muss das alternativ hin?
+        GameConfig.deck.addAndRenderALlCards(emptyCardSlots);
     }
 
     // TO-DO-RENATE: Card-click action
     public void cardClicked(MouseEvent event) {
-        String clickedCard = ((ImageView)event.getSource()).getId();
-        System.out.println("Do some stuff with this card: " + clickedCard);
+        int handCardPosition = GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
+        GameConfig.handedCards.remove(handCardPosition);
+        // remove Image
+
+        System.out.println("Do some stuff with this card: " + ((ImageView) event.getSource()).getId());
         System.out.println((ImageView)event.getSource());
-        CardDeck.showHandCards(handedCards);
-        System.out.println(emptyCardSlots.getChildren().size());
-        System.out.println(GameConfig.CARD_SLOTS.size());
+        CardDeck.showHandCards(GameConfig.handedCards);
+        System.out.println("Hand Cards: " + GameConfig.handedCards.size());
     }
 }

@@ -1,5 +1,6 @@
 package com.ducky.duckythewizard.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,23 +12,37 @@ public class GameConfig {
     public static final _Color BLUE = new _Color("blue", "0,0,255");
     public static final _Color YELLOW = new _Color("yellow", "0,255,0");
     public static final _Color GREEN = new _Color("green", "255,255,0");
+    public static final ArrayList<_Color> COLORS = new ArrayList<>();
 
     // Cards
+    public static CardDeck deck = new CardDeck();
+    public static ArrayList<Card> handedCards = new ArrayList<>();
+    public static Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
     public static final int MAX_CARD_VALUE = 12;
     public static final int MIN_CARD_VALUE = 0;
-    public static final int HAND_CARDS = 5;
+    public static final int AMOUNT_HAND_CARDS = 5;
     public static final int AMOUNT_CARDS = 52;
     public static final int CARD_HEIGHT = 104;
     public static final int CARD_WIDTH = 65;
 
-    public static Map<String, Integer> CARD_SLOTS = new HashMap<>();
+    public static void initialize() {
+        setCardSlotNumbers();
+        setColorCollection();
+    }
 
     public static void setCardSlotNumbers() {
-        GameConfig.CARD_SLOTS.put("firstCard", 1);
-        GameConfig.CARD_SLOTS.put("secondCard", 2);
-        GameConfig.CARD_SLOTS.put("thirdCard", 3);
-        GameConfig.CARD_SLOTS.put("fourthCard", 4);
-        GameConfig.CARD_SLOTS.put("fifthCard", 5);
+        GameConfig.CARD_SLOT_POSITION.put("firstCard", 0);
+        GameConfig.CARD_SLOT_POSITION.put("secondCard", 1);
+        GameConfig.CARD_SLOT_POSITION.put("thirdCard", 2);
+        GameConfig.CARD_SLOT_POSITION.put("fourthCard", 3);
+        GameConfig.CARD_SLOT_POSITION.put("fifthCard", 4);
+    }
+
+    private static void setColorCollection() {
+        GameConfig.COLORS.add(GameConfig.BLUE);
+        GameConfig.COLORS.add(GameConfig.RED);
+        GameConfig.COLORS.add(GameConfig.YELLOW);
+        GameConfig.COLORS.add(GameConfig.GREEN);
     }
 
     /*
