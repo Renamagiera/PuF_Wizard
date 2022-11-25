@@ -2,8 +2,8 @@ package com.ducky.duckythewizard.model;
 
 public class _Color {
 
-    private String name;
-    private String value; // HSLA/RGB to be defined
+    private final String name;
+    private final String value; // HSLA/RGB to be defined
 
     public _Color(String name, String value){
         this.name = name;

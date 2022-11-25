@@ -22,13 +22,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GameController{
     @FXML
     public AnchorPane emptyCardSlots;
-
-    public ArrayList<Card> handedCards;
 
     @FXML
     private ImageView rock1;
@@ -279,18 +276,34 @@ public class GameController{
 
     public void cardStuff() {
         // TO-DO-RENATE: passt das hierher oder wo muss das alternativ hin?
-        GameConfig.deck.addAndRenderALlCards(emptyCardSlots);
+        GameConfig.anchorPane = emptyCardSlots;
+        GameConfig.deckObject.addAndRenderALlCards(GameConfig.anchorPane);
     }
 
     // TO-DO-RENATE: Card-click action
     public void cardClicked(MouseEvent event) {
-        int handCardPosition = GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
-        GameConfig.handedCards.remove(handCardPosition);
-        // remove Image
+        System.out.println("Deck size: " + GameConfig.deck.size());
+        // DELETE ME LATER
+        //System.out.println("Do some stuff with this card: " + ((ImageView) event.getSource()).getId());
+        //System.out.println(event.getSource());
 
-        System.out.println("Do some stuff with this card: " + ((ImageView) event.getSource()).getId());
-        System.out.println((ImageView)event.getSource());
+        // für Test-Zwecke, wenn die Karte bereits gespielt wurde, soll eine neue aus dem Deck genommen werden
+        int handCardPosition = GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
+        Card clickedCard = GameConfig.handedCards.get(handCardPosition);
         CardDeck.showHandCards(GameConfig.handedCards);
-        System.out.println("Hand Cards: " + GameConfig.handedCards.size());
+        System.out.println("Color clicked card: " + clickedCard.color().getName());
+        if (clickedCard.color().getName().equals("none")) {
+            System.out.println("this card is already gone, here is a new one");
+            GameConfig.handedCards.remove(handCardPosition);
+            GameConfig.handedCards.add(handCardPosition, GameConfig.deckObject.dealNewCardFromDeck());
+            System.out.println("Deck size: " + GameConfig.deck.size());
+            System.out.println("new Card: " + GameConfig.handedCards.get(handCardPosition).color().getName());
+            GameConfig.deckObject.renderHandCardImages(GameConfig.anchorPane);
+        } else {
+            GameConfig.deckObject.removeCardAddDummy(GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId()));
+        }
+        // DELETE ME LATER
+
+        //GameConfig.deckObject.removeCardAddDummy(GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId()));
     }
 }

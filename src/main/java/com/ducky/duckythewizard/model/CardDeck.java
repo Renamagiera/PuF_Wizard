@@ -13,18 +13,16 @@ public class CardDeck {
 
     private static final ArrayList<Card> CARD_DECK = new ArrayList<>();
 
-    public CardDeck() {
-        createEmptyCardSlots();
-    }
+    public CardDeck() {}
 
-    public static ArrayList<Card> getCardDeck() {
+    public ArrayList<Card> getCardDeck() {
         return CARD_DECK;
     }
 
     public void addAndRenderALlCards(AnchorPane emptyCardSlots) {
-        GameConfig.deck.addCardsToDeck();
-        GameConfig.handedCards = GameConfig.deck.dealHandCards();
-        renderCardImages(emptyCardSlots);
+        GameConfig.deckObject.addCardsToDeck();
+        GameConfig.handedCards = GameConfig.deckObject.dealHandCards();
+        renderHandCardImages(GameConfig.anchorPane);
     }
 
     public void addCardsToDeck() {
@@ -38,12 +36,6 @@ public class CardDeck {
         shuffleCards();
     }
 
-    private void createEmptyCardSlots() {
-        for (int i = GameConfig.MIN_CARD_VALUE; i <= GameConfig.AMOUNT_HAND_CARDS; i++) {
-
-        }
-    }
-
     public void shuffleCards() {
         Collections.shuffle(CARD_DECK);
     }
@@ -51,46 +43,72 @@ public class CardDeck {
     public ArrayList<Card> dealHandCards() {
         ArrayList<Card> takenCards = new ArrayList<>();
         for (int i = GameConfig.MIN_CARD_VALUE; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
-            System.out.println();
-            Card takenCard = CARD_DECK.remove(i);
-            takenCard.setSlot(i);
-            takenCards.add(takenCard);
+            takenCards.add(CARD_DECK.remove(i));
         }
         return takenCards;
     }
 
-    public Card findCard(String colorName, int value) {
-        for (Card card : CARD_DECK) {
-            if (card.getColor().getName().equals(colorName) && card.getValue() == value) {
-                System.out.println("Card found: "+card.getColor().getName()+", "+card.getValue());
+    public void renderHandCardImages(AnchorPane emptyCardSlots) {
+        // every Node in AnchorPane: every empty ImageView, as a child from AnchorPane
+        int index = 0;
+        for (Node imageView : emptyCardSlots.getChildren()) {
+            ImageView castedImgView = (ImageView) imageView;
+            Image handCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(GameConfig.handedCards.get(index).imgFileName())));
+            castedImgView.setImage(handCardImage);
+            index++;
+        }
+    }
+
+    public void removeCardAddDummy(int handCardPosition) {
+        GameConfig.handedCards.remove(handCardPosition);
+        GameConfig.handedCards.add(handCardPosition, new Card(GameConfig.NONE, 0, GameConfig.emptyCardImgFilename));
+        // render new hand cards
+        // TO-DO-RENATE: nur die ausgewählte Karte neu rendern
+        renderHandCardImages(GameConfig.anchorPane);
+        GameConfig.playedCards++;
+    }
+
+    public Card dealNewCardFromDeck() {
+        if (getCardDeck().size() != 0) {
+            return getCardDeck().remove(0);
+        } else {
+            return null;
+        }
+    }
+
+    public Card findCardInHandedCards(String colorName, int value) {
+        for (Card card : GameConfig.handedCards) {
+            if (card.color().getName().equals(colorName) && card.value() == value) {
+                System.out.println("Card found: "+card.color().getName()+", "+card.value());
                 return card;
             }
         }
         return null;
     }
 
-    public void renderCardImages(AnchorPane emptyCardSlots) {
-        // every Node in AnchorPane: every empty ImageView, as a child from AnchorPane
-        int index = 0;
-        for (Node imageView : emptyCardSlots.getChildren()) {
-            ImageView castedImgView = (ImageView) imageView;
-            Image handCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(GameConfig.handedCards.get(index).getImgFileName())));
-            castedImgView.setImage(handCardImage);
-            index++;
+    public Card findCardinDeck(String colorName, int value) {
+        for (Card card : getCardDeck()) {
+            if (card.color().getName().equals(colorName) && card.value() == value) {
+                System.out.println("Card found: "+card.color().getName()+", "+card.value());
+                return card;
+            }
         }
+        return null;
     }
 
+
+/***********************************************************************************************************************/
     // DELETE ME LATER
     public static void showAllCardDeckInfo() {
         for (Card card : CARD_DECK) {
-            System.out.println(card.getValue() + ", " + card.getColor().getName());
+            System.out.println(card.value() + ", " + card.color().getName());
         }
         System.out.println("Cards: " + CARD_DECK.size());
     }
 
     public static void showHandCards(ArrayList<Card> handCards) {
         for (Card card : handCards) {
-            System.out.println(card.getValue() + ", " + card.getColor().getName());
+            System.out.println(card.value() + ", " + card.color().getName());
         }
     }
     // DELETE ME LATER

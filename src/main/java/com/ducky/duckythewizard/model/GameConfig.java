@@ -1,5 +1,7 @@
 package com.ducky.duckythewizard.model;
 
+import javafx.scene.layout.AnchorPane;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,17 +9,23 @@ import java.util.Map;
 public class GameConfig {
 
     // Game configurations
+
     // Colors
     public static final _Color RED = new _Color("red", "255,0,0");
     public static final _Color BLUE = new _Color("blue", "0,0,255");
     public static final _Color YELLOW = new _Color("yellow", "0,255,0");
     public static final _Color GREEN = new _Color("green", "255,255,0");
     public static final ArrayList<_Color> COLORS = new ArrayList<>();
+    public static final _Color NONE = new _Color("none", "0");
 
     // Cards
-    public static CardDeck deck = new CardDeck();
+    public static AnchorPane anchorPane;
+    public static String emptyCardImgFilename = "/com/ducky/duckythewizard/images/cards/empty.png";
+    public static CardDeck deckObject = new CardDeck();
+    public static ArrayList<Card> deck = deckObject.getCardDeck();
     public static ArrayList<Card> handedCards = new ArrayList<>();
-    public static Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
+    public static int playedCards = 0;
+    public static final Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
     public static final int MAX_CARD_VALUE = 12;
     public static final int MIN_CARD_VALUE = 0;
     public static final int AMOUNT_HAND_CARDS = 5;
