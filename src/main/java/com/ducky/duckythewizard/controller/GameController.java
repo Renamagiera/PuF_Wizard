@@ -1,12 +1,10 @@
 package com.ducky.duckythewizard.controller;
 
-import com.ducky.duckythewizard.model.DuckySprite;
-import com.ducky.duckythewizard.model.LongValue;
+import com.ducky.duckythewizard.model.*;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
@@ -14,6 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -23,8 +22,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameController {
+    @FXML
+    public AnchorPane emptyCardSlots;
+
+    public ArrayList<Card> handedCards;
+
     @FXML
     private ImageView rock1;
     @FXML
@@ -52,6 +57,7 @@ public class GameController {
 
     @FXML
     public void initialize() {
+        cardStuff();
         mainCanvas.setHeight(bgHeight);
         mainCanvas.setWidth(bgWidth);
 
@@ -254,7 +260,7 @@ public class GameController {
            // System.out.println("node: x: " + levelGrid.getColumnIndex(node)*50.0 + ", y: " + levelGrid.getRowIndex(node)*50.0 );
             Rectangle2D imageBoundary = new Rectangle2D(levelGrid.getColumnIndex(node)*50.0, levelGrid.getRowIndex(node)*50.0, 50.0, 50.0);
             if (duckyBoundary.intersects(imageBoundary)){
-                System.out.println(" ! COLLISION !");
+                //System.out.println(" ! COLLISION !");
                 return true;
             }
         }
@@ -269,5 +275,33 @@ public class GameController {
         imageView.setFitWidth(targetWidth);
         imageView.setFitHeight(targetHeight);
         return imageView.snapshot(parameters, null);
+    }
+
+    // TO-DO-RENATE: in Card-Controller auslagern, wenn es als "Overlay" auf dem Spiel liegt
+
+    public void cardStuff() {
+        // create new card deck, take 5 cards from deck, then render the card image for those 5
+        CardDeck newDeck = new CardDeck();
+        handedCards = newDeck.takeCardsFromDeck(GameConfig.HAND_CARDS);
+        renderCardImages(handedCards);
+    }
+
+    public void renderCardImages(ArrayList<Card> handedCards) {
+        // every Node in AnchorPane: every empty ImageView, as a child from AnchorPane
+        int index = 0;
+        for (Node imageView : emptyCardSlots.getChildren()) {
+            ImageView castedImgView = (ImageView) imageView;
+            Image handCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(handedCards.get(index).getImgFileName())));
+            castedImgView.setImage(handCardImage);
+            index++;
+        }
+    }
+
+    // TO-DO-RENATE: Card-click action
+    public void cardClicked(MouseEvent event) {
+        String clickedCard = ((ImageView)event.getSource()).getId();
+        System.out.println("Do some stuff with this card: " + clickedCard);
+        System.out.println((ImageView)event.getSource());
+        CardDeck.showAllCardDeckInfo();
     }
 }
