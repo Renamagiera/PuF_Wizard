@@ -8,9 +8,20 @@ public class Game {
     private Player player;
     private CardDeck cardDeck;
     private GameConfig gameConfig;
-    // private Sprite[][] levelGrid; ??? save level tiles and rocks in a grid variable ???
+    public GameObject[][] objectGrid; // [row][column]
     private Scene startScene;
     private Scene deathScene;
     private Scene winScene;
     private Scene playScene;
+
+
+    public Game(){
+        isRunning = true;
+    }
+    public boolean getIsRunning(){
+        return isRunning;
+    }
+    public void toggleIsRunning() {
+        isRunning = !isRunning;
+    }
 }
