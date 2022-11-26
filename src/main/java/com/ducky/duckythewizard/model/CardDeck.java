@@ -1,70 +1,114 @@
 package com.ducky.duckythewizard.model;
 
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class CardDeck {
 
-    private static final ArrayList<Card> cardDeck = new ArrayList<>();
+    private static final ArrayList<Card> CARD_DECK = new ArrayList<>();
 
-    public CardDeck() {
-        ArrayList<_Color> colors = new ArrayList<>();
-        colors.add(GameConfig.BLUE);
-        colors.add(GameConfig.RED);
-        colors.add(GameConfig.YELLOW);
-        colors.add(GameConfig.GREEN);
-        // generate CardDeck
-        for (_Color color : colors) {
+    public CardDeck() {}
+
+    public ArrayList<Card> getCardDeck() {
+        return CARD_DECK;
+    }
+
+    public void addAndRenderALlCards(AnchorPane emptyCardSlots) {
+        GameConfig.deckObject.addCardsToDeck();
+        GameConfig.handedCards = GameConfig.deckObject.dealHandCards();
+        renderHandCardImages(GameConfig.anchorPane);
+    }
+
+    public void addCardsToDeck() {
+        for (_Color color : GameConfig.COLORS) {
             for (int i = GameConfig.MIN_CARD_VALUE; i <= GameConfig.MAX_CARD_VALUE; i++) {
                 String colorName = color.getName();
                 String imgFileName = "/com/ducky/duckythewizard/images/cards/"+colorName+"/"+colorName+i+".png";
-                cardDeck.add(new Card(color, i+1, imgFileName));
+                CARD_DECK.add(new Card(color, i+1, imgFileName));
             }
         }
         shuffleCards();
     }
 
     public void shuffleCards() {
-        Collections.shuffle(cardDeck);
+        Collections.shuffle(CARD_DECK);
     }
 
-    public ArrayList<Card> takeCardsFromDeck(int amount) {
+    public ArrayList<Card> dealHandCards() {
         ArrayList<Card> takenCards = new ArrayList<>();
-        if (!(amount == 1)){
-            for (int i = GameConfig.MIN_CARD_VALUE; i < amount; i++) {
-                Card takenCard = cardDeck.remove(i);
-                takenCard.setSlot(i);
-                takenCards.add(takenCard);
-            }
-        } else {
-            for (int i = GameConfig.MIN_CARD_VALUE; i < amount; i++) {
-                takenCards.add(cardDeck.remove(i));
-            }
+        for (int i = GameConfig.MIN_CARD_VALUE; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
+            takenCards.add(CARD_DECK.remove(i));
         }
         return takenCards;
     }
 
-    public Card findCard(String colorName, int value) {
-        for (Card card : cardDeck) {
-            if (card.getColor().getName().equals(colorName) && card.getValue() == value) {
-                System.out.println("Card found: "+card.getColor().getName()+", "+card.getValue());
+    public void renderHandCardImages(AnchorPane emptyCardSlots) {
+        // every Node in AnchorPane: every empty ImageView, as a child from AnchorPane
+        int index = 0;
+        for (Node imageView : emptyCardSlots.getChildren()) {
+            ImageView castedImgView = (ImageView) imageView;
+            Image handCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(GameConfig.handedCards.get(index).imgFileName())));
+            castedImgView.setImage(handCardImage);
+            index++;
+        }
+    }
+
+    public void removeCardAddDummy(int handCardPosition) {
+        GameConfig.handedCards.remove(handCardPosition);
+        GameConfig.handedCards.add(handCardPosition, new Card(GameConfig.NONE, 0, GameConfig.emptyCardImgFilename));
+        // render new hand cards
+        // TO-DO-RENATE: nur die ausgewählte Karte neu rendern
+        renderHandCardImages(GameConfig.anchorPane);
+        GameConfig.playedCards++;
+    }
+
+    public Card dealNewCardFromDeck() {
+        if (getCardDeck().size() != 0) {
+            return getCardDeck().remove(0);
+        } else {
+            return null;
+        }
+    }
+
+    public Card findCardInHandedCards(String colorName, int value) {
+        for (Card card : GameConfig.handedCards) {
+            if (card.color().getName().equals(colorName) && card.value() == value) {
+                System.out.println("Card found: "+card.color().getName()+", "+card.value());
                 return card;
             }
         }
         return null;
     }
 
+    public Card findCardinDeck(String colorName, int value) {
+        for (Card card : getCardDeck()) {
+            if (card.color().getName().equals(colorName) && card.value() == value) {
+                System.out.println("Card found: "+card.color().getName()+", "+card.value());
+                return card;
+            }
+        }
+        return null;
+    }
+
+
+/***********************************************************************************************************************/
     // DELETE ME LATER
     public static void showAllCardDeckInfo() {
-        for (Card card : cardDeck) {
-            System.out.println(card.getValue() + ", " + card.getColor().getName());
+        for (Card card : CARD_DECK) {
+            System.out.println(card.value() + ", " + card.color().getName());
         }
-        System.out.println("Cards: " + cardDeck.size());
+        System.out.println("Cards: " + CARD_DECK.size());
     }
 
     public static void showHandCards(ArrayList<Card> handCards) {
         for (Card card : handCards) {
-            System.out.println(card.getValue() + ", " + card.getColor().getName());
+            System.out.println(card.value() + ", " + card.color().getName());
         }
     }
     // DELETE ME LATER

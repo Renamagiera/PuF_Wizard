@@ -22,13 +22,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class GameController {
+public class GameController{
     @FXML
     public AnchorPane emptyCardSlots;
-
-    public ArrayList<Card> handedCards;
 
     @FXML
     private ImageView rock1;
@@ -180,32 +177,37 @@ public class GameController {
         return imageView.snapshot(parameters, null);
     }
 
-    // TO-DO-RENATE: in Card-Controller auslagern, wenn es als "Overlay" auf dem Spiel liegt
-
     public void cardStuff() {
-        // create new card deck, take 5 cards from deck, then render the card image for those 5
-        CardDeck newDeck = new CardDeck();
-        handedCards = newDeck.takeCardsFromDeck(GameConfig.HAND_CARDS);
-        renderCardImages(handedCards);
-    }
-
-    public void renderCardImages(ArrayList<Card> handedCards) {
-        // every Node in AnchorPane: every empty ImageView, as a child from AnchorPane
-        int index = 0;
-        for (Node imageView : emptyCardSlots.getChildren()) {
-            ImageView castedImgView = (ImageView) imageView;
-            Image handCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(handedCards.get(index).getImgFileName())));
-            castedImgView.setImage(handCardImage);
-            index++;
-        }
+        // TO-DO-RENATE: passt das hierher oder wo muss das alternativ hin?
+        GameConfig.anchorPane = emptyCardSlots;
+        GameConfig.deckObject.addAndRenderALlCards(GameConfig.anchorPane);
     }
 
     // TO-DO-RENATE: Card-click action
     public void cardClicked(MouseEvent event) {
-        String clickedCard = ((ImageView)event.getSource()).getId();
-        System.out.println("Do some stuff with this card: " + clickedCard);
-        System.out.println((ImageView)event.getSource());
-        CardDeck.showAllCardDeckInfo();
+        System.out.println("Deck size: " + GameConfig.deck.size());
+        // DELETE ME LATER
+        //System.out.println("Do some stuff with this card: " + ((ImageView) event.getSource()).getId());
+        //System.out.println(event.getSource());
+
+        // für Test-Zwecke, wenn die Karte bereits gespielt wurde, soll eine neue aus dem Deck genommen werden
+        int handCardPosition = GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
+        Card clickedCard = GameConfig.handedCards.get(handCardPosition);
+        CardDeck.showHandCards(GameConfig.handedCards);
+        System.out.println("Color clicked card: " + clickedCard.color().getName());
+        if (clickedCard.color().getName().equals("none")) {
+            System.out.println("this card is already gone, here is a new one");
+            GameConfig.handedCards.remove(handCardPosition);
+            GameConfig.handedCards.add(handCardPosition, GameConfig.deckObject.dealNewCardFromDeck());
+            System.out.println("Deck size: " + GameConfig.deck.size());
+            System.out.println("new Card: " + GameConfig.handedCards.get(handCardPosition).color().getName());
+            GameConfig.deckObject.renderHandCardImages(GameConfig.anchorPane);
+        } else {
+            GameConfig.deckObject.removeCardAddDummy(GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId()));
+        }
+        // DELETE ME LATER
+
+        //GameConfig.deckObject.removeCardAddDummy(GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId()));
     }
 
     class MyAnimationTimer extends AnimationTimer
