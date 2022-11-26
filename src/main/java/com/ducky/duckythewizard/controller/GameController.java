@@ -54,37 +54,59 @@ public class GameController {
     private ArrayList<Rectangle2D> earthTiles = new ArrayList<>();
 
     private ArrayList<String> input = new ArrayList<>();
+    private Game game = new Game();
+    private CollisionHandler collisionHandler;
+    private DuckySprite ducky;
+    private GraphicsContext gc;
+    private MyAnimationTimer animationTimer;
+
+    // TODO should be in DuckySprite ???
+    private Image[] imageArrayFly;
+    private Image[] imageArrayIdle;
+    private Image[] imageArrayWalk;
 
     @FXML
     public void initialize() {
         cardStuff();
+
+        game.objectGrid = new GameObject[levelGrid.getRowCount()][levelGrid.getColumnCount()];
+
         mainCanvas.setHeight(bgHeight);
         mainCanvas.setWidth(bgWidth);
 
-        GraphicsContext gc = mainCanvas.getGraphicsContext2D();
+        // graphics context for displaying moving entities and changing texts in level
+        gc = mainCanvas.getGraphicsContext2D();
 
-        for (Node node : levelGrid.getChildren()) {
-            if (node.getStyleClass().contains("earth-tile")){
-                System.out.println("EARTHTILE");
-                Rectangle2D tile = new Rectangle2D(
-                        levelGrid.getColumnIndex(node)*cellWidth,
-                        levelGrid.getRowIndex(node)*cellHeight,
-                        cellWidth,
-                        cellHeight);
-                earthTiles.add(tile);
-                System.out.println("x: " + tile.getMinX() + ", y: " + tile.getMinY());
+        // initialize game.objectGrid
+        for(Node node: levelGrid.getChildren()) {
+            int row = levelGrid.getRowIndex(node);
+            int column = levelGrid.getColumnIndex(node);
+            if(node.getStyleClass().contains("rock")){
+                game.objectGrid[row][column] = new Stone();
+            }
+            else { // if (node.getStyleClass().contains("earth-tile")) // TODO add styleclass to earth tiles??
+                game.objectGrid[row][column] = new GameObject(false);
             }
         }
 
-        Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 24 );
-        gc.setFont( theFont );
-        gc.setStroke( Color.BLACK );
-        gc.setLineWidth(1);
+        // initialize CollisionHandler
+        collisionHandler = new CollisionHandler(game.objectGrid, cellHeight, cellWidth);
 
-        DuckySprite ducky = new DuckySprite(5);
-        Image[] imageArrayFly = new Image[6];
-        Image[] imageArrayIdle = new Image[4];
-        Image[] imageArrayWalk = new Image[6];
+        // initialize font for texts that are shown
+        Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
+        gc.setFont( theFont );
+        gc.setStroke(Color.BLACK);
+        gc.setFill(Color.WHITE );
+        gc.setLineWidth(5);
+
+        // initialize Ducky
+        ducky = new DuckySprite(5, collisionHandler);
+
+        // loading and scaling images for Ducky
+        // TODO should not be in GameController --> move to DuckySprite ???
+        imageArrayFly = new Image[6];
+        imageArrayIdle = new Image[4];
+        imageArrayWalk = new Image[6];
         for (int i = 0; i < imageArrayFly.length; i++) {
             Image image = new Image(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/fly/fly_" + i + ".png"));
             imageArrayFly[i] = scaleImage(image, 40 , 40, true);
@@ -106,165 +128,46 @@ public class GameController {
         ducky.setPosition(bgWidth/2 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);
 
-        final long startNanoTime = System.nanoTime();
-        LongValue lastNanoTime = new LongValue( System.nanoTime() );
-
-        new AnimationTimer()
-        {
-            public void handle(long currentNanoTime)
-            {
-                double t = (currentNanoTime - startNanoTime) / 1000000000.0;
-                // calculate time since last update.
-                double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
-                lastNanoTime.value = currentNanoTime;
-
-                if (input.contains("UP")){
-                    if(wouldIntersectWithLevel(ducky, 0, -1)){
-                        ducky.setVelocityY(100);
-                    }
-                    else {
-                        ducky.setVelocityY(-100);
-                    }
-
-                }
-                else if (!wouldIntersectWithLevel(ducky, 0, 1)) {
-                    ducky.setVelocity(0,100); // falling ducky
-                }
-                else {
-                    ducky.setVelocityY(0);
-                }
-                if (input.contains("LEFT")) {
-                    if (!wouldIntersectWithLevel(ducky, -1, 0)) {
-                        ducky.setVelocityX(-100);
-                    }
-                }
-
-                if (input.contains("RIGHT")) {
-                    if(!wouldIntersectWithLevel(ducky, 1, 0)) {
-                        ducky.setVelocityX(100);
-                    }
-                }
 
 
-                // left level boundary
-                if(ducky.getPositionX() <= 0 ){
-                    ducky.setVelocity(100,0);
-                    System.out.println("LEFT");
-                }
-                // right level boundary
-                if(ducky.getPositionX() >= bgWidth - ducky.getFrame(t).getWidth()){
-                    ducky.setVelocity(-100,0);
-                    System.out.println("RIGHT");
-                }
-                // upper level boundary
-                if(ducky.getPositionY() <= 0){
-                    ducky.setVelocity(0,100);
-                    System.out.println("UPPER");
-                }
-
-//                if( intersectsWithLevel(ducky)){//ducky.getBoundary().intersects(0, bgHeight, bgWidth, 100)){
-////                    ducky.setVelocity(0, 0);
-////                    ducky.resetHealthPoints();
-//                    if(!(input.contains("UP") || input.contains("LEFT") || input.contains("RIGHT"))){
-//                        ducky.setVelocity(0,0);
-//                    }
-//                    else {
-//                        ducky.invertVelocity();
-//                    }
-//                }
-
-
-
-                ducky.update(elapsedTime);
-                ducky.reduceHealthPoints();
-
-//                for(BackgroundImage image : rootBox.getBackground().getImages()){
-//                    gc.drawImage(image.getImage(), 0, 0);
-//                }
-//                for(Node node : backgroundImageGroup.getChildren()){
-//                    gc.drawImage(((ImageView)node).getImage(), 0, 0);
-//                }
-
-                // clear prior ducky image
-                gc.clearRect(0,0,bgWidth,bgHeight);
-
-                String healthText = "Health: " + ducky.getHealthPoints();
-                gc.fillText( healthText, bgWidth/3, bgHeight/4 );
-                gc.strokeText( healthText, bgWidth/3, bgHeight/4 );
-
-                if(ducky.getHealthPoints() == 0) {
-                    String pointsText = "You lose";
-                    gc.fillText( pointsText, bgWidth/2, bgHeight/3 );
-                    gc.strokeText( pointsText, bgWidth/2, bgHeight/3 );
-                }
-
-
-
-
-                if (ducky.getVelocityY() == 0 && (input.contains("LEFT") || input.contains("RIGHT"))) {
-                    //System.out.println("WALK");
-                    ducky.frames = imageArrayWalk;
-                }
-                else if (ducky.getVelocityX() == 0 && ducky.getVelocityY() == 0) {
-                    ducky.frames = imageArrayIdle;
-                }
-                else {
-                    ducky.frames = imageArrayFly;
-                }
-
-                gc.drawImage( ducky.getFrame(t), ducky.getPositionX(), ducky.getPositionY() );
-            }
-        }.start();
+        // main game loop
+        animationTimer = new MyAnimationTimer();
+        animationTimer.start();
     }
 
     @FXML
     public void handleOnKeyPressed(KeyEvent keyEvent) throws IOException {
         String code = keyEvent.getCode().toString();
-        if(code.equals("ESCAPE")) {
-            AnchorPane newRoot = FXMLLoader.load(getClass().getResource("menu-view.fxml"));
-            Stage primaryStage = (Stage) mainCanvas.getScene().getWindow();
-            primaryStage.getScene().setRoot(newRoot);
-            newRoot.requestFocus();
+//        if(code.equals("ESCAPE")) {
+//            AnchorPane newRoot = FXMLLoader.load(getClass().getResource("menu-view.fxml"));
+//            Stage primaryStage = (Stage) mainCanvas.getScene().getWindow();
+//            primaryStage.getScene().setRoot(newRoot);
+//            newRoot.requestFocus();
+//        }
+//        else {
+        if(code.equals("SPACE")){
+           game.toggleIsRunning();
+           if(game.getIsRunning()){
+               animationTimer.resetStartingTime();
+               ducky.resetHealthPoints();
+               animationTimer.start();
+           }
+           else {
+               animationTimer.stop();
+               String pauseText = "PAUSE";
+               gc.fillText( pauseText, bgWidth/2 - 50, bgHeight/4 );
+               gc.strokeText( pauseText, bgWidth/2 - 50, bgHeight/4 );
+           }
         }
-        else {
-            if ( !input.contains(code) )
-                input.add( code );
-        }
-
+        else if ( game.getIsRunning() && !input.contains(code) )
+            input.add( code );
+//        }
     }
 
     @FXML
     public void handleOnKeyReleased(KeyEvent keyEvent) {
         String code = keyEvent.getCode().toString();
         input.remove( code );
-    }
-
-    public boolean intersectsWithLevel(DuckySprite ducky) {
-        for (Node node : levelGrid.getChildren()) {
-            if (ducky.intersects(levelGrid.getRowIndex(node), levelGrid.getColumnIndex(node), 50.0, 50.0)){
-                System.out.println("==> COLLISION");
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean wouldIntersectWithLevel(DuckySprite ducky, double x, double y) {
-        double xBegin = ducky.getPositionX() + x;
-        double duckyWidth = ducky.getFrame(0).getWidth();
-        double yBegin = ducky.getPositionY() + y;
-        double duckyHeight = ducky.getFrame(0).getHeight();
-        //System.out.println("Ducky: x: " + xBegin + ", y: " + yBegin + ", width: " + duckyWidth + ", height: " + duckyHeight);
-        Rectangle2D duckyBoundary = new Rectangle2D(xBegin,yBegin,duckyWidth,duckyHeight);
-        for (Node node : levelGrid.getChildren()) {
-           // System.out.println("node: x: " + levelGrid.getColumnIndex(node)*50.0 + ", y: " + levelGrid.getRowIndex(node)*50.0 );
-            Rectangle2D imageBoundary = new Rectangle2D(levelGrid.getColumnIndex(node)*50.0, levelGrid.getRowIndex(node)*50.0, 50.0, 50.0);
-            if (duckyBoundary.intersects(imageBoundary)){
-                //System.out.println(" ! COLLISION !");
-                return true;
-            }
-        }
-        return false;
     }
 
     public Image scaleImage(Image source, int targetWidth, int targetHeight, boolean preserveRatio) {
@@ -303,5 +206,89 @@ public class GameController {
         System.out.println("Do some stuff with this card: " + clickedCard);
         System.out.println((ImageView)event.getSource());
         CardDeck.showAllCardDeckInfo();
+    }
+
+    class MyAnimationTimer extends AnimationTimer
+    {
+        long startNanoTime = System.nanoTime();
+        LongValue lastNanoTime = new LongValue( System.nanoTime() );
+        public void handle(long currentNanoTime)
+        {
+
+            double t = (currentNanoTime - startNanoTime) / 1000000000.0;
+            // calculate time since last update.
+            double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
+            lastNanoTime.value = currentNanoTime;
+
+            if (input.contains("UP")) {
+                ducky.setVelocityY(-100);   // moving UP
+            }
+            else {
+                ducky.setVelocityY(100);    // falling DOWN
+            }
+            if (input.contains("LEFT")) {
+                ducky.setVelocityX(-100);   // moving LEFT
+            }
+            else if (input.contains("RIGHT")) {
+                ducky.setVelocityX(100);    // moving RIGHT
+            }
+            else {
+                ducky.setVelocityX(0);      // not moving left or right
+            }
+
+            // bouncing back from left level boundary
+            if(ducky.getPositionX() <= 0 ){
+                ducky.setVelocity(100,0);
+                System.out.println("LEFT");
+            }
+            // bouncing back from right level boundary
+            if(ducky.getPositionX() >= bgWidth - ducky.getFrame(t).getWidth()){
+                ducky.setVelocity(-100,0);
+                System.out.println("RIGHT");
+            }
+            // bouncing back from upper level boundary
+            if(ducky.getPositionY() <= 0){
+                ducky.setVelocity(0,100);
+                System.out.println("UPPER");
+            }
+
+            ducky.update(elapsedTime);
+            ducky.reduceHealthPoints();
+
+            // clear prior ducky image
+            gc.clearRect(0,0,bgWidth,bgHeight);
+
+            // showing Health text
+            String healthText = "Health: " + ducky.getHealthPoints();
+            gc.fillText( healthText, 10, 50);
+            gc.strokeText( healthText, 10, 50 );
+
+            // showing 'You lose' text
+            if(ducky.getHealthPoints() == 0) {
+                String pointsText = "You lose";
+                gc.fillText( pointsText, bgWidth/2, bgHeight/3 );
+                gc.strokeText( pointsText, bgWidth/2, bgHeight/3 );
+            }
+
+            // setting DUcky images according to movement
+            // TODO should not be in GameController -> move to DuckySprite???
+            if (ducky.getVelocityY() == 0 && (input.contains("LEFT") || input.contains("RIGHT"))) {
+                ducky.frames = imageArrayWalk;
+            }
+            else if (ducky.getVelocityX() == 0 && ducky.getVelocityY() == 0) {
+                ducky.frames = imageArrayIdle;
+            }
+            else {
+                ducky.frames = imageArrayFly;
+            }
+
+            // drawing Ducky frame on Ducky's position
+            gc.drawImage( ducky.getFrame(t), ducky.getPositionX(), ducky.getPositionY() );
+        }
+
+        public void resetStartingTime(){
+            startNanoTime = System.nanoTime();
+            lastNanoTime = new LongValue( System.nanoTime() );
+        }
     }
 }
