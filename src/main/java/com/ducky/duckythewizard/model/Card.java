@@ -1,12 +1,5 @@
 package com.ducky.duckythewizard.model;
 
-public class Card {
+public record Card(_Color color, int value, String imgFileName) {
 
-    private Color color;
-    private int value;
-
-    public Card(Color color, int value){
-        this.color = color;
-        this.value = value;
-    }
 }
