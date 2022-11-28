@@ -3,13 +3,9 @@ package com.ducky.duckythewizard.controller;
 import com.ducky.duckythewizard.model.*;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -18,17 +14,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GameController {
     @FXML
     public AnchorPane emptyCardSlots;
-
-    public ArrayList<Card> handedCards;
 
     @FXML
     private ImageView rock1;
@@ -121,8 +112,6 @@ public class GameController {
         String code = keyEvent.getCode().toString();
         input.remove( code );
     }
-
-    // TO-DO-RENATE: in Card-Controller auslagern, wenn es als "Overlay" auf dem Spiel liegt
 
     public void cardStuff() {
         // TO-DO-RENATE: passt das hierher oder wo muss das alternativ hin?
