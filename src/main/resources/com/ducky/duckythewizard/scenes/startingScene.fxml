@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../styles/styleRenate.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+    <center>
+        <ImageView fitHeight="538.0" fitWidth="956.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <image>
+                <Image url="@../images/helpScenes/bg.png" />
+            </image>
+        </ImageView>
+    </center>
+    <bottom>
+        <AnchorPane prefHeight="124.0" prefWidth="800.0" style="-fx-background-color: #072130;" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="controlsButton" layoutX="424.0" layoutY="30.0" mnemonicParsing="false" onAction="#switchToScene" prefHeight="50.0" prefWidth="140.0" styleClass="startSceneButtons" text="Controls" textFill="WHITE" />
+                <Button fx:id="playButton" layoutX="236.0" layoutY="30.0" mnemonicParsing="false" onAction="#startGame" prefHeight="50.0" prefWidth="140.0" styleClass="startSceneButtons" text="Play" textFill="WHITE" />
+                <Button fx:id="helpButton" layoutX="612.0" layoutY="30.0" mnemonicParsing="false" onAction="#switchToScene" prefHeight="50.0" prefWidth="140.0" styleClass="startSceneButtons" text="Help" textFill="WHITE" />
+                <Button fx:id="scoreButton" layoutX="48.0" layoutY="30.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" text="Score" textFill="WHITE">
+               <styleClass>
+                  <String fx:value="startSceneButtons" />
+                  <String fx:value="buttonTransparentAndFont" />
+               </styleClass></Button>
+            </children>
+        </AnchorPane>
+    </bottom>
+</BorderPane>

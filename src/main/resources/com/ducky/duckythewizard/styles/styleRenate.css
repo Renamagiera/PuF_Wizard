@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'Alagard';
+    src: url('../fonts/alagard.ttf');
+}
+
+.buttonTransparentAndFont {
+    -fx-font-family: 'Alagard';
+    -fx-background-color: transparent;
+}
+
+.exitButton {
+    -fx-font-size: 40px;
+    -fx-text-fill: lightgreen;
+}
+
+.nextButton {
+    -fx-font-size: 50px;
+    -fx-text-fill: lightgreen;
+}
+
+.startSceneButtons {
+    -fx-font-family: 'Alagard';
+    -fx-font-size: 25px;
+    -fx-background-color: #d68139;
+}
+
+.playButtonGreen {
+    -fx-font-size: 30px;
+}
+
+.bg-blue {
+    -fx-background-color: #001b30;
+}
