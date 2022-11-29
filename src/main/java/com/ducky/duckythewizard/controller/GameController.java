@@ -3,13 +3,9 @@ package com.ducky.duckythewizard.controller;
 import com.ducky.duckythewizard.model.*;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -18,12 +14,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameController{
+public class GameController {
     @FXML
     public AnchorPane emptyCardSlots;
 
@@ -57,34 +51,19 @@ public class GameController{
     private GraphicsContext gc;
     private MyAnimationTimer animationTimer;
 
-    // TODO should be in DuckySprite ???
-    private Image[] imageArrayFly;
-    private Image[] imageArrayIdle;
-    private Image[] imageArrayWalk;
-
     @FXML
     public void initialize() {
         cardStuff();
 
-        game.objectGrid = new GameObject[levelGrid.getRowCount()][levelGrid.getColumnCount()];
+        // initialize game.objectGrid
+        Level level = new Level(levelGrid);
+        game.objectGrid = level.getGameObjectGrid();
 
         mainCanvas.setHeight(bgHeight);
         mainCanvas.setWidth(bgWidth);
 
         // graphics context for displaying moving entities and changing texts in level
         gc = mainCanvas.getGraphicsContext2D();
-
-        // initialize game.objectGrid
-        for(Node node: levelGrid.getChildren()) {
-            int row = levelGrid.getRowIndex(node);
-            int column = levelGrid.getColumnIndex(node);
-            if(node.getStyleClass().contains("rock")){
-                game.objectGrid[row][column] = new Stone();
-            }
-            else { // if (node.getStyleClass().contains("earth-tile")) // TODO add styleclass to earth tiles??
-                game.objectGrid[row][column] = new GameObject(false);
-            }
-        }
 
         // initialize CollisionHandler
         collisionHandler = new CollisionHandler(game.objectGrid, cellHeight, cellWidth);
@@ -98,34 +77,9 @@ public class GameController{
 
         // initialize Ducky
         ducky = new DuckySprite(5, collisionHandler);
-
-        // loading and scaling images for Ducky
-        // TODO should not be in GameController --> move to DuckySprite ???
-        imageArrayFly = new Image[6];
-        imageArrayIdle = new Image[4];
-        imageArrayWalk = new Image[6];
-        for (int i = 0; i < imageArrayFly.length; i++) {
-            Image image = new Image(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/fly/fly_" + i + ".png"));
-            imageArrayFly[i] = scaleImage(image, 40 , 40, true);
-//            imageArrayFly[i] = new Image(this.getClass().getResourceAsStream("images/ducky/fly/fly_" + i + ".png"));
-        }
-        for (int i = 0; i < imageArrayIdle.length; i++) {
-            Image image = new Image( this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/idle/idle_" + i + ".png" ));
-            imageArrayIdle[i] = scaleImage(image, 40, 40, true);
-//            imageArrayIdle[i] = new Image( this.getClass().getResourceAsStream("images/ducky/idle/idle_" + i + ".png" ));
-        }
-        for (int i = 0; i < imageArrayWalk.length; i++) {
-            Image image = new Image( this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/walk/walk_" + i + ".png" ));
-            imageArrayWalk[i] = scaleImage(image, 40, 40, true);
-//            imageArrayWalk[i] = new Image( this.getClass().getResourceAsStream("images/ducky/walk/walk_" + i + ".png" ));
-        }
-
-        ducky.frames = imageArrayFly;
         ducky.duration = 0.1;
         ducky.setPosition(bgWidth/2 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);
-
-
 
         // main game loop
         animationTimer = new MyAnimationTimer();
@@ -135,13 +89,6 @@ public class GameController{
     @FXML
     public void handleOnKeyPressed(KeyEvent keyEvent) throws IOException {
         String code = keyEvent.getCode().toString();
-//        if(code.equals("ESCAPE")) {
-//            AnchorPane newRoot = FXMLLoader.load(getClass().getResource("menu-view.fxml"));
-//            Stage primaryStage = (Stage) mainCanvas.getScene().getWindow();
-//            primaryStage.getScene().setRoot(newRoot);
-//            newRoot.requestFocus();
-//        }
-//        else {
         if(code.equals("SPACE")){
            game.toggleIsRunning();
            if(game.getIsRunning()){
@@ -158,23 +105,12 @@ public class GameController{
         }
         else if ( game.getIsRunning() && !input.contains(code) )
             input.add( code );
-//        }
     }
 
     @FXML
     public void handleOnKeyReleased(KeyEvent keyEvent) {
         String code = keyEvent.getCode().toString();
         input.remove( code );
-    }
-
-    public Image scaleImage(Image source, int targetWidth, int targetHeight, boolean preserveRatio) {
-        SnapshotParameters parameters = new SnapshotParameters();
-        parameters.setFill(Color.TRANSPARENT);
-        ImageView imageView = new ImageView(source);
-        imageView.setPreserveRatio(preserveRatio);
-        imageView.setFitWidth(targetWidth);
-        imageView.setFitHeight(targetHeight);
-        return imageView.snapshot(parameters, null);
     }
 
     public void cardStuff() {
@@ -255,7 +191,7 @@ public class GameController{
             }
 
             ducky.update(elapsedTime);
-            ducky.reduceHealthPoints();
+            ducky.reduceHealthPoints(); // TODO should be reduced automatically by timer/counter?
 
             // clear prior ducky image
             gc.clearRect(0,0,bgWidth,bgHeight);
@@ -270,18 +206,6 @@ public class GameController{
                 String pointsText = "You lose";
                 gc.fillText( pointsText, bgWidth/2, bgHeight/3 );
                 gc.strokeText( pointsText, bgWidth/2, bgHeight/3 );
-            }
-
-            // setting DUcky images according to movement
-            // TODO should not be in GameController -> move to DuckySprite???
-            if (ducky.getVelocityY() == 0 && (input.contains("LEFT") || input.contains("RIGHT"))) {
-                ducky.frames = imageArrayWalk;
-            }
-            else if (ducky.getVelocityX() == 0 && ducky.getVelocityY() == 0) {
-                ducky.frames = imageArrayIdle;
-            }
-            else {
-                ducky.frames = imageArrayFly;
             }
 
             // drawing Ducky frame on Ducky's position
