@@ -1,4 +1,4 @@
-package com.ducky.duckythewizard.controller;
+package com.ducky.duckythewizard.controller.TO_DELETE;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

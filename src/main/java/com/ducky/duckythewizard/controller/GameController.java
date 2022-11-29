@@ -23,14 +23,18 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.ducky.duckythewizard.controller.CardController;
+import com.ducky.duckythewizard.controller.CollisionHandler;
+
 public class GameController{
+
+    public Game session = new Game();
+
     @FXML
     public AnchorPane emptyCardSlots;
 
     @FXML
     private ImageView rock1;
-    @FXML
-    private ImageView rock2;
     @FXML
     private ImageView rock3;
     @FXML
@@ -41,17 +45,20 @@ public class GameController{
     private Canvas mainCanvas;
     @FXML
     private AnchorPane rootBox;
+
     @FXML
     private GridPane levelGrid;
 
-    private int bgWidth = 800;
-    private int bgHeight = 650;
-    private double cellWidth = 50.0;
-    private double cellHeight = 50.0;
+    private int windowWidth = this.session.getGameConfig().getWindowWidth();
+    private int windowHeight = this.session.getGameConfig().getWindowHeight();
+
+    private double cellWidth = this.session.getGameConfig().getLevel_cellWidth();
+    private double cellHeight = this.session.getGameConfig().getLevel_cellHeight();
+
     private ArrayList<Rectangle2D> earthTiles = new ArrayList<>();
 
     private ArrayList<String> input = new ArrayList<>();
-    private Game game = new Game();
+
     private CollisionHandler collisionHandler;
     private DuckySprite ducky;
     private GraphicsContext gc;
@@ -62,32 +69,49 @@ public class GameController{
     private Image[] imageArrayIdle;
     private Image[] imageArrayWalk;
 
+    public Game getSession() {
+
+        return this.session;
+    }
+
     @FXML
     public void initialize() {
+        //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
+        this.session.createCardCtrlObj();
+        this.session.createMovementCtrlObj();
+        //this.session.createLevelCtrlObj(); //Level-Auslagerungsversuch
+        //weitere Controller sollten hier dann folgen
+
         cardStuff();
 
-        game.objectGrid = new GameObject[levelGrid.getRowCount()][levelGrid.getColumnCount()];
+        //this.session.createLevel(); //Level-Auslagerungsversuch
+        //this.levelGrid = this.session.getLevel().getLevelGrid(); //Level-Auslagerungsversuch//
 
-        mainCanvas.setHeight(bgHeight);
-        mainCanvas.setWidth(bgWidth);
+
+        //session.getLevelCtrl().createObjectGrid(); //Level-Auslagerungsversuch
+        session.objectGrid = new GameObject[levelGrid.getRowCount()][levelGrid.getColumnCount()];
+
+        mainCanvas.setHeight(windowHeight);
+        mainCanvas.setWidth(windowWidth);
 
         // graphics context for displaying moving entities and changing texts in level
         gc = mainCanvas.getGraphicsContext2D();
 
-        // initialize game.objectGrid
+        // initialize session.objectGrid
         for(Node node: levelGrid.getChildren()) {
             int row = levelGrid.getRowIndex(node);
             int column = levelGrid.getColumnIndex(node);
             if(node.getStyleClass().contains("rock")){
-                game.objectGrid[row][column] = new Stone();
+                session.objectGrid[row][column] = new Stone();
             }
             else { // if (node.getStyleClass().contains("earth-tile")) // TODO add styleclass to earth tiles??
-                game.objectGrid[row][column] = new GameObject(false);
+                session.objectGrid[row][column] = new GameObject(false);
             }
         }
 
         // initialize CollisionHandler
-        collisionHandler = new CollisionHandler(game.objectGrid, cellHeight, cellWidth);
+        collisionHandler = new CollisionHandler(session.objectGrid, cellHeight, cellWidth);
+        //this.session.getLevelCtrl().createCollisionHandler(); //Level-Auslagerungsversuch
 
         // initialize font for texts that are shown
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
@@ -122,7 +146,7 @@ public class GameController{
 
         ducky.frames = imageArrayFly;
         ducky.duration = 0.1;
-        ducky.setPosition(bgWidth/2 - ducky.getFrame(0).getWidth()/2, 0);
+        ducky.setPosition(windowWidth /2 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);
 
 
@@ -143,8 +167,8 @@ public class GameController{
 //        }
 //        else {
         if(code.equals("SPACE")){
-           game.toggleIsRunning();
-           if(game.getIsRunning()){
+           session.toggleIsRunning();
+           if(session.getIsRunning()){
                animationTimer.resetStartingTime();
                ducky.resetHealthPoints();
                animationTimer.start();
@@ -152,11 +176,11 @@ public class GameController{
            else {
                animationTimer.stop();
                String pauseText = "PAUSE";
-               gc.fillText( pauseText, bgWidth/2 - 50, bgHeight/4 );
-               gc.strokeText( pauseText, bgWidth/2 - 50, bgHeight/4 );
+               gc.fillText( pauseText, windowWidth/2 - 50, windowHeight/4 );
+               gc.strokeText( pauseText, windowWidth/2 - 50, windowHeight/4 );
            }
         }
-        else if ( game.getIsRunning() && !input.contains(code) )
+        else if ( session.getIsRunning() && !input.contains(code) )
             input.add( code );
 //        }
     }
@@ -185,29 +209,7 @@ public class GameController{
 
     // TO-DO-RENATE: Card-click action
     public void cardClicked(MouseEvent event) {
-        System.out.println("Deck size: " + GameConfig.deck.size());
-        // DELETE ME LATER
-        //System.out.println("Do some stuff with this card: " + ((ImageView) event.getSource()).getId());
-        //System.out.println(event.getSource());
-
-        // für Test-Zwecke, wenn die Karte bereits gespielt wurde, soll eine neue aus dem Deck genommen werden
-        int handCardPosition = GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
-        Card clickedCard = GameConfig.handedCards.get(handCardPosition);
-        CardDeck.showHandCards(GameConfig.handedCards);
-        System.out.println("Color clicked card: " + clickedCard.color().getName());
-        if (clickedCard.color().getName().equals("none")) {
-            System.out.println("this card is already gone, here is a new one");
-            GameConfig.handedCards.remove(handCardPosition);
-            GameConfig.handedCards.add(handCardPosition, GameConfig.deckObject.dealNewCardFromDeck());
-            System.out.println("Deck size: " + GameConfig.deck.size());
-            System.out.println("new Card: " + GameConfig.handedCards.get(handCardPosition).color().getName());
-            GameConfig.deckObject.renderHandCardImages(GameConfig.anchorPane);
-        } else {
-            GameConfig.deckObject.removeCardAddDummy(GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId()));
-        }
-        // DELETE ME LATER
-
-        //GameConfig.deckObject.removeCardAddDummy(GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId()));
+        this.session.getCardCtrl().cardClicked(event);
     }
 
     class MyAnimationTimer extends AnimationTimer
@@ -244,7 +246,7 @@ public class GameController{
                 System.out.println("LEFT");
             }
             // bouncing back from right level boundary
-            if(ducky.getPositionX() >= bgWidth - ducky.getFrame(t).getWidth()){
+            if(ducky.getPositionX() >= windowWidth - ducky.getFrame(t).getWidth()){
                 ducky.setVelocity(-100,0);
                 System.out.println("RIGHT");
             }
@@ -258,7 +260,7 @@ public class GameController{
             ducky.reduceHealthPoints();
 
             // clear prior ducky image
-            gc.clearRect(0,0,bgWidth,bgHeight);
+            gc.clearRect(0,0,windowWidth,windowHeight);
 
             // showing Health text
             String healthText = "Health: " + ducky.getHealthPoints();
@@ -268,8 +270,8 @@ public class GameController{
             // showing 'You lose' text
             if(ducky.getHealthPoints() == 0) {
                 String pointsText = "You lose";
-                gc.fillText( pointsText, bgWidth/2, bgHeight/3 );
-                gc.strokeText( pointsText, bgWidth/2, bgHeight/3 );
+                gc.fillText( pointsText, windowWidth/2, windowHeight/3 );
+                gc.strokeText( pointsText, windowWidth/2, windowHeight/3 );
             }
 
             // setting DUcky images according to movement

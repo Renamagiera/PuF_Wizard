@@ -10,6 +10,13 @@ public class GameConfig {
 
     // Game configurations
 
+    public static final int windowWidth = 600;
+    public static final int windowHeight = 800;
+
+    public static final double level_cellWidth = 50.0;
+    public static final double level_cellHeight = 50.0;
+
+
     // Colors
     public static final _Color RED = new _Color("red", "255,0,0");
     public static final _Color BLUE = new _Color("blue", "0,0,255");
@@ -67,4 +74,23 @@ public class GameConfig {
         return GAME_CONFIG;
     }
      */
+
+    public int getWindowWidth() {
+
+        return windowWidth;
+    }
+
+    public int getWindowHeight() {
+
+        return windowHeight;
+    }
+
+    public double getLevel_cellWidth() {
+        return level_cellWidth;
+    }
+    public double getLevel_cellHeight() {
+        return level_cellHeight;
+    }
+
+
 }

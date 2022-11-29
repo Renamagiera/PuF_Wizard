@@ -9,4 +9,6 @@ module com.ducky.duckythewizard {
     opens com.ducky.duckythewizard.model to javafx.fxml;
     exports com.ducky.duckythewizard.controller;
     opens com.ducky.duckythewizard.controller to javafx.fxml;
+    exports com.ducky.duckythewizard.controller.TO_DELETE;
+    opens com.ducky.duckythewizard.controller.TO_DELETE to javafx.fxml;
 }
