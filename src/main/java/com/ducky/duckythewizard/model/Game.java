@@ -13,8 +13,8 @@ public class Game {
     private CardDeck cardDeck;
 
     //die Game Config wird einmalig zum Start des Games (Erstellung des Game-Klassen-Objekts) erstellt
-    private GameConfig gameConfig = new GameConfig();
-    public GameObject[][] objectGrid; // [row][column]
+    private GameConfig gameConfig;
+    public GameObject[][] objectGrid; // [row][column] - is filled in GameController
 
     private Scene startScene;
     private Scene deathScene;
@@ -23,15 +23,11 @@ public class Game {
 
     private CardController cardCtrl;
     private MovementController movementCtrl;
-    //private LevelController levelCtrl; //Level-Auslagerungsversuch
-
-    //private Level level; //Level-Auslagerungsversuch
-
-    //private Stage primaryStage; //wir sollten 1 Stage haben, der allen bekannt ist
-
 
     public Game(){
         isRunning = true;
+        gameConfig = new GameConfig();
+        //System.out.println("*** Game-object is created.");
     }
     public boolean getIsRunning(){
 
@@ -42,25 +38,13 @@ public class Game {
         isRunning = !isRunning;
     }
 
-    // create andstatt set, weil hier einmalig der Controller erstellt wird
+    // create anstatt set, weil hier ein neues Controller-Objekt erstellt wird
     public void createCardCtrlObj() {
         this.cardCtrl = new CardController(this);
     }
     public void createMovementCtrlObj() {
         this.movementCtrl = new MovementController(this);
     }
-    /*public void createLevelCtrlObj() {
-        this.levelCtrl = new LevelController(this);
-    }
-    public void createLevel() {
-        this.level = new Level(this);
-    }*/ ////Level-Auslagerungsversuch
-
-    public void setGameObjectGrid(GameObject[][] obj) {
-
-        this.objectGrid = obj;
-    }
-
 
     public GameConfig getGameConfig() {
 
@@ -75,13 +59,5 @@ public class Game {
 
         return this.movementCtrl;
     }
-    /*public LevelController getLevelCtrl() {
-        return this.levelCtrl;
-    }
-    public Level getLevel() {
-        return this.level;
-    }*/ //Level-Auslagerungsversuch
-
-
 
 }

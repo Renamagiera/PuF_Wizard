@@ -17,15 +17,19 @@ import javafx.scene.text.FontWeight;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.ducky.duckythewizard.controller.CardController;
-import com.ducky.duckythewizard.controller.CollisionHandler;
-
 public class GameController{
 
     public Game session = new Game();
 
     @FXML
+    private AnchorPane rootBox;
+    @FXML
+    private Canvas mainCanvas;
+    @FXML
+    private GridPane levelGrid;
+    @FXML
     public AnchorPane emptyCardSlots;
+    private GraphicsContext gc;
 
     @FXML
     private ImageView rock1;
@@ -37,12 +41,7 @@ public class GameController{
     private ImageView rock4;
     @FXML
     private ImageView rock5;
-    @FXML
-    private Canvas mainCanvas;
-    @FXML
-    private AnchorPane rootBox;
-    @FXML
-    private GridPane levelGrid;
+
 
     private int windowWidth = this.session.getGameConfig().getWindowWidth();
     private int windowHeight = this.session.getGameConfig().getWindowHeight();
@@ -50,37 +49,34 @@ public class GameController{
     private double cellWidth = this.session.getGameConfig().getLevel_cellWidth();
     private double cellHeight = this.session.getGameConfig().getLevel_cellHeight();
 
-    private ArrayList<Rectangle2D> earthTiles = new ArrayList<>();
-
     private ArrayList<String> input = new ArrayList<>();
 
     private CollisionHandler collisionHandler;
     private DuckySprite ducky;
-    private GraphicsContext gc;
     private MyAnimationTimer animationTimer;
 
     @FXML
     public void initialize() {
+        //System.out.println("*** Game Controller is initialized...");
         //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
         this.session.createCardCtrlObj();
         this.session.createMovementCtrlObj();
-        //this.session.createLevelCtrlObj(); //Level-Auslagerungsversuch
         //weitere Controller sollten hier dann folgen
 
         cardStuff();
 
-        // initialize game.objectGrid
+        // initialize Level map
         Level level = new Level(levelGrid);
-        game.objectGrid = level.getGameObjectGrid();
+        session.objectGrid = level.getGameObjectGrid();
 
-        mainCanvas.setHeight(bgHeight);
-        mainCanvas.setWidth(bgWidth);
+        mainCanvas.setHeight(windowHeight);
+        mainCanvas.setWidth(windowWidth);
 
         // graphics context for displaying moving entities and changing texts in level
         gc = mainCanvas.getGraphicsContext2D();
 
         // initialize CollisionHandler
-        collisionHandler = new CollisionHandler(game.objectGrid, cellHeight, cellWidth);
+        collisionHandler = new CollisionHandler(session.objectGrid, cellHeight, cellWidth);
 
         // initialize font for texts that are shown
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
@@ -125,9 +121,6 @@ public class GameController{
     public void handleOnKeyReleased(KeyEvent keyEvent) {
         String code = keyEvent.getCode().toString();
         input.remove( code );
-    }
-
-    publ
     }
 
     public void cardStuff() {
