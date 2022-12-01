@@ -1,5 +1,5 @@
 package com.ducky.duckythewizard.model;
 
-public record Card(_Color color, int value, String imgFileName) {
+public record Card(TrumpColor color, int value, String imgFileName) {
 
 }

@@ -2,7 +2,7 @@ package com.ducky.duckythewizard.model;
 
 public class Stone extends GameObject{
 
-    private _Color color;
+    private TrumpColor color;
     private Card card;
     private CountDownTimer trumpTimer;
     private boolean isActive;

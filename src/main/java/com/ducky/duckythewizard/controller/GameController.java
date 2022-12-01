@@ -1,6 +1,7 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
+import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
@@ -115,35 +116,20 @@ public class GameController {
 
     public void cardStuff() {
         // TO-DO-RENATE: passt das hierher oder wo muss das alternativ hin?
-        GameConfig.anchorPane = emptyCardSlots;
-        GameConfig.deckObject.addAndRenderALlCards(GameConfig.anchorPane);
+        GameConfig.anchorPaneCards = emptyCardSlots;
+        GameConfig.deckObject.addAndRenderALlCards(GameConfig.anchorPaneCards);
     }
 
-    // TO-DO-RENATE: Card-click action
     public void cardClicked(MouseEvent event) {
-        System.out.println("Deck size: " + GameConfig.deck.size());
-        // DELETE ME LATER
-        //System.out.println("Do some stuff with this card: " + ((ImageView) event.getSource()).getId());
-        //System.out.println(event.getSource());
-
-        // für Test-Zwecke, wenn die Karte bereits gespielt wurde, soll eine neue aus dem Deck genommen werden
         int handCardPosition = GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
         Card clickedCard = GameConfig.handedCards.get(handCardPosition);
-        CardDeck.showHandCards(GameConfig.handedCards);
-        System.out.println("Color clicked card: " + clickedCard.color().getName());
         if (clickedCard.color().getName().equals("none")) {
-            System.out.println("this card is already gone, here is a new one");
             GameConfig.handedCards.remove(handCardPosition);
             GameConfig.handedCards.add(handCardPosition, GameConfig.deckObject.dealNewCardFromDeck());
-            System.out.println("Deck size: " + GameConfig.deck.size());
-            System.out.println("new Card: " + GameConfig.handedCards.get(handCardPosition).color().getName());
-            GameConfig.deckObject.renderHandCardImages(GameConfig.anchorPane);
+            GameConfig.deckObject.renderHandCardImages(GameConfig.anchorPaneCards);
         } else {
             GameConfig.deckObject.removeCardAddDummy(GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId()));
         }
-        // DELETE ME LATER
-
-        //GameConfig.deckObject.removeCardAddDummy(GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId()));
     }
 
     class MyAnimationTimer extends AnimationTimer
