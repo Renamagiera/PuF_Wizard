@@ -2,7 +2,7 @@ package com.ducky.duckythewizard.model.config;
 
 import com.ducky.duckythewizard.model.Card;
 import com.ducky.duckythewizard.model.CardDeck;
-import com.ducky.duckythewizard.model._Color;
+import com.ducky.duckythewizard.model.TrumpColor;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
@@ -10,9 +10,9 @@ import java.util.Map;
 
 public class GameConfig {
     public static GameConfigColors gameConfigColors = new GameConfigColors();
-    public static ArrayList<_Color> trumpColors = gameConfigColors.getColors();
-    public static _Color colorWizard = gameConfigColors.getWizard();
-    public static _Color colorNone = gameConfigColors.getNone();
+    public static ArrayList<TrumpColor> trumpColors = gameConfigColors.getColors();
+    public static TrumpColor colorWizard = gameConfigColors.getWizard();
+    public static TrumpColor colorNone = gameConfigColors.getNone();
 
 
     public static GameConfigCards gameConfigCards = new GameConfigCards();

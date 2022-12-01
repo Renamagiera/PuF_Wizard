@@ -27,7 +27,7 @@ public class CardDeck {
     }
 
     public void addCardsToDeck() {
-        for (_Color color : GameConfig.trumpColors) {
+        for (TrumpColor color : GameConfig.trumpColors) {
             for (int i = GameConfig.MIN_CARD_VALUE; i <= GameConfig.MAX_CARD_VALUE; i++) {
                 String colorName = color.getName();
                 String imgFileName = "/com/ducky/duckythewizard/images/cards/"+colorName+"/"+colorName+i+".png";

@@ -1,16 +1,16 @@
 package com.ducky.duckythewizard.model.config;
 
-import com.ducky.duckythewizard.model._Color;
+import com.ducky.duckythewizard.model.TrumpColor;
 import java.util.ArrayList;
 
 public class GameConfigColors {
-    private static final ArrayList<_Color> COLORS = new ArrayList<>();
-    private static final _Color RED = new _Color("red", "255,0,0");
-    private static final _Color BLUE = new _Color("blue", "0,0,255");
-    private static final _Color YELLOW = new _Color("yellow", "0,255,0");
-    private static final _Color GREEN = new _Color("green", "255,255,0");
-    private static final _Color NONE = new _Color("none", "0");
-    private static final _Color WIZARD = new _Color("wizard", "0,0,0");
+    private static final ArrayList<TrumpColor> COLORS = new ArrayList<>();
+    private static final TrumpColor RED = new TrumpColor("red", "255,0,0");
+    private static final TrumpColor BLUE = new TrumpColor("blue", "0,0,255");
+    private static final TrumpColor YELLOW = new TrumpColor("yellow", "0,255,0");
+    private static final TrumpColor GREEN = new TrumpColor("green", "255,255,0");
+    private static final TrumpColor NONE = new TrumpColor("none", "0");
+    private static final TrumpColor WIZARD = new TrumpColor("wizard", "0,0,0");
 
     public GameConfigColors() {
         setColorCollection();
@@ -22,15 +22,15 @@ public class GameConfigColors {
         COLORS.add(YELLOW);
         COLORS.add(GREEN);
     }
-    public ArrayList<_Color> getColors() {
+    public ArrayList<TrumpColor> getColors() {
         return COLORS;
     }
 
-    public _Color getWizard() {
+    public TrumpColor getWizard() {
         return WIZARD;
     }
 
-    public _Color getNone() {
+    public TrumpColor getNone() {
         return NONE;
     }
 
