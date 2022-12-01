@@ -1,5 +1,6 @@
 package com.ducky.duckythewizard.model;
 
+import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.Scene;
 
 public class Game {
