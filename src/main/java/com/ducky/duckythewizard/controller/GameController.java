@@ -130,6 +130,7 @@ public class GameController{
         GameConfig.deckObject.addAndRenderALlCards(GameConfig.anchorPaneCards);
     }
 
+    // TO-DO-RENATE: Card-click action
     public void cardClicked(MouseEvent event) {
         this.session.getCardCtrl().cardClicked(event);
     }

@@ -1,9 +1,9 @@
-package com.ducky.duckythewizard.model.config;
+package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.TrumpColor;
 import java.util.ArrayList;
 
-public class GameConfigColors {
+public class GameColors {
     private static final ArrayList<TrumpColor> COLORS = new ArrayList<>();
     private static final TrumpColor RED = new TrumpColor("red", "255,0,0");
     private static final TrumpColor BLUE = new TrumpColor("blue", "0,0,255");
@@ -12,7 +12,7 @@ public class GameConfigColors {
     private static final TrumpColor NONE = new TrumpColor("none", "0");
     private static final TrumpColor WIZARD = new TrumpColor("wizard", "0,0,0");
 
-    public GameConfigColors() {
+    public GameColors() {
         setColorCollection();
     }
 

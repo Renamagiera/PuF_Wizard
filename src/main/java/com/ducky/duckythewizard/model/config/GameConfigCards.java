@@ -9,12 +9,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameConfigCards {
-    public static final String EMPTY_CARD_FILENAME = "/com/ducky/duckythewizard/images/cards/empty.png";
+
+    // Game-Klasse
     public static CardDeck deckObject = new CardDeck();
     public static ArrayList<Card> deck = deckObject.getCardDeck();
     public static final Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
+    //
 
     public static final int AMOUNT_WIZARDS = 4;
+    public static final String EMPTY_CARD_FILENAME = "/com/ducky/duckythewizard/images/cards/empty.png";
     public static final String WIZARD_FILENAME = "/com/ducky/duckythewizard/images/cards/wizard.png";
     public static int WIZARD_POINTS = 100;
     public static final int MAX_CARD_VALUE = 12;

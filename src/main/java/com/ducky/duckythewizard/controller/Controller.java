@@ -1,7 +1,7 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.Game;
-import com.ducky.duckythewizard.model.GameConfig;
+import com.ducky.duckythewizard.model.config.GameConfig;
 
 import java.util.ResourceBundle;
 
