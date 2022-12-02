@@ -1,6 +1,6 @@
 package com.ducky.duckythewizard.controller;
 
-import com.ducky.duckythewizard.model.GameConfig;
+import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,7 +28,6 @@ public class WizardMainApplication extends Application {
     public static void main(String[] args) {
         System.out.println("main-method");
         // hier vielleicht am Anfang alle Game-Configurationen initialisieren?
-        GameConfig.initialize();
         launch();
     }
 }

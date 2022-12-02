@@ -1,5 +1,6 @@
 package com.ducky.duckythewizard.model;
 
+import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,18 +23,25 @@ public class CardDeck {
     public void addAndRenderALlCards(AnchorPane emptyCardSlots) {
         GameConfig.deckObject.addCardsToDeck();
         GameConfig.handedCards = GameConfig.deckObject.dealHandCards();
-        renderHandCardImages(GameConfig.anchorPane);
+        renderHandCardImages(GameConfig.anchorPaneCards);
     }
 
     public void addCardsToDeck() {
-        for (_Color color : GameConfig.COLORS) {
+        for (TrumpColor color : GameConfig.trumpColors) {
             for (int i = GameConfig.MIN_CARD_VALUE; i <= GameConfig.MAX_CARD_VALUE; i++) {
                 String colorName = color.getName();
                 String imgFileName = "/com/ducky/duckythewizard/images/cards/"+colorName+"/"+colorName+i+".png";
                 CARD_DECK.add(new Card(color, i+1, imgFileName));
             }
         }
+        addWizards();
         shuffleCards();
+    }
+
+    public void addWizards() {
+        for (int i = 0; i < GameConfig.AMOUNT_WIZARDS; i++) {
+            CARD_DECK.add(new Card(GameConfig.colorWizard, GameConfig.WIZARD_POINTS, GameConfig.WIZARD_FILENAME));
+        }
     }
 
     public void shuffleCards() {
@@ -61,10 +69,10 @@ public class CardDeck {
 
     public void removeCardAddDummy(int handCardPosition) {
         GameConfig.handedCards.remove(handCardPosition);
-        GameConfig.handedCards.add(handCardPosition, new Card(GameConfig.NONE, 0, GameConfig.emptyCardImgFilename));
+        GameConfig.handedCards.add(handCardPosition, new Card(GameConfig.colorNone, 0, GameConfig.EMPTY_CARD_FILENAME));
         // render new hand cards
         // TO-DO-RENATE: nur die ausgewählte Karte neu rendern
-        renderHandCardImages(GameConfig.anchorPane);
+        renderHandCardImages(GameConfig.anchorPaneCards);
         GameConfig.playedCards++;
     }
 

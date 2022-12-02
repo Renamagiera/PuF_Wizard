@@ -27,7 +27,7 @@ public class CollisionHandler {
                     else{
                         // collision with stone
                         // inform game, that player collided with stone --> give stone-object
-                        System.out.println("STONE");
+                        //System.out.println("STONE");
                     }
                 }
             }
