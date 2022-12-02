@@ -18,9 +18,19 @@ import javafx.scene.text.FontWeight;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameController {
+public class GameController{
+
+    public Game session = new Game();
+
+    @FXML
+    private AnchorPane rootBox;
+    @FXML
+    private Canvas mainCanvas;
+    @FXML
+    private GridPane levelGrid;
     @FXML
     public AnchorPane emptyCardSlots;
+    private GraphicsContext gc;
 
     @FXML
     private ImageView rock1;
@@ -32,42 +42,42 @@ public class GameController {
     private ImageView rock4;
     @FXML
     private ImageView rock5;
-    @FXML
-    private Canvas mainCanvas;
-    @FXML
-    private AnchorPane rootBox;
-    @FXML
-    private GridPane levelGrid;
 
-    private int bgWidth = 800;
-    private int bgHeight = 650;
-    private double cellWidth = 50.0;
-    private double cellHeight = 50.0;
-    private ArrayList<Rectangle2D> earthTiles = new ArrayList<>();
+
+    private int windowWidth = this.session.getGameConfig().getWindowWidth();
+    private int windowHeight = this.session.getGameConfig().getWindowHeight();
+
+    private double cellWidth = this.session.getGameConfig().getLevel_cellWidth();
+    private double cellHeight = this.session.getGameConfig().getLevel_cellHeight();
 
     private ArrayList<String> input = new ArrayList<>();
-    private Game game = new Game();
+
     private CollisionHandler collisionHandler;
     private DuckySprite ducky;
-    private GraphicsContext gc;
     private MyAnimationTimer animationTimer;
 
     @FXML
     public void initialize() {
+        //System.out.println("*** Game Controller is initialized...");
+        //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
+        this.session.createCardCtrlObj();
+        this.session.createMovementCtrlObj();
+        //weitere Controller sollten hier dann folgen
+
         cardStuff();
 
-        // initialize game.objectGrid
+        // initialize Level map
         Level level = new Level(levelGrid);
-        game.objectGrid = level.getGameObjectGrid();
+        session.objectGrid = level.getGameObjectGrid();
 
-        mainCanvas.setHeight(bgHeight);
-        mainCanvas.setWidth(bgWidth);
+        mainCanvas.setHeight(windowHeight);
+        mainCanvas.setWidth(windowWidth);
 
         // graphics context for displaying moving entities and changing texts in level
         gc = mainCanvas.getGraphicsContext2D();
 
         // initialize CollisionHandler
-        collisionHandler = new CollisionHandler(game.objectGrid, cellHeight, cellWidth);
+        collisionHandler = new CollisionHandler(session.objectGrid, cellHeight, cellWidth);
 
         // initialize font for texts that are shown
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
@@ -79,7 +89,7 @@ public class GameController {
         // initialize Ducky
         ducky = new DuckySprite(5, collisionHandler);
         ducky.duration = 0.1;
-        ducky.setPosition(bgWidth/2 - ducky.getFrame(0).getWidth()/2, 0);
+        ducky.setPosition(windowWidth /2 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);
 
         // main game loop
@@ -91,8 +101,8 @@ public class GameController {
     public void handleOnKeyPressed(KeyEvent keyEvent) throws IOException {
         String code = keyEvent.getCode().toString();
         if(code.equals("SPACE")){
-           game.toggleIsRunning();
-           if(game.getIsRunning()){
+           session.toggleIsRunning();
+           if(session.getIsRunning()){
                animationTimer.resetStartingTime();
                ducky.resetHealthPoints();
                animationTimer.start();
@@ -100,11 +110,11 @@ public class GameController {
            else {
                animationTimer.stop();
                String pauseText = "PAUSE";
-               gc.fillText( pauseText, bgWidth/2 - 50, bgHeight/4 );
-               gc.strokeText( pauseText, bgWidth/2 - 50, bgHeight/4 );
+               gc.fillText( pauseText, windowWidth/2 - 50, windowHeight/4 );
+               gc.strokeText( pauseText, windowWidth/2 - 50, windowHeight/4 );
            }
         }
-        else if ( game.getIsRunning() && !input.contains(code) )
+        else if ( session.getIsRunning() && !input.contains(code) )
             input.add( code );
     }
 
@@ -121,15 +131,7 @@ public class GameController {
     }
 
     public void cardClicked(MouseEvent event) {
-        int handCardPosition = GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
-        Card clickedCard = GameConfig.handedCards.get(handCardPosition);
-        if (clickedCard.color().getName().equals("none")) {
-            GameConfig.handedCards.remove(handCardPosition);
-            GameConfig.handedCards.add(handCardPosition, GameConfig.deckObject.dealNewCardFromDeck());
-            GameConfig.deckObject.renderHandCardImages(GameConfig.anchorPaneCards);
-        } else {
-            GameConfig.deckObject.removeCardAddDummy(GameConfig.CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId()));
-        }
+        this.session.getCardCtrl().cardClicked(event);
     }
 
     class MyAnimationTimer extends AnimationTimer
@@ -166,7 +168,7 @@ public class GameController {
                 System.out.println("LEFT");
             }
             // bouncing back from right level boundary
-            if(ducky.getPositionX() >= bgWidth - ducky.getFrame(t).getWidth()){
+            if(ducky.getPositionX() >= windowWidth - ducky.getFrame(t).getWidth()){
                 ducky.setVelocity(-100,0);
                 System.out.println("RIGHT");
             }
@@ -180,7 +182,7 @@ public class GameController {
             ducky.reduceHealthPoints(); // TODO should be reduced automatically by timer/counter?
 
             // clear prior ducky image
-            gc.clearRect(0,0,bgWidth,bgHeight);
+            gc.clearRect(0,0,windowWidth,windowHeight);
 
             // showing Health text
             String healthText = "Health: " + ducky.getHealthPoints();
@@ -190,8 +192,8 @@ public class GameController {
             // showing 'You lose' text
             if(ducky.getHealthPoints() == 0) {
                 String pointsText = "You lose";
-                gc.fillText( pointsText, bgWidth/2, bgHeight/3 );
-                gc.strokeText( pointsText, bgWidth/2, bgHeight/3 );
+                gc.fillText( pointsText, windowWidth/2, windowHeight/3 );
+                gc.strokeText( pointsText, windowWidth/2, windowHeight/3 );
             }
 
             // drawing Ducky frame on Ducky's position
