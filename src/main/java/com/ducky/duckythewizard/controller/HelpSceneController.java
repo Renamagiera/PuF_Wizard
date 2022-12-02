@@ -12,9 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class HelpSceneController {
-
-    String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/styleRenate.css")).toExternalForm();
+public class HelpSceneController extends SceneController {
 
     public HelpSceneController() {
     }
@@ -31,7 +29,7 @@ public class HelpSceneController {
             default -> "";
         };
         Parent root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource(scene)));
-        getWindowStage(event, root);
+        super.getWindowStage(event, root);
     }
 
     public void startGame(ActionEvent event) throws IOException {
@@ -47,16 +45,6 @@ public class HelpSceneController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         WizardMainApplication reload = new WizardMainApplication();
         reload.start(stage);
-    }
-
-    /*die bereits beim Start erstellte Stage wird anhand des Events ermittelt. Darauf wird eine neue Scene erstellt*/
-    private void getWindowStage(ActionEvent event, Parent root) {
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().clear();
-        scene.getStylesheets().add(css);
-        stage.setScene(scene);
-        stage.show();
     }
 
 }

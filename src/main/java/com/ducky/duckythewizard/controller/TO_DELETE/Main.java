@@ -1,4 +1,4 @@
-package com.ducky.duckythewizard.controller;
+package com.ducky.duckythewizard.controller.TO_DELETE;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +17,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
-			primaryStage.setTitle("Travel Wizard");
+			primaryStage.setTitle("Ducky & the Wizard Stones - Main.java");
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -27,7 +27,7 @@ public class Main extends Application {
 	}
 
 	public void testMethod4(){
-		System.out.println("Hello");
+		System.out.println("Hello (Britta's test in Main.java)");
 	}
 	
 	public static void main(String[] args) {

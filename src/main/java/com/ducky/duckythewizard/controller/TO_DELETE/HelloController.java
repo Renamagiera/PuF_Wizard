@@ -1,4 +1,4 @@
-package com.ducky.duckythewizard.controller;
+package com.ducky.duckythewizard.controller.TO_DELETE;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
