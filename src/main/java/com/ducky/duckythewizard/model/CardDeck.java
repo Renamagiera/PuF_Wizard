@@ -1,33 +1,45 @@
 package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.config.GameConfig;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
+import java.util.*;
 
 public class CardDeck {
 
     private static final ArrayList<Card> CARD_DECK = new ArrayList<>();
+    private static final Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
+    private ArrayList<TrumpColor> trumpColors;
+    private TrumpColor wizard;
+    private TrumpColor none;
 
-    public CardDeck() {}
+    public CardDeck(GameColors gameColors) {
+        this.trumpColors = gameColors.getTrumpColors();
+        this.wizard = gameColors.getTrumpColorsMapNoColor().get("wizard");
+        this.none = gameColors.getTrumpColorsMapNoColor().get("none");
+        setCardSlotNumbers();
+        addCardsToDeck();
+    }
 
     public ArrayList<Card> getCardDeck() {
         return CARD_DECK;
     }
 
-    public void addAndRenderALlCards(AnchorPane emptyCardSlots) {
-        GameConfig.deckObject.addCardsToDeck();
-        GameConfig.handedCards = GameConfig.deckObject.dealHandCards();
-        renderHandCardImages(GameConfig.anchorPaneCards);
+    public void setCardSlotNumbers() {
+        CARD_SLOT_POSITION.put("firstCard", 0);
+        CARD_SLOT_POSITION.put("secondCard", 1);
+        CARD_SLOT_POSITION.put("thirdCard", 2);
+        CARD_SLOT_POSITION.put("fourthCard", 3);
+        CARD_SLOT_POSITION.put("fifthCard", 4);
     }
 
     public void addCardsToDeck() {
-        for (TrumpColor color : GameConfig.trumpColors) {
+        ArrayList<TrumpColor> trumpColorsNoNone = new ArrayList<>(this.trumpColors);
+        trumpColorsNoNone.remove(this.none);
+        for (TrumpColor color : trumpColorsNoNone) {
             for (int i = GameConfig.MIN_CARD_VALUE; i <= GameConfig.MAX_CARD_VALUE; i++) {
                 String colorName = color.getName();
                 String imgFileName = "/com/ducky/duckythewizard/images/cards/"+colorName+"/"+colorName+i+".png";
@@ -40,7 +52,7 @@ public class CardDeck {
 
     public void addWizards() {
         for (int i = 0; i < GameConfig.AMOUNT_WIZARDS; i++) {
-            CARD_DECK.add(new Card(GameConfig.colorWizard, GameConfig.WIZARD_POINTS, GameConfig.WIZARD_FILENAME));
+            CARD_DECK.add(new Card(this.wizard, GameConfig.WIZARD_POINTS, GameConfig.WIZARD_FILENAME));
         }
     }
 
@@ -48,32 +60,33 @@ public class CardDeck {
         Collections.shuffle(CARD_DECK);
     }
 
-    public ArrayList<Card> dealHandCards() {
+    public ArrayList<Card> dealHandCards(ArrayList<Card> deck) {
         ArrayList<Card> takenCards = new ArrayList<>();
         for (int i = GameConfig.MIN_CARD_VALUE; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
-            takenCards.add(CARD_DECK.remove(i));
+            takenCards.add(deck.remove(i));
         }
         return takenCards;
     }
 
-    public void renderHandCardImages(AnchorPane emptyCardSlots) {
-        // every Node in AnchorPane: every empty ImageView, as a child from AnchorPane
-        int index = 0;
-        for (Node imageView : emptyCardSlots.getChildren()) {
-            ImageView castedImgView = (ImageView) imageView;
-            Image handCardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(GameConfig.handedCards.get(index).imgFileName())));
-            castedImgView.setImage(handCardImage);
-            index++;
+    public void renderAllHandCardImages(ArrayList<Card> handCards, AnchorPane anchorPaneCards) {
+        for (int i = 0; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
+            renderOneCard(i, handCards, anchorPaneCards);
         }
     }
 
-    public void removeCardAddDummy(int handCardPosition) {
-        GameConfig.handedCards.remove(handCardPosition);
-        GameConfig.handedCards.add(handCardPosition, new Card(GameConfig.colorNone, 0, GameConfig.EMPTY_CARD_FILENAME));
-        // render new hand cards
-        // TO-DO-RENATE: nur die ausgewählte Karte neu rendern
-        renderHandCardImages(GameConfig.anchorPaneCards);
-        GameConfig.playedCards++;
+    public void renderOneCard(int handCardPosition, ArrayList<Card> handCards, AnchorPane anchorPaneCards) {
+        ImageView imgView = (ImageView) anchorPaneCards.getChildren().get(handCardPosition);
+        Image handCardImg = new Image(Objects.requireNonNull(getClass().getResourceAsStream(handCards.get(handCardPosition).imgFileName())));
+        imgView.setImage(handCardImg);
+    }
+
+    public Card removeHandCard(int handCardPosition, ArrayList<Card> handCards, boolean newCardFromDeck) {
+        handCards.remove(handCardPosition);
+        if (!newCardFromDeck) {
+            return dealNewCardFromDeck();
+        } else {
+            return new Card(this.none, 0, GameConfig.EMPTY_CARD_FILENAME);
+        }
     }
 
     public Card dealNewCardFromDeck() {
@@ -84,20 +97,24 @@ public class CardDeck {
         }
     }
 
-    public Card findCardInHandedCards(String colorName, int value) {
-        for (Card card : GameConfig.handedCards) {
+    public int getHandCardPosition(MouseEvent event) {
+        return CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
+    }
+
+    public Card findCardInHandedCards(String colorName, int value, ArrayList<Card> handCards) {
+        for (Card card : handCards) {
             if (card.color().getName().equals(colorName) && card.value() == value) {
-                System.out.println("Card found: "+card.color().getName()+", "+card.value());
+                System.out.println("Card found: " + card.color().getName() + ", " + card.value());
                 return card;
             }
         }
         return null;
     }
 
-    public Card findCardinDeck(String colorName, int value) {
-        for (Card card : getCardDeck()) {
+    public Card findCardinDeck(String colorName, int value, CardDeck deck) {
+        for (Card card : deck.getCardDeck()) {
             if (card.color().getName().equals(colorName) && card.value() == value) {
-                System.out.println("Card found: "+card.color().getName()+", "+card.value());
+                System.out.println("Card found: " + card.color().getName() + ", "+card.value());
                 return card;
             }
         }

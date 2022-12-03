@@ -4,7 +4,6 @@ import com.ducky.duckythewizard.model.*;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
@@ -125,12 +124,10 @@ public class GameController{
     }
 
     public void cardStuff() {
-        // TO-DO-RENATE: passt das hierher oder wo muss das alternativ hin?
-        GameConfig.anchorPaneCards = emptyCardSlots;
-        GameConfig.deckObject.addAndRenderALlCards(GameConfig.anchorPaneCards);
+        this.session.setAnchorPaneCards(emptyCardSlots);
+        this.session.getCardDeck().renderAllHandCardImages(this.session.getHandCards(), this.session.getAnchorPaneCards());
     }
 
-    // TO-DO-RENATE: Card-click action
     public void cardClicked(MouseEvent event) {
         this.session.getCardCtrl().cardClicked(event);
     }
