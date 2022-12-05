@@ -12,14 +12,14 @@ public class CardDeck {
 
     private static final ArrayList<Card> CARD_DECK = new ArrayList<>();
     private static final Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
-    private ArrayList<TrumpColor> trumpColors;
-    private TrumpColor wizard;
-    private TrumpColor none;
+    private ArrayList<GameColor> trumpColors;
+    private GameColor wizard;
+    private GameColor none;
 
-    public CardDeck(GameColors gameColors) {
-        this.trumpColors = gameColors.getTrumpColors();
-        this.wizard = gameColors.getTrumpColorsMapNoColor().get("wizard");
-        this.none = gameColors.getTrumpColorsMapNoColor().get("none");
+    public CardDeck(TrumpColor trumpColor) {
+        this.trumpColors = trumpColor.getTrumpColors();
+        this.wizard = trumpColor.getTrumpColorsMapNoColor().get("wizard");
+        this.none = trumpColor.getTrumpColorsMapNoColor().get("none");
         setCardSlotNumbers();
         addCardsToDeck();
     }
@@ -37,9 +37,9 @@ public class CardDeck {
     }
 
     public void addCardsToDeck() {
-        ArrayList<TrumpColor> trumpColorsNoNone = new ArrayList<>(this.trumpColors);
+        ArrayList<GameColor> trumpColorsNoNone = new ArrayList<>(this.trumpColors);
         trumpColorsNoNone.remove(this.none);
-        for (TrumpColor color : trumpColorsNoNone) {
+        for (GameColor color : trumpColorsNoNone) {
             for (int i = GameConfig.MIN_CARD_VALUE; i <= GameConfig.MAX_CARD_VALUE; i++) {
                 String colorName = color.getName();
                 String imgFileName = "/com/ducky/duckythewizard/images/cards/"+colorName+"/"+colorName+i+".png";
@@ -63,7 +63,7 @@ public class CardDeck {
     public ArrayList<Card> dealHandCards(ArrayList<Card> deck) {
         ArrayList<Card> takenCards = new ArrayList<>();
         for (int i = GameConfig.MIN_CARD_VALUE; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
-            takenCards.add(deck.remove(i));
+            takenCards.add(deck.remove(0));
         }
         return takenCards;
     }

@@ -14,12 +14,11 @@ public class WizardMainApplication extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/startingScene.fxml")));
         Scene scene = new Scene(root);
-        stage.setTitle("Ducky & the Wizard Stones");
-        String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/styleRenate.css")).toExternalForm();
+        stage.setTitle("Ducky the wizard");
+        String css = Objects.requireNonNull(this.getClass().getResource("/style.css")).toExternalForm();
         scene.getStylesheets().clear();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
-        stage.setResizable(false);
         stage.show();
     }
 

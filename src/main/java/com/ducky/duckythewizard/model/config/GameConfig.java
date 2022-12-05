@@ -1,12 +1,5 @@
 package com.ducky.duckythewizard.model.config;
 
-import com.ducky.duckythewizard.model.Card;
-import com.ducky.duckythewizard.model.GameColors;
-import com.ducky.duckythewizard.model.TrumpColor;
-import javafx.scene.layout.AnchorPane;
-
-import java.util.ArrayList;
-
 public class GameConfig {
     public static final int windowWidth = 600;
     public static final int windowHeight = 800;

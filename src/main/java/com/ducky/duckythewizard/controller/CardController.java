@@ -3,6 +3,8 @@ package com.ducky.duckythewizard.controller;
 import com.ducky.duckythewizard.model.Card;
 import com.ducky.duckythewizard.model.CardDeck;
 import com.ducky.duckythewizard.model.Game;
+import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;

@@ -17,8 +17,8 @@ public class Game {
     private CardDeck cardDeck;
     private ArrayList<Card> handCards;
     private AnchorPane anchorPaneCards;
-    private GameColors gameColors;
-    private ArrayList<TrumpColor> trumpColors;
+    private TrumpColor trumpColor;
+    private ArrayList<GameColor> trumpColors;
 
     //die Game Config wird einmalig zum Start des Games (Erstellung des Game-Klassen-Objekts) erstellt
     private GameConfig gameConfig;
@@ -35,9 +35,9 @@ public class Game {
     public Game(){
         isRunning = true;
         gameConfig = new GameConfig();
-        gameColors = new GameColors();
-        trumpColors = this.gameColors.getTrumpColors();
-        cardDeck = new CardDeck(gameColors);
+        trumpColor = new TrumpColor();
+        trumpColors = this.trumpColor.getTrumpColors();
+        cardDeck = new CardDeck(trumpColor);
         handCards = this.cardDeck.dealHandCards(this.cardDeck.getCardDeck());  // TODO starting game == dealing 5 new hand cards?
         //System.out.println("*** Game-object is created.");
     }

@@ -2,7 +2,7 @@ package com.ducky.duckythewizard.model;
 
 import java.util.Objects;
 
-public record Card(TrumpColor color, int value, String imgFileName) {
+public record Card(GameColor color, int value, String imgFileName) {
 
     @Override
     public boolean equals(Object obj) {
