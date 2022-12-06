@@ -1,5 +1,7 @@
 package com.ducky.duckythewizard.model;
 
+import com.ducky.duckythewizard.model.colors.GameColor;
+import com.ducky.duckythewizard.model.colors.TrumpColor;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,12 +18,13 @@ public class CardDeck {
     private GameColor wizard;
     private GameColor none;
 
-    public CardDeck(TrumpColor trumpColor) {
-        this.trumpColors = trumpColor.getTrumpColors();
-        this.wizard = trumpColor.getTrumpColorsMapNoColor().get("wizard");
-        this.none = trumpColor.getTrumpColorsMapNoColor().get("none");
+    public CardDeck(TrumpColor trumpColorColor) {
+        this.trumpColors = trumpColorColor.getTrumpColors();
+        this.wizard = trumpColorColor.getTrumpColorsSpecialCards().get("wizard");
+        this.none = trumpColorColor.getTrumpColorsSpecialCards().get("none");
         setCardSlotNumbers();
         addCardsToDeck();
+        trumpColorColor.toStringTrumpColors();
     }
 
     public ArrayList<Card> getCardDeck() {
@@ -76,6 +79,7 @@ public class CardDeck {
 
     public void renderOneCard(int handCardPosition, ArrayList<Card> handCards, AnchorPane anchorPaneCards) {
         ImageView imgView = (ImageView) anchorPaneCards.getChildren().get(handCardPosition);
+        //System.out.println("HandCards: " + handCards.size());
         Image handCardImg = new Image(Objects.requireNonNull(getClass().getResourceAsStream(handCards.get(handCardPosition).imgFileName())));
         imgView.setImage(handCardImg);
     }

@@ -1,5 +1,8 @@
 package com.ducky.duckythewizard.model;
 
+import com.ducky.duckythewizard.model.colors.GameColor;
+import com.ducky.duckythewizard.model.colors.GameColorObject;
+import com.ducky.duckythewizard.model.colors.TrumpColor;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import com.ducky.duckythewizard.controller.CardController;
 //import com.ducky.duckythewizard.controller.LevelController; //Level-Auslagerungsversuch
@@ -14,11 +17,11 @@ public class Game {
     private boolean isRunning;
     private Player player; //Attribut für Daten zum Spieler selbst (Name etc.)
     //private Sprite ducky = new DuckySprite(5, collisionHandler); //Attribut für Player-Sprite
+    private AnchorPane rootAnchorPane;
     private CardDeck cardDeck;
     private ArrayList<Card> handCards;
     private AnchorPane anchorPaneCards;
-    private TrumpColor trumpColor;
-    private ArrayList<GameColor> trumpColors;
+    private GameColorObject gameColorObject;
 
     //die Game Config wird einmalig zum Start des Games (Erstellung des Game-Klassen-Objekts) erstellt
     private GameConfig gameConfig;
@@ -35,9 +38,9 @@ public class Game {
     public Game(){
         isRunning = true;
         gameConfig = new GameConfig();
-        trumpColor = new TrumpColor();
-        trumpColors = this.trumpColor.getTrumpColors();
-        cardDeck = new CardDeck(trumpColor);
+        this.gameColorObject = new GameColorObject();
+        this.cardDeck = new CardDeck(this.gameColorObject.getTrumpColorObject());
+        this.player = new Player();
         handCards = this.cardDeck.dealHandCards(this.cardDeck.getCardDeck());  // TODO starting game == dealing 5 new hand cards?
         //System.out.println("*** Game-object is created.");
     }
@@ -87,4 +90,15 @@ public class Game {
         this.anchorPaneCards = anchorPane;
     }
 
+    public AnchorPane getRootAnchorPane() {
+        return rootAnchorPane;
+    }
+
+    public void setRootAnchorPane(AnchorPane rootAnchorPane) {
+        this.rootAnchorPane = rootAnchorPane;
+    }
+
+    public GameColorObject getGameColorObject() {
+        return gameColorObject;
+    }
 }

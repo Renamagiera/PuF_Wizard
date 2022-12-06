@@ -1,5 +1,7 @@
 package com.ducky.duckythewizard.model;
 
+import com.ducky.duckythewizard.model.colors.GameColor;
+
 import java.util.Objects;
 
 public record Card(GameColor color, int value, String imgFileName) {

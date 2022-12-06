@@ -65,6 +65,9 @@ public class GameController{
         this.session.createMovementCtrlObj();
         //weitere Controller sollten hier dann folgen
 
+        // root AnchorPane Node
+        this.session.setRootAnchorPane(rootBox);
+
         cardStuff();
 
         // initialize Level map
