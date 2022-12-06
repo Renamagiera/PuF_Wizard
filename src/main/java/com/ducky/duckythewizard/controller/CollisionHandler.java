@@ -1,16 +1,19 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.GameObject;
+import com.ducky.duckythewizard.model.Stone;
 import javafx.geometry.Rectangle2D;
 
 public class CollisionHandler {
 
 
+    private GameController myGameController;
     private GameObject[][] levelObjects;
     private double tileHeight;
     private double tileWidth;
 
-    public CollisionHandler(GameObject[][] levelObjects, double tileHeight, double tileWidth){
+    public CollisionHandler(GameController gameController, GameObject[][] levelObjects, double tileHeight, double tileWidth){
+        myGameController = gameController;
         this.levelObjects = levelObjects;
         this.tileHeight = tileHeight;
         this.tileWidth = tileWidth;
@@ -28,6 +31,11 @@ public class CollisionHandler {
                         // collision with stone
                         // inform game, that player collided with stone --> give stone-object
                         //System.out.println("STONE");
+
+                        Stone stone = (Stone)levelObjects[row][column];
+                        if(stone.isActive()) {
+                            myGameController.startFight(stone);
+                        }
                     }
                 }
             }

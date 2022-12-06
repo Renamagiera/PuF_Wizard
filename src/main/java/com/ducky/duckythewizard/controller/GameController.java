@@ -54,6 +54,7 @@ public class GameController{
     private ArrayList<String> input = new ArrayList<>();
 
     private CollisionHandler collisionHandler;
+    private FightController fightController;
     private DuckySprite ducky;
     private MyAnimationTimer animationTimer;
 
@@ -81,7 +82,10 @@ public class GameController{
         gc = mainCanvas.getGraphicsContext2D();
 
         // initialize CollisionHandler
-        collisionHandler = new CollisionHandler(session.objectGrid, cellHeight, cellWidth);
+        collisionHandler = new CollisionHandler(this, session.objectGrid, cellHeight, cellWidth);
+
+        //initialize FightController
+        fightController = new FightController(this);
 
         // initialize font for texts that are shown
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
@@ -93,7 +97,7 @@ public class GameController{
         // initialize Ducky
         ducky = new DuckySprite(5, collisionHandler);
         ducky.duration = 0.1;
-        ducky.setPosition(windowWidth /2 - ducky.getFrame(0).getWidth()/2, 0);
+        ducky.setPosition(windowWidth /4 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);
 
         // main game loop
@@ -137,70 +141,98 @@ public class GameController{
         this.session.getCardCtrl().cardClicked(event);
     }
 
+    public void startFight(Stone stone) {
+        if(session.getIsRunning()) {
+            System.out.println("FIGHT");
+            //animationTimer.stop();
+            session.toggleIsRunning();
+            Thread one = new Thread() {
+                public void run() {
+                    try {
+                        String message = fightController.startFight(stone, ducky); // TODO needs own thread
+                        stopFight(message);
+                    } catch (Exception v) {
+                        System.out.println(v);
+                    }
+                }
+            };
+
+            one.start();
+        }
+
+    }
+
+    public void stopFight(String message){
+        animationTimer.resetStartingTime();
+        ducky.resetHealthPoints();
+        System.out.println(message);
+        //animationTimer.start();
+        session.toggleIsRunning();
+    }
+
     class MyAnimationTimer extends AnimationTimer
     {
         long startNanoTime = System.nanoTime();
         LongValue lastNanoTime = new LongValue( System.nanoTime() );
         public void handle(long currentNanoTime)
         {
+            if(session.getIsRunning())
+            {
+                double t = (currentNanoTime - startNanoTime) / 1000000000.0;
+                // calculate time since last update.
+                double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
+                lastNanoTime.value = currentNanoTime;
 
-            double t = (currentNanoTime - startNanoTime) / 1000000000.0;
-            // calculate time since last update.
-            double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
-            lastNanoTime.value = currentNanoTime;
+                if (input.contains("UP")) {
+                    ducky.setVelocityY(-100);   // moving UP
+                } else {
+                    ducky.setVelocityY(100);    // falling DOWN
+                }
+                if (input.contains("LEFT")) {
+                    ducky.setVelocityX(-100);   // moving LEFT
+                } else if (input.contains("RIGHT")) {
+                    ducky.setVelocityX(100);    // moving RIGHT
+                } else {
+                    ducky.setVelocityX(0);      // not moving left or right
+                }
 
-            if (input.contains("UP")) {
-                ducky.setVelocityY(-100);   // moving UP
-            }
-            else {
-                ducky.setVelocityY(100);    // falling DOWN
-            }
-            if (input.contains("LEFT")) {
-                ducky.setVelocityX(-100);   // moving LEFT
-            }
-            else if (input.contains("RIGHT")) {
-                ducky.setVelocityX(100);    // moving RIGHT
-            }
-            else {
-                ducky.setVelocityX(0);      // not moving left or right
-            }
+                // bouncing back from left level boundary
+                if (ducky.getPositionX() <= 0) {
+                    ducky.setVelocity(100, 0);
+                    System.out.println("LEFT");
+                }
+                // bouncing back from right level boundary
+                if (ducky.getPositionX() >= windowWidth - ducky.getFrame(t).getWidth()) {
+                    ducky.setVelocity(-100, 0);
+                    System.out.println("RIGHT");
+                }
+                // bouncing back from upper level boundary
+                if (ducky.getPositionY() <= 0) {
+                    ducky.setVelocity(0, 100);
+                    System.out.println("UPPER");
+                }
 
-            // bouncing back from left level boundary
-            if(ducky.getPositionX() <= 0 ){
-                ducky.setVelocity(100,0);
-                System.out.println("LEFT");
+                ducky.update(elapsedTime);
+                ducky.reduceHealthPoints(); // TODO should be reduced automatically by timer/counter?
+
+                // clear prior ducky image
+                gc.clearRect(0, 0, windowWidth, windowHeight);
+
+                // showing Health text
+                String healthText = "Health: " + ducky.getHealthPoints();
+                gc.fillText(healthText, 10, 50);
+                gc.strokeText(healthText, 10, 50);
+
+                // showing 'You lose' text
+                if (ducky.getHealthPoints() == 0) {
+                    String pointsText = "You lose";
+                    gc.fillText(pointsText, windowWidth / 2, windowHeight / 3);
+                    gc.strokeText(pointsText, windowWidth / 2, windowHeight / 3);
+                }
+
+                // drawing Ducky frame on Ducky's position
+                gc.drawImage(ducky.getFrame(t), ducky.getPositionX(), ducky.getPositionY());
             }
-            // bouncing back from right level boundary
-            if(ducky.getPositionX() >= windowWidth - ducky.getFrame(t).getWidth()){
-                ducky.setVelocity(-100,0);
-                System.out.println("RIGHT");
-            }
-            // bouncing back from upper level boundary
-            if(ducky.getPositionY() <= 0){
-                ducky.setVelocity(0,100);
-                System.out.println("UPPER");
-            }
-
-            ducky.update(elapsedTime);
-            ducky.reduceHealthPoints(); // TODO should be reduced automatically by timer/counter?
-
-            // clear prior ducky image
-            gc.clearRect(0,0,windowWidth,windowHeight);
-
-            // showing Health text
-            String healthText = "Health: " + ducky.getHealthPoints();
-            gc.fillText( healthText, 10, 50);
-            gc.strokeText( healthText, 10, 50 );
-
-            // showing 'You lose' text
-            if(ducky.getHealthPoints() == 0) {
-                String pointsText = "You lose";
-                gc.fillText( pointsText, windowWidth/2, windowHeight/3 );
-                gc.strokeText( pointsText, windowWidth/2, windowHeight/3 );
-            }
-
-            // drawing Ducky frame on Ducky's position
-            gc.drawImage( ducky.getFrame(t), ducky.getPositionX(), ducky.getPositionY() );
         }
 
         public void resetStartingTime(){
