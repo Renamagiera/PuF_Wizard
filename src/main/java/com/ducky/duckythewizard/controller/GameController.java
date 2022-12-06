@@ -76,7 +76,8 @@ public class GameController{
         // initialize Level map
         Level level = new Level(levelGrid);
         session.objectGrid = level.getGameObjectGrid();
-        // search for stones in levelGrid and add to ArrayList
+
+        // search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
         stoneStuff();
 
         mainCanvas.setHeight(windowHeight);
@@ -161,13 +162,8 @@ public class GameController{
             for (int x = 1; x <= session.getStoneArrayList().size(); x++) {
                 if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("rock" + x)) {
                     ImageView imgView = (ImageView) levelGrid.getChildren().get(i);
-
-                    System.out.println("rock found: rock" + x + session.getStoneArrayList().get(x - 1).getCard().toString());
                     String stoneColor = session.getStoneArrayList().get(x - 1).getCard().color().getHexCode();
-                    System.out.println("color it to " + session.getStoneArrayList().get(x - 1).getCard().color().getName());
-                    System.out.println(levelGrid.getChildren().get(i));
-
-                    // this.session.getGameColorObject().colorImageView(imgView,0,0.5,0);   // YELLOW
+                    // TODO color the stones
                 }
             }
         }

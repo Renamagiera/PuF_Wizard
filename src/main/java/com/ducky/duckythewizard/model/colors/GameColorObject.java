@@ -99,38 +99,4 @@ public class GameColorObject {
             System.out.println("color name: " + color.getName());
         }
     }
-
-    public void colorImageView(ImageView imageView, double h, double s, double l) {
-        ColorAdjust colorAdjust = new ColorAdjust();
-
-        colorAdjust.setHue(h);
-
-        colorAdjust.setSaturation(s);
-
-        colorAdjust.setBrightness(l);
-
-        colorAdjust.setContrast(0);
-
-        imageView.setEffect(colorAdjust);
-
-  /*      ColorInput colorInput = new ColorInput();
-        colorInput.setX(imageView.getLayoutX());
-        colorInput.setY(imageView.getLayoutY());
-        colorInput.setHeight(imageView.getFitHeight());
-        colorInput.setWidth(imageView.getFitWidth());
-        colorInput.setPaint(Color.RED);
-        imageView.setEffect(colorInput);*/
-
-/*        //Instantiating the Glow class
-        Glow glow = new Glow();
-        //setting level of the glow effect
-        glow.setLevel(0.9);
-        imageView.setEffect(glow);*/
-
-/*        Bloom bloom = new Bloom();
-        //setting threshold for bloom
-        bloom.setThreshold(0.1);
-        //Applying bloom effect to text
-        imageView.setEffect(bloom);*/
-    }
 }
