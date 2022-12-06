@@ -19,7 +19,7 @@ public record Card(GameColor color, int value, String imgFileName) {
     @Override
     public String toString() {
         return "Card[" +
-                "color=" + color + ", " +
+                "color=" + color.getName() + ", " +
                 "value=" + value + ", " +
                 "imgFileName=" + imgFileName + ']';
     }

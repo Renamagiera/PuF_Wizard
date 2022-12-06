@@ -7,6 +7,7 @@ import com.ducky.duckythewizard.model.config.GameConfig;
 import com.ducky.duckythewizard.controller.CardController;
 import com.ducky.duckythewizard.controller.MovementController;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
@@ -18,13 +19,13 @@ public class Game {
     //private Sprite ducky = new DuckySprite(5, collisionHandler); //Attribut für Player-Sprite
     private AnchorPane rootAnchorPane;
     private CardDeck cardDeck;
-    private ArrayList<Card> handCards;
     private AnchorPane anchorPaneCards;
     private GameColorObject gameColorObject;
 
     //die Game Config wird einmalig zum Start des Games (Erstellung des Game-Klassen-Objekts) erstellt
     private GameConfig gameConfig;
     public GameObject[][] objectGrid; // [row][column] - is filled in GameController
+    public ArrayList<Stone> stoneArrayList;
 
     private Scene startScene;
     private Scene deathScene;
@@ -38,9 +39,9 @@ public class Game {
         isRunning = true;
         gameConfig = new GameConfig();
         this.gameColorObject = new GameColorObject();
-        this.cardDeck = new CardDeck(this.gameColorObject.getTrumpColorObject());
-        this.player = new Player();
-        handCards = this.cardDeck.dealHandCards(this.cardDeck.getCardDeck());  // TODO starting game == dealing 5 new hand cards?
+        this.cardDeck = new CardDeck(this.gameColorObject);
+        this.player = new Player(this.cardDeck);
+        this.stoneArrayList = new ArrayList<>();
         //System.out.println("*** Game-object is created.");
     }
     public boolean getIsRunning(){
@@ -77,10 +78,6 @@ public class Game {
         return this.cardDeck;
     }
 
-    public ArrayList<Card> getHandCards() {
-        return this.handCards;
-    }
-
     public AnchorPane getAnchorPaneCards() {
         return anchorPaneCards;
     }
@@ -99,5 +96,13 @@ public class Game {
 
     public GameColorObject getGameColorObject() {
         return gameColorObject;
+    }
+
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public ArrayList<Stone> getStoneArrayList() {
+        return stoneArrayList;
     }
 }
