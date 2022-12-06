@@ -2,7 +2,6 @@ package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.config.GameConfig;
 import com.ducky.duckythewizard.controller.CardController;
-//import com.ducky.duckythewizard.controller.LevelController; //Level-Auslagerungsversuch
 import com.ducky.duckythewizard.controller.MovementController;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;

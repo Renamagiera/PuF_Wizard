@@ -17,7 +17,7 @@ public class Level {
         for(Node node: levelGrid.getChildren()) {
             int row = levelGrid.getRowIndex(node);
             int column = levelGrid.getColumnIndex(node);
-            if(node.getStyleClass().contains("rock")){
+            if(node.getStyleClass().contains("stone")){
                 this.gameObjectGrid[row][column] = new Stone();
             }
             else { // if (node.getStyleClass().contains("earth-tile")) // TODO add styleclass to earth tiles??
