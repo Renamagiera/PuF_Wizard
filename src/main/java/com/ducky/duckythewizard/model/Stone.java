@@ -10,9 +10,11 @@ public class Stone extends GameObject{
     private GameColorObject gameColorObject;
     private Card card;
     private CountDownTimer trumpTimer;
+
     private static int count;
     private String id;
-    private boolean isActive;
+    private boolean isActive = true;
+
 
     public Stone() {
         super(true);
@@ -28,5 +30,14 @@ public class Stone extends GameObject{
     }
     public Card getCard() {
         return card;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setInactive() {
+        this.isActive = false;
+        // TODO start Timer to set active again automatically
     }
 }
