@@ -19,7 +19,6 @@ public class Game {
     //private Sprite ducky = new DuckySprite(5, collisionHandler); //Attribut für Player-Sprite
     private AnchorPane rootAnchorPane;
     private CardDeck cardDeck;
-    private ArrayList<Card> handCards;
     private AnchorPane anchorPaneCards;
     private GameColorObject gameColorObject;
 
@@ -40,8 +39,7 @@ public class Game {
         gameConfig = new GameConfig();
         this.gameColorObject = new GameColorObject();
         this.cardDeck = new CardDeck(this.gameColorObject.getTrumpColorObject());
-        this.player = new Player();
-        handCards = this.cardDeck.dealHandCards(this.cardDeck.getCardDeck());  // TODO starting game == dealing 5 new hand cards?
+        this.player = new Player(this.cardDeck);
         //System.out.println("*** Game-object is created.");
     }
     public boolean getIsRunning(){
@@ -78,10 +76,6 @@ public class Game {
         return this.cardDeck;
     }
 
-    public ArrayList<Card> getHandCards() {
-        return this.handCards;
-    }
-
     public AnchorPane getAnchorPaneCards() {
         return anchorPaneCards;
     }
@@ -100,5 +94,9 @@ public class Game {
 
     public GameColorObject getGameColorObject() {
         return gameColorObject;
+    }
+
+    public Player getPlayer() {
+        return this.player;
     }
 }

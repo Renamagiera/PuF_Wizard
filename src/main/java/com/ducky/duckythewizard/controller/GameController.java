@@ -130,7 +130,7 @@ public class GameController{
 
     public void cardStuff() {
         this.session.setAnchorPaneCards(emptyCardSlots);
-        this.session.getCardDeck().renderAllHandCardImages(this.session.getHandCards(), this.session.getAnchorPaneCards());
+        this.session.getCardDeck().renderAllHandCardImages(this.session.getPlayer().getHandCards(), this.session.getAnchorPaneCards());
     }
 
     public void cardClicked(MouseEvent event) {

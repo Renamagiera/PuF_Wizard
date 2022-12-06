@@ -24,7 +24,6 @@ public class CardDeck {
         this.none = trumpColorColor.getTrumpColorsSpecialCards().get("none");
         setCardSlotNumbers();
         addCardsToDeck();
-        trumpColorColor.toStringTrumpColors();
     }
 
     public ArrayList<Card> getCardDeck() {
@@ -87,13 +86,13 @@ public class CardDeck {
     public Card removeHandCard(int handCardPosition, ArrayList<Card> handCards, boolean newCardFromDeck) {
         handCards.remove(handCardPosition);
         if (!newCardFromDeck) {
-            return dealNewCardFromDeck();
+            return dealOneNewCardFromDeck();
         } else {
             return new Card(this.none, 0, GameConfig.EMPTY_CARD_FILENAME);
         }
     }
 
-    public Card dealNewCardFromDeck() {
+    public Card dealOneNewCardFromDeck() {
         if (getCardDeck().size() != 0) {
             return getCardDeck().remove(0);
         } else {
