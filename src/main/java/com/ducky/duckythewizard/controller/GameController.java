@@ -4,12 +4,8 @@ import com.ducky.duckythewizard.model.*;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +16,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GameController{
 
@@ -69,17 +64,11 @@ public class GameController{
         this.session.createMovementCtrlObj();
         //weitere Controller sollten hier dann folgen
 
-        // root AnchorPane Node
-        this.session.setRootAnchorPane(rootBox);
-
         cardStuff();
 
         // initialize Level map
         Level level = new Level(levelGrid);
         session.objectGrid = level.getGameObjectGrid();
-
-        // search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
-        stoneStuff();
 
         mainCanvas.setHeight(windowHeight);
         mainCanvas.setWidth(windowWidth);
@@ -111,32 +100,22 @@ public class GameController{
         animationTimer.start();
     }
 
-    public void addStonesToArrayList() {
-        for (int i = 0; i < session.objectGrid.length; i++) {
-            for (int y = 0; y < session.objectGrid[i].length; y++) {
-                if (session.objectGrid[i][y] instanceof Stone) {
-                    session.stoneArrayList.add((Stone)session.objectGrid[i][y]);
-                }
-            }
-        }
-    }
-
     @FXML
     public void handleOnKeyPressed(KeyEvent keyEvent) throws IOException {
         String code = keyEvent.getCode().toString();
         if(code.equals("SPACE")){
-           session.toggleIsRunning();
-           if(session.getIsRunning()){
-               animationTimer.resetStartingTime();
-               ducky.resetHealthPoints();
-               animationTimer.start();
-           }
-           else {
-               animationTimer.stop();
-               String pauseText = "PAUSE";
-               gc.fillText( pauseText, windowWidth/2 - 50, windowHeight/4 );
-               gc.strokeText( pauseText, windowWidth/2 - 50, windowHeight/4 );
-           }
+            session.toggleIsRunning();
+            if(session.getIsRunning()){
+                animationTimer.resetStartingTime();
+                ducky.resetHealthPoints();
+                animationTimer.start();
+            }
+            else {
+                animationTimer.stop();
+                String pauseText = "PAUSE";
+                gc.fillText( pauseText, windowWidth/2 - 50, windowHeight/4 );
+                gc.strokeText( pauseText, windowWidth/2 - 50, windowHeight/4 );
+            }
         }
         else if ( session.getIsRunning() && !input.contains(code) )
             input.add( code );
@@ -156,21 +135,6 @@ public class GameController{
     public void cardClicked(MouseEvent event) {
         this.session.getCardCtrl().cardClicked(event);
     }
-
-    // TODO where do I put this ???
-    public void stoneStuff() {
-        addStonesToArrayList();
-        this.session.getCardCtrl().addCardToStones();
-        // color the stones
-        for (int i = 0; i < levelGrid.getChildren().size(); i++) {
-            for (int x = 1; x <= session.getStoneArrayList().size(); x++) {
-                if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("rock" + x)) {
-                    ImageView imgView = (ImageView) levelGrid.getChildren().get(i);
-                    String stoneColor = session.getStoneArrayList().get(x - 1).getCard().color().getHexCode();
-                    // TODO color the stones
-                }
-            }
-        }
 
     public void startFight(Stone stone) {
         if(session.getIsRunning()) {
