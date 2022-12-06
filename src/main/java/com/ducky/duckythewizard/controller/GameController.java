@@ -4,8 +4,10 @@ import com.ducky.duckythewizard.model.*;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -62,6 +64,9 @@ public class GameController{
         this.session.createCardCtrlObj();
         this.session.createMovementCtrlObj();
         //weitere Controller sollten hier dann folgen
+
+        // root AnchorPane Node
+        this.session.setRootAnchorPane(rootBox);
 
         cardStuff();
 
