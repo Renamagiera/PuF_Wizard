@@ -1,6 +1,6 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.model.colors.TrumpColor;
+import com.ducky.duckythewizard.model.colors.GameColorObject;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -10,11 +10,13 @@ public class TextObject {
     private String fontColor;
     private String fontSize;
     private String textLabelId;
+    private GameColorObject gameColorObject;
 
-    public TextObject(String newText, String fontColor, String fontSize) {
+    public TextObject(String newText, String fontColor, String fontSize, GameColorObject gameColorObject) {
         this.newText = newText;
         this.fontColor = fontColor;
         this.fontSize = fontSize;
+        this.gameColorObject = gameColorObject;
     }
 
     public void setNewText(String newText) {
@@ -54,7 +56,7 @@ public class TextObject {
 
     private void addTextLabel(Label label, AnchorPane anchorPane, int yPosition) {
         label.setLayoutY(yPosition);
-        label.setStyle("-fx-font-size: " + this.fontSize + "; -fx-text-fill: " + TrumpColor.getHexCode(this.fontColor));
+        label.setStyle("-fx-font-size: " + this.fontSize + "; -fx-text-fill: " + gameColorObject.getHexCodeFromMap(this.fontColor));
         label.setText(this.newText);
         anchorPane.getChildren().add(label);
     }

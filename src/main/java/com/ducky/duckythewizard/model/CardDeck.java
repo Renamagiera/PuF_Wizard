@@ -1,6 +1,7 @@
 package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.colors.GameColor;
+import com.ducky.duckythewizard.model.colors.GameColorObject;
 import com.ducky.duckythewizard.model.colors.TrumpColor;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.image.Image;
@@ -18,10 +19,10 @@ public class CardDeck {
     private GameColor wizard;
     private GameColor none;
 
-    public CardDeck(TrumpColor trumpColorColor) {
-        this.trumpColors = trumpColorColor.getTrumpColors();
-        this.wizard = trumpColorColor.getTrumpColorsSpecialCards().get("wizard");
-        this.none = trumpColorColor.getTrumpColorsSpecialCards().get("none");
+    public CardDeck(GameColorObject gameColorObject) {
+        this.trumpColors = gameColorObject.getTrumpColors();
+        this.wizard = gameColorObject.getTrumpColorObject().getWizard();
+        this.none = gameColorObject.getTrumpColorObject().getNone();
         setCardSlotNumbers();
         addCardsToDeck();
     }
@@ -38,7 +39,7 @@ public class CardDeck {
         CARD_SLOT_POSITION.put("fifthCard", 4);
     }
 
-    public void addCardsToDeck() {
+    private void addCardsToDeck() {
         ArrayList<GameColor> trumpColorsNoNone = new ArrayList<>(this.trumpColors);
         trumpColorsNoNone.remove(this.none);
         for (GameColor color : trumpColorsNoNone) {
@@ -52,13 +53,13 @@ public class CardDeck {
         shuffleCards();
     }
 
-    public void addWizards() {
+    private void addWizards() {
         for (int i = 0; i < GameConfig.AMOUNT_WIZARDS; i++) {
             CARD_DECK.add(new Card(this.wizard, GameConfig.WIZARD_POINTS, GameConfig.WIZARD_FILENAME));
         }
     }
 
-    public void shuffleCards() {
+    private void shuffleCards() {
         Collections.shuffle(CARD_DECK);
     }
 

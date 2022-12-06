@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TrumpColor {
-    private static final ArrayList<GameColor> TRUMP_COLORS = new ArrayList<>();
-    private static final Map<String, GameColor> SPECIAL_CARDS = new HashMap<>();
-    private static final Map<String , String> HEX_CODES_TRUMP_COLORS = new HashMap<>();
     private static final GameColor RED = new GameColor("red", "#FF6666");
     private static final GameColor BLUE = new GameColor("blue", "#66CCFF");
     private static final GameColor GREEN = new GameColor("green", "#91FF66");
@@ -16,47 +13,25 @@ public class TrumpColor {
     private static final GameColor NONE = new GameColor("none", "null");
     private int colorAmount;
 
-    public TrumpColor() {
-        setTrumpColors();
-        setSpecialCardsMap();
-        setHexCodes();
-    }
+    public TrumpColor() {}
 
-    private void setTrumpColors() {
-        TRUMP_COLORS.add(RED);
-        TRUMP_COLORS.add(BLUE);
-        TRUMP_COLORS.add(GREEN);
-        TRUMP_COLORS.add(YELLOW);
-        TRUMP_COLORS.add(NONE);
-        this.colorAmount = TRUMP_COLORS.size();
-    }
 
-    private void setSpecialCardsMap() {
-        SPECIAL_CARDS.put("wizard", WIZARD);
-        SPECIAL_CARDS.put("none", NONE);
+    public GameColor getRed() {
+        return RED;
     }
-
-    private void setHexCodes() {
-        HEX_CODES_TRUMP_COLORS.put("red", "#FF6666");
-        HEX_CODES_TRUMP_COLORS.put("blue", "#66CCFF");
-        HEX_CODES_TRUMP_COLORS.put("green", "#91FF66");
-        HEX_CODES_TRUMP_COLORS.put("yellow", "#FFE366");
+    public GameColor getBlue() {
+        return BLUE;
     }
-
-    public String getRandomTrumpColor() {
-        GameColor randomColor = TRUMP_COLORS.get((int) Math.floor(Math.random()*(this.colorAmount)));
-        return HEX_CODES_TRUMP_COLORS.get(randomColor.getName());
+    public GameColor getGreen() {
+        return GREEN;
     }
-
-    public void toStringTrumpColors() {
-        for (GameColor color : TRUMP_COLORS) {
-            System.out.println("color name: " + color.getName());
-        }
+    public GameColor getYellow() {
+        return YELLOW;
     }
-
-    public static String getHexCode(String color) {
-        return HEX_CODES_TRUMP_COLORS.get(color);
+    public GameColor getNone() {
+        return NONE;
     }
-    public ArrayList<GameColor> getTrumpColors() { return TRUMP_COLORS; }
-    public Map<String, GameColor> getTrumpColorsSpecialCards() { return SPECIAL_CARDS; }
+    public GameColor getWizard() {
+        return WIZARD;
+    }
 }

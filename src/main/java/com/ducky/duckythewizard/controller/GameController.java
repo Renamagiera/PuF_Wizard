@@ -5,8 +5,10 @@ import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -18,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameController{
 
@@ -73,6 +76,8 @@ public class GameController{
         // initialize Level map
         Level level = new Level(levelGrid);
         session.objectGrid = level.getGameObjectGrid();
+        // search for stones in levelGrid and add to ArrayList
+        stoneStuff();
 
         mainCanvas.setHeight(windowHeight);
         mainCanvas.setWidth(windowWidth);
@@ -99,6 +104,16 @@ public class GameController{
         // main game loop
         animationTimer = new MyAnimationTimer();
         animationTimer.start();
+    }
+
+    public void addStonesToArrayList() {
+        for (int i = 0; i < session.objectGrid.length; i++) {
+            for (int y = 0; y < session.objectGrid[i].length; y++) {
+                if (session.objectGrid[i][y] instanceof Stone) {
+                    session.stoneArrayList.add((Stone)session.objectGrid[i][y]);
+                }
+            }
+        }
     }
 
     @FXML
@@ -135,6 +150,27 @@ public class GameController{
 
     public void cardClicked(MouseEvent event) {
         this.session.getCardCtrl().cardClicked(event);
+    }
+
+    // TODO where do I put this ???
+    public void stoneStuff() {
+        addStonesToArrayList();
+        this.session.getCardCtrl().addCardToStones();
+        // color the stones
+        for (int i = 0; i < levelGrid.getChildren().size(); i++) {
+            for (int x = 1; x <= session.getStoneArrayList().size(); x++) {
+                if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("rock" + x)) {
+                    ImageView imgView = (ImageView) levelGrid.getChildren().get(i);
+
+                    System.out.println("rock found: rock" + x + session.getStoneArrayList().get(x - 1).getCard().toString());
+                    String stoneColor = session.getStoneArrayList().get(x - 1).getCard().color().getHexCode();
+                    System.out.println("color it to " + session.getStoneArrayList().get(x - 1).getCard().color().getName());
+                    System.out.println(levelGrid.getChildren().get(i));
+
+                    // this.session.getGameColorObject().colorImageView(imgView,0,0.5,0);   // YELLOW
+                }
+            }
+        }
     }
 
     class MyAnimationTimer extends AnimationTimer
