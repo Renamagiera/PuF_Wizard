@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -16,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameController{
 
@@ -155,6 +157,8 @@ public class GameController{
                 if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("rock" + x)) {
                     ImageView imgView = (ImageView) levelGrid.getChildren().get(i);
                     String stoneColor = session.getStoneArrayList().get(x - 1).getCard().color().getHexCode();
+                    Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/ducky/duckythewizard/images/forest/redMask.png")));
+                    imgView.setImage(img);
                 }
             }
         }
