@@ -70,6 +70,9 @@ public class GameController{
         Level level = new Level(levelGrid);
         session.objectGrid = level.getGameObjectGrid();
 
+        // search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
+        stoneStuff();   // TODO where to place
+
         mainCanvas.setHeight(windowHeight);
         mainCanvas.setWidth(windowWidth);
 
@@ -98,6 +101,16 @@ public class GameController{
         // main game loop
         animationTimer = new MyAnimationTimer();
         animationTimer.start();
+    }
+
+    public void addStonesToArrayList() {
+        for (int i = 0; i < session.objectGrid.length; i++) {
+            for (int y = 0; y < session.objectGrid[i].length; y++) {
+                if (session.objectGrid[i][y] instanceof Stone) {
+                    session.stoneArrayList.add((Stone)session.objectGrid[i][y]);
+                }
+            }
+        }
     }
 
     @FXML
@@ -130,6 +143,21 @@ public class GameController{
     public void cardStuff() {
         this.session.setAnchorPaneCards(emptyCardSlots);
         this.session.getCardDeck().renderAllHandCardImages(this.session.getPlayer().getHandCards(), this.session.getAnchorPaneCards());
+    }
+
+    // TODO where do I put this ???
+    public void stoneStuff() {
+        addStonesToArrayList();
+        this.session.getCardCtrl().addCardToStones();
+        // color the stones
+        for (int i = 0; i < levelGrid.getChildren().size(); i++) {
+            for (int x = 1; x <= session.getStoneArrayList().size(); x++) {
+                if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("rock" + x)) {
+                    ImageView imgView = (ImageView) levelGrid.getChildren().get(i);
+                    String stoneColor = session.getStoneArrayList().get(x - 1).getCard().color().getHexCode();
+                }
+            }
+        }
     }
 
     public void cardClicked(MouseEvent event) {
