@@ -8,6 +8,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
 
 <AnchorPane fx:id="rootBox" onKeyPressed="#handleOnKeyPressed" onKeyReleased="#handleOnKeyReleased" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.GameController">
     <children>
@@ -25,6 +27,8 @@
                 <Image url="@../images/forest/parallax-forest-front-trees_800px.png" />
             </ImageView>
         </Group>
+      <HBox fx:id="heartContainer" prefHeight="50.0" prefWidth="180.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" prefHeight="42.0" prefWidth="50.0" text="Label" textAlignment="CENTER" />
 
       <GridPane fx:id="levelGrid" prefHeight="650.0" prefWidth="800.0">
         <columnConstraints>

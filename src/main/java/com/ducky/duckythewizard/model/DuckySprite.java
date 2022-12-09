@@ -1,6 +1,7 @@
 package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.controller.CollisionHandler;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,8 @@ public class DuckySprite extends AnimatedSprite{
     private MovementState state;
     private long resetTime;
     private int maxHealthPoints;
+    private int maxTime = 10;
+    public SimpleStringProperty timerProperty;
     private CollisionHandler collisionHandler;
 
     private Image[] imageArrayFly;
@@ -28,6 +31,7 @@ public class DuckySprite extends AnimatedSprite{
         this.state = MovementState.FLY;
         this.resetTime = System.nanoTime();
         this.maxHealthPoints = maxHealthPoints;
+        timerProperty = new SimpleStringProperty(Integer.toString(maxTime));
         this.collisionHandler = collisionHandler;
         initializeImageArrays();
         this.frames = imageArrayFly;
@@ -40,6 +44,7 @@ public class DuckySprite extends AnimatedSprite{
     @Override
     public void update(double time)
     {
+        reducePlayerTimer();
         // if collision --> revert position and adjust velocity, depending on direction in which collision occurred
         positionX += velocityX * time;
         if(collisionHandler.isCollision(this.getBoundary())){
@@ -74,15 +79,22 @@ public class DuckySprite extends AnimatedSprite{
         this.state = state;
     }
 
-    public void reduceHealthPoints() {
+    public void reducePlayerTimer() {
         int time = (int)((System.nanoTime() - this.resetTime) / 1000000000.0);
-        this.healthPoints = maxHealthPoints - time <= 0 ? 0 : maxHealthPoints - time;
-        //System.out.println("Time: " + time);
+        this.timerProperty.set(Integer.toString(maxTime - time <= 0 ? 0 : maxTime - time));
+        if(this.timerProperty.getValue().equals("0")) {
+            reducePlayerLife();
+        }
     }
 
-    public void resetHealthPoints() {
-        this.healthPoints = maxHealthPoints;
+    public void resetPlayerTimer() {
+        this.timerProperty.set(Integer.toString(maxTime));
         this.resetTime = System.nanoTime();
+    }
+
+    private void reducePlayerLife(){
+        this.healthPoints = this.healthPoints <= 0 ? 0 : this.healthPoints - 1;
+        resetPlayerTimer();
     }
 
     public int getHealthPoints() {
