@@ -1,17 +1,20 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
-import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -43,6 +46,10 @@ public class GameController{
     private ImageView rock4;
     @FXML
     private ImageView rock5;
+    @FXML
+    private Label timerLabel;
+    @FXML
+    private HBox heartContainer;
 
 
     private int windowWidth = this.session.getGameConfig().getWindowWidth();
@@ -96,10 +103,23 @@ public class GameController{
         gc.setLineWidth(5);
 
         // initialize Ducky
-        ducky = new DuckySprite(5, collisionHandler);
+        ducky = new DuckySprite(3, collisionHandler);
         ducky.duration = 0.1;
         ducky.setPosition(windowWidth /4 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);
+
+        // binding timerLabel to ducky's timer
+        timerLabel.textProperty().bind(ducky.timerProperty);
+
+        // add hearts to screen representing Ducky's health points
+        heartContainer.setSpacing(10.0);
+        for(int i = 0; i < ducky.getHealthPoints(); i++) {
+            ImageView imageView = new ImageView(new Image(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/golden-heart_50px.png")));
+            imageView.setFitHeight(cellHeight - 10);
+            imageView.setPreserveRatio(true);
+            heartContainer.getChildren().add(imageView);
+            heartContainer.setHgrow(imageView, Priority.NEVER);
+        }
 
         // main game loop
         animationTimer = new MyAnimationTimer();
@@ -123,7 +143,7 @@ public class GameController{
             session.toggleIsRunning();
             if(session.getIsRunning()){
                 animationTimer.resetStartingTime();
-                ducky.resetHealthPoints();
+                ducky.resetPlayerTimer();
                 animationTimer.start();
             }
             else {
@@ -174,6 +194,7 @@ public class GameController{
             System.out.println("FIGHT");
             //animationTimer.stop();
             session.toggleIsRunning();
+            // starting fight in new thread
             Thread one = new Thread() {
                 public void run() {
                     try {
@@ -192,7 +213,12 @@ public class GameController{
 
     public void stopFight(String message){
         animationTimer.resetStartingTime();
-        ducky.resetHealthPoints();
+        // changes to UI must happen on main thread
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+                ducky.resetPlayerTimer();
+            }
+        });
         System.out.println(message);
         //animationTimer.start();
         session.toggleIsRunning();
@@ -241,21 +267,21 @@ public class GameController{
                 }
 
                 ducky.update(elapsedTime);
-                ducky.reduceHealthPoints(); // TODO should be reduced automatically by timer/counter?
 
                 // clear prior ducky image
                 gc.clearRect(0, 0, windowWidth, windowHeight);
 
-                // showing Health text
-                String healthText = "Health: " + ducky.getHealthPoints();
-                gc.fillText(healthText, 10, 50);
-                gc.strokeText(healthText, 10, 50);
-
                 // showing 'You lose' text
-                if (ducky.getHealthPoints() == 0) {
-                    String pointsText = "You lose";
-                    gc.fillText(pointsText, windowWidth / 2, windowHeight / 3);
-                    gc.strokeText(pointsText, windowWidth / 2, windowHeight / 3);
+                if(ducky.getHealthPoints() == 0){
+                    String pointsText = "You LOSE";
+                    gc.fillText(pointsText, windowWidth / 3, windowHeight / 3);
+                    gc.strokeText(pointsText, windowWidth / 3, windowHeight / 3);
+                }
+
+                // remove heart if Ducky lost a health point
+                // TODO find solution that uses binding???
+                if(ducky.getHealthPoints() < heartContainer.getChildren().size()){
+                    heartContainer.getChildren().remove(heartContainer.getChildren().size() - 1);
                 }
 
                 // drawing Ducky frame on Ducky's position
