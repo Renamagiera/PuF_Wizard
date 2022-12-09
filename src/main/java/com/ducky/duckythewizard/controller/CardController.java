@@ -1,7 +1,11 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
+import javafx.scene.Node;
+import javafx.scene.chart.BubbleChart;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 
@@ -13,6 +17,18 @@ public class CardController extends Controller {
     }
 
     public void cardClicked(MouseEvent event) {
+        NewNode testNode = new NewNode(this.getSession().getRootAnchorPane());
+
+        AnchorPane fightScene = new AnchorPane();
+        fightScene.setId("fightScene");
+        fightScene.setLayoutX(200.00);
+        fightScene.setLayoutY(130.00);
+        fightScene.setPrefHeight(300.00);
+        fightScene.setPrefWidth(400.00);
+        fightScene.setStyle("-fx-background-color: #001b30");
+        //fightScene.getStylesheets().add("/com/ducky/duckythewizard/styles/styleRenate.css");
+        this.getSession().getRootAnchorPane().getChildren().add(fightScene);
+
         // Test für Text-Erstellung und random-Number Generierung
 /*        TextObject addThisTextPls = new TextObject("Hallo Sie haben geklickt", "red", "40px", this.getSession().getGameColorObject());
         addThisTextPls.addTextToNodeCenterX(this.getSession().getRootAnchorPane(), 100);

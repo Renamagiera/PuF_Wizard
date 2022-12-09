@@ -67,6 +67,7 @@ public class GameController{
         //weitere Controller sollten hier dann folgen
 
         cardStuff();
+        this.session.setRootAnchorPane(this.rootBox);
 
         // initialize Level map
         Level level = new Level(levelGrid);
