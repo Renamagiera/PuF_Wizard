@@ -1,6 +1,7 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
+import com.ducky.duckythewizard.view.FightScene;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -93,7 +94,7 @@ public class GameController{
         collisionHandler = new CollisionHandler(this, session.objectGrid, cellHeight, cellWidth);
 
         //initialize FightController
-        fightController = new FightController(this);
+        fightController = new FightController(this, session.getCardCtrl());
 
         // initialize font for texts that are shown
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
@@ -185,43 +186,52 @@ public class GameController{
         }
     }
 
-    public void cardClicked(MouseEvent event) {
+/*    public void cardClicked(MouseEvent event) {
         this.session.getCardCtrl().cardClicked(event);
-    }
+    }*/
 
     public void startFight(Stone stone) {
         if(session.getIsRunning()) {
             System.out.println("FIGHT");
             //animationTimer.stop();
             session.toggleIsRunning();
+            // start new fight scene
+            FightScene fightScene = new FightScene(session.getRootAnchorPane());
+            fightScene.renderFightScene();
             // starting fight in new thread
             Thread one = new Thread() {
                 public void run() {
                     try {
-                        String message = fightController.startFight(stone, ducky); // TODO needs own thread
-                        stopFight(message);
+                        fightController.startFight(stone, session.getPlayer(), fightScene); // TODO needs own thread
+                        stopThread();
                     } catch (Exception v) {
                         System.out.println(v);
                     }
                 }
             };
-
             one.start();
         }
-
     }
 
-    public void stopFight(String message){
+    public void stopThread() {
         animationTimer.resetStartingTime();
-        // changes to UI must happen on main thread
         Platform.runLater(new Runnable() {
             @Override public void run() {
                 ducky.resetPlayerTimer();
             }
         });
-        System.out.println(message);
         //animationTimer.start();
         session.toggleIsRunning();
+        System.out.println();
+    }
+
+    public void stopFight(FightScene fightScene){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                fightScene.endFightScene();
+            }
+        });
     }
 
     class MyAnimationTimer extends AnimationTimer

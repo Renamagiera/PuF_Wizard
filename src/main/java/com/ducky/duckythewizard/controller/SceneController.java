@@ -11,7 +11,7 @@ import java.util.Objects;
 /*Superclass of all SceneControllers*/
 public class SceneController {
 
-    String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/styleRenate.css")).toExternalForm();
+    String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/styleMainGameView.css")).toExternalForm();
 
     /*die bereits beim Start erstellte Stage wird anhand des Events ermittelt. Darauf wird eine neue Scene erstellt*/
     protected void getWindowStage(ActionEvent event, Parent root) {

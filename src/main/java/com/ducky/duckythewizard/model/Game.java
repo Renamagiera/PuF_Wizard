@@ -16,6 +16,8 @@ public class Game {
 
     private boolean isRunning;
     private Player player; //Attribut für Daten zum Spieler selbst (Name etc.)
+    private Card clickedCardFight;
+    private Fight activeFight;
     //private Sprite ducky = new DuckySprite(5, collisionHandler); //Attribut für Player-Sprite
     private AnchorPane rootAnchorPane;
     private CardDeck cardDeck;
@@ -104,5 +106,21 @@ public class Game {
 
     public ArrayList<Stone> getStoneArrayList() {
         return stoneArrayList;
+    }
+
+    public Card getClickedCardFight() {
+        return clickedCardFight;
+    }
+
+    public void setClickedCardFight(Card clickedCardFight) {
+        this.clickedCardFight = clickedCardFight;
+    }
+
+    public Fight getActiveFight() {
+        return activeFight;
+    }
+
+    public void setActiveFight(Fight activeFight) {
+        this.activeFight = activeFight;
     }
 }

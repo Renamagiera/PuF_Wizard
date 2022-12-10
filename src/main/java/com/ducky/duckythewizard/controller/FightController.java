@@ -1,27 +1,43 @@
 package com.ducky.duckythewizard.controller;
 
-import com.ducky.duckythewizard.model.DuckySprite;
+import com.ducky.duckythewizard.model.Card;
+import com.ducky.duckythewizard.model.Fight;
+import com.ducky.duckythewizard.model.Player;
 import com.ducky.duckythewizard.model.Stone;
+import com.ducky.duckythewizard.view.FightScene;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
-import java.util.Scanner;
+import java.awt.event.MouseListener;
 
 public class FightController extends Controller {
 
     GameController myGameController;
-    public FightController(GameController gameController){
+    CardController cardController;
+    private Card playerCard;
+    private Card enemyCard;
+    public FightController(GameController gameController, CardController cardController){
         myGameController = gameController;
+        this.cardController = cardController;
     }
 
-    public String startFight(Stone stone, DuckySprite player) { // TODO change DuckySprite for Player
-        System.out.println("--> starting fight");
+    public void startFight(Stone stone, Player player, FightScene fightScene) { // TODO change DuckySprite for Player
         stone.setInactive();
-        // Fight fight = new Fight
-        Scanner s = new Scanner(System.in);
-        System.out.print("Press w to win, something else to lose: ");
-        String input = s.next();
-        if(input.equals("w")) {
-            return "win";
-        }
-        return "lose";
+        System.out.println("--> starting fight");
+        myGameController.session.setActiveFight(new Fight());
+        // set enemy-card
+        myGameController.session.getActiveFight().setEnemyCard(stone.getCard());
+        this.cardController.addMouseEventHandler(myGameController, fightScene);
+        System.out.println(Thread.currentThread());
+    }
+
+    public Card getPlayerCard() {
+        return playerCard;
+    }
+
+    public Card getEnemyCard() {
+        return enemyCard;
     }
 }
