@@ -5,14 +5,12 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-
 import java.net.URL;
 import java.util.Objects;
-import java.util.Random;
 
 public class FightScene {
 
-    public int ID;
+    //public int ID;
     private AnchorPane parentAnchorPane;
     private AnchorPane newAnchorPane;
     private int fightSceneMidX;
@@ -20,31 +18,33 @@ public class FightScene {
     private ImageView imgViewCard1;
     private ImageView imgViewCard2;
     private Button exitButton;
-    public FightScene(AnchorPane parentAnchorPane) {
-        this.parentAnchorPane = parentAnchorPane;
+    public FightScene() {
+        // new AnchorPane, set visibility false
         this.newAnchorPane = new AnchorPane();
+        this.newAnchorPane.setVisible(false);
         this.fightSceneMidX = GameConfig.WINDOW_WIDTH_FIGHT_SCENE / 2;
         this.fightSceneMidY = GameConfig.WINDOW_HEIGHT_FIGHT_SCENE / 2;
-        Random rand = new Random();
-        this.ID = rand.nextInt(1000);
     }
-    public void renderFightScene() {
-        System.out.println("--> renderFightScene, ID: " + ID);
+    public void renderFightScene(AnchorPane anchorPane) {
+        this.parentAnchorPane = anchorPane;
+        if (!(this.parentAnchorPane.getChildren().get(this.parentAnchorPane.getChildren().size() - 1).equals(this.newAnchorPane))) {
+            renderNewScene();
+        } else {
+            setVisibilityTrue();
+        }
+    }
+
+    private void renderNewScene() {
+        this.newAnchorPane.setVisible(true);
         this.newAnchorPane.setId("fightScene");
-        this.newAnchorPane.setLayoutX(midFromParent());
-        this.newAnchorPane.setLayoutY(GameConfig.LAYOUT_Y_FIGHT_SCENE);
-        this.newAnchorPane.setPrefWidth(GameConfig.WINDOW_WIDTH_FIGHT_SCENE);
-        this.newAnchorPane.setPrefHeight(GameConfig.WINDOW_HEIGHT_FIGHT_SCENE);
-        URL url = this.getClass().getResource("/com/ducky/duckythewizard/styles/styleMainGameView.css");
-        String css = Objects.requireNonNull(url).toExternalForm();
-        this.newAnchorPane.getStylesheets().add(css);
-        this.imgViewCard1 = new ImageView();
-        this.imgViewCard2 = new ImageView();
-        this.newAnchorPane.getChildren().add(renderCardImageViews(100, 110, this.imgViewCard1));
-        this.newAnchorPane.getChildren().add(renderCardImageViews(230, 110, this.imgViewCard2));
-        this.imgViewCard2.setPickOnBounds(true);
-        this.imgViewCard2.setPreserveRatio(true);
+        this.setLayouts();
+        this.setImageViews();
+        this.addExitButton();
         this.parentAnchorPane.getChildren().add(this.newAnchorPane);
+    }
+
+    private void setVisibilityTrue() {
+        this.newAnchorPane.setVisible(true);
     }
 
     // TODO das sind eigentlich Methoden aus der CardDeck-Klasse, evtl. auslagern in eine eigene CardImgView-Klasse !!!
@@ -67,17 +67,37 @@ public class FightScene {
         return (GameConfig.WINDOW_WIDTH - GameConfig.WINDOW_WIDTH_FIGHT_SCENE) / 2;
     }
 
-    public void addButton(String buttonText, int positionX, int positionY) {
+    private void setLayouts() {
+        this.newAnchorPane.setLayoutX(midFromParent());
+        this.newAnchorPane.setLayoutY(GameConfig.LAYOUT_Y_FIGHT_SCENE);
+        this.newAnchorPane.setPrefWidth(GameConfig.WINDOW_WIDTH_FIGHT_SCENE);
+        this.newAnchorPane.setPrefHeight(GameConfig.WINDOW_HEIGHT_FIGHT_SCENE);
+        URL url = this.getClass().getResource("/com/ducky/duckythewizard/styles/styleMainGameView.css");
+        String css = Objects.requireNonNull(url).toExternalForm();
+        this.newAnchorPane.getStylesheets().add(css);
+    }
+
+    private void setImageViews() {
+        this.imgViewCard1 = new ImageView();
+        this.imgViewCard2 = new ImageView();
+        this.newAnchorPane.getChildren().add(renderCardImageViews(100, 110, this.imgViewCard1));
+        this.newAnchorPane.getChildren().add(renderCardImageViews(230, 110, this.imgViewCard2));
+        this.imgViewCard2.setPickOnBounds(true);
+        this.imgViewCard2.setPreserveRatio(true);
+    }
+
+    public void addExitButton() {
         this.exitButton = new Button();
-        this.exitButton.setLayoutX(positionX);
-        this.exitButton.setLayoutY(positionY);
-        this.exitButton.setText(buttonText);
+        this.exitButton.setId("exitButton");
+        this.exitButton.setStyle("-fx-background-color: transparent; -fx-text-fill: lightgreen;");
+        this.exitButton.setLayoutX(350);
+        this.exitButton.setLayoutY(0);
+        this.exitButton.setText("x");
         this.newAnchorPane.getChildren().add(this.exitButton);
     }
 
     public void endFightScene() {
-        System.out.println("--> endFightScene, ID: " + ID);
-        this.parentAnchorPane.getChildren().remove(this.newAnchorPane);
+        this.newAnchorPane.setVisible(false);
     }
 
     public AnchorPane getNewAnchorPane() {

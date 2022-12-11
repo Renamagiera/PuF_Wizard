@@ -383,7 +383,7 @@
             <children>
                 <AnchorPane fx:id="emptyCardSlots" layoutX="137.0">
                     <children>
-                        <ImageView fx:id="firstCard" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="firstCard" fitHeight="104.0" fitWidth="65.0"  pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/cards/empty.png" />
                      </image></ImageView>

@@ -25,12 +25,21 @@ public class FightController extends Controller {
 
     public void startFight(Stone stone, Player player, FightScene fightScene) { // TODO change DuckySprite for Player
         stone.setInactive();
-        System.out.println("--> starting fight, ID: " + fightScene.ID);
         myGameController.session.setActiveFight(new Fight());
         // set enemy-card
         myGameController.session.getActiveFight().setEnemyCard(stone.getCard());
-        this.cardController.addMouseEventHandler(myGameController, fightScene);
-        System.out.println(Thread.currentThread());
+
+        for (Node node : myGameController.session.getAnchorPaneCards().getChildren()) {
+            ImageView imgView = (ImageView) node;
+            imgView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                myGameController.stopFight(fightScene);
+            });
+        }
+
+        // exit button: close fight
+        fightScene.getExitButton().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            myGameController.stopFight(fightScene);
+        });
     }
 
     public Card getPlayerCard() {

@@ -69,13 +69,15 @@ public class GameController{
     @FXML
     public void initialize() {
         //System.out.println("*** Game Controller is initialized...");
+
+        this.session.setRootAnchorPane(this.rootBox);
+
         //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
         this.session.createCardCtrlObj();
         this.session.createMovementCtrlObj();
         //weitere Controller sollten hier dann folgen
 
         cardStuff();
-        this.session.setRootAnchorPane(this.rootBox);
 
         // initialize Level map
         Level level = new Level(levelGrid);
@@ -197,9 +199,9 @@ public class GameController{
             System.out.println("FIGHT");
             //animationTimer.stop();
             session.toggleIsRunning();
-            // start new fight scene
-            FightScene fightScene = new FightScene(session.getRootAnchorPane());
-            fightScene.renderFightScene();
+            // start new fight, set fight scene visibility true
+            FightScene fightScene = this.session.getFightScene();
+            fightScene.renderFightScene(this.session.getRootAnchorPane());
             // starting fight in new thread
             Thread one = new Thread() {
                 public void run() {
@@ -224,12 +226,12 @@ public class GameController{
         });
         //animationTimer.start();
         session.toggleIsRunning();
-        System.out.println();
+        System.out.println("Thread stopped, thread ID: " + Thread.currentThread().getName());
     }
 
     public void stopFight(FightScene fightScene){
+        System.out.println("----> stopFight");
         if(!session.getIsRunning()) {
-            System.out.println("--> stopFight");
             animationTimer.resetStartingTime();
             Platform.runLater(new Runnable() {
                 @Override
@@ -238,7 +240,6 @@ public class GameController{
                     fightScene.endFightScene();
                 }
             });
-
             session.toggleIsRunning();
         }
     }

@@ -6,6 +6,7 @@ import com.ducky.duckythewizard.model.colors.TrumpColor;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import com.ducky.duckythewizard.controller.CardController;
 import com.ducky.duckythewizard.controller.MovementController;
+import com.ducky.duckythewizard.view.FightScene;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -18,6 +19,7 @@ public class Game {
     private Player player; //Attribut für Daten zum Spieler selbst (Name etc.)
     private Card clickedCardFight;
     private Fight activeFight;
+    private FightScene fightScene;
     //private Sprite ducky = new DuckySprite(5, collisionHandler); //Attribut für Player-Sprite
     private AnchorPane rootAnchorPane;
     private CardDeck cardDeck;
@@ -44,6 +46,7 @@ public class Game {
         this.cardDeck = new CardDeck(this.gameColorObject);
         this.player = new Player(this.cardDeck);
         this.stoneArrayList = new ArrayList<>();
+        this.fightScene = new FightScene();
         //System.out.println("*** Game-object is created.");
     }
     public boolean getIsRunning(){
@@ -123,5 +126,9 @@ public class Game {
 
     public void setActiveFight(Fight activeFight) {
         this.activeFight = activeFight;
+    }
+
+    public FightScene getFightScene() {
+        return fightScene;
     }
 }
