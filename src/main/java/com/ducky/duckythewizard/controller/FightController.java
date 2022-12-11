@@ -1,9 +1,6 @@
 package com.ducky.duckythewizard.controller;
 
-import com.ducky.duckythewizard.model.Card;
-import com.ducky.duckythewizard.model.Fight;
-import com.ducky.duckythewizard.model.Player;
-import com.ducky.duckythewizard.model.Stone;
+import com.ducky.duckythewizard.model.*;
 import com.ducky.duckythewizard.view.FightScene;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -11,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class FightController extends Controller {
 
@@ -23,21 +21,22 @@ public class FightController extends Controller {
         this.cardController = cardController;
     }
 
-    public void startFight(Stone stone, Player player, FightScene fightScene) { // TODO change DuckySprite for Player
+    public void startFight(Stone stone, Player player, FightScene fightScene) {
         stone.setInactive();
+        CardDeck deck = myGameController.session.getCardDeck();
+        ArrayList<Card> handCards = myGameController.session.getPlayer().getHandCards();
         myGameController.session.setActiveFight(new Fight());
         // set enemy-card
         myGameController.session.getActiveFight().setEnemyCard(stone.getCard());
-
         for (Node node : myGameController.session.getAnchorPaneCards().getChildren()) {
             ImageView imgView = (ImageView) node;
             imgView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                myGameController.stopFight(fightScene);
+                int clickPosition = deck.getHandCardPosition(event);
+                deck.removeHandCard(clickPosition, handCards, false);
             });
         }
-
-        // exit button: close fight
-        fightScene.getExitButton().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        // exit label: close fight
+        fightScene.getExitLbl().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             myGameController.stopFight(fightScene);
         });
     }

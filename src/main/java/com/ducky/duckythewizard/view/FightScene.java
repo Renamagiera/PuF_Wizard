@@ -2,6 +2,7 @@ package com.ducky.duckythewizard.view;
 
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -18,6 +19,7 @@ public class FightScene {
     private ImageView imgViewCard1;
     private ImageView imgViewCard2;
     private Button exitButton;
+    private Label exitLbl;
     public FightScene() {
         // new AnchorPane, set visibility false
         this.newAnchorPane = new AnchorPane();
@@ -39,7 +41,8 @@ public class FightScene {
         this.newAnchorPane.setId("fightScene");
         this.setLayouts();
         this.setImageViews();
-        this.addExitButton();
+        this.addExitLabel();
+        //this.addExitButton();
         this.parentAnchorPane.getChildren().add(this.newAnchorPane);
     }
 
@@ -86,7 +89,7 @@ public class FightScene {
         this.imgViewCard2.setPreserveRatio(true);
     }
 
-    public void addExitButton() {
+    private void addExitButton() {
         this.exitButton = new Button();
         this.exitButton.setId("exitButton");
         this.exitButton.setStyle("-fx-background-color: transparent; -fx-text-fill: lightgreen;");
@@ -94,6 +97,14 @@ public class FightScene {
         this.exitButton.setLayoutY(0);
         this.exitButton.setText("x");
         this.newAnchorPane.getChildren().add(this.exitButton);
+    }
+
+    private void addExitLabel() {
+        this.exitLbl = new Label();
+        this.exitLbl.setText("x");
+        this.exitLbl.setLayoutX(368.0);
+        this.exitLbl.setLayoutY(14.0);
+        this.newAnchorPane.getChildren().add(this.exitLbl);
     }
 
     public void endFightScene() {
@@ -114,5 +125,9 @@ public class FightScene {
 
     public Button getExitButton() {
         return exitButton;
+    }
+
+    public Label getExitLbl() {
+        return exitLbl;
     }
 }
