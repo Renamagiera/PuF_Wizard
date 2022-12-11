@@ -8,8 +8,11 @@ import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.Objects;
+import java.util.Random;
 
 public class FightScene {
+
+    public int ID;
     private AnchorPane parentAnchorPane;
     private AnchorPane newAnchorPane;
     private int fightSceneMidX;
@@ -22,8 +25,11 @@ public class FightScene {
         this.newAnchorPane = new AnchorPane();
         this.fightSceneMidX = GameConfig.WINDOW_WIDTH_FIGHT_SCENE / 2;
         this.fightSceneMidY = GameConfig.WINDOW_HEIGHT_FIGHT_SCENE / 2;
+        Random rand = new Random();
+        this.ID = rand.nextInt(1000);
     }
     public void renderFightScene() {
+        System.out.println("--> renderFightScene, ID: " + ID);
         this.newAnchorPane.setId("fightScene");
         this.newAnchorPane.setLayoutX(midFromParent());
         this.newAnchorPane.setLayoutY(GameConfig.LAYOUT_Y_FIGHT_SCENE);
@@ -70,6 +76,7 @@ public class FightScene {
     }
 
     public void endFightScene() {
+        System.out.println("--> endFightScene, ID: " + ID);
         this.parentAnchorPane.getChildren().remove(this.newAnchorPane);
     }
 

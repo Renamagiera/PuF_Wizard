@@ -51,6 +51,7 @@ public class Game {
         return isRunning;
     }
     public void toggleIsRunning() {
+        System.out.println("--> toggleIsRunning");
         isRunning = !isRunning;
     }
 

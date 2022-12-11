@@ -191,7 +191,9 @@ public class GameController{
     }*/
 
     public void startFight(Stone stone) {
+        System.out.println("--> startFight, before IF");
         if(session.getIsRunning()) {
+            System.out.println("--> startFight, inside IF");
             System.out.println("FIGHT");
             //animationTimer.stop();
             session.toggleIsRunning();
@@ -202,8 +204,8 @@ public class GameController{
             Thread one = new Thread() {
                 public void run() {
                     try {
-                        fightController.startFight(stone, session.getPlayer(), fightScene); // TODO needs own thread
-                        stopThread();
+                        fightController.startFight(stone, session.getPlayer(), fightScene);
+                        //stopThread();
                     } catch (Exception v) {
                         System.out.println(v);
                     }
@@ -226,12 +228,19 @@ public class GameController{
     }
 
     public void stopFight(FightScene fightScene){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                fightScene.endFightScene();
-            }
-        });
+        if(!session.getIsRunning()) {
+            System.out.println("--> stopFight");
+            animationTimer.resetStartingTime();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ducky.resetPlayerTimer();
+                    fightScene.endFightScene();
+                }
+            });
+
+            session.toggleIsRunning();
+        }
     }
 
     class MyAnimationTimer extends AnimationTimer

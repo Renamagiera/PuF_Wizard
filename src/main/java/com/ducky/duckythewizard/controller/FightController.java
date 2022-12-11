@@ -25,7 +25,7 @@ public class FightController extends Controller {
 
     public void startFight(Stone stone, Player player, FightScene fightScene) { // TODO change DuckySprite for Player
         stone.setInactive();
-        System.out.println("--> starting fight");
+        System.out.println("--> starting fight, ID: " + fightScene.ID);
         myGameController.session.setActiveFight(new Fight());
         // set enemy-card
         myGameController.session.getActiveFight().setEnemyCard(stone.getCard());
