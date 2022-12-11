@@ -19,30 +19,6 @@ public class CardController extends Controller {
         super(game);
     }
 
-/*    public Card cardClicked(MouseEvent event) {
- *//*       // Test für Text-Erstellung und random-Number Generierung
-        TextObject addThisTextPls = new TextObject("Hallo Sie haben geklickt", "red", "40px", this.getSession().getGameColorObject());
-        addThisTextPls.addTextToNodeCenterX(this.getSession().getRootAnchorPane(), 100);
-        System.out.println(this.getSession().getGameColorObject().getRandomTrumpColor());*//*
-
-        // nur klick-bar, wenn game-session nicht läuft (isRunning = false)
-        if (!this.getSession().getIsRunning()) {
-            // die geklickte Karte eventuell als Game-Variable anlegen
-            int handCardClickedPosition = this.deck.getHandCardPosition(event);
-            Card clickedCard = this.handCards.get(handCardClickedPosition);
-
-            if (clickedCard.color().getName().equals("none")) {
-                this.handCards.add(handCardClickedPosition, this.getSession().getCardDeck().removeHandCard(handCardClickedPosition, this.handCards, false));
-            } else {
-                this.handCards.add(handCardClickedPosition, this.getSession().getCardDeck().removeHandCard(handCardClickedPosition, this.handCards, true));
-            }
-            this.deck.renderOneCard(handCardClickedPosition, handCards, this.getSession().getAnchorPaneCards());
-        } else {
-            System.out.println("not clickable");
-        }
-        return null;
-    }*/
-
     public Card clickedCard(MouseEvent event) {
         int clickedCardPosition = this.deck.getHandCardPosition(event);
         Card clickedCard = this.handCards.get(clickedCardPosition);
@@ -53,7 +29,7 @@ public class CardController extends Controller {
     }
 
     public void removeAndRenderCardAfterClick(int clickedCardPosition) {
-        this.handCards.add(clickedCardPosition, this.getSession().getCardDeck().removeHandCard(clickedCardPosition, this.handCards, true));
+        this.handCards.add(clickedCardPosition, this.getSession().getCardDeck().removeHandCard(clickedCardPosition, this.handCards, false));
         this.deck.renderOneCard(clickedCardPosition, this.handCards, this.getSession().getAnchorPaneCards());
     }
     public void addMouseEventHandler(GameController gameCtrl, FightScene fightScene) {
@@ -64,9 +40,9 @@ public class CardController extends Controller {
                 public void handle(MouseEvent mouseEvent) {
                     if(!getSession().getIsRunning()) {
                         getSession().getActiveFight().setPlayerCard(clickedCard(mouseEvent));
+                        // render an empty card image first
                         getSession().getCardCtrl().removeAndRenderCardAfterClick(gameCtrl.session.getCardDeck().getHandCardPosition(mouseEvent));
                         // determine Winner: take Card from handCards {add new from deck | add empty}
-                        gameCtrl.stopFight(fightScene);
                         removeAllClickHandlers();
                     }
 
@@ -75,10 +51,13 @@ public class CardController extends Controller {
             clickHandlers.add(cardClicked);
             imgView.addEventFilter(MouseEvent.MOUSE_CLICKED, cardClicked);
         }
+        fightScene.getExitLbl().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            gameCtrl.stopFight(fightScene);
+        });
     }
 
     private void removeAllClickHandlers() {
-        for (int i = 0; i < this.getSession().getAnchorPaneCards().getChildren().size(); i++){
+        for (int i = 0; i < clickHandlers.size(); i++){
             ImageView imgView = (ImageView) this.getSession().getAnchorPaneCards().getChildren().get(i);
             imgView.removeEventFilter(MouseEvent.MOUSE_CLICKED, clickHandlers.get(i));
         }

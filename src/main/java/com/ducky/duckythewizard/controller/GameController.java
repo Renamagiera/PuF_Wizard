@@ -11,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -77,14 +76,15 @@ public class GameController{
         this.session.createMovementCtrlObj();
         //weitere Controller sollten hier dann folgen
 
-        cardStuff();
+        // get card-anchor-pane, render hand-cards
+        cards();
 
         // initialize Level map
         Level level = new Level(levelGrid);
         session.objectGrid = level.getGameObjectGrid();
 
         // search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
-        stoneStuff();   // TODO where to place
+        stones();
 
         mainCanvas.setHeight(windowHeight);
         mainCanvas.setWidth(windowWidth);
@@ -129,16 +129,6 @@ public class GameController{
         animationTimer.start();
     }
 
-    public void addStonesToArrayList() {
-        for (int i = 0; i < session.objectGrid.length; i++) {
-            for (int y = 0; y < session.objectGrid[i].length; y++) {
-                if (session.objectGrid[i][y] instanceof Stone) {
-                    session.stoneArrayList.add((Stone)session.objectGrid[i][y]);
-                }
-            }
-        }
-    }
-
     @FXML
     public void handleOnKeyPressed(KeyEvent keyEvent) throws IOException {
         String code = keyEvent.getCode().toString();
@@ -166,13 +156,13 @@ public class GameController{
         input.remove( code );
     }
 
-    public void cardStuff() {
+    public void cards() {
         this.session.setAnchorPaneCards(emptyCardSlots);
         this.session.getCardDeck().renderAllHandCardImages(this.session.getPlayer().getHandCards(), this.session.getAnchorPaneCards());
     }
 
-    // TODO where do I put this ???
-    public void stoneStuff() {
+    // TODO stone-color-view-class
+    public void stones() {
         addStonesToArrayList();
         this.session.getCardCtrl().addCardToStones();
         // color the stones
@@ -188,9 +178,16 @@ public class GameController{
         }
     }
 
-/*    public void cardClicked(MouseEvent event) {
-        this.session.getCardCtrl().cardClicked(event);
-    }*/
+
+    public void addStonesToArrayList() {
+        for (int i = 0; i < session.objectGrid.length; i++) {
+            for (int y = 0; y < session.objectGrid[i].length; y++) {
+                if (session.objectGrid[i][y] instanceof Stone) {
+                    session.stoneArrayList.add((Stone)session.objectGrid[i][y]);
+                }
+            }
+        }
+    }
 
     public void startFight(Stone stone) {
         System.out.println("--> startFight, before IF");
