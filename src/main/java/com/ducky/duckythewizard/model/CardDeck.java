@@ -86,7 +86,7 @@ public class CardDeck {
 
     public Card removeHandCard(int handCardPosition, ArrayList<Card> handCards, boolean newCardFromDeck) {
         handCards.remove(handCardPosition);
-        if (!newCardFromDeck) {
+        if (newCardFromDeck) {
             return dealOneNewCardFromDeck();
         } else {
             return new Card(this.none, 0, GameConfig.EMPTY_CARD_FILENAME);

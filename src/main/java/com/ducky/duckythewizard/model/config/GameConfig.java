@@ -1,10 +1,13 @@
 package com.ducky.duckythewizard.model.config;
 
 public class GameConfig {
-    public static final int windowWidth = 800;
-    public static final int windowHeight = 650;
-    public static final double level_cellWidth = 50.0;
-    public static final double level_cellHeight = 50.0;
+    public static final int WINDOW_WIDTH = 800;
+    public static final int WINDOW_HEIGHT = 650;
+    public static final int WINDOW_WIDTH_FIGHT_SCENE = 400;
+    public static final int WINDOW_HEIGHT_FIGHT_SCENE = 300;
+    public static final int LAYOUT_Y_FIGHT_SCENE = 130;
+    public static final double LEVEL_CELL_WIDTH = 50.0;
+    public static final double LEVEL_CELL_HEIGHT = 50.0;
 
     public static GameConfigCards gameConfigCards = new GameConfigCards();
     public static final String EMPTY_CARD_FILENAME = gameConfigCards.getEmptyCardFilename();
@@ -17,18 +20,18 @@ public class GameConfig {
 
     public int getWindowWidth() {
 
-        return windowWidth;
+        return WINDOW_WIDTH;
     }
 
     public int getWindowHeight() {
 
-        return windowHeight;
+        return WINDOW_HEIGHT;
     }
 
     public double getLevel_cellWidth() {
-        return level_cellWidth;
+        return LEVEL_CELL_WIDTH;
     }
     public double getLevel_cellHeight() {
-        return level_cellHeight;
+        return LEVEL_CELL_HEIGHT;
     }
 }

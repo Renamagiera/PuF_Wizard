@@ -1,6 +1,7 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
+import com.ducky.duckythewizard.view.FightScene;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -10,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameController{
 
@@ -67,19 +68,23 @@ public class GameController{
     @FXML
     public void initialize() {
         //System.out.println("*** Game Controller is initialized...");
+
+        this.session.setRootAnchorPane(this.rootBox);
+
         //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
         this.session.createCardCtrlObj();
         this.session.createMovementCtrlObj();
         //weitere Controller sollten hier dann folgen
 
-        cardStuff();
+        // get card-anchor-pane, render hand-cards
+        cards();
 
         // initialize Level map
         Level level = new Level(levelGrid);
         session.objectGrid = level.getGameObjectGrid();
 
         // search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
-        stoneStuff();   // TODO where to place
+        stones();
 
         mainCanvas.setHeight(windowHeight);
         mainCanvas.setWidth(windowWidth);
@@ -91,7 +96,7 @@ public class GameController{
         collisionHandler = new CollisionHandler(this, session.objectGrid, cellHeight, cellWidth);
 
         //initialize FightController
-        fightController = new FightController(this);
+        fightController = new FightController(this, session.getCardCtrl());
 
         // initialize font for texts that are shown
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
@@ -124,16 +129,6 @@ public class GameController{
         animationTimer.start();
     }
 
-    public void addStonesToArrayList() {
-        for (int i = 0; i < session.objectGrid.length; i++) {
-            for (int y = 0; y < session.objectGrid[i].length; y++) {
-                if (session.objectGrid[i][y] instanceof Stone) {
-                    session.stoneArrayList.add((Stone)session.objectGrid[i][y]);
-                }
-            }
-        }
-    }
-
     @FXML
     public void handleOnKeyPressed(KeyEvent keyEvent) throws IOException {
         String code = keyEvent.getCode().toString();
@@ -161,13 +156,13 @@ public class GameController{
         input.remove( code );
     }
 
-    public void cardStuff() {
+    public void cards() {
         this.session.setAnchorPaneCards(emptyCardSlots);
         this.session.getCardDeck().renderAllHandCardImages(this.session.getPlayer().getHandCards(), this.session.getAnchorPaneCards());
     }
 
-    // TODO where do I put this ???
-    public void stoneStuff() {
+    // TODO stone-color-view-class
+    public void stones() {
         addStonesToArrayList();
         this.session.getCardCtrl().addCardToStones();
         // color the stones
@@ -176,48 +171,74 @@ public class GameController{
                 if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("rock" + x)) {
                     ImageView imgView = (ImageView) levelGrid.getChildren().get(i);
                     String stoneColor = session.getStoneArrayList().get(x - 1).getCard().color().getHexCode();
+                    Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/ducky/duckythewizard/images/forest/redMask.png")));
+                    imgView.setImage(img);
                 }
             }
         }
     }
 
-    public void cardClicked(MouseEvent event) {
-        this.session.getCardCtrl().cardClicked(event);
+
+    public void addStonesToArrayList() {
+        for (int i = 0; i < session.objectGrid.length; i++) {
+            for (int y = 0; y < session.objectGrid[i].length; y++) {
+                if (session.objectGrid[i][y] instanceof Stone) {
+                    session.stoneArrayList.add((Stone)session.objectGrid[i][y]);
+                }
+            }
+        }
     }
 
     public void startFight(Stone stone) {
+        System.out.println("--> startFight, before IF");
         if(session.getIsRunning()) {
+            System.out.println("--> startFight, inside IF");
             System.out.println("FIGHT");
             //animationTimer.stop();
             session.toggleIsRunning();
+            // start new fight, set fight scene visibility true
+            FightScene fightScene = this.session.getFightScene();
+            fightScene.renderFightScene(this.session.getRootAnchorPane());
             // starting fight in new thread
             Thread one = new Thread() {
                 public void run() {
                     try {
-                        String message = fightController.startFight(stone, ducky); // TODO needs own thread
-                        stopFight(message);
+                        fightController.startFight(stone, session.getPlayer(), fightScene);
+                        //stopThread();
                     } catch (Exception v) {
                         System.out.println(v);
                     }
                 }
             };
-
             one.start();
         }
-
     }
 
-    public void stopFight(String message){
+    public void stopThread() {
         animationTimer.resetStartingTime();
-        // changes to UI must happen on main thread
         Platform.runLater(new Runnable() {
             @Override public void run() {
                 ducky.resetPlayerTimer();
             }
         });
-        System.out.println(message);
         //animationTimer.start();
         session.toggleIsRunning();
+        System.out.println("Thread stopped, thread ID: " + Thread.currentThread().getName());
+    }
+
+    public void stopFight(FightScene fightScene){
+        System.out.println("----> stopFight");
+        if(!session.getIsRunning()) {
+            animationTimer.resetStartingTime();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ducky.resetPlayerTimer();
+                    fightScene.endFightScene();
+                }
+            });
+            session.toggleIsRunning();
+        }
     }
 
     class MyAnimationTimer extends AnimationTimer
