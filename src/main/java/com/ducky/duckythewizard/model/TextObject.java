@@ -1,30 +1,29 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.model.colors.GameColorObject;
+import com.ducky.duckythewizard.model.color.GameColorObject;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 public class TextObject {
     private String newText;
-    private String fontColor;
+    private String fontColorHexCode;
     private String fontSize;
     private String textLabelId;
     private GameColorObject gameColorObject;
 
-    public TextObject(String newText, String fontColor, String fontSize, GameColorObject gameColorObject) {
+    public TextObject(String newText, String fontColorHexCode, String fontSize) {
         this.newText = newText;
-        this.fontColor = fontColor;
+        this.fontColorHexCode = fontColorHexCode;
         this.fontSize = fontSize;
-        this.gameColorObject = gameColorObject;
     }
 
     public void setNewText(String newText) {
         this.newText = newText;
     }
 
-    public void setFontColor(String fontColor) {
-        this.fontColor = fontColor;
+    public void setFontColorHexCode(String fontColorHexCode) {
+        this.fontColorHexCode = fontColorHexCode;
     }
 
     public void setFontSize(String fontSize) {
@@ -40,24 +39,28 @@ public class TextObject {
         return textLabelId;
     }
 
+    public String getNewText() {
+        return newText;
+    }
 
-    public void addTextToNodeCenterX(AnchorPane anchorPane, int yPosition) {
+    public Label newTextCenteredX(AnchorPane anchorPane, int yPosition) {
         Label newTextLabel = new Label();
         newTextLabel.setPrefWidth(anchorPane.getWidth());
         newTextLabel.setAlignment(Pos.CENTER);
-        addTextLabel(newTextLabel, anchorPane, yPosition);
+        newTextLabel.setLayoutY(yPosition);
+        addTextLabel(newTextLabel, yPosition);
+        return newTextLabel;
     }
 
     public void addTextToNodeCustomCoordinates(AnchorPane anchorPane, int xPosition, int yPosition) {
         Label newTextLabel = new Label();
         newTextLabel.setLayoutX(xPosition);
-        addTextLabel(newTextLabel, anchorPane, yPosition);
+        addTextLabel(newTextLabel, yPosition);
     }
 
-    private void addTextLabel(Label label, AnchorPane anchorPane, int yPosition) {
+    private void addTextLabel(Label label, int yPosition) {
         label.setLayoutY(yPosition);
-        label.setStyle("-fx-font-size: " + this.fontSize + "; -fx-text-fill: " + gameColorObject.getHexCodeFromMap(this.fontColor));
+        label.setStyle("-fx-font-size: " + this.fontSize + "; -fx-text-fill: " + this.fontColorHexCode);
         label.setText(this.newText);
-        anchorPane.getChildren().add(label);
     }
 }

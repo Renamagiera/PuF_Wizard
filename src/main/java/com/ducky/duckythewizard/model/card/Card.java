@@ -1,10 +1,21 @@
-package com.ducky.duckythewizard.model;
+package com.ducky.duckythewizard.model.card;
 
-import com.ducky.duckythewizard.model.colors.GameColor;
+import com.ducky.duckythewizard.model.color.GameColor;
 
 import java.util.Objects;
 
-public record Card(GameColor color, int value, String imgFileName) {
+public class Card {
+    private GameColor color;
+    private int value;
+    private String imgFileName;
+
+    public Card() {}
+
+    public Card(GameColor color, int value, String imgFileName) {
+        this.color = color;
+        this.value = value;
+        this.imgFileName = imgFileName;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -24,5 +35,15 @@ public record Card(GameColor color, int value, String imgFileName) {
                 "imgFileName=" + imgFileName + ']';
     }
 
+    public GameColor getColor() {
+        return color;
+    }
 
+    public int getValue() {
+        return value;
+    }
+
+    public String getImgFileName() {
+        return imgFileName;
+    }
 }

@@ -1,8 +1,4 @@
-package com.ducky.duckythewizard.model.colors;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+package com.ducky.duckythewizard.model.color;
 
 public class LayoutColor {
     private static final GameColor WHITE = new GameColor("white", "#FFFFFF");

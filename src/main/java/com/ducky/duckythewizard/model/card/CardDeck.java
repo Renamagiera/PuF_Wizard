@@ -1,9 +1,9 @@
-package com.ducky.duckythewizard.model;
+package com.ducky.duckythewizard.model.card;
 
-import com.ducky.duckythewizard.model.colors.GameColor;
-import com.ducky.duckythewizard.model.colors.GameColorObject;
-import com.ducky.duckythewizard.model.colors.TrumpColor;
+import com.ducky.duckythewizard.model.color.GameColor;
+import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
+import com.ducky.duckythewizard.view.FightScene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -71,17 +71,45 @@ public class CardDeck {
         return takenCards;
     }
 
-    public void renderAllHandCardImages(ArrayList<Card> handCards, AnchorPane anchorPaneCards) {
-        for (int i = 0; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
-            renderOneCard(i, handCards, anchorPaneCards);
+    public Card dealOneNewCardFromDeck() {
+        if (getCardDeck().size() != 0) {
+            return getCardDeck().remove(0);
+        } else {
+            return null;
         }
     }
 
-    public void renderOneCard(int handCardPosition, ArrayList<Card> handCards, AnchorPane anchorPaneCards) {
-        ImageView imgView = (ImageView) anchorPaneCards.getChildren().get(handCardPosition);
-        //System.out.println("HandCards: " + handCards.size());
-        Image handCardImg = new Image(Objects.requireNonNull(getClass().getResourceAsStream(handCards.get(handCardPosition).imgFileName())));
-        imgView.setImage(handCardImg);
+    public void renderAllHandCardImages(ArrayList<Card> handCards, AnchorPane anchorPaneCards) {
+        for (int i = 0; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
+            newImage(handCards.get(i).getImgFileName(), (ImageView) anchorPaneCards.getChildren().get(i));
+        }
+    }
+
+    public void renderCard(int clickPosition, ArrayList<Card> handCards, AnchorPane anchorPaneCards) {
+        ImageView imageView = (ImageView) anchorPaneCards.getChildren().get(clickPosition);
+        imageView.setPickOnBounds(true);
+        newImage(handCards.get(clickPosition).getImgFileName(), imageView);
+    }
+
+    public void renderSpecialCard(ImageView imageView, String type) {
+        if (type.equals("empty")) {
+            imageView.setPickOnBounds(false);
+            newImage(GameConfig.EMPTY_CARD_FILENAME, imageView);
+        } else if (type.equals("back")) {
+            imageView.setPickOnBounds(true);
+            System.out.println("back-card");
+        }
+
+    }
+
+    public void renderFightCard(Card card, FightScene fightScene, String player) {
+        ImageView imgView = new ImageView();
+        if (player.equals("ducky")) {
+            imgView = fightScene.getImgViewCardDucky();
+        } else if (player.equals("stone")) {
+            imgView = fightScene.getImgViewCardStone();
+        }
+        newImage(card.getImgFileName(), imgView);
     }
 
     public Card removeHandCard(int handCardPosition, ArrayList<Card> handCards, boolean newCardFromDeck) {
@@ -93,12 +121,9 @@ public class CardDeck {
         }
     }
 
-    public Card dealOneNewCardFromDeck() {
-        if (getCardDeck().size() != 0) {
-            return getCardDeck().remove(0);
-        } else {
-            return null;
-        }
+    private void newImage(String fileName, ImageView imgView) {
+        Image newImage =  new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileName)));
+        imgView.setImage(newImage);
     }
 
     public int getHandCardPosition(MouseEvent event) {
@@ -107,8 +132,8 @@ public class CardDeck {
 
     public Card findCardInHandedCards(String colorName, int value, ArrayList<Card> handCards) {
         for (Card card : handCards) {
-            if (card.color().getName().equals(colorName) && card.value() == value) {
-                System.out.println("Card found: " + card.color().getName() + ", " + card.value());
+            if (card.getColor().getName().equals(colorName) && card.getValue() == value) {
+                System.out.println("Card found: " + card.getColor().getName() + ", " + card.getValue());
                 return card;
             }
         }
@@ -117,8 +142,8 @@ public class CardDeck {
 
     public Card findCardinDeck(String colorName, int value, CardDeck deck) {
         for (Card card : deck.getCardDeck()) {
-            if (card.color().getName().equals(colorName) && card.value() == value) {
-                System.out.println("Card found: " + card.color().getName() + ", "+card.value());
+            if (card.getColor().getName().equals(colorName) && card.getValue() == value) {
+                System.out.println("Card found: " + card.getColor().getName() + ", "+card.getValue());
                 return card;
             }
         }
@@ -130,14 +155,14 @@ public class CardDeck {
     // DELETE ME LATER
     public static void showAllCardDeckInfo() {
         for (Card card : CARD_DECK) {
-            System.out.println(card.value() + ", " + card.color().getName());
+            System.out.println(card.getValue() + ", " + card.getColor().getName());
         }
         System.out.println("Cards: " + CARD_DECK.size());
     }
 
     public static void showHandCards(ArrayList<Card> handCards) {
         for (Card card : handCards) {
-            System.out.println(card.value() + ", " + card.color().getName());
+            System.out.println(card.getValue() + ", " + card.getColor().getName());
         }
     }
     // DELETE ME LATER

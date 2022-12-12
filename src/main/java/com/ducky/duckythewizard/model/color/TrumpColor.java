@@ -1,8 +1,4 @@
-package com.ducky.duckythewizard.model.colors;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+package com.ducky.duckythewizard.model.color;
 
 public class TrumpColor {
     private static final GameColor RED = new GameColor("red", "#FF6666");

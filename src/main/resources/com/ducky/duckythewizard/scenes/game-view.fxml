@@ -401,7 +401,7 @@
                      </image></ImageView>
                         <ImageView fx:id="fifthCard" fitHeight="104.0" fitWidth="65.0" layoutX="460.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/cards/empty.png" />
+                        <Image url="@../images/cards/empty.png"/>
                      </image></ImageView>
                     </children>
                 </AnchorPane>
