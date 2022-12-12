@@ -1,18 +1,8 @@
-package com.ducky.duckythewizard.model.colors;
-
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
-import javafx.scene.effect.Glow;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
+package com.ducky.duckythewizard.model.color;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.awt.Color.RGBtoHSB;
-import static javafx.scene.paint.Color.*;
 
 public class GameColorObject {
     private TrumpColor trumpColorObject;

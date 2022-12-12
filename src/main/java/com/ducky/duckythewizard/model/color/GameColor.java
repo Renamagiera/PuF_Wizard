@@ -1,4 +1,4 @@
-package com.ducky.duckythewizard.model.colors;
+package com.ducky.duckythewizard.model.color;
 
 public class GameColor {
 

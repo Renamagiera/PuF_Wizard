@@ -76,8 +76,8 @@ public class GameController{
         this.session.createMovementCtrlObj();
         //weitere Controller sollten hier dann folgen
 
-        // get card-anchor-pane, render hand-cards
-        cards();
+        // initialize cards: set card-anchor-pane, render hand-cards
+        this.session.getCardCtrl().cardInit(emptyCardSlots);
 
         // initialize Level map
         Level level = new Level(levelGrid);
@@ -156,11 +156,6 @@ public class GameController{
         input.remove( code );
     }
 
-    public void cards() {
-        this.session.setAnchorPaneCards(emptyCardSlots);
-        this.session.getCardDeck().renderAllHandCardImages(this.session.getPlayer().getHandCards(), this.session.getAnchorPaneCards());
-    }
-
     // TODO stone-color-view-class
     public void stones() {
         addStonesToArrayList();
@@ -170,7 +165,7 @@ public class GameController{
             for (int x = 1; x <= session.getStoneArrayList().size(); x++) {
                 if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("rock" + x)) {
                     ImageView imgView = (ImageView) levelGrid.getChildren().get(i);
-                    String stoneColor = session.getStoneArrayList().get(x - 1).getCard().color().getHexCode();
+                    String stoneColor = session.getStoneArrayList().get(x - 1).getCard().getColor().getHexCode();
                     Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/ducky/duckythewizard/images/forest/redMask.png")));
                     imgView.setImage(img);
                 }
@@ -196,9 +191,13 @@ public class GameController{
             System.out.println("FIGHT");
             //animationTimer.stop();
             session.toggleIsRunning();
-            // start new fight, set fight scene visibility true
+            // start new fight-scene, set fight scene visibility true
             FightScene fightScene = this.session.getFightScene();
-            fightScene.renderFightScene(this.session.getRootAnchorPane());
+            // start new fight-object
+            this.session.setActiveFight(new Fight());
+            // set enemy-card to fight-object
+            this.session.getActiveFight().setStoneCard(stone.getCard());
+            fightScene.renderFightScene(this.session.getRootAnchorPane(), this.session.getActiveFight().getStoneCard().getColor());
             // starting fight in new thread
             Thread one = new Thread() {
                 public void run() {

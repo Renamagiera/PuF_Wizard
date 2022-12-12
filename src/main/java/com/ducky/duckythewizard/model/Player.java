@@ -1,5 +1,8 @@
 package com.ducky.duckythewizard.model;
 
+import com.ducky.duckythewizard.model.card.Card;
+import com.ducky.duckythewizard.model.card.CardDeck;
+
 import java.util.ArrayList;
 
 public class Player {

@@ -16,9 +16,6 @@ public class FightController extends Controller {
 
     public void startFight(Stone stone, Player player, FightScene fightScene) {
         stone.setInactive();
-        myGameController.session.setActiveFight(new Fight());
-        // set enemy-card
-        myGameController.session.getActiveFight().setEnemyCard(stone.getCard());
         this.cardController.addMouseEventHandler(myGameController, fightScene);
     }
 }

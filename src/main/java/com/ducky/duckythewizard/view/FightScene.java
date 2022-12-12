@@ -1,5 +1,8 @@
 package com.ducky.duckythewizard.view;
 
+import com.ducky.duckythewizard.model.TextObject;
+import com.ducky.duckythewizard.model.color.GameColor;
+import com.ducky.duckythewizard.model.color.TrumpColor;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,8 +19,8 @@ public class FightScene {
     private AnchorPane newAnchorPane;
     private int fightSceneMidX;
     private int fightSceneMidY;
-    private ImageView imgViewCard1;
-    private ImageView imgViewCard2;
+    private ImageView imgViewCardStone;
+    private ImageView imgViewCardDucky;
     private Button exitButton;
     private Label exitLbl;
     public FightScene() {
@@ -27,8 +30,9 @@ public class FightScene {
         this.fightSceneMidX = GameConfig.WINDOW_WIDTH_FIGHT_SCENE / 2;
         this.fightSceneMidY = GameConfig.WINDOW_HEIGHT_FIGHT_SCENE / 2;
     }
-    public void renderFightScene(AnchorPane anchorPane) {
+    public void renderFightScene(AnchorPane anchorPane, GameColor trumpColorStone) {
         this.parentAnchorPane = anchorPane;
+        this.setBorderColor(trumpColorStone);
         if (!(this.parentAnchorPane.getChildren().get(this.parentAnchorPane.getChildren().size() - 1).equals(this.newAnchorPane))) {
             renderNewScene();
         } else {
@@ -58,12 +62,6 @@ public class FightScene {
         imgView.setImage(emptyImage);
         return imgView;
     }
-
-    public void renderCardImgPlayer(String cardFileName) {
-        Image cardImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(cardFileName)));
-        this.imgViewCard2.setImage(cardImage);
-        this.newAnchorPane.getChildren().add(this.imgViewCard2);
-    }
     /***********************************************************************************************************************/
 
     private int midFromParent() {
@@ -81,12 +79,12 @@ public class FightScene {
     }
 
     private void setImageViews() {
-        this.imgViewCard1 = new ImageView();
-        this.imgViewCard2 = new ImageView();
-        this.newAnchorPane.getChildren().add(renderCardImageViews(100, 110, this.imgViewCard1));
-        this.newAnchorPane.getChildren().add(renderCardImageViews(230, 110, this.imgViewCard2));
-        this.imgViewCard2.setPickOnBounds(true);
-        this.imgViewCard2.setPreserveRatio(true);
+        this.imgViewCardStone = new ImageView();
+        this.imgViewCardDucky = new ImageView();
+        this.newAnchorPane.getChildren().add(renderCardImageViews(100, 110, this.imgViewCardStone));
+        this.newAnchorPane.getChildren().add(renderCardImageViews(230, 110, this.imgViewCardDucky));
+        this.imgViewCardDucky.setPickOnBounds(true);
+        this.imgViewCardDucky.setPreserveRatio(true);
     }
 
     private void addExitButton() {
@@ -103,8 +101,18 @@ public class FightScene {
         this.exitLbl = new Label();
         this.exitLbl.setText("x");
         this.exitLbl.setLayoutX(368.0);
-        this.exitLbl.setLayoutY(14.0);
+        this.exitLbl.setLayoutY(0);
         this.newAnchorPane.getChildren().add(this.exitLbl);
+    }
+
+    private void setBorderColor(GameColor trumpColorStone) {
+        System.out.println("trump-color stone: " + trumpColorStone);
+        this.newAnchorPane.setStyle("-fx-border-color: " + trumpColorStone.getHexCode() + "; -fx-border-width: 5px;");
+    }
+
+    private Label addTrumpColorText(GameColor trumpColorStone) {
+        // TODO
+        return null;
     }
 
     public void endFightScene() {
@@ -115,12 +123,12 @@ public class FightScene {
         return newAnchorPane;
     }
 
-    public ImageView getImgViewCard1() {
-        return imgViewCard1;
+    public ImageView getImgViewCardStone() {
+        return imgViewCardStone;
     }
 
-    public ImageView getImgViewCard2() {
-        return imgViewCard2;
+    public ImageView getImgViewCardDucky() {
+        return imgViewCardDucky;
     }
 
     public Button getExitButton() {

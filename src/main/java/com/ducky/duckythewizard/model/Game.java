@@ -1,14 +1,13 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.model.colors.GameColor;
-import com.ducky.duckythewizard.model.colors.GameColorObject;
-import com.ducky.duckythewizard.model.colors.TrumpColor;
+import com.ducky.duckythewizard.model.card.Card;
+import com.ducky.duckythewizard.model.card.CardDeck;
+import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import com.ducky.duckythewizard.controller.CardController;
 import com.ducky.duckythewizard.controller.MovementController;
 import com.ducky.duckythewizard.view.FightScene;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
