@@ -67,7 +67,7 @@ public class CardController extends Controller {
             imgView.addEventFilter(MouseEvent.MOUSE_CLICKED, cardClicked);
         }
         fightScene.getExitLbl().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            gameCtrl.stopFight(fightScene);
+            gameCtrl.endCollision(fightScene);
             resetPlayerFightCard(fightScene);
         });
     }

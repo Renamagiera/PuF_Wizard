@@ -34,7 +34,7 @@ public class CollisionHandler {
 
                         Stone stone = (Stone)levelObjects[row][column];
                         if(stone.isActive()) {
-                            myGameController.startFight(stone);
+                            myGameController.startCollision(stone);
                         }
                     }
                 }

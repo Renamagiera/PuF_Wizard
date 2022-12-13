@@ -1,6 +1,7 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
+import com.ducky.duckythewizard.model.config.GameConfig;
 import com.ducky.duckythewizard.view.FightScene;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -20,6 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameController{
 
@@ -34,7 +36,6 @@ public class GameController{
     @FXML
     public AnchorPane emptyCardSlots;
     private GraphicsContext gc;
-
     @FXML
     private ImageView stone0;
     @FXML
@@ -50,17 +51,12 @@ public class GameController{
     @FXML
     private HBox heartContainer;
 
-
     private int windowWidth = this.session.getGameConfig().getWindowWidth();
     private int windowHeight = this.session.getGameConfig().getWindowHeight();
-
     private double cellWidth = this.session.getGameConfig().getLevel_cellWidth();
     private double cellHeight = this.session.getGameConfig().getLevel_cellHeight();
-
     private ArrayList<String> input = new ArrayList<>();
-
     private CollisionHandler collisionHandler;
-    private FightController fightController;
     private DuckySprite ducky;
     private MyAnimationTimer animationTimer;
 
@@ -73,7 +69,8 @@ public class GameController{
         //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
         this.session.createCardCtrlObj();
         this.session.createMovementCtrlObj();
-        //weitere Controller sollten hier dann folgen
+        this.session.createStoneCtrlObj();
+        this.session.createFightCtrlObj(this);
 
         // initialize cards: set card-anchor-pane, render hand-cards
         this.session.getCardCtrl().cardInit(emptyCardSlots);
@@ -82,8 +79,8 @@ public class GameController{
         Level level = new Level(levelGrid);
         session.objectGrid = level.getGameObjectGrid();
 
-        // search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
-        stones();
+        // initialize stones: search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
+        this.session.getStoneCtrl().initializeStones(this.levelGrid);
 
         mainCanvas.setHeight(windowHeight);
         mainCanvas.setWidth(windowWidth);
@@ -93,9 +90,6 @@ public class GameController{
 
         // initialize CollisionHandler
         collisionHandler = new CollisionHandler(this, session.objectGrid, cellHeight, cellWidth);
-
-        //initialize FightController
-        fightController = new FightController(this, session.getCardCtrl());
 
         // initialize font for texts that are shown
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
@@ -155,99 +149,12 @@ public class GameController{
         input.remove( code );
     }
 
-    // TODO stone-color-view-class
-    public void stones() {
-        addStonesToArrayList();
-        addRandomTrumpColorStone();
-        this.session.getCardCtrl().addCardToStones();
-        // color the stones to the trump-color
-        for (int i = 0; i < levelGrid.getChildren().size(); i++) {
-            for (int x = 0; x < session.getStoneArrayList().size(); x++) {
-                if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("stone" + x)) {
-                    Stone stone = session.getStoneArrayList().get(x);
-                    session.getStoneArrayList().get(x).setRandomTrumpColor(session.getGameColorObject().getRandomTrumpColor());
-                    ImageView imgView = (ImageView) levelGrid.getChildren().get(i);
-                    String stoneRandomTrumpColor = stone.getRandomTrumpColor().getName();
-                    if (!stoneRandomTrumpColor.equals("none")) {
-                        this.session.getGameColorObject().tintStone(imgView, stoneRandomTrumpColor);
-                    }
-                }
-            }
-        }
+    public void startCollision(Stone collisionStone) {
+        this.session.getFightCtrl().startFight(collisionStone);
     }
 
-
-    public void addStonesToArrayList() {
-        for (int i = 0; i < session.objectGrid.length; i++) {
-            for (int y = 0; y < session.objectGrid[i].length; y++) {
-                if (session.objectGrid[i][y] instanceof Stone) {
-                    session.stoneArrayList.add((Stone)session.objectGrid[i][y]);
-                }
-            }
-        }
-    }
-
-    public void addRandomTrumpColorStone() {
-        for (Stone stone : session.stoneArrayList) {
-            stone.setRandomTrumpColor(session.getGameColorObject().getRandomTrumpColor());
-        }
-    }
-
-    public void startFight(Stone stone) {
-        System.out.println("--> startFight, before IF");
-        if(session.getIsRunning()) {
-            System.out.println("--> startFight, inside IF");
-            System.out.println("FIGHT");
-            //animationTimer.stop();
-            session.toggleIsRunning();
-            // start new fight-scene, set fight scene visibility true
-            FightScene fightScene = this.session.getFightScene();
-            // start new fight-object
-            this.session.setActiveFight(new Fight(this.session.getGameColorObject()));
-            // set enemy-card and stone object to fight-object
-            this.session.getActiveFight().setStoneCard(stone.getCard());
-            this.session.getActiveFight().setStoneInFight(stone);
-            fightScene.renderFightScene(this.session.getRootAnchorPane(), this.session.getActiveFight().getStoneInFight().getRandomTrumpColor(), this.session.getGameColorObject());
-            // starting fight in new thread
-            Thread one = new Thread() {
-                public void run() {
-                    try {
-                        fightController.startFight(stone, session.getPlayer(), fightScene);
-                        //stopThread();
-                    } catch (Exception v) {
-                        System.out.println(v);
-                    }
-                }
-            };
-            one.start();
-        }
-    }
-
-    public void stopThread() {
-        animationTimer.resetStartingTime();
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                ducky.resetPlayerTimer();
-            }
-        });
-        //animationTimer.start();
-        session.toggleIsRunning();
-        System.out.println("Thread stopped, thread ID: " + Thread.currentThread().getName());
-    }
-
-    public void stopFight(FightScene fightScene){
-        System.out.println("----> stopFight");
-        if(!session.getIsRunning()) {
-            animationTimer.resetStartingTime();
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    ducky.resetPlayerTimer();
-                    fightScene.endFightScene();
-                }
-            });
-            session.toggleIsRunning();
-        }
+    public void endCollision(FightScene fightScene) {
+        this.session.getFightCtrl().stopFight(fightScene, animationTimer, ducky);
     }
 
     class MyAnimationTimer extends AnimationTimer

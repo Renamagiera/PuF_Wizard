@@ -1,11 +1,10 @@
 package com.ducky.duckythewizard.model;
 
+import com.ducky.duckythewizard.controller.*;
 import com.ducky.duckythewizard.model.card.Card;
 import com.ducky.duckythewizard.model.card.CardDeck;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
-import com.ducky.duckythewizard.controller.CardController;
-import com.ducky.duckythewizard.controller.MovementController;
 import com.ducky.duckythewizard.view.FightScene;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -37,6 +36,8 @@ public class Game {
 
     private CardController cardCtrl;
     private MovementController movementCtrl;
+    private StoneController stoneCtrl;
+    private FightController fightCtrl;
 
     public Game(){
         isRunning = true;
@@ -49,7 +50,6 @@ public class Game {
         //System.out.println("*** Game-object is created.");
     }
     public boolean getIsRunning(){
-
         return isRunning;
     }
     public void toggleIsRunning() {
@@ -64,19 +64,28 @@ public class Game {
     public void createMovementCtrlObj() {
         this.movementCtrl = new MovementController(this);
     }
+    public void createStoneCtrlObj() {
+        this.stoneCtrl = new StoneController(this);
+    }
+    public void createFightCtrlObj(GameController gameCtrl) {
+        this.fightCtrl = new FightController(gameCtrl, this);
+    }
 
     public GameConfig getGameConfig() {
-
         return this.gameConfig;
     }
 
     public CardController getCardCtrl() {
-
         return this.cardCtrl;
     }
     public MovementController getMovementCtrl() {
-
         return this.movementCtrl;
+    }
+    public StoneController getStoneCtrl() {
+        return stoneCtrl;
+    }
+    public FightController getFightCtrl() {
+        return fightCtrl;
     }
 
     public CardDeck getCardDeck() {
