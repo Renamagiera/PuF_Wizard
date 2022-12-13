@@ -20,7 +20,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GameController{
 
@@ -37,15 +36,15 @@ public class GameController{
     private GraphicsContext gc;
 
     @FXML
-    private ImageView rock1;
+    private ImageView stone0;
     @FXML
-    private ImageView rock2;
+    private ImageView stone1;
     @FXML
-    private ImageView rock3;
+    private ImageView stone2;
     @FXML
-    private ImageView rock4;
+    private ImageView stone3;
     @FXML
-    private ImageView rock5;
+    private ImageView stone4;
     @FXML
     private Label timerLabel;
     @FXML
@@ -159,15 +158,19 @@ public class GameController{
     // TODO stone-color-view-class
     public void stones() {
         addStonesToArrayList();
+        addRandomTrumpColorStone();
         this.session.getCardCtrl().addCardToStones();
-        // color the stones
+        // color the stones to the trump-color
         for (int i = 0; i < levelGrid.getChildren().size(); i++) {
-            for (int x = 1; x <= session.getStoneArrayList().size(); x++) {
-                if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("rock" + x)) {
+            for (int x = 0; x < session.getStoneArrayList().size(); x++) {
+                if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("stone" + x)) {
+                    Stone stone = session.getStoneArrayList().get(x);
+                    session.getStoneArrayList().get(x).setRandomTrumpColor(session.getGameColorObject().getRandomTrumpColor());
                     ImageView imgView = (ImageView) levelGrid.getChildren().get(i);
-                    String stoneColor = session.getStoneArrayList().get(x - 1).getCard().getColor().getHexCode();
-                    Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/ducky/duckythewizard/images/forest/redMask.png")));
-                    imgView.setImage(img);
+                    String stoneRandomTrumpColor = stone.getRandomTrumpColor().getName();
+                    if (!stoneRandomTrumpColor.equals("none")) {
+                        this.session.getGameColorObject().tintStone(imgView, stoneRandomTrumpColor);
+                    }
                 }
             }
         }
@@ -184,6 +187,12 @@ public class GameController{
         }
     }
 
+    public void addRandomTrumpColorStone() {
+        for (Stone stone : session.stoneArrayList) {
+            stone.setRandomTrumpColor(session.getGameColorObject().getRandomTrumpColor());
+        }
+    }
+
     public void startFight(Stone stone) {
         System.out.println("--> startFight, before IF");
         if(session.getIsRunning()) {
@@ -194,10 +203,11 @@ public class GameController{
             // start new fight-scene, set fight scene visibility true
             FightScene fightScene = this.session.getFightScene();
             // start new fight-object
-            this.session.setActiveFight(new Fight());
-            // set enemy-card to fight-object
+            this.session.setActiveFight(new Fight(this.session.getGameColorObject()));
+            // set enemy-card and stone object to fight-object
             this.session.getActiveFight().setStoneCard(stone.getCard());
-            fightScene.renderFightScene(this.session.getRootAnchorPane(), this.session.getActiveFight().getStoneCard().getColor());
+            this.session.getActiveFight().setStoneInFight(stone);
+            fightScene.renderFightScene(this.session.getRootAnchorPane(), this.session.getActiveFight().getStoneInFight().getRandomTrumpColor(), this.session.getGameColorObject());
             // starting fight in new thread
             Thread one = new Thread() {
                 public void run() {

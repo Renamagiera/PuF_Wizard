@@ -55,8 +55,8 @@ public class CardController extends Controller {
                             gameCtrl.session.getActiveFight().setPlayerCard(clickedCard);
                             // render an empty card image first
                             gameCtrl.session.getCardCtrl().removeCard(clickPosition);
-                            // render clicked card at click-position
-                            gameCtrl.session.getCardDeck().renderFightCard(clickedCard, fightScene, "player");
+                            // render clicked card to fight-scene
+                            gameCtrl.session.getCardDeck().renderFightCard(clickedCard, fightScene, "ducky");
                             // determine Winner: take Card from handCards {add new from deck | add empty}
                             removeAllClickHandlers();
                         }

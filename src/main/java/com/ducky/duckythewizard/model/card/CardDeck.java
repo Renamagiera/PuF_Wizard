@@ -103,13 +103,11 @@ public class CardDeck {
     }
 
     public void renderFightCard(Card card, FightScene fightScene, String player) {
-        ImageView imgView = new ImageView();
         if (player.equals("ducky")) {
-            imgView = fightScene.getImgViewCardDucky();
+            newImage(card.getImgFileName(), fightScene.getImgViewCardDucky());
         } else if (player.equals("stone")) {
-            imgView = fightScene.getImgViewCardStone();
+            newImage(card.getImgFileName(), fightScene.getImgViewCardStone());
         }
-        newImage(card.getImgFileName(), imgView);
     }
 
     public Card removeHandCard(int handCardPosition, ArrayList<Card> handCards, boolean newCardFromDeck) {

@@ -2,7 +2,7 @@ package com.ducky.duckythewizard.view;
 
 import com.ducky.duckythewizard.model.TextObject;
 import com.ducky.duckythewizard.model.color.GameColor;
-import com.ducky.duckythewizard.model.color.TrumpColor;
+import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,6 +23,12 @@ public class FightScene {
     private ImageView imgViewCardDucky;
     private Button exitButton;
     private Label exitLbl;
+    private GameColorObject gameColorObject;
+    private GameColor trumpColorObject;
+    private String trumpColorHexCode;
+    private String trumpColorName;
+    private Label trumpColorLabel;
+    private static final String FONT_SIZE_LABEL_TRUMP_COLOR = "20px";
     public FightScene() {
         // new AnchorPane, set visibility false
         this.newAnchorPane = new AnchorPane();
@@ -30,13 +36,20 @@ public class FightScene {
         this.fightSceneMidX = GameConfig.WINDOW_WIDTH_FIGHT_SCENE / 2;
         this.fightSceneMidY = GameConfig.WINDOW_HEIGHT_FIGHT_SCENE / 2;
     }
-    public void renderFightScene(AnchorPane anchorPane, GameColor trumpColorStone) {
+    public void renderFightScene(AnchorPane anchorPane, GameColor trumpColorObject, GameColorObject gameColorObject) {
         this.parentAnchorPane = anchorPane;
-        this.setBorderColor(trumpColorStone);
+        this.gameColorObject = gameColorObject;
+        this.trumpColorObject = trumpColorObject;
+        this.trumpColorHexCode = trumpColorObject.getHexCode();
+        this.trumpColorName = trumpColorObject.getName();
+        this.trumpColorLabel = labelTrumpColor();
+        this.newAnchorPane.getChildren().add(this.trumpColorLabel);
+        this.addExitLabel();
+        this.setBorderColor();
         if (!(this.parentAnchorPane.getChildren().get(this.parentAnchorPane.getChildren().size() - 1).equals(this.newAnchorPane))) {
             renderNewScene();
         } else {
-            setVisibilityTrue();
+            startFightScene();
         }
     }
 
@@ -45,16 +58,19 @@ public class FightScene {
         this.newAnchorPane.setId("fightScene");
         this.setLayouts();
         this.setImageViews();
-        this.addExitLabel();
         //this.addExitButton();
         this.parentAnchorPane.getChildren().add(this.newAnchorPane);
     }
 
-    private void setVisibilityTrue() {
+    private void startFightScene() {
         this.newAnchorPane.setVisible(true);
     }
+    public void endFightScene() {
+        this.newAnchorPane.getChildren().remove(this.trumpColorLabel);
+        this.newAnchorPane.setVisible(false);
+    }
 
-    // TODO das sind eigentlich Methoden aus der CardDeck-Klasse, evtl. auslagern in eine eigene CardImgView-Klasse !!!
+    // TODO das sind eigentlich Methoden aus der CardDeck-Klasse, evtl. auslagern in eine eigene CardImgView-Klasse ???
     private ImageView renderCardImageViews(int layoutX, int layoutY, ImageView imgView) {
         Image emptyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
         imgView.setLayoutX(layoutX);
@@ -105,18 +121,21 @@ public class FightScene {
         this.newAnchorPane.getChildren().add(this.exitLbl);
     }
 
-    private void setBorderColor(GameColor trumpColorStone) {
-        System.out.println("trump-color stone: " + trumpColorStone);
-        this.newAnchorPane.setStyle("-fx-border-color: " + trumpColorStone.getHexCode() + "; -fx-border-width: 5px;");
+    private void setBorderColor() {
+        this.newAnchorPane.setStyle("-fx-border-color: " + this.trumpColorHexCode + "; -fx-border-width: 3px;");
     }
 
-    private Label addTrumpColorText(GameColor trumpColorStone) {
-        // TODO
-        return null;
-    }
-
-    public void endFightScene() {
-        this.newAnchorPane.setVisible(false);
+    private Label labelTrumpColor() {
+        TextObject textObject = new TextObject();
+        if (!trumpColorName.equals("none")) {
+            textObject.getTextLabel().setText("Trump color is " + this.trumpColorName);
+            textObject.setStyle(FONT_SIZE_LABEL_TRUMP_COLOR, this.trumpColorHexCode);
+        } else {
+            textObject.getTextLabel().setText("No trump color");
+            textObject.setStyleDefaultWhite(FONT_SIZE_LABEL_TRUMP_COLOR);
+        }
+        textObject.centerLabelFightScene(20);
+        return textObject.getTextLabel();
     }
 
     public AnchorPane getNewAnchorPane() {
@@ -137,5 +156,9 @@ public class FightScene {
 
     public Label getExitLbl() {
         return exitLbl;
+    }
+
+    public void setTrumpColorObject(GameColor trumpColorObject) {
+        this.trumpColorObject = trumpColorObject;
     }
 }
