@@ -76,10 +76,15 @@ public class GameColorObject {
     }
 
     private void setRgbMap() {
-        RGB_MAP.put("red", Color.rgb(255,102,102));
-        RGB_MAP.put("blue", Color.rgb(102,204,255));
-        RGB_MAP.put("green", Color.rgb(145,255,102));
-        RGB_MAP.put("yellow", Color.rgb(255,227,102));
+        //
+        RGB_MAP.put("yellow", Color.rgb(255,102,102));
+        //
+        RGB_MAP.put("blue", Color.rgb(100,205,124));
+        //
+        RGB_MAP.put("green", Color.rgb(255,255,150));
+        //
+        RGB_MAP.put("red", Color.rgb(208,32,144));
+        //
         RGB_MAP.put("none", Color.rgb(255,255,255));
     }
 
@@ -118,6 +123,24 @@ public class GameColorObject {
 
         ColorAdjust colorAdjust = new ColorAdjust();
 
+/*        //Color test = Color.hsb(180,0,0);
+        //Color test2 = Color.rgb(255,255,0);
+        //Color test2 = Color.rgb(255,255,0);
+        //Color test2 = Color.rgb(255,255,0);
+        // red:
+        Color red = Color.rgb(208,32,144);
+        //Color test2 = Color.rgb(255,52,179);
+        //Color test2 = Color.rgb(238,130,238);
+        //Color test2 = Color.rgb(255,20,147);
+        // blue:
+        //Color test2 = Color.rgb(144,238,144);
+        //Color test2 = Color.rgb(50,205,50);
+        Color blue = Color.rgb(100,205,124);
+        // green:
+        Color green = Color.rgb(255,255,150);
+        //yellow:
+        Color yellow = Color.rgb(255,102,102);*/
+
         double hue = map((targetStoneColor.getHue() + 180) % 360, 0, 360, -1, 1);
         double saturation = targetStoneColor.getSaturation();
         double brightness = map(targetStoneColor.getBrightness(), 0, 1, -1,0);
@@ -125,8 +148,6 @@ public class GameColorObject {
         colorAdjust.setHue(hue);
         colorAdjust.setSaturation(saturation);
         colorAdjust.setBrightness(brightness);
-
-        //System.out.println("Target color: " + targetStoneColor + ", hue 0..360: " + targetStoneColor.getHue() + ", hue 0..1: " + hue);
 
         imageView.setEffect(colorAdjust);
     }
