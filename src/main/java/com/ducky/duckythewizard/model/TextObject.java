@@ -1,21 +1,22 @@
 package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.color.GameColorObject;
+import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import org.w3c.dom.Text;
 
 public class TextObject {
     private String newText;
     private String fontColorHexCode;
     private String fontSize;
-    private String textLabelId;
+    private String textObjectId;
+    private Label textLabel;
     private GameColorObject gameColorObject;
 
-    public TextObject(String newText, String fontColorHexCode, String fontSize) {
-        this.newText = newText;
-        this.fontColorHexCode = fontColorHexCode;
-        this.fontSize = fontSize;
+    public TextObject() {
+        this.textLabel = new Label();
     }
 
     public void setNewText(String newText) {
@@ -31,36 +32,38 @@ public class TextObject {
     }
 
 
-    public void setTextLabelId(String id) {
-        this.textLabelId = id;
+    public void setTextObjectId(String id) {
+        this.textObjectId = id;
     }
 
-    public String getTextLabelId() {
-        return textLabelId;
+    public String getTextObjectId() {
+        return textObjectId;
     }
 
     public String getNewText() {
         return newText;
     }
 
-    public Label newTextCenteredX(AnchorPane anchorPane, int yPosition) {
-        Label newTextLabel = new Label();
-        newTextLabel.setPrefWidth(anchorPane.getWidth());
-        newTextLabel.setAlignment(Pos.CENTER);
-        newTextLabel.setLayoutY(yPosition);
-        addTextLabel(newTextLabel, yPosition);
-        return newTextLabel;
+    public Label getTextLabel() {
+        return textLabel;
     }
 
-    public void addTextToNodeCustomCoordinates(AnchorPane anchorPane, int xPosition, int yPosition) {
-        Label newTextLabel = new Label();
-        newTextLabel.setLayoutX(xPosition);
-        addTextLabel(newTextLabel, yPosition);
+    public void setStyle(String fontSize, String fontColorHexCode) {
+        this.textLabel.setStyle("-fx-font-size: " + fontSize + "; -fx-text-fill: " + fontColorHexCode + ";");
     }
 
-    private void addTextLabel(Label label, int yPosition) {
-        label.setLayoutY(yPosition);
-        label.setStyle("-fx-font-size: " + this.fontSize + "; -fx-text-fill: " + this.fontColorHexCode);
-        label.setText(this.newText);
+    public void setStyleDefaultWhite(String fontSize) {
+        this.textLabel.setStyle("-fx-font-size: " + fontSize + ";");
+    }
+
+    public void centerLabelFightScene(int yPosition) {
+        this.textLabel.setPrefWidth(GameConfig.WINDOW_WIDTH_FIGHT_SCENE);
+        this.textLabel.setAlignment(Pos.CENTER);
+        this.textLabel.setLayoutY(yPosition);
+    }
+
+    public void customCoordinates(int xPosition, int yPosition) {
+        this.textLabel.setLayoutX(xPosition);
+        this.textLabel.setLayoutY(yPosition);
     }
 }

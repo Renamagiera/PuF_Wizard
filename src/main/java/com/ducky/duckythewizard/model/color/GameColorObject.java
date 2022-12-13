@@ -1,5 +1,10 @@
 package com.ducky.duckythewizard.model.color;
 
+import javafx.scene.effect.ColorAdjust;
+
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +16,7 @@ public class GameColorObject {
     private ArrayList<GameColor> layoutColors;
     private static final Map<String, GameColor> SPECIAL_CARDS = new HashMap<>();
     private static final Map<String , String> HEX_CODES = new HashMap<>();
-    public Map<String, GameColor> getTrumpColorsSpecialCards() { return SPECIAL_CARDS; }
+    private static final Map<String, Color> RGB_MAP = new HashMap<>();
     private int colorAmount;
 
     public GameColorObject() {
@@ -22,6 +27,7 @@ public class GameColorObject {
         addLayoutColorsToList();
         setSpecialCardsMap();
         setHexCodesToMap();
+        setRgbMap();
     }
 
     // get Color Objects
@@ -47,10 +53,10 @@ public class GameColorObject {
     private void addLayoutColorsToList() {
         this.layoutColors = new ArrayList<>(trumpColors);
         this.layoutColors.remove(this.layoutColors.size() - 1);
-        layoutColors.add(this.layoutColorObject.getWhite());
-        layoutColors.add(this.layoutColorObject.getBlack());
-        layoutColors.add(this.layoutColorObject.getBrown());
-        layoutColors.add(this.layoutColorObject.getOrange());
+        this.layoutColors.add(this.layoutColorObject.getWhite());
+        this.layoutColors.add(this.layoutColorObject.getBlack());
+        this.layoutColors.add(this.layoutColorObject.getBrown());
+        this.layoutColors.add(this.layoutColorObject.getOrange());
     }
 
     private void setSpecialCardsMap() {
@@ -69,13 +75,20 @@ public class GameColorObject {
         HEX_CODES.put("orange", "#D68139");
     }
 
+    private void setRgbMap() {
+        RGB_MAP.put("red", Color.rgb(255,102,102));
+        RGB_MAP.put("blue", Color.rgb(102,204,255));
+        RGB_MAP.put("green", Color.rgb(145,255,102));
+        RGB_MAP.put("yellow", Color.rgb(255,227,102));
+        RGB_MAP.put("none", Color.rgb(255,255,255));
+    }
+
     public String getHexCodeFromMap(String color) {
         return HEX_CODES.get(color);
     }
 
-    public String getRandomTrumpColor() {
-        GameColor randomColor = trumpColors.get((int) Math.floor(Math.random()*(this.colorAmount)));
-        return HEX_CODES.get(randomColor.getName());
+    public GameColor getRandomTrumpColor() {
+        return trumpColors.get((int) Math.floor(Math.random()*(this.colorAmount)));
     }
 
     public void toStringTrumpColors() {
@@ -88,5 +101,37 @@ public class GameColorObject {
         for (GameColor color : layoutColors) {
             System.out.println("color name: " + color.getName());
         }
+    }
+
+    public void tintStone(ImageView imageView, String stoneColor) {
+        System.out.println("stone color should be: " + stoneColor);
+        Color targetStoneColor = RGB_MAP.get("none");
+        if (stoneColor.equals("red")) {
+            targetStoneColor = RGB_MAP.get("red");
+        } else if (stoneColor.equals("blue")) {
+            targetStoneColor = RGB_MAP.get("blue");
+        } else if (stoneColor.equals("green")) {
+            targetStoneColor = RGB_MAP.get("green");
+        } else if (stoneColor.equals("yellow")) {
+            targetStoneColor = RGB_MAP.get("yellow");
+        }
+
+        ColorAdjust colorAdjust = new ColorAdjust();
+
+        double hue = map((targetStoneColor.getHue() + 180) % 360, 0, 360, -1, 1);
+        double saturation = targetStoneColor.getSaturation();
+        double brightness = map(targetStoneColor.getBrightness(), 0, 1, -1,0);
+
+        colorAdjust.setHue(hue);
+        colorAdjust.setSaturation(saturation);
+        colorAdjust.setBrightness(brightness);
+
+        //System.out.println("Target color: " + targetStoneColor + ", hue 0..360: " + targetStoneColor.getHue() + ", hue 0..1: " + hue);
+
+        imageView.setEffect(colorAdjust);
+    }
+
+    public static double map(double value, double start, double stop, double targetStart, double targetStop) {
+        return targetStart + (targetStop - targetStart) * ((value - start) / (stop - start));
     }
 }

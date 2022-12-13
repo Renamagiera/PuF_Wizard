@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg824"
+   width="27"
+   height="27"
+   viewBox="0 0 27 27"
+   sodipodi:docname="rock_color.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs828" />
+  <sodipodi:namedview
+     id="namedview826"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="22.627417"
+     inkscape:cx="21.743533"
+     inkscape:cy="12.263883"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g830" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g830">
+    <image
+       width="27"
+       height="27"
+       preserveAspectRatio="none"
+       style="image-rendering:optimizeSpeed"
+       xlink:href="rock_50px_cropped.png"
+       id="image832"
+       inkscape:export-filename="C:\PuF\PuF_Wizard\src\main\resources\com\ducky\duckythewizard\images\forest\redMask.png"
+       inkscape:export-xdpi="177.77777"
+       inkscape:export-ydpi="177.77777" />
+    <path
+       style="fill:#ff0000;fill-opacity:0.40000001;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.7"
+       d="m 3.9554616,5.9548033 -0.0088,6.3595257 -0.0025,1.203463 0.0065,0.4456 -1.993497,-0.0075 -3.41e-4,1.500628 -0.0085,0.500629 -0.99113795,0.0039 -3.41e-4,6.9915 0.66980295,-0.0039 0.333395,-0.0043 6.28e-4,1.008835 0.473679,0.0025 0.528653,-0.0065 -0.0078,1.002829 1.003853,-0.0036 0.0078,1.009463 16.9856184,-0.01206 -0.0014,-0.987205 1.998314,-0.02338 -0.358823,-0.589506 0.358823,0.589506 0.0025,-2.981331 0.999606,-0.0102 0.01445,-0.980756 0.98364,-0.02022 0.0099,-0.991111 0.994711,-0.0027 c -0.02535,-3.471995 -0.0072,-8.391278 0.0092,-11.5896786 l -0.01693,-0.3977555 -1.992475,-0.00425 0.0019,-0.9992648 -1.990717,0.010696 -0.01274,-1.0080999 -0.9957,3.405e-4 0.0019,-1.0045344 -3.001203,0.00577 -0.0056,-1.0038528 -0.99043,-0.00747 -0.0099,-0.9917932 -0.9957,0.00493 -0.0092,-1.0026732 -5.57867,-6.82e-4 -1.4101564,-0.00328 -9.75e-4,1.0042472 -0.999659,-0.00684 -0.0095,1.0035654 -0.988622,0.00131 -0.01297,1.0006817 -1.18716,-0.0043 -0.802772,0.00322 -0.0032,0.9991078 z"
+       id="path1142"
+       sodipodi:nodetypes="ccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+       inkscape:export-filename="C:\PuF\PuF_Wizard\src\main\resources\com\ducky\duckythewizard\images\forest\redMask.png"
+       inkscape:export-xdpi="177.77777"
+       inkscape:export-ydpi="177.77777" />
+  </g>
+</svg>
