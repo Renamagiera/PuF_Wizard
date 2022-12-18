@@ -11,6 +11,7 @@ public class GameConfig {
 
     public static GameConfigCards gameConfigCards = new GameConfigCards();
     public static final String EMPTY_CARD_FILENAME = gameConfigCards.getEmptyCardFilename();
+    public static final String BACK_CARD_FILENAME = gameConfigCards.getBackCardFilename();
     public static final String WIZARD_FILENAME = gameConfigCards.getWizardFilename();
     public static final int AMOUNT_WIZARDS = gameConfigCards.getAmountWizards();
     public static int WIZARD_POINTS = gameConfigCards.getWizardPoints();

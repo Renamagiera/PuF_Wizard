@@ -1,17 +1,14 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
-import com.ducky.duckythewizard.model.config.GameConfig;
-import com.ducky.duckythewizard.view.FightScene;
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -19,9 +16,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GameController{
 
@@ -50,6 +46,7 @@ public class GameController{
     private Label timerLabel;
     @FXML
     private HBox heartContainer;
+    @FXML
 
     private int windowWidth = this.session.getGameConfig().getWindowWidth();
     private int windowHeight = this.session.getGameConfig().getWindowHeight();
@@ -67,10 +64,14 @@ public class GameController{
         this.session.setRootAnchorPane(this.rootBox);
 
         //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
+        this.session.createGameCtrlObj(this);
         this.session.createCardCtrlObj();
         this.session.createMovementCtrlObj();
         this.session.createStoneCtrlObj();
-        this.session.createFightCtrlObj(this);
+        this.session.createFightCtrlObj();
+
+        //zum Start des Games werden views erstellt
+        this.session.createGameSceneObj();
 
         // initialize cards: set card-anchor-pane, render hand-cards
         this.session.getCardCtrl().cardInit(emptyCardSlots);
@@ -123,7 +124,7 @@ public class GameController{
     }
 
     @FXML
-    public void handleOnKeyPressed(KeyEvent keyEvent) throws IOException {
+    public void handleOnKeyPressed(KeyEvent keyEvent) {
         String code = keyEvent.getCode().toString();
         if(code.equals("SPACE")){
             session.toggleIsRunning();
@@ -153,8 +154,8 @@ public class GameController{
         this.session.getFightCtrl().startFight(collisionStone);
     }
 
-    public void endCollision(FightScene fightScene) {
-        this.session.getFightCtrl().stopFight(fightScene, animationTimer, ducky);
+    public void endCollision() {
+        this.session.getFightCtrl().stopFight(animationTimer, ducky);
     }
 
     class MyAnimationTimer extends AnimationTimer

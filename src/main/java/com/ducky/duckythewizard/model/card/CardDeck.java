@@ -3,7 +3,7 @@ package com.ducky.duckythewizard.model.card;
 import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
-import com.ducky.duckythewizard.view.FightScene;
+import com.ducky.duckythewizard.model.FightScene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import java.util.*;
 
 public class CardDeck {
+    // how data can be accessed, created, stored and changed
 
     private static final ArrayList<Card> CARD_DECK = new ArrayList<>();
     private static final Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();

@@ -3,6 +3,7 @@ package com.ducky.duckythewizard.controller;
 import java.io.IOException;
 import java.util.Objects;
 
+import com.ducky.duckythewizard.view.GameScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,9 +34,7 @@ public class HelpSceneController extends SceneController {
     }
 
     public void startGame(ActionEvent event) throws IOException {
-        // Britta's Code zum Starten des Games
         AnchorPane newRoot = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/game-view.fxml")));
-        //Stage primaryStage = (Stage) next3.getScene().getWindow();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.getScene().setRoot(newRoot);
         newRoot.requestFocus();

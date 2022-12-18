@@ -6,7 +6,7 @@ public class TrumpColor {
     private static final GameColor GREEN = new GameColor("green", "#91ff66");
     private static final GameColor YELLOW = new GameColor("yellow", "#ffe366");
     private static final GameColor WIZARD = new GameColor("wizard", "null");
-    private static final GameColor NONE = new GameColor("none", "null");
+    private static final GameColor NONE = new GameColor("none", "#ffffff");
     private int colorAmount;
 
     public TrumpColor() {}
