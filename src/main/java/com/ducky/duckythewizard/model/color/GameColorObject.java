@@ -109,7 +109,6 @@ public class GameColorObject {
     }
 
     public void tintStone(ImageView imageView, String stoneColor) {
-        System.out.println("stone color should be: " + stoneColor);
         Color targetStoneColor = RGB_MAP.get("none");
         if (stoneColor.equals("red")) {
             targetStoneColor = RGB_MAP.get("red");

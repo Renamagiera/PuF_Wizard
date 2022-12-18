@@ -1,41 +1,32 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
-import com.ducky.duckythewizard.view.FightScene;
 import javafx.application.Platform;
 
 public class FightController extends Controller {
-    GameController myGameController;
-    public FightController(GameController gameController, Game game){
+    public FightController(Game game){
         super(game);
-        myGameController = gameController;
-    }
-
-    public void setFightHandler(Stone stone, Player player, FightScene fightScene) {
-        stone.setInactive();
-        this.getSession().getCardCtrl().addMouseEventHandler(myGameController, fightScene);
     }
 
     public void startFight(Stone stone) {
-        System.out.println("--> startFight, before IF");
-        if(myGameController.session.getIsRunning()) {
-            System.out.println("--> startFight, inside IF");
-            System.out.println("FIGHT");
-            //animationTimer.stop();
-            myGameController.session.toggleIsRunning();
-            // start new fight-scene, set fight scene visibility true
-            FightScene fightScene = myGameController.session.getFightScene();
+        if(this.getSession().getIsRunning()) {
+            this.getSession().toggleIsRunning();
             // start new fight-object
-            myGameController.session.setActiveFight(new Fight(myGameController.session.getGameColorObject()));
+            this.getSession().setActiveFight(new Fight(this.getSession().getGameColorObject()));
             // set enemy-card and stone object to fight-object
-            myGameController.session.getActiveFight().setStoneCard(stone.getCard());
-            myGameController.session.getActiveFight().setStoneInFight(stone);
-            fightScene.renderFightScene(myGameController.session.getRootAnchorPane(), myGameController.session.getActiveFight().getStoneInFight().getRandomTrumpColor(), myGameController.session.getGameColorObject());
+            this.getSession().getActiveFight().setStoneCard(stone.getCard());
+            this.getSession().getActiveFight().setStoneInFight(stone);
+
+            this.getSession().getFightScene().renderFightScene(
+                    this.getSession().getPlayScene().getRootAnchorPaneGame(),
+                    this.getSession().getActiveFight().getStoneInFight().getRandomTrumpColor(),
+                    this.getSession().getActiveFight());
+
             // starting fight in new thread
             Thread one = new Thread() {
                 public void run() {
                     try {
-                        setFightHandler(stone, myGameController.session.getPlayer(), fightScene);
+                        setFightHandler(stone, getSession().getPlayer());
                         //stopThread();
                     } catch (Exception v) {
                         System.out.println(v);
@@ -46,18 +37,23 @@ public class FightController extends Controller {
         }
     }
 
-    public void stopFight(FightScene fightScene, GameController.MyAnimationTimer animationTimer, DuckySprite ducky){
+    public void setFightHandler(Stone stone, Player player) {
+        stone.setInactive();
+        this.getSession().getCardCtrl().addMouseEventHandler();
+    }
+
+    public void stopFight(GameController.MyAnimationTimer animationTimer, DuckySprite ducky){
         System.out.println("----> stopFight");
-        if(!myGameController.session.getIsRunning()) {
+        if(!this.getSession().getIsRunning()) {
             animationTimer.resetStartingTime();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     ducky.resetPlayerTimer();
-                    fightScene.endFightScene();
+                    getSession().getFightScene().endFightScene();
                 }
             });
-            myGameController.session.toggleIsRunning();
+            this.getSession().toggleIsRunning();
         }
     }
 }

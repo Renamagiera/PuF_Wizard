@@ -20,6 +20,7 @@ public class StoneController extends Controller {
         tintStones(levelGrid);
         this.getSession().getCardCtrl().addCardToStones();
     }
+
     private void addStonesToArrayList() {
         for (int i = 0; i < this.getSession().objectGrid.length; i++) {
             for (int y = 0; y < this.getSession().objectGrid[i].length; y++) {

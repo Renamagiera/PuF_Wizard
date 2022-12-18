@@ -5,7 +5,7 @@ import com.ducky.duckythewizard.model.card.Card;
 import com.ducky.duckythewizard.model.card.CardDeck;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
-import com.ducky.duckythewizard.view.FightScene;
+import com.ducky.duckythewizard.view.GameScene;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 
@@ -17,7 +17,6 @@ public class Game {
     private Player player; //Attribut für Daten zum Spieler selbst (Name etc.)
     private Card clickedCardFight;
     private Fight activeFight;
-    private FightScene fightScene;
     //private Sprite ducky = new DuckySprite(5, collisionHandler); //Attribut für Player-Sprite
     private AnchorPane rootAnchorPane;
     private CardDeck cardDeck;
@@ -32,8 +31,10 @@ public class Game {
     private Scene startScene;
     private Scene deathScene;
     private Scene winScene;
-    private Scene playScene;
+    private GameScene playScene;
+    private FightScene fightScene;
 
+    private GameController gameCtrl;
     private CardController cardCtrl;
     private MovementController movementCtrl;
     private StoneController stoneCtrl;
@@ -46,18 +47,21 @@ public class Game {
         this.cardDeck = new CardDeck(this.gameColorObject);
         this.player = new Player(this.cardDeck);
         this.stoneArrayList = new ArrayList<>();
-        this.fightScene = new FightScene();
+        this.fightScene = new FightScene(this.gameColorObject, this.getCardCtrl());
         //System.out.println("*** Game-object is created.");
     }
     public boolean getIsRunning(){
         return isRunning;
     }
     public void toggleIsRunning() {
-        System.out.println("--> toggleIsRunning");
+        // System.out.println("--> toggleIsRunning");
         isRunning = !isRunning;
     }
 
     // create anstatt set, weil hier ein neues Controller-Objekt erstellt wird
+    public void createGameCtrlObj(GameController gameCtrl) {
+        this.gameCtrl = gameCtrl;
+    }
     public void createCardCtrlObj() {
         this.cardCtrl = new CardController(this);
     }
@@ -67,14 +71,22 @@ public class Game {
     public void createStoneCtrlObj() {
         this.stoneCtrl = new StoneController(this);
     }
-    public void createFightCtrlObj(GameController gameCtrl) {
-        this.fightCtrl = new FightController(gameCtrl, this);
+    public void createFightCtrlObj() {
+        this.fightCtrl = new FightController(this);
+    }
+
+    // create Scenes ?
+    public void createGameSceneObj() {
+        this.playScene = new GameScene(this.rootAnchorPane);
     }
 
     public GameConfig getGameConfig() {
         return this.gameConfig;
     }
 
+    public GameController getGameCtrl() {
+        return gameCtrl;
+    }
     public CardController getCardCtrl() {
         return this.cardCtrl;
     }
@@ -86,6 +98,10 @@ public class Game {
     }
     public FightController getFightCtrl() {
         return fightCtrl;
+    }
+
+    public GameScene getPlayScene() {
+        return this.playScene;
     }
 
     public CardDeck getCardDeck() {

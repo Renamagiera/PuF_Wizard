@@ -1,14 +1,15 @@
-package com.ducky.duckythewizard.view;
+package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.model.TextObject;
+import com.ducky.duckythewizard.controller.CardController;
+import com.ducky.duckythewizard.controller.GameController;
 import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+
 import java.net.URL;
 import java.util.Objects;
 
@@ -17,34 +18,39 @@ public class FightScene {
     //public int ID;
     private AnchorPane parentAnchorPane;
     private AnchorPane newAnchorPane;
+    private CardController cardCtrl;
+    private Fight activeFight;
     private int fightSceneMidX;
     private int fightSceneMidY;
     private ImageView imgViewCardStone;
     private ImageView imgViewCardDucky;
-    private Button exitButton;
     private Label exitLbl;
     private GameColorObject gameColorObject;
     private GameColor trumpColorObject;
     private String trumpColorHexCode;
     private String trumpColorName;
     private Label trumpColorLabel;
+    private Label cardChooseTextLabel;
     private static final String FONT_SIZE_LABEL_TRUMP_COLOR = "20px";
-    public FightScene() {
+    public FightScene(GameColorObject gameColorObject, CardController cardCtrl) {
         // new AnchorPane, set visibility false
         this.newAnchorPane = new AnchorPane();
         this.newAnchorPane.setVisible(false);
+        this.gameColorObject = gameColorObject;
+        this.cardCtrl = cardCtrl;
         this.fightSceneMidX = GameConfig.WINDOW_WIDTH_FIGHT_SCENE / 2;
         this.fightSceneMidY = GameConfig.WINDOW_HEIGHT_FIGHT_SCENE / 2;
     }
-    public void renderFightScene(AnchorPane anchorPane, GameColor trumpColorObject, GameColorObject gameColorObject) {
+    public void renderFightScene(AnchorPane anchorPane, GameColor trumpColorObject, Fight fight) {
         this.parentAnchorPane = anchorPane;
-        this.gameColorObject = gameColorObject;
+        this.activeFight = fight;
         this.trumpColorObject = trumpColorObject;
         this.trumpColorHexCode = trumpColorObject.getHexCode();
         this.trumpColorName = trumpColorObject.getName();
         this.trumpColorLabel = labelTrumpColor();
+        this.cardChooseTextLabel = addCardChooseLabel();
         this.newAnchorPane.getChildren().add(this.trumpColorLabel);
-        this.addExitLabel();
+        this.newAnchorPane.getChildren().add(this.cardChooseTextLabel);
         this.setBorderColor();
         if (!(this.parentAnchorPane.getChildren().get(this.parentAnchorPane.getChildren().size() - 1).equals(this.newAnchorPane))) {
             renderNewScene();
@@ -58,7 +64,6 @@ public class FightScene {
         this.newAnchorPane.setId("fightScene");
         this.setLayouts();
         this.setImageViews();
-        //this.addExitButton();
         this.parentAnchorPane.getChildren().add(this.newAnchorPane);
     }
 
@@ -66,17 +71,28 @@ public class FightScene {
         this.newAnchorPane.setVisible(true);
     }
     public void endFightScene() {
+        this.newAnchorPane.getChildren().remove(this.cardChooseTextLabel);
         this.newAnchorPane.getChildren().remove(this.trumpColorLabel);
+        this.newAnchorPane.getChildren().remove(this.exitLbl);
         this.newAnchorPane.setVisible(false);
     }
 
     // TODO das sind eigentlich Methoden aus der CardDeck-Klasse, evtl. auslagern in eine eigene CardImgView-Klasse ???
-    private ImageView renderCardImageViews(int layoutX, int layoutY, ImageView imgView) {
-        Image emptyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
-        imgView.setLayoutX(layoutX);
-        imgView.setLayoutY(layoutY);
-        imgView.setImage(emptyImage);
-        return imgView;
+    private ImageView renderCardImageViews(int layoutX, ImageView imgView, boolean stone) {
+        //Image emptyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
+        if (stone) {
+            Image emptyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(this.activeFight.getDuckyPlaysFirst() ? GameConfig.EMPTY_CARD_FILENAME : GameConfig.BACK_CARD_FILENAME)));
+            imgView.setLayoutX(layoutX);
+            imgView.setLayoutY(110);
+            imgView.setImage(emptyImage);
+            return imgView;
+        } else {
+            Image emptyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
+            imgView.setLayoutX(layoutX);
+            imgView.setLayoutY(110);
+            imgView.setImage(emptyImage);
+            return imgView;
+        }
     }
     /***********************************************************************************************************************/
 
@@ -97,28 +113,22 @@ public class FightScene {
     private void setImageViews() {
         this.imgViewCardStone = new ImageView();
         this.imgViewCardDucky = new ImageView();
-        this.newAnchorPane.getChildren().add(renderCardImageViews(100, 110, this.imgViewCardStone));
-        this.newAnchorPane.getChildren().add(renderCardImageViews(230, 110, this.imgViewCardDucky));
+        this.newAnchorPane.getChildren().add(renderCardImageViews(100, this.imgViewCardStone, true));
+        this.newAnchorPane.getChildren().add(renderCardImageViews(230, this.imgViewCardDucky, false));
         this.imgViewCardDucky.setPickOnBounds(true);
         this.imgViewCardDucky.setPreserveRatio(true);
     }
 
-    private void addExitButton() {
-        this.exitButton = new Button();
-        this.exitButton.setId("exitButton");
-        this.exitButton.setStyle("-fx-background-color: transparent; -fx-text-fill: lightgreen;");
-        this.exitButton.setLayoutX(350);
-        this.exitButton.setLayoutY(0);
-        this.exitButton.setText("x");
-        this.newAnchorPane.getChildren().add(this.exitButton);
-    }
-
-    private void addExitLabel() {
-        this.exitLbl = new Label();
-        this.exitLbl.setText("x");
-        this.exitLbl.setLayoutX(368.0);
-        this.exitLbl.setLayoutY(0);
-        this.newAnchorPane.getChildren().add(this.exitLbl);
+    private Label addCardChooseLabel() {
+        TextObject textObject = new TextObject();
+        if (activeFight.getDuckyPlaysFirst()) {
+            textObject.getTextLabel().setText("Choose a card to start");
+        } else {
+            textObject.getTextLabel().setText("Try to beat this card!");
+        }
+        textObject.setStyleDefaultWhite("32px");
+        textObject.centerLabelFightScene(50);
+        return textObject.getTextLabel();
     }
 
     private void setBorderColor() {
@@ -138,6 +148,15 @@ public class FightScene {
         return textObject.getTextLabel();
     }
 
+    public void addExitLabel() {
+        this.exitLbl = new Label();
+        this.exitLbl.setText("x");
+        this.exitLbl.setLayoutX(368.0);
+        this.exitLbl.setLayoutY(5);
+        this.exitLbl.setId("exitLbl");
+        this.newAnchorPane.getChildren().add(this.exitLbl);
+    }
+
     public AnchorPane getNewAnchorPane() {
         return newAnchorPane;
     }
@@ -148,10 +167,6 @@ public class FightScene {
 
     public ImageView getImgViewCardDucky() {
         return imgViewCardDucky;
-    }
-
-    public Button getExitButton() {
-        return exitButton;
     }
 
     public Label getExitLbl() {

@@ -8,12 +8,16 @@ public class GameConfigCards {
     public static final int MIN_CARD_VALUE = 0;
     public static final int AMOUNT_HAND_CARDS = 5;
     public static final String EMPTY_CARD_FILENAME = "/com/ducky/duckythewizard/images/cards/empty.png";
+    public static final String BACK_CARD_FILENAME = "/com/ducky/duckythewizard/images/cards/back.png";
     public static final String WIZARD_FILENAME = "/com/ducky/duckythewizard/images/cards/wizard.png";
 
     public GameConfigCards() {}
 
     public String getEmptyCardFilename() {
         return EMPTY_CARD_FILENAME;
+    }
+    public String getBackCardFilename() {
+        return BACK_CARD_FILENAME;
     }
 
     public String getWizardFilename() {
