@@ -5,7 +5,9 @@ import com.ducky.duckythewizard.model.card.Card;
 import com.ducky.duckythewizard.model.card.CardDeck;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
-import com.ducky.duckythewizard.view.GameScene;
+import com.ducky.duckythewizard.view.CardView;
+import com.ducky.duckythewizard.view.FightView;
+import com.ducky.duckythewizard.view.GameView;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 
@@ -31,8 +33,9 @@ public class Game {
     private Scene startScene;
     private Scene deathScene;
     private Scene winScene;
-    private GameScene playScene;
-    private FightScene fightScene;
+    private GameView playScene;
+    private FightView fightView;
+    private CardView cardView;
 
     private GameController gameCtrl;
     private CardController cardCtrl;
@@ -47,7 +50,7 @@ public class Game {
         this.cardDeck = new CardDeck(this.gameColorObject);
         this.player = new Player(this.cardDeck);
         this.stoneArrayList = new ArrayList<>();
-        this.fightScene = new FightScene(this.gameColorObject, this.getCardCtrl());
+        this.fightView = new FightView(this.gameColorObject, this.getCardCtrl());
         //System.out.println("*** Game-object is created.");
     }
     public boolean getIsRunning(){
@@ -77,7 +80,10 @@ public class Game {
 
     // create Scenes ?
     public void createGameSceneObj() {
-        this.playScene = new GameScene(this.rootAnchorPane);
+        this.playScene = new GameView(this.rootAnchorPane);
+    }
+    public void createCardViewObj() {
+        this.cardView = new CardView(this.anchorPaneCards);
     }
 
     public GameConfig getGameConfig() {
@@ -100,8 +106,11 @@ public class Game {
         return fightCtrl;
     }
 
-    public GameScene getPlayScene() {
+    public GameView getPlayScene() {
         return this.playScene;
+    }
+    public CardView getCardView() {
+        return this.cardView;
     }
 
     public CardDeck getCardDeck() {
@@ -152,7 +161,7 @@ public class Game {
         this.activeFight = activeFight;
     }
 
-    public FightScene getFightScene() {
-        return fightScene;
+    public FightView getFightScene() {
+        return fightView;
     }
 }

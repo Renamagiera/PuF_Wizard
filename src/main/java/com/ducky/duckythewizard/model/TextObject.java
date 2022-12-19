@@ -4,8 +4,6 @@ import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import org.w3c.dom.Text;
 
 public class TextObject {
     private String newText;

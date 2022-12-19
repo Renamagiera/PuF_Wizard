@@ -3,7 +3,7 @@ package com.ducky.duckythewizard.model.card;
 import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
-import com.ducky.duckythewizard.model.FightScene;
+import com.ducky.duckythewizard.view.FightView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -33,11 +33,11 @@ public class CardDeck {
     }
 
     public void setCardSlotNumbers() {
-        CARD_SLOT_POSITION.put("firstCard", 0);
-        CARD_SLOT_POSITION.put("secondCard", 1);
-        CARD_SLOT_POSITION.put("thirdCard", 2);
-        CARD_SLOT_POSITION.put("fourthCard", 3);
-        CARD_SLOT_POSITION.put("fifthCard", 4);
+        CARD_SLOT_POSITION.put("handCard0", 0);
+        CARD_SLOT_POSITION.put("handCard1", 1);
+        CARD_SLOT_POSITION.put("handCard2", 2);
+        CARD_SLOT_POSITION.put("handCard3", 3);
+        CARD_SLOT_POSITION.put("handCard4", 4);
     }
 
     private void addCardsToDeck() {
@@ -103,11 +103,11 @@ public class CardDeck {
 
     }
 
-    public void renderFightCard(Card card, FightScene fightScene, String player) {
+    public void renderFightCard(Card card, FightView fightView, String player) {
         if (player.equals("ducky")) {
-            newImage(card.getImgFileName(), fightScene.getImgViewCardDucky());
+            newImage(card.getImgFileName(), fightView.getImgViewCardDucky());
         } else if (player.equals("stone")) {
-            newImage(card.getImgFileName(), fightScene.getImgViewCardStone());
+            newImage(card.getImgFileName(), fightView.getImgViewCardStone());
         }
     }
 
