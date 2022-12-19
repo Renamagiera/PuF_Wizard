@@ -3,7 +3,7 @@ package com.ducky.duckythewizard.model.card;
 import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
-import com.ducky.duckythewizard.view.FightView;
+import com.ducky.duckythewizard.model.FightView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -81,7 +81,12 @@ public class CardDeck {
     }
 
     public void renderAllHandCardImages(ArrayList<Card> handCards, AnchorPane anchorPaneCards) {
+        double spaceBetweenCards = 40.0;
+        double xPosition = calcSpaceLeftRight(spaceBetweenCards, GameConfig.AMOUNT_HAND_CARDS, GameConfig.WINDOW_WIDTH);
         for (int i = 0; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
+            ImageView imgView = (ImageView) anchorPaneCards.getChildren().get(i);
+            imgView.setLayoutX(xPosition);
+            xPosition = xPosition + GameConfig.CARD_WIDTH + spaceBetweenCards;
             newImage(handCards.get(i).getImgFileName(), (ImageView) anchorPaneCards.getChildren().get(i));
         }
     }
@@ -100,7 +105,6 @@ public class CardDeck {
             imageView.setPickOnBounds(true);
             System.out.println("back-card");
         }
-
     }
 
     public void renderFightCard(Card card, FightView fightView, String player) {
@@ -147,6 +151,12 @@ public class CardDeck {
             }
         }
         return null;
+    }
+
+    public double calcSpaceLeftRight(double spaceBetweenCards, int amountCards, double nodeWidth) {
+        double handCardsWithoutSpace = GameConfig.CARD_WIDTH * amountCards;
+        double handCardsWithSpace = handCardsWithoutSpace + ((amountCards - 1) * spaceBetweenCards);
+        return (nodeWidth - handCardsWithSpace) / 2;
     }
 
 

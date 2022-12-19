@@ -1,15 +1,14 @@
 package com.ducky.duckythewizard.controller;
 
-import com.ducky.duckythewizard.model.card.Card;
-import com.ducky.duckythewizard.model.card.CardDeck;
 import com.ducky.duckythewizard.model.Game;
 import com.ducky.duckythewizard.model.Stone;
+import com.ducky.duckythewizard.model.card.Card;
+import com.ducky.duckythewizard.model.card.CardDeck;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 
@@ -53,7 +52,7 @@ public class CardController extends Controller {
                             getSession().getCardCtrl().removeCard(clickPosition);
                             // render clicked card to fight-scene
                             getSession().getCardDeck().renderFightCard(clickedCard, getSession().getFightScene(), "ducky");
-                            // determine Winner: take Card from handCards {add new from deck | add empty}   // TODO
+                            // determine Winner: take Card from handCards {add new from deck | add empty}   // TODO in fight-class
                             removeAllClickHandlers();
                             // add exit-button after card was clicked
                             getSession().getFightScene().addExitLabel();

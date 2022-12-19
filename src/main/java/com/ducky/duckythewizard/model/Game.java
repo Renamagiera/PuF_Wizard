@@ -5,9 +5,6 @@ import com.ducky.duckythewizard.model.card.Card;
 import com.ducky.duckythewizard.model.card.CardDeck;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
-import com.ducky.duckythewizard.view.CardView;
-import com.ducky.duckythewizard.view.FightView;
-import com.ducky.duckythewizard.view.GameView;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 
@@ -21,6 +18,7 @@ public class Game {
     private Fight activeFight;
     //private Sprite ducky = new DuckySprite(5, collisionHandler); //Attribut für Player-Sprite
     private AnchorPane rootAnchorPane;
+    private AnchorPane fightOverlay;
     private CardDeck cardDeck;
     private AnchorPane anchorPaneCards;
     private GameColorObject gameColorObject;
@@ -33,10 +31,7 @@ public class Game {
     private Scene startScene;
     private Scene deathScene;
     private Scene winScene;
-    private GameView playScene;
     private FightView fightView;
-    private CardView cardView;
-
     private GameController gameCtrl;
     private CardController cardCtrl;
     private MovementController movementCtrl;
@@ -50,7 +45,7 @@ public class Game {
         this.cardDeck = new CardDeck(this.gameColorObject);
         this.player = new Player(this.cardDeck);
         this.stoneArrayList = new ArrayList<>();
-        this.fightView = new FightView(this.gameColorObject, this.getCardCtrl());
+        this.fightView = new FightView();
         //System.out.println("*** Game-object is created.");
     }
     public boolean getIsRunning(){
@@ -78,14 +73,6 @@ public class Game {
         this.fightCtrl = new FightController(this);
     }
 
-    // create Scenes ?
-    public void createGameSceneObj() {
-        this.playScene = new GameView(this.rootAnchorPane);
-    }
-    public void createCardViewObj() {
-        this.cardView = new CardView(this.anchorPaneCards);
-    }
-
     public GameConfig getGameConfig() {
         return this.gameConfig;
     }
@@ -106,19 +93,15 @@ public class Game {
         return fightCtrl;
     }
 
-    public GameView getPlayScene() {
-        return this.playScene;
-    }
-    public CardView getCardView() {
-        return this.cardView;
-    }
-
     public CardDeck getCardDeck() {
         return this.cardDeck;
     }
 
     public AnchorPane getAnchorPaneCards() {
-        return anchorPaneCards;
+        return this.anchorPaneCards;
+    }
+    public AnchorPane getFightOverlay() {
+        return this.fightOverlay;
     }
 
     public void setAnchorPaneCards(AnchorPane anchorPane) {
@@ -131,6 +114,9 @@ public class Game {
 
     public void setRootAnchorPane(AnchorPane rootAnchorPane) {
         this.rootAnchorPane = rootAnchorPane;
+    }
+    public void setFightOverlay(AnchorPane fightOverlay) {
+        this.fightOverlay = fightOverlay;
     }
 
     public GameColorObject getGameColorObject() {
