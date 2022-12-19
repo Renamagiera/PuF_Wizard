@@ -18,6 +18,4 @@ module com.ducky.duckythewizard {
     opens com.ducky.duckythewizard.model.color to javafx.fxml;
     exports com.ducky.duckythewizard.model.card;
     opens com.ducky.duckythewizard.model.card to javafx.fxml;
-    exports com.ducky.duckythewizard.view;
-    opens com.ducky.duckythewizard.view to javafx.fxml;
 }

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="rootBox" onKeyPressed="#handleOnKeyPressed" onKeyReleased="#handleOnKeyReleased" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.GameController">
+<AnchorPane fx:id="rootBox" onKeyPressed="#handleOnKeyPressed" onKeyReleased="#handleOnKeyReleased" prefHeight="650.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.GameController">
     <children>
         <Group fx:id="backgroundImageGroup">
             <ImageView id="background_img" fitHeight="650.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
@@ -378,6 +378,34 @@
             </children>
         </GridPane>
         <Canvas fx:id="mainCanvas" />
-        <AnchorPane fx:id="emptyCardSlots" layoutY="500.0" prefHeight="104.0" prefWidth="800.0"></AnchorPane>
+        <AnchorPane fx:id="emptyCardSlots" layoutY="500.0" prefHeight="104.0" prefWidth="800.0">
+            <children>
+                <ImageView fx:id="handCard0" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/cards/empty.png" />
+                    </image></ImageView>
+                <ImageView fx:id="handCard1" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/cards/empty.png" />
+                    </image></ImageView>
+                <ImageView fx:id="handCard2" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/cards/empty.png" />
+                    </image></ImageView>
+                <ImageView fx:id="handCard3" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/cards/empty.png" />
+                    </image></ImageView>
+                <ImageView fx:id="handCard4" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/cards/empty.png" />
+                    </image></ImageView>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="fightOverlay" prefHeight="350.0" prefWidth="400.0" stylesheets="@../styles/styleMainGameView.css">
+         <children>
+            <ImageView fx:id="stoneCard" fitHeight="104.0" fitWidth="65.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="duckyCard" fitHeight="104.0" fitWidth="65.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true" />
+         </children></AnchorPane>
     </children>
 </AnchorPane>

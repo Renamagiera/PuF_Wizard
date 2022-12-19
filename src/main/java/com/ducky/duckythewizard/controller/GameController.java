@@ -26,6 +26,8 @@ public class GameController{
     @FXML
     private AnchorPane rootBox;
     @FXML
+    private AnchorPane fightOverlay;
+    @FXML
     private Canvas mainCanvas;
     @FXML
     private GridPane levelGrid;
@@ -63,6 +65,8 @@ public class GameController{
 
         this.session.setRootAnchorPane(this.rootBox);
         this.session.setAnchorPaneCards(this.emptyCardSlots);
+        this.session.setFightOverlay(this.fightOverlay);
+        this.fightOverlay.setVisible(false);
 
         //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
         this.session.createGameCtrlObj(this);
@@ -71,12 +75,7 @@ public class GameController{
         this.session.createStoneCtrlObj();
         this.session.createFightCtrlObj();
 
-        //zum Start des Games werden views erstellt
-        this.session.createGameSceneObj();
-        this.session.createCardViewObj();
-
         // initialize cards: set card-anchor-pane, render hand-cards
-        this.session.getCardView().renderImgViews();
         this.session.getCardCtrl().cardInit();
 
         // initialize Level map
