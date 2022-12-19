@@ -62,6 +62,7 @@ public class GameController{
         //System.out.println("*** Game Controller is initialized...");
 
         this.session.setRootAnchorPane(this.rootBox);
+        this.session.setAnchorPaneCards(this.emptyCardSlots);
 
         //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
         this.session.createGameCtrlObj(this);
@@ -72,9 +73,11 @@ public class GameController{
 
         //zum Start des Games werden views erstellt
         this.session.createGameSceneObj();
+        this.session.createCardViewObj();
 
         // initialize cards: set card-anchor-pane, render hand-cards
-        this.session.getCardCtrl().cardInit(emptyCardSlots);
+        this.session.getCardView().renderImgViews();
+        this.session.getCardCtrl().cardInit();
 
         // initialize Level map
         Level level = new Level(levelGrid);

@@ -30,8 +30,7 @@ public class CardController extends Controller {
         return null;
     }
 
-    public void cardInit(AnchorPane emptyCardSlots) {
-        this.getSession().setAnchorPaneCards(emptyCardSlots);
+    public void cardInit() {
         this.getSession().getCardDeck().renderAllHandCardImages(this.getSession().getPlayer().getHandCards(), this.getSession().getAnchorPaneCards());
     }
 

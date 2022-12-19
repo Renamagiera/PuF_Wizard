@@ -378,29 +378,6 @@
             </children>
         </GridPane>
         <Canvas fx:id="mainCanvas" />
-        <AnchorPane fx:id="emptyCardSlots" layoutX="137.0" layoutY="500.0" prefHeight="104.0" prefWidth="800.0">
-            <children>
-                <ImageView fx:id="firstCard" fitHeight="104.0" fitWidth="65.0"  pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/cards/empty.png" />
-                     </image></ImageView>
-                        <ImageView fx:id="secondCard" fitHeight="104.0" fitWidth="65.0" layoutX="115.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/cards/empty.png" />
-                     </image></ImageView>
-                        <ImageView fx:id="thirdCard" fitHeight="104.0" fitWidth="65.0" layoutX="230.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/cards/empty.png" />
-                     </image></ImageView>
-                        <ImageView fx:id="fourthCard" fitHeight="104.0" fitWidth="65.0" layoutX="345.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/cards/empty.png" />
-                     </image></ImageView>
-                        <ImageView fx:id="fifthCard" fitHeight="104.0" fitWidth="65.0" layoutX="460.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/cards/empty.png"/>
-                     </image></ImageView>
-            </children>
-        </AnchorPane>
+        <AnchorPane fx:id="emptyCardSlots" layoutY="500.0" prefHeight="104.0" prefWidth="800.0"></AnchorPane>
     </children>
 </AnchorPane>

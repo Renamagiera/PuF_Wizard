@@ -10,6 +10,8 @@ public class GameConfigCards {
     public static final String EMPTY_CARD_FILENAME = "/com/ducky/duckythewizard/images/cards/empty.png";
     public static final String BACK_CARD_FILENAME = "/com/ducky/duckythewizard/images/cards/back.png";
     public static final String WIZARD_FILENAME = "/com/ducky/duckythewizard/images/cards/wizard.png";
+    public static final double CARD_HEIGHT = 104.0;
+    public static final double CARD_WIDTH = 65.0;
 
     public GameConfigCards() {}
 
@@ -22,6 +24,12 @@ public class GameConfigCards {
 
     public String getWizardFilename() {
         return WIZARD_FILENAME;
+    }
+    public double getCardHeight() {
+        return CARD_HEIGHT;
+    }
+    public double getCardWidth() {
+        return CARD_WIDTH;
     }
 
     public int getAmountWizards() {

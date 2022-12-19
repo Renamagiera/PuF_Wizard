@@ -1,7 +1,8 @@
-package com.ducky.duckythewizard.model;
+package com.ducky.duckythewizard.view;
 
 import com.ducky.duckythewizard.controller.CardController;
-import com.ducky.duckythewizard.controller.GameController;
+import com.ducky.duckythewizard.model.Fight;
+import com.ducky.duckythewizard.model.TextObject;
 import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
@@ -13,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.util.Objects;
 
-public class FightScene {
+public class FightView extends View {
 
     //public int ID;
     private AnchorPane parentAnchorPane;
@@ -32,7 +33,8 @@ public class FightScene {
     private Label trumpColorLabel;
     private Label cardChooseTextLabel;
     private static final String FONT_SIZE_LABEL_TRUMP_COLOR = "20px";
-    public FightScene(GameColorObject gameColorObject, CardController cardCtrl) {
+    public FightView(GameColorObject gameColorObject, CardController cardCtrl) {
+        super();
         // new AnchorPane, set visibility false
         this.newAnchorPane = new AnchorPane();
         this.newAnchorPane.setVisible(false);
@@ -48,6 +50,7 @@ public class FightScene {
         this.trumpColorHexCode = trumpColorObject.getHexCode();
         this.trumpColorName = trumpColorObject.getName();
         this.trumpColorLabel = labelTrumpColor();
+        this.setImageViews();
         this.cardChooseTextLabel = addCardChooseLabel();
         this.newAnchorPane.getChildren().add(this.trumpColorLabel);
         this.newAnchorPane.getChildren().add(this.cardChooseTextLabel);
@@ -63,7 +66,6 @@ public class FightScene {
         this.newAnchorPane.setVisible(true);
         this.newAnchorPane.setId("fightScene");
         this.setLayouts();
-        this.setImageViews();
         this.parentAnchorPane.getChildren().add(this.newAnchorPane);
     }
 
@@ -74,27 +76,10 @@ public class FightScene {
         this.newAnchorPane.getChildren().remove(this.cardChooseTextLabel);
         this.newAnchorPane.getChildren().remove(this.trumpColorLabel);
         this.newAnchorPane.getChildren().remove(this.exitLbl);
+        this.newAnchorPane.getChildren().remove(this.imgViewCardStone);
+        this.newAnchorPane.getChildren().remove(this.imgViewCardDucky);
         this.newAnchorPane.setVisible(false);
     }
-
-    // TODO das sind eigentlich Methoden aus der CardDeck-Klasse, evtl. auslagern in eine eigene CardImgView-Klasse ???
-    private ImageView renderCardImageViews(int layoutX, ImageView imgView, boolean stone) {
-        //Image emptyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
-        if (stone) {
-            Image emptyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(this.activeFight.getDuckyPlaysFirst() ? GameConfig.EMPTY_CARD_FILENAME : GameConfig.BACK_CARD_FILENAME)));
-            imgView.setLayoutX(layoutX);
-            imgView.setLayoutY(110);
-            imgView.setImage(emptyImage);
-            return imgView;
-        } else {
-            Image emptyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
-            imgView.setLayoutX(layoutX);
-            imgView.setLayoutY(110);
-            imgView.setImage(emptyImage);
-            return imgView;
-        }
-    }
-    /***********************************************************************************************************************/
 
     private int midFromParent() {
         return (GameConfig.WINDOW_WIDTH - GameConfig.WINDOW_WIDTH_FIGHT_SCENE) / 2;
@@ -111,22 +96,44 @@ public class FightScene {
     }
 
     private void setImageViews() {
+        double spaceBetweenCards = 50.0;
+        double xPosition = super.calcSpaceLeftRight(spaceBetweenCards, 2, GameConfig.WINDOW_WIDTH_FIGHT_SCENE);
         this.imgViewCardStone = new ImageView();
         this.imgViewCardDucky = new ImageView();
-        this.newAnchorPane.getChildren().add(renderCardImageViews(100, this.imgViewCardStone, true));
-        this.newAnchorPane.getChildren().add(renderCardImageViews(230, this.imgViewCardDucky, false));
+        this.imgViewCardStone.setFitHeight(GameConfig.CARD_HEIGHT);
+        this.imgViewCardDucky.setFitHeight(GameConfig.CARD_HEIGHT);
+        this.imgViewCardStone.setFitWidth(GameConfig.CARD_WIDTH);
+        this.imgViewCardDucky.setFitWidth(GameConfig.CARD_WIDTH);
+        this.newAnchorPane.getChildren().add(renderCardImageViews(xPosition, this.imgViewCardStone, true));
+        xPosition = xPosition + GameConfig.CARD_WIDTH + spaceBetweenCards;
+        this.newAnchorPane.getChildren().add(renderCardImageViews(xPosition, this.imgViewCardDucky, false));
         this.imgViewCardDucky.setPickOnBounds(true);
         this.imgViewCardDucky.setPreserveRatio(true);
     }
 
+    private ImageView renderCardImageViews(double layoutX, ImageView imgView, boolean stone) {
+        if (stone) {
+            imgView.setLayoutX(layoutX);
+            imgView.setLayoutY(110);
+            super.newImage(this.activeFight.getDuckyPlaysFirst() ? GameConfig.EMPTY_CARD_FILENAME : GameConfig.BACK_CARD_FILENAME, imgView);
+            return imgView;
+        } else {
+            imgView.setLayoutX(layoutX);
+            imgView.setLayoutY(110);
+            super.newImage(GameConfig.EMPTY_CARD_FILENAME, imgView);
+            return imgView;
+        }
+    }
+
     private Label addCardChooseLabel() {
         TextObject textObject = new TextObject();
+        textObject.getTextLabel().setId("cardChooseText");
         if (activeFight.getDuckyPlaysFirst()) {
             textObject.getTextLabel().setText("Choose a card to start");
         } else {
             textObject.getTextLabel().setText("Try to beat this card!");
         }
-        textObject.setStyleDefaultWhite("32px");
+        textObject.setStyleDefaultWhite("25px");
         textObject.centerLabelFightScene(50);
         return textObject.getTextLabel();
     }
@@ -137,6 +144,7 @@ public class FightScene {
 
     private Label labelTrumpColor() {
         TextObject textObject = new TextObject();
+        textObject.getTextLabel().setId("trumpColorText");
         if (!trumpColorName.equals("none")) {
             textObject.getTextLabel().setText("Trump color is " + this.trumpColorName);
             textObject.setStyle(FONT_SIZE_LABEL_TRUMP_COLOR, this.trumpColorHexCode);
