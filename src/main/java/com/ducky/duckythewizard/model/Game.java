@@ -3,6 +3,7 @@ package com.ducky.duckythewizard.model;
 import com.ducky.duckythewizard.controller.*;
 import com.ducky.duckythewizard.model.card.Card;
 import com.ducky.duckythewizard.model.card.CardDeck;
+import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.Scene;
@@ -69,7 +70,7 @@ public class Game {
     public void createStoneCtrlObj() {
         this.stoneCtrl = new StoneController(this);
     }
-    public void createFightCtrlObj() {
+    public void createFightCtrlObj() throws InterruptedException {
         this.fightCtrl = new FightController(this);
     }
 
@@ -119,9 +120,11 @@ public class Game {
         this.fightOverlay = fightOverlay;
     }
 
+
     public GameColorObject getGameColorObject() {
         return gameColorObject;
     }
+
 
     public Player getPlayer() {
         return this.player;
@@ -147,7 +150,7 @@ public class Game {
         this.activeFight = activeFight;
     }
 
-    public FightView getFightScene() {
+    public FightView getFightView() {
         return fightView;
     }
 }

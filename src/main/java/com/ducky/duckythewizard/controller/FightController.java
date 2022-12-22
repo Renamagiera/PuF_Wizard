@@ -4,8 +4,10 @@ import com.ducky.duckythewizard.model.*;
 import javafx.application.Platform;
 
 public class FightController extends Controller {
-    public FightController(Game game){
+    private Stone stone;
+    public FightController(Game game) throws InterruptedException {
         super(game);
+        //setNewTrump();
     }
 
     public void startFight(Stone stone) {
@@ -13,23 +15,19 @@ public class FightController extends Controller {
             this.getSession().toggleIsRunning();
             // start new fight-object
             this.getSession().setActiveFight(new Fight(this.getSession().getGameColorObject()));
-            // set enemy-card and stone object to fight-object
+            // set stone-card and stone object to fight-object
             this.getSession().getActiveFight().setStoneCard(stone.getCard());
             this.getSession().getActiveFight().setStoneInFight(stone);
 
-            System.out.println(this.getSession().getFightOverlay());
-
-            this.getSession().getFightScene().renderFightScene(
-                    this.getSession().getFightOverlay(),
-                    this.getSession().getRootAnchorPane(),
-                    this.getSession().getActiveFight());
+            this.getSession().getFightView().renderFightScene(
+                    this.getSession().getActiveFight(),
+                    this.getSession().getGameColorObject());
 
             // starting fight in new thread
             Thread one = new Thread() {
                 public void run() {
                     try {
                         setFightHandler(stone, getSession().getPlayer());
-                        //stopThread();
                     } catch (Exception v) {
                         System.out.println(v);
                     }
@@ -45,14 +43,16 @@ public class FightController extends Controller {
     }
 
     public void stopFight(GameController.MyAnimationTimer animationTimer, DuckySprite ducky){
-        System.out.println("----> stopFight");
+        //System.out.println("----> stopFight");
         if(!this.getSession().getIsRunning()) {
             animationTimer.resetStartingTime();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     ducky.resetPlayerTimer();
-                    getSession().getFightScene().endFightScene();
+                    getSession().getFightView().endFightScene();
+                    // get focus back
+                    getSession().getRootAnchorPane().requestFocus();
                 }
             });
             this.getSession().toggleIsRunning();

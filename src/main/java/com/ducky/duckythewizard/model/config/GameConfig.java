@@ -15,6 +15,7 @@ public class GameConfig {
     public static final String WIZARD_FILENAME = gameConfigCards.getWizardFilename();
     public static final double CARD_HEIGHT = gameConfigCards.getCardHeight();
     public static final double CARD_WIDTH = gameConfigCards.getCardWidth();
+    public static final int AMOUNT_CARDS = gameConfigCards.getAmountCards();
     public static final int AMOUNT_WIZARDS = gameConfigCards.getAmountWizards();
     public static int WIZARD_POINTS = gameConfigCards.getWizardPoints();
     public static final int MAX_CARD_VALUE = gameConfigCards.getMaxCardValue();
@@ -23,6 +24,8 @@ public class GameConfig {
 
     public static final String STONE_IMAGE_FILE_NAME = "/com/ducky/duckythewizard/images/forest/rock_50px.png";
     public static final String STONE_IMAGE_FILE_NAME_CROPPED = "/com/ducky/duckythewizard/images/forest/rock_50px_cropped.png";
+    public static final int STONE_INACTIVE_TIMER = 10000;
+    public static final int TRUMP_TIMER = 2000;
 
     public int getWindowWidth() {
         return WINDOW_WIDTH;

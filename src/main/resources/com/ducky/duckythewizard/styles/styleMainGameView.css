@@ -32,6 +32,26 @@
     -fx-background-color: #001b30;
 }
 
+/**************************************************/
+
+.textGeneral {
+    -fx-font-family: 'Alagard';
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+.textFontBig {
+    -fx-font-size: 30px;
+}
+
 #fightOverlay {
     -fx-background-color: #412B0F;
+}
+
+#cardsInDeck {
+    -fx-font-size: 18px;
+}
+
+#cards {
+    -fx-text-fill: lightgreen;
 }

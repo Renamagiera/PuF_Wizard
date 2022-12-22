@@ -3,6 +3,7 @@ package com.ducky.duckythewizard.controller;
 import com.ducky.duckythewizard.model.*;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
@@ -18,6 +19,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
+
+import static java.lang.Thread.sleep;
 
 public class GameController{
 
@@ -49,6 +52,19 @@ public class GameController{
     @FXML
     private HBox heartContainer;
     @FXML
+    private Label cards;
+    @FXML
+    private Label trumpColorText;
+    @FXML
+    private Label cardChooseText;
+    @FXML
+    private Label exitLabel;
+    @FXML
+    private ImageView stoneCard;
+    @FXML
+    private ImageView duckyCard;
+    @FXML
+    private Label winLossLabel;
 
     private int windowWidth = this.session.getGameConfig().getWindowWidth();
     private int windowHeight = this.session.getGameConfig().getWindowHeight();
@@ -60,13 +76,14 @@ public class GameController{
     private MyAnimationTimer animationTimer;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws InterruptedException {
         //System.out.println("*** Game Controller is initialized...");
 
         this.session.setRootAnchorPane(this.rootBox);
         this.session.setAnchorPaneCards(this.emptyCardSlots);
         this.session.setFightOverlay(this.fightOverlay);
         this.fightOverlay.setVisible(false);
+        this.session.getFightView().setAnchorPaneFightOverlay(this.fightOverlay);
 
         //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
         this.session.createGameCtrlObj(this);
@@ -76,7 +93,19 @@ public class GameController{
         this.session.createFightCtrlObj();
 
         // initialize cards: set card-anchor-pane, render hand-cards
-        this.session.getCardCtrl().cardInit();
+        this.session.getCardCtrl().cardInit(exitLabel);
+
+        // bindings
+        cards.textProperty().bind(session.getCardDeck().cardsProperty);
+        trumpColorText.textProperty().bind(session.getFightView().trumpColorTextProperty);
+        trumpColorText.styleProperty().bind(session.getFightView().trumpColorTextStyleProperty);
+        cardChooseText.textProperty().bind(session.getFightView().cardChooseTextProperty);
+        stoneCard.imageProperty().bind(session.getFightView().stoneCardProperty.imageProperty());
+        duckyCard.imageProperty().bind(session.getFightView().duckyCardProperty.imageProperty());
+        exitLabel.textProperty().bind(session.getFightView().exitLabelTextProperty);
+        winLossLabel.textProperty().bind(session.getFightView().winLossLabelProperty);
+        winLossLabel.styleProperty().bind(session.getFightView().winLossLabelStyleProperty);
+        fightOverlay.styleProperty().bind(session.getFightView().fightOverlayStyleProperty);
 
         // initialize Level map
         Level level = new Level(levelGrid);
@@ -123,6 +152,9 @@ public class GameController{
         // main game loop
         animationTimer = new MyAnimationTimer();
         animationTimer.start();
+/*        System.out.println("stones: " + session.stoneArrayList.size());
+        System.out.println("hand cards: " + session.getPlayer().getHandCards().size());
+        System.out.println("deck size: " + session.getCardDeck().getCardDeck().size());*/
     }
 
     @FXML

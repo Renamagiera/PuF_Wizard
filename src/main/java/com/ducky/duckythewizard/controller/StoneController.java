@@ -10,14 +10,15 @@ import javafx.scene.layout.GridPane;
 import java.util.Objects;
 
 public class StoneController extends Controller {
+    private Thread trumpColorChange;
     public StoneController (Game game) {
         super(game);
     }
     public void initializeStones(GridPane levelGrid) {
         addStonesToArrayList();
-        addRandomTrumpColorStone();
+        //addRandomTrumpColorStone();
         setStoneImages(levelGrid);
-        tintStones(levelGrid);
+        tintAllStones(levelGrid);
         this.getSession().getCardCtrl().addCardToStones();
     }
 
@@ -33,22 +34,28 @@ public class StoneController extends Controller {
 
     private void addRandomTrumpColorStone() {
         for (Stone stone : this.getSession().stoneArrayList) {
-            stone.setRandomTrumpColor(this.getSession().getGameColorObject().getRandomTrumpColor());
+            stone.setTrumpColorStone(this.getSession().getGameColorObject().generateRandomTrump());
         }
     }
 
-    private void tintStones(GridPane levelGrid) {
+    private void tintAllStones(GridPane levelGrid) {
         // color the stones to the trump-color
         for (int i = 0; i < levelGrid.getChildren().size(); i++) {
             for (int x = 0; x < this.getSession().getStoneArrayList().size(); x++) {
                 if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("stone" + x)) {
                     Stone stone = this.getSession().getStoneArrayList().get(x);
-                    this.getSession().getStoneArrayList().get(x).setRandomTrumpColor(this.getSession().getGameColorObject().getRandomTrumpColor());
+
+                    // set random trump color
+                    stone.setTrumpColorStone(this.getSession().getGameColorObject().generateRandomTrump());
+
+                    // generate first random-trump-color
+                    this.getSession().getStoneArrayList().get(x).setTrumpColorStone(this.getSession().getGameColorObject().generateRandomTrump());
+
                     ImageView imgView = (ImageView) levelGrid.getChildren().get(i);
-                    String stoneRandomTrumpColor = stone.getRandomTrumpColor().getName();
-/*                    if (!stoneRandomTrumpColor.equals("none")) {
-                        this.session.getGameColorObject().tintStone(imgView, stoneRandomTrumpColor);
-                    }*/
+                    // safe stone-imageview to stone-arraylist
+                    this.getSession().stoneArrayList.get(x).setStoneImgView(imgView);
+
+                    String stoneRandomTrumpColor = stone.getTrumpColorStone().getName();
                     this.getSession().getGameColorObject().tintStone(imgView, stoneRandomTrumpColor);
                 }
             }
@@ -65,5 +72,25 @@ public class StoneController extends Controller {
                 }
             }
         }
+    }
+
+    public void setNewTrump() throws InterruptedException {
+        this.trumpColorChange = new Thread(() -> {
+            while (this.getSession().getIsRunning()) {
+                try {
+                    Thread.sleep(GameConfig.TRUMP_TIMER);
+                    for (Stone stone : this.getSession().stoneArrayList) {
+                        stone.setTrumpColorStone(this.getSession().getGameColorObject().generateRandomTrump());
+                        this.getSession().getGameColorObject().tintStone(stone.getStoneImgView(), stone.getTrumpColorStone().getName());
+                        this.getSession().getFightView().updateBorderColor(stone.getTrumpColorStone().getHexCode());
+                        System.out.println("stone id: " + stone.getId() + ", new trump color: " + stone.getTrumpColorStone().getName());
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("");
+            }
+        });
+        this.trumpColorChange.start();
     }
 }
