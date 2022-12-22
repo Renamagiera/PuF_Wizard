@@ -73,11 +73,11 @@ public class CardController extends Controller {
                             boolean duckyWin = getSession().getActiveFight().determineWinner();
                             getSession().getFightView().updateWinLossLabel(duckyWin);
 
-                            // determine if Ducky won (no cards left)
-                            if (getSession().getCardDeck().checkIfCardDeckEmpty()) {
-
-                            }
                             removeAllClickHandlers();
+
+                            if (checkWin(duckyWin).equals("win") || checkWin(duckyWin).equals("loss")) {
+                                getSession().getGameCtrl().renderEndScene(duckyWin);
+                            }
 
                             // end fight-view clicking x-Label
                             getSession().getFightView().createExitLabel();
@@ -99,18 +99,25 @@ public class CardController extends Controller {
         }
     }
 
-    private void endFight(int clickPosition, boolean duckyWin) {
-        getSession().getGameCtrl().endCollision();
+    private String checkWin(boolean duckyWin) {
         // TODO just if Ducky won:
-        if (getSession().getCardDeck().getCardDeck().size() >= 2) {
-            getSession().getCardCtrl().newCardsFromDeck(clickPosition, duckyWin);
-        } else if (getSession().getCardDeck().getCardDeck().size() == 1) {
-            if (duckyWin) {
-                // render one card for ducky
-                // set win scene
-                System.out.println("WIN !!!");
+        // after fight: deal new cards, check ducky win/loss
+        int cardsLeft = getSession().getCardDeck().getCardDeck().size();
+        if (duckyWin && cardsLeft <= 2) {
+            return "win";
+        } else if (!duckyWin) {
+            if (cardsLeft >= 2) {
+                return getSession().getPlayer().getPlayableCards() > 1 ? "no" : "loss";
+            } else {
+                return getSession().getPlayer().getPlayableCards() <= 1 ? "loss" : "no";
             }
         }
+        return "no";
+    }
+
+    private void endFight(int clickPosition, boolean duckyWin) {
+        getSession().getGameCtrl().endCollision();
+        newCardsFromDeck(clickPosition, duckyWin);
     }
 
     private void newCardsFromDeck(int clickedPosition, boolean duckyWin) {
@@ -121,6 +128,7 @@ public class CardController extends Controller {
             this.handCards.add(clickedPosition, this.deck.removeHandCard(clickedPosition, this.handCards, true));
         } else {
             this.handCards.add(clickedPosition, this.deck.removeHandCard(clickedPosition, this.handCards, false));
+            this.getSession().getPlayer().decrementHandCards();
         }
         this.deck.renderCard(clickedPosition, this.handCards, this.getSession().getAnchorPaneCards());
         // new card for stone

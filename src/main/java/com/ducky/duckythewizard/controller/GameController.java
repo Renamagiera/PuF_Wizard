@@ -3,7 +3,6 @@ package com.ducky.duckythewizard.controller;
 import com.ducky.duckythewizard.model.*;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
@@ -19,8 +18,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
-
-import static java.lang.Thread.sleep;
 
 public class GameController{
 
@@ -65,6 +62,10 @@ public class GameController{
     private ImageView duckyCard;
     @FXML
     private Label winLossLabel;
+    @FXML
+    private AnchorPane endScene;
+    @FXML
+    private Label endSceneLabel;
 
     private int windowWidth = this.session.getGameConfig().getWindowWidth();
     private int windowHeight = this.session.getGameConfig().getWindowHeight();
@@ -82,8 +83,12 @@ public class GameController{
         this.session.setRootAnchorPane(this.rootBox);
         this.session.setAnchorPaneCards(this.emptyCardSlots);
         this.session.setFightOverlay(this.fightOverlay);
-        this.fightOverlay.setVisible(false);
+        this.session.setAnchorPaneEndOverlay(this.endScene);
         this.session.getFightView().setAnchorPaneFightOverlay(this.fightOverlay);
+
+        // fight- and end-overlay not visible
+        this.fightOverlay.setVisible(false);
+        this.endScene.setVisible(false);
 
         //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
         this.session.createGameCtrlObj(this);
@@ -95,7 +100,7 @@ public class GameController{
         // initialize cards: set card-anchor-pane, render hand-cards
         this.session.getCardCtrl().cardInit(exitLabel);
 
-        // bindings
+        // bindings fight-view
         cards.textProperty().bind(session.getCardDeck().cardsProperty);
         trumpColorText.textProperty().bind(session.getFightView().trumpColorTextProperty);
         trumpColorText.styleProperty().bind(session.getFightView().trumpColorTextStyleProperty);
@@ -106,6 +111,11 @@ public class GameController{
         winLossLabel.textProperty().bind(session.getFightView().winLossLabelProperty);
         winLossLabel.styleProperty().bind(session.getFightView().winLossLabelStyleProperty);
         fightOverlay.styleProperty().bind(session.getFightView().fightOverlayStyleProperty);
+
+        // bindings end-scene
+        endSceneLabel.textProperty().bind(session.getEndSceneView().endSceneLabelProperty);
+        endSceneLabel.styleProperty().bind(session.getEndSceneView().endSceneLabelStyleProperty);
+        endScene.getChildren().get(0).styleProperty().bind(session.getEndSceneView().endSceneStyleProperty);
 
         // initialize Level map
         Level level = new Level(levelGrid);
@@ -190,6 +200,13 @@ public class GameController{
 
     public void endCollision() {
         this.session.getFightCtrl().stopFight(animationTimer, ducky);
+    }
+
+    public void renderEndScene(boolean duckyWin) {
+        this.session.getEndSceneView().renderEndScene(
+                this.session.getAnchorPaneEndOverlay(),
+                duckyWin,
+                this.session.getGameColorObject());
     }
 
     class MyAnimationTimer extends AnimationTimer

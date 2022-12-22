@@ -44,7 +44,11 @@
     -fx-font-size: 30px;
 }
 
-#fightOverlay {
+.bgEndingScene {
+    -fx-background-color: rgba(0,0,0,0.5);
+}
+
+.bgBrown {
     -fx-background-color: #412B0F;
 }
 
