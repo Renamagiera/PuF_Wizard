@@ -13,6 +13,7 @@ public class FightController extends Controller {
     public void startFight(Stone stone) {
         if(this.getSession().getIsRunning()) {
             this.getSession().toggleIsRunning();
+            this.stone = stone;
             // start new fight-object
             this.getSession().setActiveFight(new Fight(this.getSession().getGameColorObject()));
             // set stone-card and stone object to fight-object
@@ -38,7 +39,6 @@ public class FightController extends Controller {
     }
 
     public void setFightHandler(Stone stone, Player player) {
-        stone.setInactive();
         this.getSession().getCardCtrl().addMouseEventHandler();
     }
 
@@ -56,6 +56,7 @@ public class FightController extends Controller {
                 }
             });
             this.getSession().toggleIsRunning();
+            stone.setInactive();
         }
     }
 }
