@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class Player {
     private ArrayList<Card> handCards;
+    private int score;
     private int playableCards;
 
     public Player(CardDeck deck) {
