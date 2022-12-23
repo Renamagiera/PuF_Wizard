@@ -28,7 +28,7 @@ public class Game {
     //die Game Config wird einmalig zum Start des Games (Erstellung des Game-Klassen-Objekts) erstellt
     private GameConfig gameConfig;
     public GameObject[][] objectGrid; // [row][column] - is filled in GameController
-    public ArrayList<Stone> stoneArrayList;
+    private ArrayList<Stone> stoneArrayList;
 
     private FightView fightView;
     private EndSceneView endSceneView;
@@ -146,7 +146,7 @@ public class Game {
     }
 
     public ArrayList<Stone> getStoneArrayList() {
-        return stoneArrayList;
+        return this.stoneArrayList;
     }
 
     public Card getClickedCardFight() {

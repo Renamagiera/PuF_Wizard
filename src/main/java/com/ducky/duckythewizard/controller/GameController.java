@@ -55,8 +55,6 @@ public class GameController{
     @FXML
     private Label cardChooseText;
     @FXML
-    private Label exitLabel;
-    @FXML
     private ImageView stoneCard;
     @FXML
     private ImageView duckyCard;
@@ -98,7 +96,7 @@ public class GameController{
         this.session.createFightCtrlObj();
 
         // initialize cards: set card-anchor-pane, render hand-cards
-        this.session.getCardCtrl().cardInit(exitLabel);
+        this.session.getCardCtrl().cardInit();
 
         // bindings fight-view
         cards.textProperty().bind(session.getCardDeck().cardsProperty);
@@ -107,7 +105,6 @@ public class GameController{
         cardChooseText.textProperty().bind(session.getFightView().cardChooseTextProperty);
         stoneCard.imageProperty().bind(session.getFightView().stoneCardProperty.imageProperty());
         duckyCard.imageProperty().bind(session.getFightView().duckyCardProperty.imageProperty());
-        exitLabel.textProperty().bind(session.getFightView().exitLabelTextProperty);
         winLossLabel.textProperty().bind(session.getFightView().winLossLabelProperty);
         winLossLabel.styleProperty().bind(session.getFightView().winLossLabelStyleProperty);
         fightOverlay.styleProperty().bind(session.getFightView().fightOverlayStyleProperty);
@@ -162,9 +159,6 @@ public class GameController{
         // main game loop
         animationTimer = new MyAnimationTimer();
         animationTimer.start();
-/*        System.out.println("stones: " + session.stoneArrayList.size());
-        System.out.println("hand cards: " + session.getPlayer().getHandCards().size());
-        System.out.println("deck size: " + session.getCardDeck().getCardDeck().size());*/
     }
 
     @FXML
@@ -200,6 +194,11 @@ public class GameController{
 
     public void endCollision() {
         this.session.getFightCtrl().stopFight(animationTimer, ducky);
+        try {
+            this.session.getStoneCtrl().startThreadsNewTrumpColor();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void renderEndScene(boolean duckyWin) {

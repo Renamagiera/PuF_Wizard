@@ -19,7 +19,6 @@ public class CardController extends Controller {
     private ArrayList<EventHandler<MouseEvent>> clickHandlers = new ArrayList<>();
     private CardDeck deck = this.getSession().getCardDeck();
 
-    private Label exitLabel;
     public CardController (Game game) {
         super(game);
     }
@@ -34,8 +33,7 @@ public class CardController extends Controller {
         }
     }
 
-    public void cardInit(Label exitLabel) {
-        this.exitLabel = exitLabel;
+    public void cardInit() {
         this.getSession().getCardDeck().renderAllHandCardImages(this.getSession().getPlayer().getHandCards(), this.getSession().getAnchorPaneCards());
     }
 
@@ -79,9 +77,10 @@ public class CardController extends Controller {
                                 getSession().getGameCtrl().renderEndScene(duckyWin);
                             }
 
+                            // END FIGHT:
                             // end fight-view clicking x-Label
-                            getSession().getFightView().createExitLabel();
-                            exitLabel.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent1 -> {
+                            getSession().getFightView().addExitLabel();
+                            getSession().getFightView().getExitLabel().addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent1 -> {
                                 endFight(clickPosition, duckyWin);
                             });
                             // end fight-view clicking ESC
@@ -120,7 +119,6 @@ public class CardController extends Controller {
         newCardsFromDeck(clickPosition, duckyWin);
 /*        System.out.println("card deck size: " + this.getSession().getCardDeck().getCardDeck().size());
         System.out.println("playable cards " + this.getSession().getPlayer().checkAvailableCards());*/
-        System.out.println("");
     }
 
     private void newCardsFromDeck(int clickedPosition, boolean duckyWin) {

@@ -5,9 +5,8 @@ import javafx.application.Platform;
 
 public class FightController extends Controller {
     private Stone stone;
-    public FightController(Game game) throws InterruptedException {
+    public FightController(Game game) {
         super(game);
-        //setNewTrump();
     }
 
     public void startFight(Stone stone) {
@@ -28,7 +27,7 @@ public class FightController extends Controller {
             Thread one = new Thread() {
                 public void run() {
                     try {
-                        setFightHandler(stone, getSession().getPlayer());
+                        setFightHandler();
                     } catch (Exception v) {
                         System.out.println(v);
                     }
@@ -38,12 +37,12 @@ public class FightController extends Controller {
         }
     }
 
-    public void setFightHandler(Stone stone, Player player) {
+    public void setFightHandler() {
         this.getSession().getCardCtrl().addMouseEventHandler();
     }
 
     public void stopFight(GameController.MyAnimationTimer animationTimer, DuckySprite ducky){
-        //System.out.println("----> stopFight");
+        System.out.println("----> stopFight");
         if(!this.getSession().getIsRunning()) {
             animationTimer.resetStartingTime();
             Platform.runLater(new Runnable() {

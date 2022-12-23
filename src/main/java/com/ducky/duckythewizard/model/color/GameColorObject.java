@@ -108,15 +108,15 @@ public class GameColorObject {
         }
     }
 
-    public void tintStone(ImageView imageView, String stoneColor) {
+    public void tintStone(ImageView imageView, String stoneColorName) {
         Color targetStoneColor = RGB_MAP.get("none");
-        if (stoneColor.equals("red")) {
+        if (stoneColorName.equals("red")) {
             targetStoneColor = RGB_MAP.get("red");
-        } else if (stoneColor.equals("blue")) {
+        } else if (stoneColorName.equals("blue")) {
             targetStoneColor = RGB_MAP.get("blue");
-        } else if (stoneColor.equals("green")) {
+        } else if (stoneColorName.equals("green")) {
             targetStoneColor = RGB_MAP.get("green");
-        } else if (stoneColor.equals("yellow")) {
+        } else if (stoneColorName.equals("yellow")) {
             targetStoneColor = RGB_MAP.get("yellow");
         }
 
