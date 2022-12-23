@@ -1,10 +1,8 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.controller.CardController;
-import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
-import javafx.scene.control.Label;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -13,148 +11,115 @@ import java.util.Objects;
 
 public class FightView {
 
-    //public int ID;
-    private AnchorPane parentAnchorPane;
+    public SimpleStringProperty trumpColorTextProperty;
+    public SimpleStringProperty trumpColorTextStyleProperty;
+    public SimpleStringProperty cardChooseTextProperty;
+    public ImageView stoneCardProperty;
+    public ImageView duckyCardProperty;
+    public SimpleStringProperty exitLabelTextProperty;
+    public SimpleStringProperty winLossLabelProperty;
+    public SimpleStringProperty winLossLabelStyleProperty;
+    public SimpleStringProperty fightOverlayStyleProperty;
+
+    private static final Image BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightView.class.getResourceAsStream(GameConfig.BACK_CARD_FILENAME)));
+    private static final Image EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightView.class.getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
+
     private AnchorPane anchorPaneFightOverlay;
-    private CardController cardCtrl;
     private Fight activeFight;
-    private ImageView imgViewCardStone;
-    private ImageView imgViewCardDucky;
-    private Label exitLbl;
     private GameColorObject gameColorObject;
-    private GameColor trumpColorObject;
     private String trumpColorHexCode;
     private String trumpColorName;
-    private Label trumpColorLabel;
-    private Label cardChooseTextLabel;
-    private static final String FONT_SIZE_LABEL_TRUMP_COLOR = "20px";
+
     public FightView() {
+        this.trumpColorTextProperty = new SimpleStringProperty("");
+        this.trumpColorTextStyleProperty = new SimpleStringProperty("");
+        this.cardChooseTextProperty = new SimpleStringProperty("");
+        this.stoneCardProperty = new ImageView(EMPTY_CARD_IMAGE);
+        this.duckyCardProperty = new ImageView(EMPTY_CARD_IMAGE);
+        this.exitLabelTextProperty = new SimpleStringProperty("");
+        this.winLossLabelProperty = new SimpleStringProperty("");
+        this.winLossLabelStyleProperty = new SimpleStringProperty("");
+        this.fightOverlayStyleProperty = new SimpleStringProperty("");
     }
-    public void renderFightScene(AnchorPane anchorPaneFightOverlay, AnchorPane anchorPaneRoot, Fight activeFight) {
-        this.anchorPaneFightOverlay = anchorPaneFightOverlay;
-        this.parentAnchorPane = anchorPaneRoot;
+
+    public void renderFightScene(Fight activeFight, GameColorObject gameColorObject) {
+        this.gameColorObject = gameColorObject;
         this.anchorPaneFightOverlay.setVisible(true);
         this.activeFight = activeFight;
-        this.trumpColorName = this.activeFight.getStoneInFight().getRandomTrumpColor().getName();
-        this.trumpColorHexCode = this.activeFight.getStoneInFight().getRandomTrumpColor().getHexCode();
-        this.setLayouts();
-        this.setImageViews();
-        this.setLabelTrumpColor();
-        this.setBorderColor();
-        this.setCardChooseLabel();
+        this.trumpColorName = activeFight.getStoneInFight().getTrumpColorStone().getName();
+        this.trumpColorHexCode = activeFight.getStoneInFight().getTrumpColorStone().getHexCode();
+        this.updateImageViews();
+        this.updateLabelTrumpColor();
+        this.updateBorderColor(this.trumpColorHexCode);
+        this.updateCardChooseLabel();
+        this.clearWinLossLabel();
     }
 
     public void endFightScene() {
         this.anchorPaneFightOverlay.setVisible(false);
-        this.anchorPaneFightOverlay.getChildren().remove(this.trumpColorLabel);
-        this.anchorPaneFightOverlay.getChildren().remove(this.exitLbl);
-        this.anchorPaneFightOverlay.getChildren().remove(this.cardChooseTextLabel);
     }
 
-    private void setLayouts() {
-        this.anchorPaneFightOverlay.setLayoutX((double) (GameConfig.WINDOW_WIDTH - GameConfig.WINDOW_WIDTH_FIGHT_SCENE) / 2);
-        this.anchorPaneFightOverlay.setLayoutY(GameConfig.LAYOUT_Y_FIGHT_SCENE);
+    private void updateImageViews() {
+        this.duckyCardProperty.imageProperty().set(EMPTY_CARD_IMAGE);
+        this.stoneCardProperty.imageProperty().set(this.activeFight.getDuckyPlaysFirst() ? BACK_CARD_IMAGE : newImage(this.activeFight.getStoneCard().getImgFileName()));
     }
 
-    private void setBorderColor() {
-        this.anchorPaneFightOverlay.setStyle("-fx-border-color: " + this.trumpColorHexCode + "; -fx-border-width: 3px;");
-    }
-
-    private void setImageViews() {
-        double spaceBetweenCards = 50.0;
-        double xPosition = this.calcSpaceLeftRight(spaceBetweenCards, 2, GameConfig.WINDOW_WIDTH_FIGHT_SCENE);
-        this.imgViewCardStone = (ImageView) this.anchorPaneFightOverlay.getChildren().get(0);
-        this.imgViewCardDucky = (ImageView) this.anchorPaneFightOverlay.getChildren().get(1);
-        this.imgViewCardStone.setFitHeight(GameConfig.CARD_HEIGHT);
-        this.imgViewCardDucky.setFitHeight(GameConfig.CARD_HEIGHT);
-        this.imgViewCardStone.setFitWidth(GameConfig.CARD_WIDTH);
-        this.imgViewCardDucky.setFitWidth(GameConfig.CARD_WIDTH);
-        this.imgViewCardStone.setLayoutX(xPosition);
-        xPosition = xPosition + GameConfig.CARD_WIDTH + spaceBetweenCards;
-        this.imgViewCardDucky.setLayoutX(xPosition);
-        this.renderCardImageViews(this.imgViewCardStone, true);
-        this.renderCardImageViews(this.imgViewCardDucky, false);
-    }
-
-    private void renderCardImageViews(ImageView imgView, boolean stone) {
-        if (stone) {
-            newImage(this.activeFight.getDuckyPlaysFirst() ? this.activeFight.getStoneCard().getImgFileName() : GameConfig.BACK_CARD_FILENAME, imgView);
-        } else {
-            newImage(GameConfig.EMPTY_CARD_FILENAME, imgView);
-        }
-    }
-
-    private void setLabelTrumpColor() {
-        TextObject textObject = new TextObject();
-        textObject.getTextLabel().setId("trumpColorText");
-        this.trumpColorLabel = textObject.getTextLabel();
+    private void updateLabelTrumpColor() {
         if (!this.trumpColorName.equals("none")) {
-            textObject.getTextLabel().setText("Trump color is " + this.trumpColorName);
-            textObject.setStyle(FONT_SIZE_LABEL_TRUMP_COLOR, this.trumpColorHexCode);
+            this.trumpColorTextProperty.set("Trump color is " + this.trumpColorName);
         } else {
-            textObject.getTextLabel().setText("No trump color");
-            textObject.setStyleDefaultWhite(FONT_SIZE_LABEL_TRUMP_COLOR);
+            this.trumpColorTextProperty.set("No trump color");
         }
-        textObject.centerLabelFightScene(20);
-        this.anchorPaneFightOverlay.getChildren().add(textObject.getTextLabel());
+        this.trumpColorTextStyleProperty.set("-fx-text-fill: " + this.trumpColorHexCode + ";");
     }
 
-    private void setCardChooseLabel() {
-        TextObject textObject = new TextObject();
-        textObject.getTextLabel().setId("cardChooseText");
-        this.cardChooseTextLabel = textObject.getTextLabel();
-        if (!activeFight.getDuckyPlaysFirst()) {
-            textObject.getTextLabel().setText("Choose a card to start");
+    private void updateCardChooseLabel() {
+        if (activeFight.getDuckyPlaysFirst()) {
+            this.cardChooseTextProperty.set("Choose a card to start");
         } else {
-            textObject.getTextLabel().setText("Try to beat this card!");
+            this.cardChooseTextProperty.set("Try to beat this card!");
         }
-        textObject.setStyleDefaultWhite("25px");
-        textObject.centerLabelFightScene(50);
-        this.anchorPaneFightOverlay.getChildren().add(textObject.getTextLabel());
     }
 
-    private void addWinLossLabel() {
-        TextObject textObject = new TextObject();
-        textObject.getTextLabel().setId("winLossLabel");
+    private void clearWinLossLabel() {
+        this.winLossLabelProperty.set("");
     }
 
-    public void addExitLabel() {
-        this.exitLbl = new Label();
-        this.exitLbl.setText("x");
-        this.exitLbl.setLayoutX(368.0);
-        this.exitLbl.setLayoutY(5);
-        this.exitLbl.setId("exitLbl");
-        this.anchorPaneFightOverlay.getChildren().add(this.exitLbl);
+    private Image newImage(String fileName) {
+        return new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileName)));
     }
 
-    public void newImage(String fileName, ImageView imgView) {
-        Image newImage =  new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileName)));
-        imgView.setImage(newImage);
+    public void updateBorderColor(String trumpColorHexCode) {
+        this.fightOverlayStyleProperty.set("-fx-border-color: " + trumpColorHexCode + "; -fx-border-width: 3px;");
     }
 
-    public double calcSpaceLeftRight(double spaceBetweenCards, int amountCards, double nodeWidth) {
-        double handCardsWithoutSpace = GameConfig.CARD_WIDTH * amountCards;
-        double handCardsWithSpace = handCardsWithoutSpace + ((amountCards - 1) * spaceBetweenCards);
-        return (nodeWidth - handCardsWithSpace) / 2;
+    public void updateWinLossLabel(boolean duckyWin) {
+        if (duckyWin) {
+            this.winLossLabelProperty.set("Win!");
+            this.winLossLabelStyleProperty.set("-fx-text-fill: " + this.gameColorObject.getHexCodeFromMap("green") + ";");
+        } else {
+            this.winLossLabelProperty.set("Loss!");
+            this.winLossLabelStyleProperty.set("-fx-text-fill: " + this.gameColorObject.getHexCodeFromMap("red") + ";");
+        }
+    }
+
+    public void renderFightViewCard(boolean ducky) {
+        if (ducky) {
+            this.duckyCardProperty.imageProperty().set(newImage(this.activeFight.getDuckyCard().getImgFileName()));
+        } else {
+            this.stoneCardProperty.imageProperty().set(newImage(this.activeFight.getStoneCard().getImgFileName()));
+        }
+    }
+
+    public void createExitLabel() {
+        this.exitLabelTextProperty.set("x");
     }
 
     public AnchorPane getAnchorPaneFightOverlay() {
         return anchorPaneFightOverlay;
     }
 
-    public ImageView getImgViewCardStone() {
-        return imgViewCardStone;
-    }
-
-    public ImageView getImgViewCardDucky() {
-        return imgViewCardDucky;
-    }
-
-    public Label getExitLbl() {
-        return exitLbl;
-    }
-
-    public void setTrumpColorObject(GameColor trumpColorObject) {
-        this.trumpColorObject = trumpColorObject;
+    public void setAnchorPaneFightOverlay(AnchorPane overlay) {
+        this.anchorPaneFightOverlay = overlay;
     }
 }

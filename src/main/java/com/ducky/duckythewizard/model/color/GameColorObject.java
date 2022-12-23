@@ -92,7 +92,7 @@ public class GameColorObject {
         return HEX_CODES.get(color);
     }
 
-    public GameColor getRandomTrumpColor() {
+    public GameColor generateRandomTrump() {
         return trumpColors.get((int) Math.floor(Math.random()*(this.colorAmount)));
     }
 

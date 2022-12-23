@@ -4,6 +4,7 @@ import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import com.ducky.duckythewizard.model.FightView;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +20,7 @@ public class CardDeck {
     private ArrayList<GameColor> trumpColors;
     private GameColor wizard;
     private GameColor none;
+    public SimpleStringProperty cardsProperty;
 
     public CardDeck(GameColorObject gameColorObject) {
         this.trumpColors = gameColorObject.getTrumpColors();
@@ -26,6 +28,7 @@ public class CardDeck {
         this.none = gameColorObject.getTrumpColorObject().getNone();
         setCardSlotNumbers();
         addCardsToDeck();
+        this.cardsProperty = new SimpleStringProperty(Integer.toString(CARD_DECK.size()));
     }
 
     public ArrayList<Card> getCardDeck() {
@@ -47,7 +50,7 @@ public class CardDeck {
             for (int i = GameConfig.MIN_CARD_VALUE; i <= GameConfig.MAX_CARD_VALUE; i++) {
                 String colorName = color.getName();
                 String imgFileName = "/com/ducky/duckythewizard/images/cards/"+colorName+"/"+colorName+i+".png";
-                CARD_DECK.add(new Card(color, i+1, imgFileName));
+                CARD_DECK.add(new Card(color, i, imgFileName));
             }
         }
         addWizards();
@@ -69,12 +72,16 @@ public class CardDeck {
         for (int i = GameConfig.MIN_CARD_VALUE; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
             takenCards.add(deck.remove(0));
         }
+        // update deck-size
+        this.setCardsProperty(Integer.toString(CARD_DECK.size()));
         return takenCards;
     }
 
     public Card dealOneNewCardFromDeck() {
-        if (getCardDeck().size() != 0) {
-            return getCardDeck().remove(0);
+        if (CARD_DECK.size() != 0) {
+            // update deck-size
+            this.setCardsProperty(Integer.toString(CARD_DECK.size()));
+            return CARD_DECK.remove(0);
         } else {
             return null;
         }
@@ -107,14 +114,6 @@ public class CardDeck {
         }
     }
 
-    public void renderFightCard(Card card, FightView fightView, String player) {
-        if (player.equals("ducky")) {
-            newImage(card.getImgFileName(), fightView.getImgViewCardDucky());
-        } else if (player.equals("stone")) {
-            newImage(card.getImgFileName(), fightView.getImgViewCardStone());
-        }
-    }
-
     public Card removeHandCard(int handCardPosition, ArrayList<Card> handCards, boolean newCardFromDeck) {
         handCards.remove(handCardPosition);
         if (newCardFromDeck) {
@@ -131,6 +130,10 @@ public class CardDeck {
 
     public int getHandCardPosition(MouseEvent event) {
         return CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
+    }
+
+    public boolean checkIfCardDeckEmpty() {
+        return CARD_DECK.size() == 0;
     }
 
     public Card findCardInHandedCards(String colorName, int value, ArrayList<Card> handCards) {
@@ -159,8 +162,15 @@ public class CardDeck {
         return (nodeWidth - handCardsWithSpace) / 2;
     }
 
+    public void setCardsProperty(String cardsProperty) {
+        this.cardsProperty.set(cardsProperty);
+    }
 
-/***********************************************************************************************************************/
+    public String getCardsProperty() {
+        return cardsProperty.get();
+    }
+
+    /***********************************************************************************************************************/
     // DELETE ME LATER
     public static void showAllCardDeckInfo() {
         for (Card card : CARD_DECK) {
