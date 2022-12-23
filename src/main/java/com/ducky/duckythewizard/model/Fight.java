@@ -66,7 +66,7 @@ public class Fight {
     public boolean determineWinner() {
         int stoneScore = stoneCard.getValue();
         int duckyScore = duckyCard.getValue();
-        String trump = this.stoneInFight.getTrumpColorStone().getName();
+        String trump = this.stoneInFight.getRandomTrumpColorStone().getName();
 
         // if both got wizard, first wizard wins
         // no need to check more?

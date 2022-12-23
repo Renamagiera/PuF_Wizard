@@ -30,7 +30,10 @@
         </Group>
         <HBox fx:id="heartContainer" prefHeight="50.0" prefWidth="180.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
         <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" prefHeight="42.0" prefWidth="50.0" text="Label" textAlignment="CENTER" />
-        <GridPane fx:id="levelGrid" prefHeight="650.0" prefWidth="800.0">
+        <Label fx:id="punkteTextLabel" alignment="TOP_RIGHT" text="Punkte: " AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="10.0" />
+        <Label fx:id="scoreLabel" alignment="TOP_RIGHT" text="SCORE" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0" />
+
+      <GridPane fx:id="levelGrid" prefHeight="650.0" prefWidth="800.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0" />
@@ -419,12 +422,6 @@
                   <String fx:value="textGeneral" />
                   <String fx:value="textFontBig" />
                </styleClass></Label>
-            <Label fx:id="exitLabel" layoutX="368.0" layoutY="5.0" text="x">
-               <styleClass>
-                  <String fx:value="textGeneral" />
-                  <String fx:value="textFontBig" />
-               </styleClass>
-            </Label>
             <Label fx:id="winLossLabel" alignment="CENTER" layoutY="270.0" prefWidth="400.0" text="winLossLabel">
                <styleClass>
                   <String fx:value="textGeneral" />

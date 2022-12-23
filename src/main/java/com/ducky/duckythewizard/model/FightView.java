@@ -3,6 +3,7 @@ package com.ducky.duckythewizard.model;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -16,7 +17,6 @@ public class FightView {
     public SimpleStringProperty cardChooseTextProperty;
     public ImageView stoneCardProperty;
     public ImageView duckyCardProperty;
-    public SimpleStringProperty exitLabelTextProperty;
     public SimpleStringProperty winLossLabelProperty;
     public SimpleStringProperty winLossLabelStyleProperty;
     public SimpleStringProperty fightOverlayStyleProperty;
@@ -30,13 +30,14 @@ public class FightView {
     private String trumpColorHexCode;
     private String trumpColorName;
 
+    private Label exitLabel;
+
     public FightView() {
         this.trumpColorTextProperty = new SimpleStringProperty("");
         this.trumpColorTextStyleProperty = new SimpleStringProperty("");
         this.cardChooseTextProperty = new SimpleStringProperty("");
         this.stoneCardProperty = new ImageView(EMPTY_CARD_IMAGE);
         this.duckyCardProperty = new ImageView(EMPTY_CARD_IMAGE);
-        this.exitLabelTextProperty = new SimpleStringProperty("");
         this.winLossLabelProperty = new SimpleStringProperty("");
         this.winLossLabelStyleProperty = new SimpleStringProperty("");
         this.fightOverlayStyleProperty = new SimpleStringProperty("");
@@ -46,17 +47,18 @@ public class FightView {
         this.gameColorObject = gameColorObject;
         this.anchorPaneFightOverlay.setVisible(true);
         this.activeFight = activeFight;
-        this.trumpColorName = activeFight.getStoneInFight().getTrumpColorStone().getName();
-        this.trumpColorHexCode = activeFight.getStoneInFight().getTrumpColorStone().getHexCode();
+        this.trumpColorName = activeFight.getStoneInFight().getRandomTrumpColorStone().getName();
+        this.trumpColorHexCode = activeFight.getStoneInFight().getRandomTrumpColorStone().getHexCode();
         this.updateImageViews();
         this.updateLabelTrumpColor();
         this.updateBorderColor(this.trumpColorHexCode);
         this.updateCardChooseLabel();
-        this.clearWinLossLabel();
+        this.clear();
     }
 
     public void endFightScene() {
         this.anchorPaneFightOverlay.setVisible(false);
+        this.anchorPaneFightOverlay.getChildren().remove(this.exitLabel);
     }
 
     private void updateImageViews() {
@@ -81,12 +83,21 @@ public class FightView {
         }
     }
 
-    private void clearWinLossLabel() {
+    private void clear() {
         this.winLossLabelProperty.set("");
     }
 
     private Image newImage(String fileName) {
         return new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileName)));
+    }
+
+    public void addExitLabel() {
+        this.exitLabel = new Label("x");
+        this.exitLabel.setId("exitLabel");
+        this.exitLabel.setLayoutX(358);
+        this.exitLabel.setLayoutY(5);
+        this.exitLabel.setStyle("-fx-font-family: 'Alagard'; -fx-text-fill: white; -fx-font-size: 30px;");
+        this.anchorPaneFightOverlay.getChildren().add(this.exitLabel);
     }
 
     public void updateBorderColor(String trumpColorHexCode) {
@@ -111,15 +122,15 @@ public class FightView {
         }
     }
 
-    public void createExitLabel() {
-        this.exitLabelTextProperty.set("x");
-    }
-
     public AnchorPane getAnchorPaneFightOverlay() {
         return anchorPaneFightOverlay;
     }
 
     public void setAnchorPaneFightOverlay(AnchorPane overlay) {
         this.anchorPaneFightOverlay = overlay;
+    }
+
+    public Label getExitLabel() {
+        return exitLabel;
     }
 }

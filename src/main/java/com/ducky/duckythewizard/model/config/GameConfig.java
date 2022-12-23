@@ -25,6 +25,8 @@ public class GameConfig {
     public static final String STONE_IMAGE_FILE_NAME = "/com/ducky/duckythewizard/images/forest/rock_50px.png";
     public static final String STONE_IMAGE_FILE_NAME_CROPPED = "/com/ducky/duckythewizard/images/forest/rock_50px_cropped.png";
     public static final int STONE_INACTIVE_TIMER = 10000;
+    public static final int STONE_CHANGE_COLOR_RATE_MIN = 5;
+    public static final int STONE_CHANGE_COLOR_RATE_MAX = 10;
     public static final int TRUMP_TIMER = 2000;
 
     public int getWindowWidth() {
