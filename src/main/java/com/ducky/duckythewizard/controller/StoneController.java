@@ -48,7 +48,7 @@ public class StoneController extends Controller {
     private void tintAllStones(GridPane levelGrid) {
         // color the stones to the trump-color
         // executorService runs runnables as daemons
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(this.getSession().stoneArrayList.size(),
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(this.getSession().getStoneArrayList().size(),
             new ThreadFactory() {
                 public Thread newThread(Runnable r) {
                     Thread t = Executors.defaultThreadFactory().newThread(r);
@@ -74,9 +74,9 @@ public class StoneController extends Controller {
                     Runnable stoneColorRunnable = new Runnable() {
                         public void run() {
                             if (getSession().getIsRunning()) {
-                                stone.setTrumpColorStone(getSession().getGameColorObject().generateRandomTrump());
-                                System.out.println("--> setting " + stone.getId() + " stoneColor to: " + stone.getTrumpColorStone());
-                                String stoneRandomTrumpColor = stone.getTrumpColorStone().getName();
+                                stone.setRandomTrumpColorStone(getSession().getGameColorObject().generateRandomTrump());
+                                System.out.println("--> setting " + stone.getId() + " stoneColor to: " + stone.getRandomTrumpColorStone());
+                                String stoneRandomTrumpColor = stone.getRandomTrumpColorStone().getName();
                                 getSession().getGameColorObject().tintStone(imgView, stoneRandomTrumpColor);
                             }
                         }
