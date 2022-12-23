@@ -107,9 +107,9 @@ public class CardController extends Controller {
             return "win";
         } else if (!duckyWin) {
             if (cardsLeft >= 2) {
-                return getSession().getPlayer().getPlayableCards() > 1 ? "no" : "loss";
+                return getSession().getPlayer().checkAvailableCards() ? "no" : "loss";
             } else {
-                return getSession().getPlayer().getPlayableCards() <= 1 ? "loss" : "no";
+                return getSession().getPlayer().checkAvailableCards() ? "loss" : "no";
             }
         }
         return "no";
@@ -118,6 +118,9 @@ public class CardController extends Controller {
     private void endFight(int clickPosition, boolean duckyWin) {
         getSession().getGameCtrl().endCollision();
         newCardsFromDeck(clickPosition, duckyWin);
+/*        System.out.println("card deck size: " + this.getSession().getCardDeck().getCardDeck().size());
+        System.out.println("playable cards " + this.getSession().getPlayer().checkAvailableCards());*/
+        System.out.println("");
     }
 
     private void newCardsFromDeck(int clickedPosition, boolean duckyWin) {

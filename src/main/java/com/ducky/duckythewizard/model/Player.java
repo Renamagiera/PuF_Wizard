@@ -15,6 +15,18 @@ public class Player {
         this.playableCards = GameConfig.AMOUNT_HAND_CARDS;
     }
 
+    public boolean checkAvailableCards() {
+        int cardsAvailable = GameConfig.AMOUNT_HAND_CARDS;
+        for (Card handCard : this.handCards) {
+            if (handCard.getColor().getName().equals("none")) {
+                cardsAvailable--;
+            }
+        }
+        /*System.out.println("check-method: available cards: " + cardsAvailable);
+        System.out.println("");*/
+        return cardsAvailable >= 1;
+    }
+
     public void decrementHandCards() {
         this.playableCards--;
     }
