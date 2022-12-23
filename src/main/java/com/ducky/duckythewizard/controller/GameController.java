@@ -47,6 +47,8 @@ public class GameController{
     @FXML
     private Label timerLabel;
     @FXML
+    private Label scoreLabel;
+    @FXML
     private HBox heartContainer;
     @FXML
     private Label cards;
@@ -146,8 +148,11 @@ public class GameController{
         ducky.setPosition(windowWidth /4 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);
 
-        // binding timerLabel to ducky's timer
+        // binding timerLabel to Ducky's timer
         timerLabel.textProperty().bind(ducky.timerProperty);
+
+        // binding scoreLabel to Ducky's score
+        scoreLabel.textProperty().bind(ducky.score.asString());
 
         // add hearts to screen representing Ducky's health points
         heartContainer.setSpacing(10.0);
@@ -258,9 +263,14 @@ public class GameController{
 
                 // showing 'You lose' text
                 if(ducky.getHealthPoints() == 0){
-                    String pointsText = "You LOSE";
+                    String pointsText = "You LOSE\nyour score is " + ducky.getScore();
                     gc.fillText(pointsText, windowWidth / 3, windowHeight / 3);
                     gc.strokeText(pointsText, windowWidth / 3, windowHeight / 3);
+
+                    //ServerFacade serverFacade = new ServerFacade();
+                    //serverFacade.sendHighScoreToServer("Ducky-Test-19", ducky.getScore());
+
+                    session.toggleIsRunning();
                 }
 
                 // remove heart if Ducky lost a health point

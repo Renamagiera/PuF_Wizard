@@ -8,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.util.Objects;
+import java.util.Random;
+import java.util.concurrent.*;
 
 public class StoneController extends Controller {
     private Thread trumpColorChange;
@@ -40,6 +42,15 @@ public class StoneController extends Controller {
 
     private void tintAllStones(GridPane levelGrid) {
         // color the stones to the trump-color
+        // executorService runs runnables as daemons
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(this.getSession().stoneArrayList.size(),
+            new ThreadFactory() {
+                public Thread newThread(Runnable r) {
+                    Thread t = Executors.defaultThreadFactory().newThread(r);
+                    t.setDaemon(true);
+                    return t;
+                }
+            });
         for (int i = 0; i < levelGrid.getChildren().size(); i++) {
             for (int x = 0; x < this.getSession().getStoneArrayList().size(); x++) {
                 if (levelGrid.getChildren().get(i).getId()!=null && levelGrid.getChildren().get(i).getId().equals("stone" + x)) {
@@ -57,6 +68,23 @@ public class StoneController extends Controller {
 
                     String stoneRandomTrumpColor = stone.getTrumpColorStone().getName();
                     this.getSession().getGameColorObject().tintStone(imgView, stoneRandomTrumpColor);
+
+                    Runnable stoneColorRunnable = new Runnable() {
+                        public void run() {
+                            if (getSession().getIsRunning()) {
+                                stone.setTrumpColorStone(getSession().getGameColorObject().generateRandomTrump());
+                                System.out.println("--> setting " + stone.getId() + " stoneColor to: " + stone.getTrumpColorStone());
+                                String stoneRandomTrumpColor = stone.getTrumpColorStone().getName();
+                                getSession().getGameColorObject().tintStone(imgView, stoneRandomTrumpColor);
+                            }
+                        }
+                    };
+
+                    // change rate is random number generated separately for each stone
+                    int stoneChangeColorRate = new Random().nextInt(
+                            GameConfig.STONE_CHANGE_COLOR_RATE_MAX - GameConfig.STONE_CHANGE_COLOR_RATE_MIN + 1) + GameConfig.STONE_CHANGE_COLOR_RATE_MIN;
+
+                    executorService.scheduleAtFixedRate(stoneColorRunnable, 0, stoneChangeColorRate, TimeUnit.SECONDS);
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.controller.CollisionHandler;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
@@ -15,6 +16,7 @@ public class DuckySprite extends AnimatedSprite{
     }
 
     private int healthPoints;
+    public SimpleIntegerProperty score;
     private MovementState state;
     private long resetTime;
     private int maxHealthPoints;
@@ -28,6 +30,7 @@ public class DuckySprite extends AnimatedSprite{
 
     public DuckySprite(int maxHealthPoints, CollisionHandler collisionHandler) {
         this.healthPoints = maxHealthPoints;
+        this.score = new SimpleIntegerProperty(0);
         this.state = MovementState.FLY;
         this.resetTime = System.nanoTime();
         this.maxHealthPoints = maxHealthPoints;
@@ -99,6 +102,15 @@ public class DuckySprite extends AnimatedSprite{
 
     public int getHealthPoints() {
         return healthPoints;
+    }
+
+    public int getScore() {
+        return score.getValue();
+    }
+
+    public void addToScore (int points) {
+        score.set(score.getValue() + points);
+        System.out.println("==> adding " + points + " to score, score is now: " + score.getValue());
     }
 
     private void initializeImageArrays() {
