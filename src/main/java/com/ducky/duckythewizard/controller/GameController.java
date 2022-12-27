@@ -66,6 +66,8 @@ public class GameController{
     private AnchorPane endScene;
     @FXML
     private Label endSceneLabel;
+    @FXML
+    private Label score;
 
     private int windowWidth = this.session.getGameConfig().getWindowWidth();
     private int windowHeight = this.session.getGameConfig().getWindowHeight();
@@ -115,6 +117,7 @@ public class GameController{
         endSceneLabel.textProperty().bind(session.getEndSceneView().endSceneLabelProperty);
         endSceneLabel.styleProperty().bind(session.getEndSceneView().endSceneLabelStyleProperty);
         endScene.getChildren().get(0).styleProperty().bind(session.getEndSceneView().endSceneStyleProperty);
+        score.textProperty().bind(session.getEndSceneView().scoreProperty);
 
         // initialize Level map
         Level level = new Level(levelGrid);
@@ -199,18 +202,14 @@ public class GameController{
 
     public void endCollision() {
         this.session.getFightCtrl().stopFight(animationTimer, ducky);
-        try {
-            this.session.getStoneCtrl().startThreadsNewTrumpColor();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void renderEndScene(boolean duckyWin) {
         this.session.getEndSceneView().renderEndScene(
                 this.session.getAnchorPaneEndOverlay(),
                 duckyWin,
-                this.session.getGameColorObject());
+                this.session.getGameColorObject(),
+                ducky.getScore());
     }
 
     class MyAnimationTimer extends AnimationTimer
@@ -261,15 +260,17 @@ public class GameController{
                 gc.clearRect(0, 0, windowWidth, windowHeight);
 
                 // showing 'You lose' text
+                // lose-scene
                 if(ducky.getHealthPoints() == 0){
-                    String pointsText = "You LOSE\nyour score is " + ducky.getScore();
+                    /*String pointsText = "You LOSE\nyour score is " + ducky.getScore();
                     gc.fillText(pointsText, windowWidth / 3, windowHeight / 3);
-                    gc.strokeText(pointsText, windowWidth / 3, windowHeight / 3);
+                    gc.strokeText(pointsText, windowWidth / 3, windowHeight / 3);*/
 
                     //ServerFacade serverFacade = new ServerFacade();
                     //serverFacade.sendHighScoreToServer("Ducky-Test-19", ducky.getScore());
 
                     session.toggleIsRunning();
+                    renderEndScene(false);
                 }
 
                 // remove heart if Ducky lost a health point
