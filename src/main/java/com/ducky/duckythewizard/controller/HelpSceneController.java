@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class HelpSceneController extends SceneController {
@@ -32,16 +31,14 @@ public class HelpSceneController extends SceneController {
         super.getWindowStage(event, root);
     }
 
-
     public void startGame(ActionEvent event) throws IOException {
         super.startGame(event);
     }
 
-    public void endHelpScenes(ActionEvent event) throws IOException {
-        super.startGame(event);
-        /*Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    public void backToMenu(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         WizardMainApplication reload = new WizardMainApplication();
-        reload.start(stage);*/
+        reload.start(stage);
     }
 
 }

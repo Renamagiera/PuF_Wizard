@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 public class Game {
 
-    WizardMainApplication mainApplication;
-
     private boolean isRunning;
     private Player player; //Attribut für Daten zum Spieler selbst (Name etc.)
     private Card clickedCardFight;
@@ -43,7 +41,6 @@ public class Game {
     private SceneController sceneCtrl;
 
     public Game(){
-        this.mainApplication = new WizardMainApplication();
         isRunning = true;
         gameConfig = new GameConfig();
         this.gameColorObject = new GameColorObject();
@@ -75,7 +72,9 @@ public class Game {
     public void createStoneCtrlObj() {
         this.stoneCtrl = new StoneController(this);
     }
-    public void createFightCtrlObj() { this.fightCtrl = new FightController(this); }
+    public void createFightCtrlObj() throws InterruptedException {
+        this.fightCtrl = new FightController(this);
+    }
     public void createSceneCtrlObj() { this.sceneCtrl = new SceneController(); }
 
     public GameConfig getGameConfig() {
@@ -97,7 +96,6 @@ public class Game {
     public FightController getFightCtrl() {
         return fightCtrl;
     }
-    public SceneController getSceneCtrl() { return sceneCtrl; }
 
     public CardDeck getCardDeck() {
         return this.cardDeck;
@@ -171,9 +169,5 @@ public class Game {
 
     public FightView getFightView() {
         return fightView;
-    }
-
-    public WizardMainApplication getMainApplication() {
-        return mainApplication;
     }
 }

@@ -406,7 +406,7 @@
                     </image></ImageView>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="fightOverlay" layoutX="200.0" layoutY="130.0" prefHeight="350.0" prefWidth="400.0" styleClass="bgBrown" stylesheets="@../styles/style.css">
+        <AnchorPane fx:id="fightOverlay" layoutX="200.0" layoutY="130.0" prefHeight="350.0" prefWidth="400.0" styleClass="bgBrown" stylesheets="@../styles/font.css">
          <children>
             <ImageView fx:id="stoneCard" fitHeight="104.0" fitWidth="65.0" layoutX="110.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -416,8 +416,8 @@
                <image>
                   <Image url="@../images/cards/empty.png" />
                </image></ImageView>
-            <Label fx:id="trumpColorText" alignment="CENTER" layoutY="20.0" prefWidth="400.0" styleClass="textGeneral" stylesheets="@../styles/style.css" text="trumpColorText" />
-            <Label fx:id="cardChooseText" alignment="CENTER" layoutY="60.0" prefWidth="400.0" stylesheets="@../styles/style.css" text="cardChooseText">
+            <Label fx:id="trumpColorText" alignment="CENTER" layoutY="20.0" prefWidth="400.0" styleClass="textGeneral" stylesheets="@../styles/font.css" text="trumpColorText" />
+            <Label fx:id="cardChooseText" alignment="CENTER" layoutY="60.0" prefWidth="400.0" stylesheets="@../styles/font.css" text="cardChooseText">
                <styleClass>
                   <String fx:value="textGeneral" />
                   <String fx:value="textFontBig" />
@@ -429,9 +429,9 @@
                </styleClass>
             </Label>
          </children></AnchorPane>
-      <Label fx:id="cardsInDeck" layoutX="20.0" layoutY="585.0" styleClass="textGeneral" stylesheets="@../styles/style.css" text="cards left" />
-      <Label fx:id="cards" layoutX="49.0" layoutY="560.0" styleClass="textGeneral" stylesheets="@../styles/style.css" text="45" />
-      <AnchorPane fx:id="endScene" prefHeight="650.0" prefWidth="800.0" styleClass="bgEndingScene" stylesheets="@../styles/style.css">
+      <Label fx:id="cardsInDeck" layoutX="20.0" layoutY="585.0" styleClass="textGeneral" stylesheets="@../styles/font.css" text="cards left" />
+      <Label fx:id="cards" layoutX="49.0" layoutY="560.0" styleClass="textGeneral" stylesheets="@../styles/font.css" text="45" />
+      <AnchorPane fx:id="endScene" prefHeight="650.0" prefWidth="800.0" styleClass="bgEndingScene" stylesheets="@../styles/font.css">
          <children>
             <AnchorPane layoutX="150.0" layoutY="225.0" prefHeight="200.0" prefWidth="500.0" styleClass="bgBrown">
                <children>

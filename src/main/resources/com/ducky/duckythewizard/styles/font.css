@@ -1,6 +1,7 @@
-
-
-
+@font-face {
+    font-family: 'Alagard';
+    src: url('../fonts/alagard.ttf');
+}
 .root{
     -fx-background-size: cover, cover, cover, cover;
     -fx-background-position: top, top, top, top;
@@ -11,34 +12,6 @@
             url("../images/forest/parallax-forest-lights_800px.png"),
             url("../images/forest/parallax-forest-middle-trees_800px.png"),
             url("../images/forest/parallax-forest-front-trees_800px.png")
-}
-
-
-
-@font-face {
-    font-family: 'Alagard';
-    src: url('/com/ducky/duckythewizard/fonts/alagard.ttf');
-}
-.button .text{
-    -fx-font-family: 'Alagard';
-    -fx-font-size: 30px;
-}
-.label{
-    -fx-font-family: 'Alagard';
-    -fx-font-size: 30px;
-    -fx-text-fill: #ffffff;
-}
-.text-area *.content {
-    -fx-background-color: #072130;
-}
-
-
-
-
-
-@font-face {
-    font-family: 'Alagard';
-    src: url('/com/ducky/duckythewizard/fonts/alagard.ttf');
 }
 .buttonTransparentAndFont {
     -fx-font-family: 'Alagard';
