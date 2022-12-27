@@ -3,7 +3,6 @@ package com.ducky.duckythewizard.model.card;
 import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
-import com.ducky.duckythewizard.model.FightView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +14,7 @@ import java.util.*;
 public class CardDeck {
     // how data can be accessed, created, stored and changed
 
-    private static final ArrayList<Card> CARD_DECK = new ArrayList<>();
+    private ArrayList<Card> cardDeck;
     private static final Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
     private ArrayList<GameColor> trumpColors;
     private GameColor wizard;
@@ -23,16 +22,18 @@ public class CardDeck {
     public SimpleStringProperty cardsProperty;
 
     public CardDeck(GameColorObject gameColorObject) {
+        //System.out.println("--> new card deck created");
+        this.cardDeck = new ArrayList<>();
         this.trumpColors = gameColorObject.getTrumpColors();
         this.wizard = gameColorObject.getTrumpColorObject().getWizard();
         this.none = gameColorObject.getTrumpColorObject().getNone();
-        setCardSlotNumbers();
-        addCardsToDeck();
-        this.cardsProperty = new SimpleStringProperty(Integer.toString(CARD_DECK.size()));
+        this.setCardSlotNumbers();
+        this.addCardsToDeck();
+        this.cardsProperty = new SimpleStringProperty(Integer.toString(cardDeck.size()));
     }
 
     public ArrayList<Card> getCardDeck() {
-        return CARD_DECK;
+        return cardDeck;
     }
 
     public void setCardSlotNumbers() {
@@ -50,21 +51,22 @@ public class CardDeck {
             for (int i = GameConfig.MIN_CARD_VALUE; i <= GameConfig.MAX_CARD_VALUE; i++) {
                 String colorName = color.getName();
                 String imgFileName = "/com/ducky/duckythewizard/images/cards/"+colorName+"/"+colorName+i+".png";
-                CARD_DECK.add(new Card(color, i, imgFileName));
+                cardDeck.add(new Card(color, i, imgFileName));
             }
         }
         addWizards();
         shuffleCards();
+        System.out.println("--> card deck size: " + cardDeck.size());
     }
 
     private void addWizards() {
         for (int i = 0; i < GameConfig.AMOUNT_WIZARDS; i++) {
-            CARD_DECK.add(new Card(this.wizard, GameConfig.WIZARD_POINTS, GameConfig.WIZARD_FILENAME));
+            cardDeck.add(new Card(this.wizard, GameConfig.WIZARD_POINTS, GameConfig.WIZARD_FILENAME));
         }
     }
 
     private void shuffleCards() {
-        Collections.shuffle(CARD_DECK);
+        Collections.shuffle(cardDeck);
     }
 
     public ArrayList<Card> dealHandCards(ArrayList<Card> deck) {
@@ -73,15 +75,16 @@ public class CardDeck {
             takenCards.add(deck.remove(0));
         }
         // update deck-size
-        this.setCardsProperty(Integer.toString(CARD_DECK.size()));
+        this.setCardsProperty(Integer.toString(cardDeck.size()));
         return takenCards;
     }
 
     public Card dealOneNewCardFromDeck() {
-        if (CARD_DECK.size() != 0) {
+        if (cardDeck.size() != 0) {
+            Card card = cardDeck.remove(0);
             // update deck-size
-            this.setCardsProperty(Integer.toString(CARD_DECK.size()));
-            return CARD_DECK.remove(0);
+            this.setCardsProperty(Integer.toString(cardDeck.size()));
+            return card;
         } else {
             return null;
         }
@@ -104,14 +107,9 @@ public class CardDeck {
         newImage(handCards.get(clickPosition).getImgFileName(), imageView);
     }
 
-    public void renderSpecialCard(ImageView imageView, String type) {
-        if (type.equals("empty")) {
-            imageView.setPickOnBounds(false);
-            newImage(GameConfig.EMPTY_CARD_FILENAME, imageView);
-        } else if (type.equals("back")) {
-            imageView.setPickOnBounds(true);
-            System.out.println("back-card");
-        }
+    public void renderEmptyCard(ImageView imageView) {
+        imageView.setPickOnBounds(false);
+        newImage(GameConfig.EMPTY_CARD_FILENAME, imageView);
     }
 
     public Card removeHandCard(int handCardPosition, ArrayList<Card> handCards, boolean newCardFromDeck) {
@@ -132,30 +130,6 @@ public class CardDeck {
         return CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
     }
 
-    public boolean checkIfCardDeckEmpty() {
-        return CARD_DECK.size() == 0;
-    }
-
-    public Card findCardInHandedCards(String colorName, int value, ArrayList<Card> handCards) {
-        for (Card card : handCards) {
-            if (card.getColor().getName().equals(colorName) && card.getValue() == value) {
-                System.out.println("Card found: " + card.getColor().getName() + ", " + card.getValue());
-                return card;
-            }
-        }
-        return null;
-    }
-
-    public Card findCardinDeck(String colorName, int value, CardDeck deck) {
-        for (Card card : deck.getCardDeck()) {
-            if (card.getColor().getName().equals(colorName) && card.getValue() == value) {
-                System.out.println("Card found: " + card.getColor().getName() + ", "+card.getValue());
-                return card;
-            }
-        }
-        return null;
-    }
-
     public double calcSpaceLeftRight(double spaceBetweenCards, int amountCards, double nodeWidth) {
         double handCardsWithoutSpace = GameConfig.CARD_WIDTH * amountCards;
         double handCardsWithSpace = handCardsWithoutSpace + ((amountCards - 1) * spaceBetweenCards);
@@ -166,23 +140,4 @@ public class CardDeck {
         this.cardsProperty.set(cardsProperty);
     }
 
-    public String getCardsProperty() {
-        return cardsProperty.get();
-    }
-
-    /***********************************************************************************************************************/
-    // DELETE ME LATER
-    public static void showAllCardDeckInfo() {
-        for (Card card : CARD_DECK) {
-            System.out.println(card.getValue() + ", " + card.getColor().getName());
-        }
-        System.out.println("Cards: " + CARD_DECK.size());
-    }
-
-    public static void showHandCards(ArrayList<Card> handCards) {
-        for (Card card : handCards) {
-            System.out.println(card.getValue() + ", " + card.getColor().getName());
-        }
-    }
-    // DELETE ME LATER
 }

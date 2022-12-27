@@ -2,6 +2,7 @@ package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -17,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameController{
@@ -80,7 +83,7 @@ public class GameController{
 
     @FXML
     public void initialize() throws InterruptedException {
-        //System.out.println("*** Game Controller is initialized...");
+        System.out.println("*** Game Controller is initialized...");
 
         this.session.setRootAnchorPane(this.rootBox);
         this.session.setAnchorPaneCards(this.emptyCardSlots);
@@ -98,6 +101,7 @@ public class GameController{
         this.session.createMovementCtrlObj();
         this.session.createStoneCtrlObj();
         this.session.createFightCtrlObj();
+        this.session.createSceneCtrlObj();
 
         // initialize cards: set card-anchor-pane, render hand-cards
         this.session.getCardCtrl().cardInit();
@@ -210,6 +214,10 @@ public class GameController{
                 duckyWin,
                 this.session.getGameColorObject(),
                 ducky.getScore());
+    }
+
+    public void restartGame(MouseEvent event) throws IOException {
+        this.session.getSceneCtrl().startGame(event);
     }
 
     class MyAnimationTimer extends AnimationTimer

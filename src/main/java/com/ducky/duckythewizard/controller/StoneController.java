@@ -40,12 +40,12 @@ public class StoneController extends Controller {
             public void run() {
                 if (getSession().getIsRunning()) {
                     for (Stone stone : getSession().getStoneArrayList()) {
-                        stone.setActive(false);
+                        //stone.setActive(false);
                         stone.setRandomTrumpColorStone(getSession().getGameColorObject().generateRandomTrump());
                         //System.out.println("--> setting " + stone.getId() + " stoneColor to: " + stone.getRandomTrumpColorStone());
                         String stoneRandomTrumpColor = stone.getRandomTrumpColorStone().getName();
                         getSession().getGameColorObject().tintStone(stone.getStoneImgView(), stoneRandomTrumpColor);
-                        stone.setActive(true);
+                        //stone.setActive(true);
                     }
                 }
             }

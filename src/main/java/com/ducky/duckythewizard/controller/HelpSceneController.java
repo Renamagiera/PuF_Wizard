@@ -32,17 +32,16 @@ public class HelpSceneController extends SceneController {
         super.getWindowStage(event, root);
     }
 
+
     public void startGame(ActionEvent event) throws IOException {
-        AnchorPane newRoot = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/game-view.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.getScene().setRoot(newRoot);
-        newRoot.requestFocus();
+        super.startGame(event);
     }
 
     public void endHelpScenes(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        super.startGame(event);
+        /*Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         WizardMainApplication reload = new WizardMainApplication();
-        reload.start(stage);
+        reload.start(stage);*/
     }
 
 }

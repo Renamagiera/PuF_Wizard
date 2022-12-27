@@ -7,7 +7,6 @@ import com.ducky.duckythewizard.model.card.CardDeck;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -39,7 +38,7 @@ public class CardController extends Controller {
 
     public void removeCardFromHandCardsAddDummy(int clickedCardPosition) {
         this.handCards.add(clickedCardPosition, this.deck.removeHandCard(clickedCardPosition, this.handCards, false));
-        this.deck.renderSpecialCard((ImageView) this.getSession().getAnchorPaneCards().getChildren().get(clickedCardPosition), "empty");
+        this.deck.renderEmptyCard((ImageView) this.getSession().getAnchorPaneCards().getChildren().get(clickedCardPosition));
     }
     public void addMouseEventHandler() {
         for (Node node : this.getSession().getAnchorPaneCards().getChildren()) {
