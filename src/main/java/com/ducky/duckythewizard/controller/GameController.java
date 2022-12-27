@@ -96,6 +96,7 @@ public class GameController{
         this.session.createMovementCtrlObj();
         this.session.createStoneCtrlObj();
         this.session.createFightCtrlObj();
+        this.session.createSceneCtrlObj();
 
         // initialize cards: set card-anchor-pane, render hand-cards
         this.session.getCardCtrl().cardInit();
