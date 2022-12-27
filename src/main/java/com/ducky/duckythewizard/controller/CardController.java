@@ -73,7 +73,11 @@ public class CardController extends Controller {
                             removeAllClickHandlers();
 
                             if (checkWin(duckyWin).equals("win") || checkWin(duckyWin).equals("loss")) {
-                                getSession().getGameCtrl().renderEndScene(duckyWin);
+                                if (duckyWin) {
+                                    getSession().getGameCtrl().renderEndScene("duckyWin");
+                                } else {
+                                    getSession().getGameCtrl().renderEndScene("duckyLoss");
+                                }
                             }
 
                             // END FIGHT:

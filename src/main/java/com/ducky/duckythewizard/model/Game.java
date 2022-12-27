@@ -96,6 +96,7 @@ public class Game {
     public FightController getFightCtrl() {
         return fightCtrl;
     }
+    public SceneController getSceneCtrl() { return this.sceneCtrl; }
 
     public CardDeck getCardDeck() {
         return this.cardDeck;

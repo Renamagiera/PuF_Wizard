@@ -56,7 +56,7 @@ public class CardDeck {
         }
         addWizards();
         shuffleCards();
-        System.out.println("--> card deck size: " + cardDeck.size());
+        //System.out.println("--> card deck size: " + cardDeck.size());
     }
 
     private void addWizards() {

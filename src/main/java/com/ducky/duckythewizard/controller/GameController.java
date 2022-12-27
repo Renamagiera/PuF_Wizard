@@ -3,6 +3,7 @@ package com.ducky.duckythewizard.controller;
 import com.ducky.duckythewizard.model.*;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -71,6 +72,8 @@ public class GameController{
     private Label endSceneLabel;
     @FXML
     private Label score;
+    @FXML
+    private Label exitLabelEndScene;
 
     private int windowWidth = this.session.getGameConfig().getWindowWidth();
     private int windowHeight = this.session.getGameConfig().getWindowHeight();
@@ -83,7 +86,7 @@ public class GameController{
 
     @FXML
     public void initialize() throws InterruptedException {
-        System.out.println("*** Game Controller is initialized...");
+        //System.out.println("*** Game Controller is initialized...");
 
         this.session.setRootAnchorPane(this.rootBox);
         this.session.setAnchorPaneCards(this.emptyCardSlots);
@@ -122,6 +125,7 @@ public class GameController{
         endSceneLabel.styleProperty().bind(session.getEndSceneView().endSceneLabelStyleProperty);
         endScene.getChildren().get(0).styleProperty().bind(session.getEndSceneView().endSceneStyleProperty);
         score.textProperty().bind(session.getEndSceneView().scoreProperty);
+        exitLabelEndScene.textProperty().bind(session.getEndSceneView().exitLabelProperty);
 
         // initialize Level map
         Level level = new Level(levelGrid);
@@ -180,14 +184,16 @@ public class GameController{
             session.toggleIsRunning();
             if(session.getIsRunning()){
                 animationTimer.resetStartingTime();
-                ducky.resetPlayerTimer();
+                //ducky.resetPlayerTimer();
                 animationTimer.start();
+                this.endPauseScene();
             }
             else {
                 animationTimer.stop();
-                String pauseText = "PAUSE";
+                this.startPauseScene();
+                /*String pauseText = "PAUSE";
                 gc.fillText( pauseText, windowWidth/2 - 50, windowHeight/4 );
-                gc.strokeText( pauseText, windowWidth/2 - 50, windowHeight/4 );
+                gc.strokeText( pauseText, windowWidth/2 - 50, windowHeight/4 );*/
             }
         }
         else if ( session.getIsRunning() && !input.contains(code) )
@@ -208,16 +214,33 @@ public class GameController{
         this.session.getFightCtrl().stopFight(animationTimer, ducky);
     }
 
-    public void renderEndScene(boolean duckyWin) {
+    public void renderEndScene(String overlayHeadline) {
         this.session.getEndSceneView().renderEndScene(
                 this.session.getAnchorPaneEndOverlay(),
-                duckyWin,
+                overlayHeadline,
                 this.session.getGameColorObject(),
-                ducky.getScore());
+                this.ducky.getScore());
     }
 
     public void restartGame(MouseEvent event) throws IOException {
         this.session.getSceneCtrl().startGame(event);
+    }
+
+    public void backToMenu(Event event) throws IOException {
+        this.session.getSceneCtrl().backToMenu(event);
+    }
+
+    public void startPauseScene() {
+        this.session.getEndSceneView().renderEndScene(
+                this.session.getAnchorPaneEndOverlay(),
+                "pause",
+                this.session.getGameColorObject(),
+                this.ducky.getScore());
+    }
+
+    public void endPauseScene() {
+        this.session.getEndSceneView().endScene();
+        this.rootBox.requestFocus();
     }
 
     class MyAnimationTimer extends AnimationTimer
@@ -278,7 +301,7 @@ public class GameController{
                     //serverFacade.sendHighScoreToServer("Ducky-Test-19", ducky.getScore());
 
                     session.toggleIsRunning();
-                    renderEndScene(false);
+                    renderEndScene("duckyLoss");
                 }
 
                 // remove heart if Ducky lost a health point

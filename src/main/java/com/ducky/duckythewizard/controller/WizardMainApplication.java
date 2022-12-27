@@ -15,7 +15,7 @@ public class WizardMainApplication extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/startingScene.fxml")));
         Scene scene = new Scene(root);
         stage.setTitle("Ducky and the wizard stones");
-        String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/font.css")).toExternalForm();
+        String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/style.css")).toExternalForm();
         scene.getStylesheets().clear();
         scene.getStylesheets().add(css);
         stage.setScene(scene);

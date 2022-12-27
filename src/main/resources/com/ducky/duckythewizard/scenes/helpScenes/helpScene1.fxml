@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/font.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
    <children>
       <ImageView fitHeight="650.0" fitWidth="800.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -22,7 +22,7 @@
             <String fx:value="nextButton" />
             <String fx:value="buttonTransparentAndFont" />
          </styleClass></Button>
-      <Button fx:id="exit1" layoutX="710.0" layoutY="-30.0" mnemonicParsing="false" onAction="#endHelpScenes" prefHeight="100.0" prefWidth="112.0" text="x">
+      <Button fx:id="exit1" layoutX="710.0" layoutY="-30.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="100.0" prefWidth="112.0" text="x">
          <font>
             <Font size="1.0" />
          </font>

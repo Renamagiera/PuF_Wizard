@@ -6,14 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Objects;
 
 /*Superclass of all SceneControllers*/
 public class SceneController {
 
-    String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/font.css")).toExternalForm();
+    String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/style.css")).toExternalForm();
 
     /*die bereits beim Start erstellte Stage wird anhand des Events ermittelt. Darauf wird eine neue Scene erstellt*/
 
@@ -32,4 +34,11 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void backToMenu(Event event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        WizardMainApplication reload = new WizardMainApplication();
+        reload.start(stage);
+    }
+
 }
