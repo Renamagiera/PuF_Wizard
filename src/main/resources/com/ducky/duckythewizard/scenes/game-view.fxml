@@ -32,17 +32,17 @@
         <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" prefHeight="42.0" prefWidth="50.0" text="Label" textAlignment="CENTER">
          <styleClass>
             <String fx:value="textGeneral" />
-            <String fx:value="textFontBig" />
+            <String fx:value="textSizeNormal" />
          </styleClass></Label>
-        <Label fx:id="punkteTextLabel" alignment="TOP_RIGHT" text="Punkte: " AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="10.0">
+        <Label fx:id="punkteTextLabel" alignment="TOP_RIGHT" text="Punkte: " AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0">
          <styleClass>
             <String fx:value="textGeneral" />
-            <String fx:value="textFontBig" />
+            <String fx:value="textSizeNormal" />
          </styleClass></Label>
         <Label fx:id="scoreLabel" alignment="TOP_RIGHT" text="SCORE" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
          <styleClass>
             <String fx:value="textGeneral" />
-            <String fx:value="textFontBig" />
+            <String fx:value="textSizeNormal" />
          </styleClass></Label>
 
       <GridPane fx:id="levelGrid" prefHeight="650.0" prefWidth="800.0">
@@ -432,17 +432,25 @@
             <Label fx:id="cardChooseText" alignment="CENTER" layoutY="60.0" prefWidth="400.0" stylesheets="@../styles/style.css" text="cardChooseText">
                <styleClass>
                   <String fx:value="textGeneral" />
-                  <String fx:value="textFontBig" />
+                  <String fx:value="textSizeNormal" />
                </styleClass></Label>
             <Label fx:id="winLossLabel" alignment="CENTER" layoutY="270.0" prefWidth="400.0" text="winLossLabel">
                <styleClass>
                   <String fx:value="textGeneral" />
-                  <String fx:value="textFontBig" />
+                  <String fx:value="textSizeNormal" />
                </styleClass>
             </Label>
          </children></AnchorPane>
-      <Label fx:id="cardsInDeck" layoutX="20.0" layoutY="585.0" styleClass="textGeneral" stylesheets="@../styles/style.css" text="cards left" />
-      <Label fx:id="cards" layoutX="49.0" layoutY="560.0" styleClass="textGeneral" stylesheets="@../styles/style.css" text="45" />
+      <Label fx:id="cardsInDeck" layoutX="20.0" layoutY="585.0" stylesheets="@../styles/style.css" text="cards left">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="textSizeSmall" />
+         </styleClass></Label>
+      <Label fx:id="cards" layoutX="49.0" layoutY="560.0" stylesheets="@../styles/style.css" text="45">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="textGreen" />
+         </styleClass></Label>
       <AnchorPane fx:id="endScene" prefHeight="650.0" prefWidth="800.0" styleClass="bgEndingScene" stylesheets="@../styles/style.css">
          <children>
             <AnchorPane layoutX="150.0" layoutY="225.0" prefHeight="200.0" prefWidth="500.0" styleClass="bgBrown">
@@ -464,7 +472,7 @@
                   <Label fx:id="exitLabelEndScene" layoutX="470.0">
                      <styleClass>
                         <String fx:value="textGeneral" />
-                        <String fx:value="textFontBig" />
+                        <String fx:value="textSizeNormal" />
                      </styleClass>
                   </Label>
                </children>

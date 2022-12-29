@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+<AnchorPane prefHeight="650.0" prefWidth="800.0" styleClass="bg-blue" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
    <children>
-      <ImageView fitHeight="650.0" fitWidth="800.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/helpScenes/help_img_1.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="nextTo2" layoutX="720.0" layoutY="550.0" mnemonicParsing="false" onAction="#switchToScene" prefHeight="100.0" prefWidth="30.0" text="&gt;">
-         <font>
-            <Font size="1.0" />
-         </font>
+      <Label alignment="CENTER" prefHeight="650.0" prefWidth="800.0" text="You are Ducky, a noble duck in search of adventure. Deep in the forest you encounter enchanted stones. The Wizard Stones!!! You finally found them. But ... what is happening? They are evil and want to fight you!&#10;&#10;In your backpack you carry 5 magical cards with whomst you must fight to save your soul.&#10;&#10;If you win against a stone, you receive a new card. If you lose, you must continue fighting with less cards. If you lose all your cards ... well ... may the gods have mercy on your soul ...&#10;&#10;Continue to learn how you can win a fight!" textAlignment="CENTER" wrapText="true">
          <styleClass>
-            <String fx:value="nextButton" />
-            <String fx:value="buttonTransparentAndFont" />
-         </styleClass></Button>
-      <Button fx:id="exit1" layoutX="710.0" layoutY="-30.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="100.0" prefWidth="112.0" text="x">
-         <font>
-            <Font size="1.0" />
-         </font>
-         <styleClass>
-            <String fx:value="exitButton" />
-            <String fx:value="buttonTransparentAndFont" />
+            <String fx:value="bg-blue" />
+            <String fx:value="textGeneral" />
+            <String fx:value="textSizeNormal" />
+            <String fx:value="textPaddingSmall" />
          </styleClass>
-      </Button>
+      </Label>
+      <Label fx:id="nextTo2" alignment="CENTER" layoutX="730.0" layoutY="580.0" onMouseClicked="#switchToScene" prefHeight="60.0" prefWidth="60.0" text="&gt;">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="textGreen" />
+            <String fx:value="textSizeVeryBig" />
+         </styleClass>
+      </Label>
+      <Label alignment="CENTER" layoutX="760.0" onMouseClicked="#backToMenu" prefHeight="40.0" prefWidth="40.0" text="x">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="textGreen" />
+            <String fx:value="textSizeNormal" />
+         </styleClass>
+      </Label>
    </children>
-   <styleClass>
-      <String fx:value="bg-blue" />
-      <String fx:value="buttonTransparentAndFont" />
-   </styleClass>
 </AnchorPane>

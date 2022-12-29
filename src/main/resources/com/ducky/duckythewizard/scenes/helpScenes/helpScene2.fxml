@@ -1,45 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" styleClass="bg-blue" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" styleClass="bg-blue" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
    <children>
-      <ImageView fitHeight="650.0" fitWidth="800.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" styleClass="nextButton">
-         <image>
-            <Image url="@../../images/helpScenes/help_img_2.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="nextTo3" layoutX="720.0" layoutY="550.0" mnemonicParsing="false" onAction="#switchToScene" prefHeight="100.0" prefWidth="30.0" text="&gt;">
-         <font>
-            <Font size="1.0" />
-         </font>
+      <Label alignment="CENTER" prefHeight="650.0" prefWidth="800.0" text="You have differently colored cards. The rules are: the highest value wins! But be careful, not only values count! Colors can change your fate as well. There are colors that can &quot;trump&quot; all the others.&#10;&#10;If you possess a red card and choose to fight a stone that is currently red in color, then your red cards will be infused with more power (higher value)! In turn, if the red stone has a red card as well, its card will also receive a higher value.&#10;&#10;The most powerful cards are the Wizard cards. These cards defeat all other number/color cards. If two Wizards are played in a round, the first played Wizard wins." textAlignment="CENTER" wrapText="true">
          <styleClass>
-            <String fx:value="nextButton" />
-            <String fx:value="buttonTransparentAndFont" />
+            <String fx:value="textGeneral" />
+            <String fx:value="textSizeNormal" />
+            <String fx:value="textPaddingSmall" />
+            <String fx:value="bg-blue" />
          </styleClass>
-      </Button>
-      <Button fx:id="exit2" layoutX="710.0" layoutY="-30.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="100.0" prefWidth="112.0" text="x">
-         <font>
-            <Font size="1.0" />
-         </font>
+      </Label>
+      <Label fx:id="nextTo3" alignment="CENTER" layoutX="730.0" layoutY="580.0" onMouseClicked="#switchToScene" prefHeight="60.0" prefWidth="60.0" text="&gt;">
          <styleClass>
-            <String fx:value="exitButton" />
-            <String fx:value="buttonTransparentAndFont" />
+            <String fx:value="textGeneral" />
+            <String fx:value="textGreen" />
+            <String fx:value="textSizeVeryBig" />
          </styleClass>
-      </Button>
-      <Button fx:id="backTo1" layoutX="600.0" layoutY="550.0" mnemonicParsing="false" onAction="#switchToScene" prefHeight="100.0" prefWidth="30.0" text="&lt;">
-         <font>
-            <Font size="1.0" />
-         </font>
+      </Label>
+      <Label fx:id="backTo1" alignment="CENTER" layoutX="650.0" layoutY="580.0" onMouseClicked="#switchToScene" prefHeight="60.0" prefWidth="60.0" text="&lt;">
          <styleClass>
-            <String fx:value="nextButton" />
-            <String fx:value="buttonTransparentAndFont" />
+            <String fx:value="textGeneral" />
+            <String fx:value="textGreen" />
+            <String fx:value="textSizeVeryBig" />
          </styleClass>
-      </Button>
+      </Label>
+      <Label alignment="CENTER" layoutX="760.0" onMouseClicked="#backToMenu" prefHeight="40.0" prefWidth="40.0" text="x">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="textGreen" />
+            <String fx:value="textSizeNormal" />
+         </styleClass>
+      </Label>
    </children>
 </AnchorPane>
