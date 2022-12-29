@@ -38,6 +38,7 @@ public class Game {
     private MovementController movementCtrl;
     private StoneController stoneCtrl;
     private FightController fightCtrl;
+    private SceneController sceneCtrl;
 
     public Game(){
         isRunning = true;
@@ -74,6 +75,7 @@ public class Game {
     public void createFightCtrlObj() throws InterruptedException {
         this.fightCtrl = new FightController(this);
     }
+    public void createSceneCtrlObj() { this.sceneCtrl = new SceneController(); }
 
     public GameConfig getGameConfig() {
         return this.gameConfig;
@@ -94,6 +96,7 @@ public class Game {
     public FightController getFightCtrl() {
         return fightCtrl;
     }
+    public SceneController getSceneCtrl() { return this.sceneCtrl; }
 
     public CardDeck getCardDeck() {
         return this.cardDeck;

@@ -53,6 +53,24 @@ public class Stone extends GameObject{
         thread.start();
     }
 
+    public void setInactiveColorChange() {
+        this.isActive = false;
+        // starting timer to set stone active again in new thread
+        Thread thread = new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+                isActive = true;
+            } catch (InterruptedException ie) {
+                System.out.println(ie);
+            }
+        });
+        thread.start();
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     public void setRandomTrumpColorStone(GameColor randomTrumpColorStone) {
         this.randomTrumpColorStone = randomTrumpColorStone;
     }
@@ -65,5 +83,9 @@ public class Stone extends GameObject{
     }
     public ImageView getStoneImgView() {
         return stoneImgView;
+    }
+
+    public boolean getActive() {
+        return this.isActive;
     }
 }

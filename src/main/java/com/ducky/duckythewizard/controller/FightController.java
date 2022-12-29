@@ -42,7 +42,7 @@ public class FightController extends Controller {
     }
 
     public void stopFight(GameController.MyAnimationTimer animationTimer, DuckySprite ducky){
-        System.out.println("----> stopFight");
+        //System.out.println("----> stopFight");
         if(!this.getSession().getIsRunning()) {
             animationTimer.resetStartingTime();
             Platform.runLater(new Runnable() {

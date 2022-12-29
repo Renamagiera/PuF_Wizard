@@ -2,6 +2,8 @@ package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -17,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameController{
@@ -66,6 +70,10 @@ public class GameController{
     private AnchorPane endScene;
     @FXML
     private Label endSceneLabel;
+    @FXML
+    private Label score;
+    @FXML
+    private Label exitLabelEndScene;
 
     private int windowWidth = this.session.getGameConfig().getWindowWidth();
     private int windowHeight = this.session.getGameConfig().getWindowHeight();
@@ -96,6 +104,7 @@ public class GameController{
         this.session.createMovementCtrlObj();
         this.session.createStoneCtrlObj();
         this.session.createFightCtrlObj();
+        this.session.createSceneCtrlObj();
 
         // initialize cards: set card-anchor-pane, render hand-cards
         this.session.getCardCtrl().cardInit();
@@ -115,6 +124,8 @@ public class GameController{
         endSceneLabel.textProperty().bind(session.getEndSceneView().endSceneLabelProperty);
         endSceneLabel.styleProperty().bind(session.getEndSceneView().endSceneLabelStyleProperty);
         endScene.getChildren().get(0).styleProperty().bind(session.getEndSceneView().endSceneStyleProperty);
+        score.textProperty().bind(session.getEndSceneView().scoreProperty);
+        exitLabelEndScene.textProperty().bind(session.getEndSceneView().exitLabelProperty);
 
         // initialize Level map
         Level level = new Level(levelGrid);
@@ -173,14 +184,16 @@ public class GameController{
             session.toggleIsRunning();
             if(session.getIsRunning()){
                 animationTimer.resetStartingTime();
-                ducky.resetPlayerTimer();
+                //ducky.resetPlayerTimer();
                 animationTimer.start();
+                this.endPauseScene();
             }
             else {
                 animationTimer.stop();
-                String pauseText = "PAUSE";
+                this.startPauseScene();
+                /*String pauseText = "PAUSE";
                 gc.fillText( pauseText, windowWidth/2 - 50, windowHeight/4 );
-                gc.strokeText( pauseText, windowWidth/2 - 50, windowHeight/4 );
+                gc.strokeText( pauseText, windowWidth/2 - 50, windowHeight/4 );*/
             }
         }
         else if ( session.getIsRunning() && !input.contains(code) )
@@ -199,18 +212,35 @@ public class GameController{
 
     public void endCollision() {
         this.session.getFightCtrl().stopFight(animationTimer, ducky);
-        try {
-            this.session.getStoneCtrl().startThreadsNewTrumpColor();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
-    public void renderEndScene(boolean duckyWin) {
+    public void renderEndScene(String overlayHeadline) {
         this.session.getEndSceneView().renderEndScene(
                 this.session.getAnchorPaneEndOverlay(),
-                duckyWin,
-                this.session.getGameColorObject());
+                overlayHeadline,
+                this.session.getGameColorObject(),
+                this.ducky.getScore());
+    }
+
+    public void restartGame(MouseEvent event) throws IOException {
+        this.session.getSceneCtrl().startGame(event);
+    }
+
+    public void backToMenu(Event event) throws IOException {
+        this.session.getSceneCtrl().backToMenu(event);
+    }
+
+    public void startPauseScene() {
+        this.session.getEndSceneView().renderEndScene(
+                this.session.getAnchorPaneEndOverlay(),
+                "pause",
+                this.session.getGameColorObject(),
+                this.ducky.getScore());
+    }
+
+    public void endPauseScene() {
+        this.session.getEndSceneView().endScene();
+        this.rootBox.requestFocus();
     }
 
     class MyAnimationTimer extends AnimationTimer
@@ -261,15 +291,17 @@ public class GameController{
                 gc.clearRect(0, 0, windowWidth, windowHeight);
 
                 // showing 'You lose' text
+                // lose-scene
                 if(ducky.getHealthPoints() == 0){
-                    String pointsText = "You LOSE\nyour score is " + ducky.getScore();
+                    /*String pointsText = "You LOSE\nyour score is " + ducky.getScore();
                     gc.fillText(pointsText, windowWidth / 3, windowHeight / 3);
-                    gc.strokeText(pointsText, windowWidth / 3, windowHeight / 3);
+                    gc.strokeText(pointsText, windowWidth / 3, windowHeight / 3);*/
 
                     //ServerFacade serverFacade = new ServerFacade();
                     //serverFacade.sendHighScoreToServer("Ducky-Test-19", ducky.getScore());
 
                     session.toggleIsRunning();
+                    renderEndScene("duckyLoss");
                 }
 
                 // remove heart if Ducky lost a health point

@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class HelpSceneController extends SceneController {
@@ -33,13 +32,10 @@ public class HelpSceneController extends SceneController {
     }
 
     public void startGame(ActionEvent event) throws IOException {
-        AnchorPane newRoot = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/game-view.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.getScene().setRoot(newRoot);
-        newRoot.requestFocus();
+        super.startGame(event);
     }
 
-    public void endHelpScenes(ActionEvent event) throws IOException {
+    public void backToMenu(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         WizardMainApplication reload = new WizardMainApplication();
         reload.start(stage);
