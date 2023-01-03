@@ -12,6 +12,7 @@ public class FightController extends Controller {
     public void startFight(Stone stone) {
         if(this.getSession().getIsRunning()) {
             this.getSession().toggleIsRunning();
+            this.getSession().toggleKeyInput();
             this.stone = stone;
             // start new fight-object
             this.getSession().setActiveFight(new Fight(this.getSession().getGameColorObject()));
@@ -56,6 +57,7 @@ public class FightController extends Controller {
                 }
             });
             this.getSession().toggleIsRunning();
+            this.getSession().toggleKeyInput();
             stone.setInactive();
         }
     }

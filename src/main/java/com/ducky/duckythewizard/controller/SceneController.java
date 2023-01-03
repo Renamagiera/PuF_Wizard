@@ -1,6 +1,5 @@
 package com.ducky.duckythewizard.controller;
 
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -26,7 +25,7 @@ public class SceneController {
         newRoot.requestFocus();
     }
 
-    protected void getWindowStage(ActionEvent event, Parent root) {
+    protected void getWindowStage(Event event, Parent root) {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().clear();

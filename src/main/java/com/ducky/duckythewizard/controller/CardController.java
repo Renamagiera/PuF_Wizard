@@ -43,56 +43,54 @@ public class CardController extends Controller {
     public void addMouseEventHandler() {
         for (Node node : this.getSession().getAnchorPaneCards().getChildren()) {
             ImageView imgView = (ImageView) node;
-            EventHandler<MouseEvent> cardClicked = new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    // take focus, so key's can be pressed
-                    getSession().getFightView().getAnchorPaneFightOverlay().requestFocus();
-                    if(!getSession().getIsRunning()) {
-                        Card clickedCard = clickedCard(mouseEvent);
+            EventHandler<MouseEvent> cardClicked = mouseEvent -> {
+                // take focus, so key's can be pressed
+                getSession().getFightView().getAnchorPaneFightOverlay().requestFocus();
+                if(!getSession().getIsRunning()) {
+                    Card clickedCard = clickedCard(mouseEvent);
 
-                        if (clickedCard != null) {
-                            // if ducky played first, the stone card needs to be rendered after clicking a card
-                            if (getSession().getActiveFight().getDuckyPlaysFirst()) {
-                                getSession().getFightView().renderFightViewCard(false);
-                            }
-
-                            int clickPosition = getSession().getCardDeck().getHandCardPosition(mouseEvent);
-                            // give clicked card to fight-class
-                            getSession().getActiveFight().setDuckyCard(clickedCard);
-                            // render an empty card-image at clicked card position
-                            getSession().getCardCtrl().removeCardFromHandCardsAddDummy(clickPosition);
-                            // render clicked card to fight-scene
-                            getSession().getFightView().renderFightViewCard(true);
-
-                            // determine Winner
-                            // set win- or loss-label
-                            boolean duckyWin = getSession().getActiveFight().determineWinner();
-                            getSession().getFightView().updateWinLossLabel(duckyWin);
-
-                            removeAllClickHandlers();
-
-                            if (checkWin(duckyWin).equals("win") || checkWin(duckyWin).equals("loss")) {
-                                if (duckyWin) {
-                                    getSession().getGameCtrl().renderEndScene("duckyWin");
-                                } else {
-                                    getSession().getGameCtrl().renderEndScene("duckyLoss");
-                                }
-                            }
-
-                            // END FIGHT:
-                            // end fight-view clicking x-Label
-                            getSession().getFightView().addExitLabel();
-                            getSession().getFightView().getExitLabel().addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent1 -> {
-                                endFight(clickPosition, duckyWin);
-                            });
-                            // end fight-view clicking ESC
-                            getSession().getFightView().getAnchorPaneFightOverlay().setOnKeyPressed(keyEvent -> {
-                                if (keyEvent.getCode() == KeyCode.ESCAPE) {
-                                    endFight(clickPosition, duckyWin);
-                                }
-                            });
+                    if (clickedCard != null) {
+                        // if ducky played first, the stone card needs to be rendered after clicking a card
+                        if (getSession().getActiveFight().getDuckyPlaysFirst()) {
+                            getSession().getFightView().renderFightViewCard(false);
                         }
+
+                        int clickPosition = getSession().getCardDeck().getHandCardPosition(mouseEvent);
+                        // give clicked card to fight-class
+                        getSession().getActiveFight().setDuckyCard(clickedCard);
+                        // render an empty card-image at clicked card position
+                        getSession().getCardCtrl().removeCardFromHandCardsAddDummy(clickPosition);
+                        // render clicked card to fight-scene
+                        getSession().getFightView().renderFightViewCard(true);
+
+                        // DETERMINE WINNER
+                        // set win- or loss-label
+                        boolean duckyWin = getSession().getActiveFight().determineWinner();
+                        getSession().getFightView().updateWinLossLabel(duckyWin);
+
+                        removeAllClickHandlers();
+
+                        // RENDER END-SCENE
+                        if (checkWin(duckyWin).equals("win") || checkWin(duckyWin).equals("loss")) {
+                            if (duckyWin) {
+                                getSession().getGameCtrl().renderEndScene("duckyWin");
+                            } else {
+                                getSession().getGameCtrl().renderEndScene("duckyLoss");
+                            }
+                        }
+
+                        // END FIGHT-SCENE
+                        // end fight-view clicking x-Label
+                        getSession().getFightView().addExitLabel();
+                        getSession().getFightView().getExitLabel().addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent1 -> {
+                            endFight(clickPosition, duckyWin);
+                        });
+                        // end fight-view clicking ESC
+                        getSession().getFightView().getAnchorPaneFightOverlay().setOnKeyPressed(keyEvent -> {
+                            if (keyEvent.getCode() == KeyCode.ESCAPE) {
+                                endFight(clickPosition, duckyWin);
+                            }
+                        });
                     }
                 }
             };

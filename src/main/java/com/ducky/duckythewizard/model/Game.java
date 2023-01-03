@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public class Game {
 
     private boolean isRunning;
+    private boolean keyInput;
+
     private Player player; //Attribut für Daten zum Spieler selbst (Name etc.)
     private Card clickedCardFight;
     private Fight activeFight;
@@ -42,6 +44,7 @@ public class Game {
 
     public Game(){
         isRunning = true;
+        keyInput = true;
         gameConfig = new GameConfig();
         this.gameColorObject = new GameColorObject();
         this.cardDeck = new CardDeck(this.gameColorObject);
@@ -55,8 +58,14 @@ public class Game {
         return isRunning;
     }
     public void toggleIsRunning() {
-        // System.out.println("--> toggleIsRunning");
         isRunning = !isRunning;
+    }
+    public boolean getKeyInput() {
+        return keyInput;
+    }
+    public void toggleKeyInput() {
+        System.out.println("key input toggled");
+        keyInput = !keyInput;
     }
 
     // create anstatt set, weil hier ein neues Controller-Objekt erstellt wird
@@ -72,10 +81,11 @@ public class Game {
     public void createStoneCtrlObj() {
         this.stoneCtrl = new StoneController(this);
     }
-    public void createFightCtrlObj() throws InterruptedException {
+    public void createFightCtrlObj() {
         this.fightCtrl = new FightController(this);
     }
-    public void createSceneCtrlObj() { this.sceneCtrl = new SceneController(); }
+    public void createSceneCtrlObj() {
+        this.sceneCtrl = new SceneController(); }
 
     public GameConfig getGameConfig() {
         return this.gameConfig;
@@ -96,7 +106,9 @@ public class Game {
     public FightController getFightCtrl() {
         return fightCtrl;
     }
-    public SceneController getSceneCtrl() { return this.sceneCtrl; }
+    public SceneController getSceneCtrl() {
+        return this.sceneCtrl;
+    }
 
     public CardDeck getCardDeck() {
         return this.cardDeck;

@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.util.Objects;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class HelpSceneController extends SceneController {
@@ -18,9 +20,9 @@ public class HelpSceneController extends SceneController {
 
     @FXML
      /*anhand des Events wird die ID des Buttons ermittelt und die passende FMXL-Scene als root übergeben*/
-    private void switchToScene(ActionEvent event) throws IOException {
-        String btnId = ((Button)event.getSource()).getId();
-        String scene = switch (btnId) {
+    private void switchToScene(Event event) throws IOException {
+        String labelId = ((Label)event.getSource()).getId();
+        String scene = switch (labelId) {
             case "helpButton", "backTo1" -> "/com/ducky/duckythewizard/scenes/helpScenes/helpScene1.fxml";
             case "nextTo2", "backTo2" -> "/com/ducky/duckythewizard/scenes/helpScenes/helpScene2.fxml";
             case "nextTo3" -> "/com/ducky/duckythewizard/scenes/helpScenes/helpScene3.fxml";
@@ -31,14 +33,12 @@ public class HelpSceneController extends SceneController {
         super.getWindowStage(event, root);
     }
 
-    public void startGame(ActionEvent event) throws IOException {
+    public void startGame(Event event) throws IOException {
         super.startGame(event);
     }
 
-    public void backToMenu(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        WizardMainApplication reload = new WizardMainApplication();
-        reload.start(stage);
+    public void backToMenu(Event event) throws IOException {
+        super.backToMenu(event);
     }
 
 }

@@ -23,7 +23,7 @@ public class CollisionHandler {
         boolean isCollision = false;
         for(int row = 0; row < levelObjects.length; row++){
             for(int column = 0; column < levelObjects[row].length; column++){
-                if(levelObjects[row][column] != null && playerBoundaries.intersects(getBoundariesOfGameObject(row, column))){
+                if(levelObjects[row][column] != null && playerBoundaries.intersects(getBoundariesOfGameObject(row, column, levelObjects[row][column] instanceof Stone))){
                     if(!levelObjects[row][column].getCanPassThrough()){
                         isCollision = true;
                     }
@@ -43,7 +43,12 @@ public class CollisionHandler {
         return isCollision;
     }
 
-    private Rectangle2D getBoundariesOfGameObject(int row, int column){
-        return new Rectangle2D(column*tileWidth, row*tileHeight, tileWidth, tileHeight);
+    private Rectangle2D getBoundariesOfGameObject(int row, int column, boolean stone){
+        if (!stone) {
+            return new Rectangle2D(column*tileWidth, row*tileHeight, tileWidth, tileHeight);
+        } else {
+            // smaller hit-box for stones
+            return new Rectangle2D(column*tileWidth + (tileWidth/4), row*tileHeight + (tileHeight/2), tileWidth/2, tileHeight/2);
+        }
     }
 }

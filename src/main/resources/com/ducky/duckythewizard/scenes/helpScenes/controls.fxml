@@ -1,39 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
    <children>
-      <ImageView fitHeight="650.0" fitWidth="800.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../images/helpScenes/controls_img_1.png" />
-         </image>
-      </ImageView>
-      <Button layoutX="640.0" layoutY="550.0" mnemonicParsing="false" onAction="#startGame" prefHeight="100.0" prefWidth="200.0" text="Play">
-         <font>
-            <Font size="1.0" />
-         </font>
+      <Label alignment="CENTER" prefHeight="650.0" prefWidth="800.0" text="Ducky can move UP, LEFT and RIGHT usind the arrow keys or the W, A, and D keys.&#10;&#10;Ducky starts a fight by walking into a stone.&#10;&#10;After you've played your card in a fight you can leave the fight using the ESC key - or simply click the 'x' button with your mouse.&#10;&#10;After you've dealt all your cards (in a good or a bad way) you can restart by clicking the RESTART button.&#10;&#10;Now go and have fun!" textAlignment="CENTER" wrapText="true">
          <styleClass>
-            <String fx:value="nextButton" />
-            <String fx:value="buttonTransparentAndFont" />
-            <String fx:value="playButtonGreen" />
+            <String fx:value="textGeneral" />
+            <String fx:value="bg-blue" />
+            <String fx:value="textPaddingSmall" />
+            <String fx:value="textSizeNormal" />
          </styleClass>
-      </Button>
-      <Button layoutX="710.0" layoutY="-30.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="100.0" prefWidth="112.0" text="x">
-         <font>
-            <Font size="1.0" />
-         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="720.0" layoutY="595.0" onMouseClicked="#startGame" prefHeight="35.0" prefWidth="60.0" text="play">
          <styleClass>
-            <String fx:value="exitButton" />
-            <String fx:value="buttonTransparentAndFont" />
+            <String fx:value="textGeneral" />
+            <String fx:value="textGreen" />
+            <String fx:value="textSizeNormal" />
          </styleClass>
-      </Button>
+      </Label>
+      <Label alignment="CENTER" layoutX="760.0" onMouseClicked="#backToMenu" prefHeight="40.0" prefWidth="40.0" text="x">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="textGreen" />
+            <String fx:value="textSizeNormal" />
+         </styleClass>
+      </Label>
    </children>
    <styleClass>
       <String fx:value="bg-blue" />

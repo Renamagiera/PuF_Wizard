@@ -19,8 +19,26 @@
     -fx-text-fill: white;
     -fx-font-size: 20px;
 }
-.textFontBig {
+.textGreen {
+    -fx-text-fill: lightgreen;
+}
+.textSizeStartLabels {
+    -fx-font-size: 25px;
+}
+.textSizeSmall {
+    -fx-font-size: 18px;
+}
+.textSizeNormal {
     -fx-font-size: 30px;
+}
+.textSizeBig {
+    -fx-font-size: 40px;
+}
+.textSizeVeryBig {
+    -fx-font-size: 50px;
+}
+.textPaddingSmall {
+    -fx-label-padding: 10px;
 }
 .bgEndingScene {
     -fx-background-color: rgba(0,0,0,0.5);
@@ -31,35 +49,7 @@
 .bgLightBrown {
     -fx-background-color: #d68139;
 }
-
-.buttonTransparentAndFont {
-    -fx-font-family: 'Alagard';
-    -fx-background-color: transparent;
-}
-.exitButton {
-    -fx-font-size: 40px;
-    -fx-text-fill: lightgreen;
-}
-.nextButton {
-    -fx-font-size: 50px;
-    -fx-text-fill: lightgreen;
-}
-.startSceneButtons {
-    -fx-font-family: 'Alagard';
-    -fx-font-size: 25px;
-    -fx-background-color: #d68139;
-}
-.playButtonGreen {
-    -fx-font-size: 30px;
-}
 .bg-blue {
     -fx-background-color: #001b30;
 }
-/**************************************************/
 
-#cardsInDeck {
-    -fx-font-size: 18px;
-}
-#cards {
-    -fx-text-fill: lightgreen;
-}

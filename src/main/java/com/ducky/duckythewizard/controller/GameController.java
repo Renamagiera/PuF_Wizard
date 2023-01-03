@@ -2,7 +2,6 @@ package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
 import javafx.animation.AnimationTimer;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -17,6 +16,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -72,8 +75,6 @@ public class GameController{
     private Label endSceneLabel;
     @FXML
     private Label score;
-    @FXML
-    private Label exitLabelEndScene;
 
     private int windowWidth = this.session.getGameConfig().getWindowWidth();
     private int windowHeight = this.session.getGameConfig().getWindowHeight();
@@ -85,7 +86,7 @@ public class GameController{
     private MyAnimationTimer animationTimer;
 
     @FXML
-    public void initialize() throws InterruptedException {
+    public void initialize() {
         //System.out.println("*** Game Controller is initialized...");
 
         this.session.setRootAnchorPane(this.rootBox);
@@ -125,7 +126,6 @@ public class GameController{
         endSceneLabel.styleProperty().bind(session.getEndSceneView().endSceneLabelStyleProperty);
         endScene.getChildren().get(0).styleProperty().bind(session.getEndSceneView().endSceneStyleProperty);
         score.textProperty().bind(session.getEndSceneView().scoreProperty);
-        exitLabelEndScene.textProperty().bind(session.getEndSceneView().exitLabelProperty);
 
         // initialize Level map
         Level level = new Level(levelGrid);
@@ -175,29 +175,53 @@ public class GameController{
         // main game loop
         animationTimer = new MyAnimationTimer();
         animationTimer.start();
+
+
+        /*// debug hitBox
+        for(int row = 0; row < session.objectGrid.length; row++){
+            for(int column = 0; column < session.objectGrid[row].length; column++){
+                if(session.objectGrid[row][column] != null && session.objectGrid[row][column] instanceof Stone) {
+                    Rectangle rectangle = new Rectangle(column*cellWidth + (cellWidth/4), row*cellHeight + (cellHeight/2), cellWidth / 2, cellHeight / 2);
+                    rectangle.setStrokeType(StrokeType.OUTSIDE);
+                    rectangle.setStroke(Color.BLUE);
+                    rectangle.setStrokeMiterLimit(8.0);
+                    rectangle.setFill(Color.TRANSPARENT);
+                    this.rootBox.getChildren().add(rectangle);
+
+                    Rectangle rectangleBig = new Rectangle(column*cellWidth, row*cellHeight, cellWidth, cellHeight);
+                    rectangleBig.setStrokeType(StrokeType.OUTSIDE);
+                    rectangleBig.setStroke(Color.RED);
+                    rectangleBig.setStrokeMiterLimit(8.0);
+                    rectangleBig.setFill(Color.TRANSPARENT);
+                    this.rootBox.getChildren().add(rectangleBig);
+                }
+            }
+        }*/
     }
 
     @FXML
     public void handleOnKeyPressed(KeyEvent keyEvent) {
-        String code = keyEvent.getCode().toString();
-        if(code.equals("SPACE")){
-            session.toggleIsRunning();
-            if(session.getIsRunning()){
-                animationTimer.resetStartingTime();
-                //ducky.resetPlayerTimer();
-                animationTimer.start();
-                this.endPauseScene();
-            }
-            else {
-                animationTimer.stop();
-                this.startPauseScene();
+        if (this.session.getKeyInput()) {
+            String code = keyEvent.getCode().toString();
+            if(code.equals("SPACE")){
+                session.toggleIsRunning();
+                if(session.getIsRunning()){
+                    animationTimer.resetStartingTime();
+                    //ducky.resetPlayerTimer();
+                    animationTimer.start();
+                    this.endPauseScene();
+                }
+                else {
+                    animationTimer.stop();
+                    this.startPauseScene();
                 /*String pauseText = "PAUSE";
                 gc.fillText( pauseText, windowWidth/2 - 50, windowHeight/4 );
                 gc.strokeText( pauseText, windowWidth/2 - 50, windowHeight/4 );*/
+                }
             }
+            else if ( session.getIsRunning() && !input.contains(code) )
+                input.add( code );
         }
-        else if ( session.getIsRunning() && !input.contains(code) )
-            input.add( code );
     }
 
     @FXML
@@ -219,7 +243,8 @@ public class GameController{
                 this.session.getAnchorPaneEndOverlay(),
                 overlayHeadline,
                 this.session.getGameColorObject(),
-                this.ducky.getScore());
+                this.ducky.getScore(),
+                this);
     }
 
     public void restartGame(MouseEvent event) throws IOException {
@@ -235,12 +260,20 @@ public class GameController{
                 this.session.getAnchorPaneEndOverlay(),
                 "pause",
                 this.session.getGameColorObject(),
-                this.ducky.getScore());
+                this.ducky.getScore(),
+                this);
     }
 
     public void endPauseScene() {
         this.session.getEndSceneView().endScene();
         this.rootBox.requestFocus();
+    }
+
+    public void resumeGame() {
+        this.rootBox.requestFocus();
+        session.toggleIsRunning();
+        animationTimer.resetStartingTime();
+        animationTimer.start();
     }
 
     class MyAnimationTimer extends AnimationTimer
