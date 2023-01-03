@@ -453,7 +453,7 @@
          </styleClass></Label>
       <AnchorPane fx:id="endScene" prefHeight="650.0" prefWidth="800.0" styleClass="bgEndingScene" stylesheets="@../styles/style.css">
          <children>
-            <AnchorPane layoutX="150.0" layoutY="225.0" prefHeight="200.0" prefWidth="500.0" styleClass="bgBrown">
+            <AnchorPane fx:id="endSceneMenu" layoutX="150.0" layoutY="225.0" prefHeight="200.0" prefWidth="500.0" styleClass="bgBrown">
                <children>
                   <Label fx:id="endSceneLabel" alignment="CENTER" layoutY="30.0" prefWidth="500.0" styleClass="textGeneral" text="endSceneLabel" />
                   <Label fx:id="score" alignment="CENTER" layoutY="90.0" prefWidth="500.0" styleClass="textGeneral" text="Your Score" />
@@ -467,12 +467,6 @@
                      <styleClass>
                         <String fx:value="textGeneral" />
                         <String fx:value="bgLightBrown" />
-                     </styleClass>
-                  </Label>
-                  <Label fx:id="exitLabelEndScene" layoutX="470.0">
-                     <styleClass>
-                        <String fx:value="textGeneral" />
-                        <String fx:value="textSizeNormal" />
                      </styleClass>
                   </Label>
                </children>
