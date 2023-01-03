@@ -64,7 +64,6 @@ public class Game {
         return keyInput;
     }
     public void toggleKeyInput() {
-        System.out.println("key input toggled");
         keyInput = !keyInput;
     }
 
