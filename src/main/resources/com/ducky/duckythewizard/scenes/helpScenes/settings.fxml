@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="settings" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+   <children>
+      <Label alignment="CENTER" layoutX="300.0" layoutY="250.0" prefHeight="50.0" prefWidth="200.0" text="Skin" textAlignment="CENTER">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="bg-blue" />
+         </styleClass>
+      </Label>
+      <Label fx:id="controls" alignment="CENTER" layoutX="300.0" layoutY="150.0" onMouseClicked="#switchToControls" prefHeight="50.0" prefWidth="200.0" text="Controls" textAlignment="CENTER">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="bg-blue" />
+         </styleClass>
+      </Label>
+      <Label alignment="CENTER" layoutX="760.0" onMouseClicked="#backToMenu" prefHeight="40.0" prefWidth="40.0" text="x">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="textSizeNormal" />
+         </styleClass>
+      </Label>
+      <RadioButton fx:id="red" layoutX="350.0" layoutY="360.0" mnemonicParsing="false" prefWidth="100.0" styleClass="textGeneral" text="red" />
+      <RadioButton fx:id="blue" layoutX="350.0" layoutY="400.0" mnemonicParsing="false" prefWidth="100.0" styleClass="textGeneral" text="blue" />
+      <RadioButton fx:id="normal" layoutX="350.0" layoutY="320.0" mnemonicParsing="false" prefWidth="110.0" styleClass="textGeneral" text="normal" />
+      <Label alignment="CENTER" layoutX="300.0" layoutY="450.0" onMouseClicked="#startGame" prefHeight="50.0" prefWidth="200.0" text="PLAY" textAlignment="CENTER">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="bg-blue" />
+            <String fx:value="textGreen" />
+         </styleClass>
+      </Label>
+   </children>
+</AnchorPane>

@@ -25,7 +25,7 @@
                   <String fx:value="textSizeStartLabels" />
                </styleClass>
             </Label>
-            <Label fx:id="controlsButton" alignment="CENTER" layoutX="424.0" layoutY="30.0" onMouseClicked="#switchToScene" prefHeight="50.0" prefWidth="140.0" text="Controls">
+            <Label fx:id="controlsButton" alignment="CENTER" layoutX="424.0" layoutY="30.0" onMouseClicked="#switchToScene" prefHeight="50.0" prefWidth="140.0" text="Settings">
                <styleClass>
                   <String fx:value="textSizeStartLabels" />
                   <String fx:value="textGeneral" />

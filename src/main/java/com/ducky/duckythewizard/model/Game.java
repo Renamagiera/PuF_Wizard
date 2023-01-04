@@ -1,7 +1,6 @@
 package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.controller.*;
-import com.ducky.duckythewizard.model.card.Card;
 import com.ducky.duckythewizard.model.card.CardDeck;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
@@ -14,8 +13,8 @@ public class Game {
     private boolean isRunning;
     private boolean keyInput;
 
+    private String skin;
     private Player player; //Attribut für Daten zum Spieler selbst (Name etc.)
-    private Card clickedCardFight;
     private Fight activeFight;
     //private Sprite ducky = new DuckySprite(5, collisionHandler); //Attribut für Player-Sprite
     private AnchorPane rootAnchorPane;
@@ -109,77 +108,60 @@ public class Game {
         return this.sceneCtrl;
     }
 
+    public String getSkin() {
+        return skin;
+    }
     public CardDeck getCardDeck() {
         return this.cardDeck;
     }
-
-    public AnchorPane getAnchorPaneCards() {
-        return this.anchorPaneCards;
+    public Player getPlayer() {
+        return this.player;
     }
-    public AnchorPane getFightOverlay() {
-        return this.fightOverlay;
+    public ArrayList<Stone> getStoneArrayList() {
+        return this.stoneArrayList;
     }
-    public AnchorPane getAnchorPaneEndOverlay() {
-        return anchorPaneEndOverlay;
-    }
-
-    public EndSceneView getEndSceneView() {
-        return this.endSceneView;
-    }
-
-    public void setAnchorPaneCards(AnchorPane anchorPane) {
-        this.anchorPaneCards = anchorPane;
+    public Fight getActiveFight() {
+        return activeFight;
     }
 
     public AnchorPane getRootAnchorPane() {
         return rootAnchorPane;
     }
-
-    public void setRootAnchorPane(AnchorPane rootAnchorPane) {
-        this.rootAnchorPane = rootAnchorPane;
+    public AnchorPane getAnchorPaneCards() {
+        return this.anchorPaneCards;
     }
-    public void setFightOverlay(AnchorPane fightOverlay) {
-        this.fightOverlay = fightOverlay;
-    }
-
-    public void setAnchorPaneEndOverlay(AnchorPane anchorPaneEndOverlay) {
-        this.anchorPaneEndOverlay = anchorPaneEndOverlay;
+    public AnchorPane getAnchorPaneEndOverlay() {
+        return anchorPaneEndOverlay;
     }
 
-    public void setEndSceneView(EndSceneView endSceneView) {
-        this.endSceneView = endSceneView;
+    public FightView getFightView() {
+        return fightView;
+    }
+    public EndSceneView getEndSceneView() {
+        return this.endSceneView;
     }
 
     public GameColorObject getGameColorObject() {
         return gameColorObject;
     }
 
-
-    public Player getPlayer() {
-        return this.player;
+    public void setAnchorPaneCards(AnchorPane anchorPane) {
+        this.anchorPaneCards = anchorPane;
     }
-
-    public ArrayList<Stone> getStoneArrayList() {
-        return this.stoneArrayList;
+    public void setAnchorPaneEndOverlay(AnchorPane anchorPaneEndOverlay) {
+        this.anchorPaneEndOverlay = anchorPaneEndOverlay;
     }
-
-    public Card getClickedCardFight() {
-        return clickedCardFight;
-    }
-
-    public void setClickedCardFight(Card clickedCardFight) {
-        this.clickedCardFight = clickedCardFight;
-    }
-
-    public Fight getActiveFight() {
-        return activeFight;
-    }
-
     public void setActiveFight(Fight activeFight) {
         this.activeFight = activeFight;
     }
-
-    public FightView getFightView() {
-        return fightView;
+    public void setRootAnchorPane(AnchorPane rootAnchorPane) {
+        this.rootAnchorPane = rootAnchorPane;
     }
+    public void setFightOverlay(AnchorPane fightOverlay) {
+        this.fightOverlay = fightOverlay;
+    }
+    public void setSkin(String skin) {
+        this.skin = skin;
+    }
+
 }
