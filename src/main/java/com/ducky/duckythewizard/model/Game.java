@@ -15,6 +15,7 @@ public class Game {
     private boolean keyInput;
 
     private Player player; //Attribut für Daten zum Spieler selbst (Name etc.)
+
     private Card clickedCardFight;
     private Fight activeFight;
     //private Sprite ducky = new DuckySprite(5, collisionHandler); //Attribut für Player-Sprite
