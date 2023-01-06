@@ -78,7 +78,7 @@ public class GameController{
     private double cellHeight = this.session.getGameConfig().getLevel_cellHeight();
     private ArrayList<String> input = new ArrayList<>();
     private CollisionHandler collisionHandler;
-    private DuckySprite ducky;
+    private AnimatedSprite ducky;
     private MyAnimationTimer animationTimer;
 
     @FXML
@@ -150,21 +150,21 @@ public class GameController{
         gc.setLineWidth(5);
 
         // initialize Ducky
-        ducky = new DuckySprite(3, collisionHandler, this.session.getSkin());
+        ducky = new AnimatedSprite(collisionHandler, this.session.getSkin(), this.session.getPlayer());
         ducky.duration = 0.1;
         ducky.setPosition(windowWidth /4 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);
 
         // binding timerLabel to Ducky's timer
-        timerLabel.textProperty().bind(ducky.timerProperty);
+        timerLabel.textProperty().bind(this.session.getPlayer().timerProperty); // LENA Player statt DUcky
 
         // binding scoreLabel to Ducky's score
-        scoreLabel.textProperty().bind(ducky.score.asString());
+        scoreLabel.textProperty().bind(this.session.getPlayer().score.asString()); // LENA Player statt DUcky
 
         // add hearts to screen representing Ducky's health points
-        heartContainer.setSpacing(10.0);
-        for(int i = 0; i < ducky.getHealthPoints(); i++) {
-            ImageView imageView = new ImageView(new Image(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/golden-heart_50px.png")));
+        heartContainer.setSpacing(10.0); // PLAYER statt Ducky
+        for(int i = 0; i < this.session.getPlayer().getHealthPoints(); i++) {
+            ImageView imageView = new ImageView(new Image(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/life-heart.png")));
             imageView.setFitHeight(cellHeight - 10);
             imageView.setPreserveRatio(true);
             heartContainer.getChildren().add(imageView);
@@ -184,7 +184,6 @@ public class GameController{
                 session.toggleIsRunning();
                 if(session.getIsRunning()){
                     animationTimer.resetStartingTime();
-                    //ducky.resetPlayerTimer();
                     animationTimer.start();
                     this.endPauseScene();
                 }
@@ -209,7 +208,7 @@ public class GameController{
     }
 
     public void endCollision() {
-        this.session.getFightCtrl().stopFight(animationTimer, ducky);
+        this.session.getFightCtrl().stopFight(animationTimer);
     }
 
     public void renderEndScene(String overlayHeadline) {
@@ -217,7 +216,7 @@ public class GameController{
                 this.session.getAnchorPaneEndOverlay(),
                 overlayHeadline,
                 this.session.getGameColorObject(),
-                this.ducky.getScore(),
+                this.session.getPlayer().getScore(),
                 this);
     }
 
@@ -234,7 +233,7 @@ public class GameController{
                 this.session.getAnchorPaneEndOverlay(),
                 "pause",
                 this.session.getGameColorObject(),
-                this.ducky.getScore(),
+                this.session.getPlayer().getScore(),
                 this);
     }
 
@@ -299,7 +298,7 @@ public class GameController{
 
                 // showing 'You lose' text
                 // lose-scene
-                if(ducky.getHealthPoints() == 0){
+                if(session.getPlayer().getHealthPoints() == 0){
                     /*String pointsText = "You LOSE\nyour score is " + ducky.getScore();
                     gc.fillText(pointsText, windowWidth / 3, windowHeight / 3);
                     gc.strokeText(pointsText, windowWidth / 3, windowHeight / 3);*/
@@ -313,7 +312,8 @@ public class GameController{
 
                 // remove heart if Ducky lost a health point
                 // TODO find solution that uses binding???
-                if(ducky.getHealthPoints() < heartContainer.getChildren().size()){
+                //LENA Player statt Ducky
+                if(session.getPlayer().getHealthPoints() < heartContainer.getChildren().size()){
                     heartContainer.getChildren().remove(heartContainer.getChildren().size() - 1);
                 }
 
