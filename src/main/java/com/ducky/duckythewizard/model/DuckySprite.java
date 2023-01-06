@@ -16,9 +16,6 @@ public class DuckySprite extends AnimatedSprite{
         WALK,
         FLY
     }
-
-    private int targetSize = 40;
-
     private String skin;
     private int healthPoints;
     public SimpleIntegerProperty score;
@@ -40,14 +37,12 @@ public class DuckySprite extends AnimatedSprite{
 
     public DuckySprite(int maxHealthPoints, CollisionHandler collisionHandler, String skin) {
         this.skin = skin;
-        if (this.skin.equals("batty")) {
-            this.targetSize = 34;
-        }
         this.healthPoints = maxHealthPoints;
         this.score = new SimpleIntegerProperty(0);
         this.state = MovementState.FLY;
         this.resetTime = System.nanoTime();
         this.maxHealthPoints = maxHealthPoints;
+        //TO DO a timer value should come from game configuration
         this.timerProperty = new SimpleStringProperty(Integer.toString(maxTime));
         this.collisionHandler = collisionHandler;
         this.initializeImageArrays();
@@ -154,6 +149,24 @@ public class DuckySprite extends AnimatedSprite{
         System.out.println("==> adding " + points + " to score, score is now: " + score.getValue());
     }
 
+    public int rescaleImgWidth(Image image) {
+        int imgWidth = (int) image.getWidth();
+        double calculation = imgWidth * 1.75;
+        //TO DO Scalefactor should come from game configuration
+        imgWidth = (int) calculation;
+
+        return imgWidth;
+    }
+
+    public int rescaleImgHeight(Image image) {
+        int imgHeight = (int) image.getHeight();
+        double calculation = imgHeight * 1.75;
+        //TO DO Scalefactor should come from game configuration
+        imgHeight = (int) calculation;
+
+        return imgHeight;
+    }
+
     private void initializeImageArrays() {
         imageArrayFlyRight = new Image[6];
         imageArrayFlyLeft = new Image[6];
@@ -167,29 +180,37 @@ public class DuckySprite extends AnimatedSprite{
         // FLY
         for (int i = 0; i < imageArrayFlyRight.length; i++) {
             Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.skin + "/fly/fly_" + i + ".png")));
-            imageArrayFlyRight[i] = scaleImage(image, 40 , 40, true, false);
+
+            imageArrayFlyRight[i] = scaleImage(image, rescaleImgWidth(image), rescaleImgHeight(image), true, false);
         }
         for (int i = 0; i < imageArrayFlyRight.length; i++) {
-            imageArrayFlyLeft[i] = scaleImage(imageArrayFlyRight[i], 40, 40, true, true);
+            imageArrayFlyLeft[i] = scaleImage(imageArrayFlyRight[i], imageArrayFlyRight[i].getWidth(), imageArrayFlyRight[i].getHeight(), true, true);
         }
 
         // IDLE
         for (int i = 0; i < imageArrayIdleLookRight.length; i++) {
             Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.skin + "/idle/idle_" + i + ".png")));
-            imageArrayIdleLookRight[i] = scaleImage(image, 40, 40, true, false);
+            imageArrayIdleLookRight[i] = scaleImage(image, rescaleImgWidth(image), rescaleImgHeight(image), true, false);
         }
         for (int i = 0; i < imageArrayIdleLookRight.length; i++) {
-            imageArrayIdleLookLeft[i] = scaleImage(imageArrayIdleLookRight[i], 40, 40, true, true);
+            imageArrayIdleLookLeft[i] = scaleImage(imageArrayIdleLookRight[i], imageArrayIdleLookRight[i].getWidth(), imageArrayIdleLookRight[i].getHeight(), true, true);
         }
 
         // WALK
         for (int i = 0; i < imageArrayWalkRight.length; i++) {
             Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.skin + "/walk/walk_" + i + ".png")));
-            imageArrayWalkRight[i] = scaleImage(image, this.targetSize, this.targetSize, true, false);
+            imageArrayWalkRight[i] = scaleImage(image, rescaleImgWidth(image), rescaleImgHeight(image), true, false);
         }
         for (int i = 0; i < imageArrayWalkRight.length; i++) {
-            imageArrayWalkLeft[i] = scaleImage(imageArrayWalkRight[i], this.targetSize, this.targetSize, true, true);
+            imageArrayWalkLeft[i] = scaleImage(imageArrayWalkRight[i], imageArrayWalkRight[i].getWidth(), imageArrayWalkRight[i].getHeight(), true, true);
         }
+    }
+
+    private Image scaleImage(Image source, double targetWidth, double targetHeight, boolean preserveRatio, boolean mirror) {
+        int width = (int) targetWidth;
+        int height = (int) targetHeight;
+
+        return scaleImage(source, width, height, preserveRatio, mirror);
     }
 
     private Image scaleImage(Image source, int targetWidth, int targetHeight, boolean preserveRatio, boolean mirror) {

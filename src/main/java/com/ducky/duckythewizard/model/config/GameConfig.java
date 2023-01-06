@@ -27,6 +27,8 @@ public class GameConfig {
     public static final int MAX_CARD_VALUE = gameConfigCards.getMaxCardValue();
     public static final int MIN_CARD_VALUE = gameConfigCards.getMinCardValue();
 
+    /* ** SPRITE CONFIGURATION ** */
+    public static final double SPRITE_SCALE_FACTOR = 1.75;
 
     /* ** STONE CONFIGURATION ** */
     public static final String STONE_IMAGE_FILE_NAME = "/com/ducky/duckythewizard/images/forest/rock_50px.png";
