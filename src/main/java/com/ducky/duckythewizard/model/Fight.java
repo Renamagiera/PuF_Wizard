@@ -10,12 +10,9 @@ public class Fight {
     private Stone stoneInFight;
     private Card duckyCard;
     private Card stoneCard;
-    private GameColor trumpColor;
     private boolean duckyPlaysFirst;
 
     public Fight(GameColorObject gameColorObject) {
-        // set random color as trump-color
-        this.trumpColor = gameColorObject.generateRandomTrump();
         // who starts
         this.duckyPlaysFirst = generateDuckyPlaysFirst();
     }
@@ -28,20 +25,12 @@ public class Fight {
         return stoneCard;
     }
 
-    public GameColor getTrumpColor() {
-        return trumpColor;
-    }
-
     public void setStoneCard(Card stoneCard) {
         this.stoneCard = stoneCard;
     }
 
     public void setDuckyCard(Card duckyCard) {
         this.duckyCard = duckyCard;
-    }
-
-    public void setTrumpColor(GameColor trumpColor) {
-        this.trumpColor = trumpColor;
     }
 
     public void setStoneInFight(Stone stoneInFight) {

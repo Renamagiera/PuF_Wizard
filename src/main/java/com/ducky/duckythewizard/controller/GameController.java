@@ -16,10 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.shape.StrokeLineJoin;
-import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -89,6 +85,9 @@ public class GameController{
     public void initialize() {
         //System.out.println("*** Game Controller is initialized...");
 
+        // skin
+        this.session.setSkin(SceneController.getSkin());
+
         this.session.setRootAnchorPane(this.rootBox);
         this.session.setAnchorPaneCards(this.emptyCardSlots);
         this.session.setFightOverlay(this.fightOverlay);
@@ -151,7 +150,7 @@ public class GameController{
         gc.setLineWidth(5);
 
         // initialize Ducky
-        ducky = new DuckySprite(3, collisionHandler);
+        ducky = new DuckySprite(3, collisionHandler, this.session.getSkin());
         ducky.duration = 0.1;
         ducky.setPosition(windowWidth /4 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);
@@ -175,33 +174,11 @@ public class GameController{
         // main game loop
         animationTimer = new MyAnimationTimer();
         animationTimer.start();
-
-
-        /*// debug hitBox
-        for(int row = 0; row < session.objectGrid.length; row++){
-            for(int column = 0; column < session.objectGrid[row].length; column++){
-                if(session.objectGrid[row][column] != null && session.objectGrid[row][column] instanceof Stone) {
-                    Rectangle rectangle = new Rectangle(column*cellWidth + (cellWidth/4), row*cellHeight + (cellHeight/2), cellWidth / 2, cellHeight / 2);
-                    rectangle.setStrokeType(StrokeType.OUTSIDE);
-                    rectangle.setStroke(Color.BLUE);
-                    rectangle.setStrokeMiterLimit(8.0);
-                    rectangle.setFill(Color.TRANSPARENT);
-                    this.rootBox.getChildren().add(rectangle);
-
-                    Rectangle rectangleBig = new Rectangle(column*cellWidth, row*cellHeight, cellWidth, cellHeight);
-                    rectangleBig.setStrokeType(StrokeType.OUTSIDE);
-                    rectangleBig.setStroke(Color.RED);
-                    rectangleBig.setStrokeMiterLimit(8.0);
-                    rectangleBig.setFill(Color.TRANSPARENT);
-                    this.rootBox.getChildren().add(rectangleBig);
-                }
-            }
-        }*/
     }
 
     @FXML
     public void handleOnKeyPressed(KeyEvent keyEvent) {
-        if (this.session.getKeyInput()) {
+        if (!this.session.getInFight()) {
             String code = keyEvent.getCode().toString();
             if(code.equals("SPACE")){
                 session.toggleIsRunning();
@@ -214,9 +191,6 @@ public class GameController{
                 else {
                     animationTimer.stop();
                     this.startPauseScene();
-                /*String pauseText = "PAUSE";
-                gc.fillText( pauseText, windowWidth/2 - 50, windowHeight/4 );
-                gc.strokeText( pauseText, windowWidth/2 - 50, windowHeight/4 );*/
                 }
             }
             else if ( session.getIsRunning() && !input.contains(code) )
@@ -289,14 +263,14 @@ public class GameController{
                 double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
                 lastNanoTime.value = currentNanoTime;
 
-                if (input.contains("UP")) {
+                if (input.contains("UP") || input.contains("W")) {
                     ducky.setVelocityY(-100);   // moving UP
                 } else {
                     ducky.setVelocityY(100);    // falling DOWN
                 }
-                if (input.contains("LEFT")) {
+                if (input.contains("LEFT") || input.contains("A")) {
                     ducky.setVelocityX(-100);   // moving LEFT
-                } else if (input.contains("RIGHT")) {
+                } else if (input.contains("RIGHT") || input.contains("D")) {
                     ducky.setVelocityX(100);    // moving RIGHT
                 } else {
                     ducky.setVelocityX(0);      // not moving left or right

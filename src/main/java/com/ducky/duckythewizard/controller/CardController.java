@@ -100,8 +100,7 @@ public class CardController extends Controller {
     }
 
     private String checkWin(boolean duckyWin) {
-        // TODO just if Ducky won:
-        // after fight: deal new cards, check ducky win/loss
+        // after card-click: check ducky win/loss
         int cardsLeft = getSession().getCardDeck().getCardDeck().size();
         if (duckyWin && cardsLeft <= 2) {
             return "win";
@@ -109,7 +108,7 @@ public class CardController extends Controller {
             if (cardsLeft >= 2) {
                 return getSession().getPlayer().checkAvailableCards() ? "no" : "loss";
             } else {
-                return getSession().getPlayer().checkAvailableCards() ? "loss" : "no";
+                return getSession().getPlayer().checkAvailableCards() ? "win" : "loss";
             }
         }
         return "no";
@@ -118,20 +117,17 @@ public class CardController extends Controller {
     private void endFight(int clickPosition, boolean duckyWin) {
         getSession().getGameCtrl().endCollision();
         newCardsFromDeck(clickPosition, duckyWin);
-/*        System.out.println("card deck size: " + this.getSession().getCardDeck().getCardDeck().size());
-        System.out.println("playable cards " + this.getSession().getPlayer().checkAvailableCards());*/
     }
 
     private void newCardsFromDeck(int clickedPosition, boolean duckyWin) {
-        // first take one new card from deck, give to hand-cards at clicked hand-card-position
-        // render new card given from deck
-        // new card for ducky
+        /*give ducky one new card. If he won the fight he gets one new card from deck. Otherwise, ducky gets an empty card.*/
         if (duckyWin) {
             this.handCards.add(clickedPosition, this.deck.removeHandCard(clickedPosition, this.handCards, true));
         } else {
             this.handCards.add(clickedPosition, this.deck.removeHandCard(clickedPosition, this.handCards, false));
             this.getSession().getPlayer().decrementHandCards();
         }
+        // render ducky's new card
         this.deck.renderCard(clickedPosition, this.handCards, this.getSession().getAnchorPaneCards());
         // new card for stone
         this.getSession().getActiveFight().getStoneInFight().setCard(this.deck.dealOneNewCardFromDeck());

@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
+import java.util.Objects;
+
 public class DuckySprite extends AnimatedSprite{
     public enum MovementState {
         IDLE,
@@ -15,6 +17,7 @@ public class DuckySprite extends AnimatedSprite{
         FLY
     }
 
+    private String skin;
     private int healthPoints;
     public SimpleIntegerProperty score;
     private MovementState state;
@@ -33,21 +36,23 @@ public class DuckySprite extends AnimatedSprite{
 
     private boolean duckyLooksLeft = false;
 
-    public DuckySprite(int maxHealthPoints, CollisionHandler collisionHandler) {
+    public DuckySprite(int maxHealthPoints, CollisionHandler collisionHandler, String skin) {
+        this.skin = skin;
         this.healthPoints = maxHealthPoints;
         this.score = new SimpleIntegerProperty(0);
         this.state = MovementState.FLY;
         this.resetTime = System.nanoTime();
         this.maxHealthPoints = maxHealthPoints;
-        timerProperty = new SimpleStringProperty(Integer.toString(maxTime));
+        this.timerProperty = new SimpleStringProperty(Integer.toString(maxTime));
         this.collisionHandler = collisionHandler;
-        initializeImageArrays();
+        this.initializeImageArrays();
         this.frames = imageArrayFlyRight;
     }
 
-    public DuckySprite(CollisionHandler collisionHandler){
+    // TODO Britta brauchst du das?
+    /*public DuckySprite(CollisionHandler collisionHandler){
         this(10, collisionHandler);
-    }
+    }*/
 
     @Override
     public void update(double time)
@@ -156,7 +161,7 @@ public class DuckySprite extends AnimatedSprite{
 
         // FLY
         for (int i = 0; i < imageArrayFlyRight.length; i++) {
-            Image image = new Image(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/fly/fly_" + i + ".png" ));
+            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/" + this.skin + "/fly/fly_" + i + ".png")));
             imageArrayFlyRight[i] = scaleImage(image, 40 , 40, true, false);
         }
         for (int i = 0; i < imageArrayFlyRight.length; i++) {
@@ -165,7 +170,7 @@ public class DuckySprite extends AnimatedSprite{
 
         // IDLE
         for (int i = 0; i < imageArrayIdleLookRight.length; i++) {
-            Image image = new Image( this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/idle/idle_" + i + ".png" ));
+            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/" + this.skin + "/idle/idle_" + i + ".png")));
             imageArrayIdleLookRight[i] = scaleImage(image, 40, 40, true, false);
         }
         for (int i = 0; i < imageArrayIdleLookRight.length; i++) {
@@ -174,7 +179,7 @@ public class DuckySprite extends AnimatedSprite{
 
         // WALK
         for (int i = 0; i < imageArrayWalkRight.length; i++) {
-            Image image = new Image( this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/walk/walk_" + i + ".png" ));
+            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/" + this.skin + "/walk/walk_" + i + ".png")));
             imageArrayWalkRight[i] = scaleImage(image, 40, 40, true, false);
         }
         for (int i = 0; i < imageArrayWalkRight.length; i++) {

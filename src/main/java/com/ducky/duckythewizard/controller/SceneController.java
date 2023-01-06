@@ -13,8 +13,8 @@ import java.util.Objects;
 
 /*Superclass of all SceneControllers*/
 public class SceneController {
-
     String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/style.css")).toExternalForm();
+    private static String skin = "normal";
 
     /*die bereits beim Start erstellte Stage wird anhand des Events ermittelt. Darauf wird eine neue Scene erstellt*/
 
@@ -40,4 +40,11 @@ public class SceneController {
         reload.start(stage);
     }
 
+    public static String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skinP) {
+        skin = skinP;
+    }
 }
