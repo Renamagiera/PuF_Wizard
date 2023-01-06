@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Game {
 
     private boolean isRunning;
-    private boolean keyInput;
+    private boolean inFight;
 
     private String skin;
     private Player player; //Attribut für Daten zum Spieler selbst (Name etc.)
@@ -43,7 +43,7 @@ public class Game {
 
     public Game(){
         isRunning = true;
-        keyInput = true;
+        inFight = false;
         gameConfig = new GameConfig();
         this.gameColorObject = new GameColorObject();
         this.cardDeck = new CardDeck(this.gameColorObject);
@@ -59,11 +59,11 @@ public class Game {
     public void toggleIsRunning() {
         isRunning = !isRunning;
     }
-    public boolean getKeyInput() {
-        return keyInput;
+    public boolean getInFight() {
+        return inFight;
     }
-    public void toggleKeyInput() {
-        keyInput = !keyInput;
+    public void toggleInFight() {
+        inFight = !inFight;
     }
 
     // create anstatt set, weil hier ein neues Controller-Objekt erstellt wird

@@ -19,6 +19,7 @@ public class WizardMainApplication extends Application {
         scene.getStylesheets().clear();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
