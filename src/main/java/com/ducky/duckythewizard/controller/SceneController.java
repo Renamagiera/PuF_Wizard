@@ -14,7 +14,7 @@ import java.util.Objects;
 /*Superclass of all SceneControllers*/
 public class SceneController {
     String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/style.css")).toExternalForm();
-    private static String skin = "normal";
+    private static String skin = "ducky";
 
     /*die bereits beim Start erstellte Stage wird anhand des Events ermittelt. Darauf wird eine neue Scene erstellt*/
 

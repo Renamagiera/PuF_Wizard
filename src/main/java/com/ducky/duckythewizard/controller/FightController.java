@@ -42,15 +42,15 @@ public class FightController extends Controller {
         this.getSession().getCardCtrl().addMouseEventHandler();
     }
 
-    public void stopFight(GameController.MyAnimationTimer animationTimer, DuckySprite ducky){
+    public void stopFight(GameController.MyAnimationTimer animationTimer){
         //System.out.println("----> stopFight");
         if(!this.getSession().getIsRunning()) {
             animationTimer.resetStartingTime();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    ducky.resetPlayerTimer();
-                    ducky.addToScore(100); // TODO points should depend on result of fight
+                    getSession().getPlayer().resetPlayerTimer();
+                    getSession().getPlayer().addToScore(100); // TODO points should depend on result of fight //Player statt Ducky
                     getSession().getFightView().endFightScene();
                     // get focus back
                     getSession().getRootAnchorPane().requestFocus();

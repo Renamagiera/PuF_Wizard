@@ -16,7 +16,6 @@ public class Game {
     private String skin;
     private Player player; //Attribut für Daten zum Spieler selbst (Name etc.)
     private Fight activeFight;
-    //private Sprite ducky = new DuckySprite(5, collisionHandler); //Attribut für Player-Sprite
     private AnchorPane rootAnchorPane;
     private AnchorPane fightOverlay;
     private AnchorPane anchorPaneCards;

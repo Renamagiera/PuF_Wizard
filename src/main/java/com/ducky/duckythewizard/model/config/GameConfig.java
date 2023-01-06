@@ -27,6 +27,12 @@ public class GameConfig {
     public static final int MAX_CARD_VALUE = gameConfigCards.getMaxCardValue();
     public static final int MIN_CARD_VALUE = gameConfigCards.getMinCardValue();
 
+    /* ** PLAYER CONFIGURATION ** */
+    public static final int PLAYER_MAX_HEALTHPOINTS = 3;
+    public static final int PLAYER_ACTION_TIMER = 10;
+
+    /* ** SPRITE CONFIGURATION ** */
+    public static final double SPRITE_SCALE_FACTOR = 2;
 
     /* ** STONE CONFIGURATION ** */
     public static final String STONE_IMAGE_FILE_NAME = "/com/ducky/duckythewizard/images/forest/rock_50px.png";
