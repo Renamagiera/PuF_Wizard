@@ -45,25 +45,22 @@ public class HelpSceneController extends SceneController {
     }
 
     private void addRadioButtonsToGroup() {
-        if (this.root.lookup("#red") != null) {
+        if (this.root.lookup("#ducky") != null) {
             ToggleGroup group = new ToggleGroup();
 
-            RadioButton red = (RadioButton) this.root.lookup("#red");
-            RadioButton blue = (RadioButton) this.root.lookup("#blue");
-            RadioButton normal = (RadioButton) this.root.lookup("#normal");
+            RadioButton ducky = (RadioButton) this.root.lookup("#ducky");
+            RadioButton batty = (RadioButton) this.root.lookup("#batty");
 
-            red.setToggleGroup(group);
-            blue.setToggleGroup(group);
-            normal.setToggleGroup(group);
+            ducky.setToggleGroup(group);
+            batty.setToggleGroup(group);
 
-            if (SceneController.getSkin().equals("normal")) {
-                normal.setSelected(true);
+            if (SceneController.getSkin().equals("ducky")) {
+                ducky.setSelected(true);
             }
 
             switch (SceneController.getSkin()) {
-                case "normal" -> normal.setSelected(true);
-                case "red" -> red.setSelected(true);
-                case "blue" -> blue.setSelected(true);
+                case "ducky" -> ducky.setSelected(true);
+                case "batty" -> batty.setSelected(true);
             }
 
             group.selectedToggleProperty().addListener((observableValue, toggle, t1) -> {

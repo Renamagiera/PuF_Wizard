@@ -17,6 +17,8 @@ public class DuckySprite extends AnimatedSprite{
         FLY
     }
 
+    private int targetSize = 40;
+
     private String skin;
     private int healthPoints;
     public SimpleIntegerProperty score;
@@ -34,10 +36,13 @@ public class DuckySprite extends AnimatedSprite{
     private Image[] imageArrayWalkRight;
     private Image[] imageArrayWalkLeft;
 
-    private boolean duckyLooksLeft = false;
+    private boolean spriteLooksLeft = false;
 
     public DuckySprite(int maxHealthPoints, CollisionHandler collisionHandler, String skin) {
         this.skin = skin;
+        if (this.skin.equals("batty")) {
+            this.targetSize = 34;
+        }
         this.healthPoints = maxHealthPoints;
         this.score = new SimpleIntegerProperty(0);
         this.state = MovementState.FLY;
@@ -80,16 +85,16 @@ public class DuckySprite extends AnimatedSprite{
         // WALK
         if (velocityY == 0 && velocityX != 0) {
             if (velocityX > 0) {
-                this.duckyLooksLeft = false;
+                this.spriteLooksLeft = false;
                 this.frames = imageArrayWalkRight;
             } else if (velocityX < 0) {
-                this.duckyLooksLeft = true;
+                this.spriteLooksLeft = true;
                 this.frames = imageArrayWalkLeft;
             }
         }
         // IDLE
         else if (velocityX == 0 && velocityY == 0) {
-            if (this.duckyLooksLeft) {
+            if (this.spriteLooksLeft) {
                 this.frames = imageArrayIdleLookLeft;
             } else {
                 this.frames = imageArrayIdleLookRight;
@@ -98,14 +103,14 @@ public class DuckySprite extends AnimatedSprite{
         // FLY
         else {
             if (velocityX > 0) {
-                this.duckyLooksLeft = false;
+                this.spriteLooksLeft = false;
                 this.frames = imageArrayFlyRight;
             } else if (velocityX < 0){
-                this.duckyLooksLeft = true;
+                this.spriteLooksLeft = true;
                 this.frames = imageArrayFlyLeft;
             } else {
                 // ducky is just falling
-                if (this.duckyLooksLeft) {
+                if (this.spriteLooksLeft) {
                     this.frames = imageArrayFlyLeft;
                 } else {
                     this.frames = imageArrayFlyRight;
@@ -161,7 +166,7 @@ public class DuckySprite extends AnimatedSprite{
 
         // FLY
         for (int i = 0; i < imageArrayFlyRight.length; i++) {
-            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/" + this.skin + "/fly/fly_" + i + ".png")));
+            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.skin + "/fly/fly_" + i + ".png")));
             imageArrayFlyRight[i] = scaleImage(image, 40 , 40, true, false);
         }
         for (int i = 0; i < imageArrayFlyRight.length; i++) {
@@ -170,7 +175,7 @@ public class DuckySprite extends AnimatedSprite{
 
         // IDLE
         for (int i = 0; i < imageArrayIdleLookRight.length; i++) {
-            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/" + this.skin + "/idle/idle_" + i + ".png")));
+            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.skin + "/idle/idle_" + i + ".png")));
             imageArrayIdleLookRight[i] = scaleImage(image, 40, 40, true, false);
         }
         for (int i = 0; i < imageArrayIdleLookRight.length; i++) {
@@ -179,11 +184,11 @@ public class DuckySprite extends AnimatedSprite{
 
         // WALK
         for (int i = 0; i < imageArrayWalkRight.length; i++) {
-            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/ducky/" + this.skin + "/walk/walk_" + i + ".png")));
-            imageArrayWalkRight[i] = scaleImage(image, 40, 40, true, false);
+            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.skin + "/walk/walk_" + i + ".png")));
+            imageArrayWalkRight[i] = scaleImage(image, this.targetSize, this.targetSize, true, false);
         }
         for (int i = 0; i < imageArrayWalkRight.length; i++) {
-            imageArrayWalkLeft[i] = scaleImage(imageArrayWalkRight[i], 40, 40, true, true);
+            imageArrayWalkLeft[i] = scaleImage(imageArrayWalkRight[i], this.targetSize, this.targetSize, true, true);
         }
     }
 

@@ -25,9 +25,8 @@
             <String fx:value="textSizeNormal" />
          </styleClass>
       </Label>
-      <RadioButton fx:id="red" layoutX="350.0" layoutY="360.0" mnemonicParsing="false" prefWidth="100.0" styleClass="textGeneral" text="red" />
-      <RadioButton fx:id="blue" layoutX="350.0" layoutY="400.0" mnemonicParsing="false" prefWidth="100.0" styleClass="textGeneral" text="blue" />
-      <RadioButton fx:id="normal" layoutX="350.0" layoutY="320.0" mnemonicParsing="false" prefWidth="110.0" styleClass="textGeneral" text="normal" />
+      <RadioButton fx:id="batty" layoutX="350.0" layoutY="360.0" mnemonicParsing="false" prefWidth="100.0" styleClass="textGeneral" text="batty" />
+      <RadioButton fx:id="ducky" layoutX="350.0" layoutY="320.0" mnemonicParsing="false" prefWidth="110.0" styleClass="textGeneral" text="ducky" />
       <Label alignment="CENTER" layoutX="300.0" layoutY="450.0" onMouseClicked="#startGame" prefHeight="50.0" prefWidth="200.0" text="PLAY" textAlignment="CENTER">
          <styleClass>
             <String fx:value="textGeneral" />
