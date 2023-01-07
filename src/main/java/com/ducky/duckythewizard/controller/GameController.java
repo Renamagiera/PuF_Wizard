@@ -86,7 +86,8 @@ public class GameController{
         //System.out.println("*** Game Controller is initialized...");
 
         // skin
-        this.session.setSkin(SceneController.getSkin());
+        System.out.println(SceneController.getSprite());
+        this.session.setSprite(SceneController.getSprite());
 
         this.session.setRootAnchorPane(this.rootBox);
         this.session.setFightOverlay(this.fightOverlay);
@@ -149,7 +150,7 @@ public class GameController{
         gc.setLineWidth(5);
 
         // initialize Ducky
-        ducky = new AnimatedSprite(collisionHandler, this.session.getSkin(), this.session.getPlayer());
+        ducky = new AnimatedSprite(collisionHandler, this.session.getSprite(), this.session.getPlayer());
         ducky.duration = 0.1;
         ducky.setPosition(windowWidth /4 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);

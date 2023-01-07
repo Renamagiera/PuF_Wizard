@@ -9,14 +9,29 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.util.*;
 
 public class HelpSceneController extends SceneController {
-
     private Parent root;
+    private Map<String, Map<String, String>> skins;
+    private ToggleGroup groupSprites;
+    private ToggleGroup groupSkins;
+
+    public HelpSceneController() {
+        this.skins = new HashMap<>();
+        skins.put("ducky", new HashMap<>() {{
+            put("one", "normal");
+            put("two", "blue");
+            put("three", "red");
+        }});
+        skins.put("batty", new HashMap<>() {{
+            put("one", "normal");
+            put("two", "white");
+            put("three", "green");
+        }});
+    }
 
     @FXML
-     /*anhand des Events wird die ID des Buttons ermittelt und die passende FMXL-Scene als root übergeben*/
     private void switchToScene(Event event) throws IOException {
         String labelId = ((Label)event.getSource()).getId();
         String scene = switch (labelId) {
@@ -46,29 +61,54 @@ public class HelpSceneController extends SceneController {
 
     private void addRadioButtonsToGroup() {
         if (this.root.lookup("#ducky") != null) {
-            ToggleGroup group = new ToggleGroup();
-
-            RadioButton ducky = (RadioButton) this.root.lookup("#ducky");
-            RadioButton batty = (RadioButton) this.root.lookup("#batty");
-
-            ducky.setToggleGroup(group);
-            batty.setToggleGroup(group);
-
-            if (SceneController.getSkin().equals("ducky")) {
-                ducky.setSelected(true);
+            this.groupSprites = new ToggleGroup();
+            this.groupSkins = new ToggleGroup();
+            for (String sprite : this.skins.keySet()) {
+                RadioButton buttonSprite = (RadioButton) this.root.lookup("#" + sprite);
+                buttonSprite.setToggleGroup(groupSprites);
+                if (SceneController.getSprite().equals(sprite)) {
+                    buttonSprite.setSelected(true);
+                }
             }
+            this.updateSkinButtons();
+            this.addListener(groupSprites, true);
+            this.addListener(groupSkins, false);
+        }
+    }
 
-            switch (SceneController.getSkin()) {
-                case "ducky" -> ducky.setSelected(true);
-                case "batty" -> batty.setSelected(true);
+    private void updateSkinButtons() {
+        RadioButton button = (RadioButton) this.groupSprites.getSelectedToggle();
+        String spriteId = button.getId();
+        for (String skinKey : this.skins.get(spriteId).keySet()) {
+            if (this.root.lookup("#" + skinKey) != null) {
+                RadioButton buttonSkin = (RadioButton) this.root.lookup("#" + skinKey);
+                buttonSkin.setToggleGroup(this.groupSkins);
+                buttonSkin.setText(this.skins.get(spriteId).get(skinKey));
+                if (SceneController.getSkin().equals(this.skins.get(spriteId).get(skinKey))) {
+                    buttonSkin.setSelected(true);
+                }
             }
+        }
+    }
 
-            group.selectedToggleProperty().addListener((observableValue, toggle, t1) -> {
-                RadioButton clickedButton = (RadioButton) group.getSelectedToggle();
-                if (clickedButton != null) {
+    private void addListener(ToggleGroup toggleGroup, boolean sprite) {
+        toggleGroup.selectedToggleProperty().addListener((observableValue, toggle, t1) -> {
+            RadioButton clickedButton = (RadioButton) toggleGroup.getSelectedToggle();
+            if (clickedButton != null) {
+                if (sprite) {
+                    super.setSprite(clickedButton.getText());
+                    // reset skin to default (first skin)
+                    super.setSkin(this.resetToDefaultSkin());
+                    this.updateSkinButtons();
+                } else {
                     super.setSkin(clickedButton.getText());
                 }
-            });
-        }
+            }
+        });
+    }
+
+    private String resetToDefaultSkin() {
+        String sprite = SceneController.getSprite();
+        return this.skins.get(sprite).get("one");
     }
 }

@@ -13,7 +13,7 @@ public class Game {
     private boolean isRunning;
     private boolean inFight;
 
-    private String skin;
+    private String sprite;
     private Player player;
     private Fight activeFight;
     private AnchorPane rootAnchorPane;
@@ -106,8 +106,8 @@ public class Game {
         return this.sceneCtrl;
     }
 
-    public String getSkin() {
-        return skin;
+    public String getSprite() {
+        return sprite;
     }
     public CardDeckModel getCardDeckModel() {
         return this.cardDeckModel;
@@ -152,8 +152,8 @@ public class Game {
     public void setFightOverlay(AnchorPane fightOverlay) {
         this.fightOverlay = fightOverlay;
     }
-    public void setSkin(String skin) {
-        this.skin = skin;
+    public void setSprite(String sprite) {
+        this.sprite = sprite;
     }
 
 }
