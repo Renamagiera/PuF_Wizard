@@ -50,7 +50,6 @@ public class FightController extends Controller {
                 @Override
                 public void run() {
                     getSession().getPlayer().resetPlayerTimer();
-                    getSession().getPlayer().addToScore(100); // TODO points should depend on result of fight //Player statt Ducky
                     getSession().getFightView().endFightScene();
                     // get focus back
                     getSession().getRootAnchorPane().requestFocus();

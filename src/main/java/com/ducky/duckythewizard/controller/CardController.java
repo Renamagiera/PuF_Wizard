@@ -64,19 +64,16 @@ public class CardController extends Controller {
                         getSession().getFightView().renderFightViewCard(true);
 
                         // DETERMINE WINNER
-                        // set win- or loss-label
+                        // set win- or loss-label, add score to player
                         boolean duckyWin = getSession().getActiveFight().determineWinner();
                         getSession().getFightView().updateWinLossLabel(duckyWin);
+                        getSession().getPlayer().addToScore(duckyWin ? 100 : 0);
 
                         removeAllClickHandlers();
 
                         // RENDER END-SCENE
                         if (checkWin(duckyWin).equals("win") || checkWin(duckyWin).equals("loss")) {
-                            if (duckyWin) {
-                                getSession().getGameCtrl().renderEndScene("duckyWin");
-                            } else {
-                                getSession().getGameCtrl().renderEndScene("duckyLoss");
-                            }
+                            getSession().getGameCtrl().renderEndScene(checkWin(duckyWin).equals("win") ? "duckyWin" : "duckyLoss");
                         }
 
                         // END FIGHT-SCENE
