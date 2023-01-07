@@ -173,19 +173,13 @@ public class AnimatedSprite extends Sprite
     public int rescaleImgWidth(Image image) {
         int imgWidth = (int) image.getWidth();
         double calculation = imgWidth * GameConfig.SPRITE_SCALE_FACTOR;
-        //TO DO Scalefactor should come from game configuration
-        imgWidth = (int) calculation;
-
-        return imgWidth;
+        return (int) calculation;
     }
 
     public int rescaleImgHeight(Image image) {
         int imgHeight = (int) image.getHeight();
         double calculation = imgHeight * GameConfig.SPRITE_SCALE_FACTOR;
-        //TO DO Scalefactor should come from game configuration
-        imgHeight = (int) calculation;
-
-        return imgHeight;
+        return (int) calculation;
     }
 
     private void initializeImageArrays() {
@@ -250,9 +244,7 @@ public class AnimatedSprite extends Sprite
     private int countFiles(String move) {
         int fileCount;
         File directory = new File("src/main/resources/com/ducky/duckythewizard/images/" + this.skin + "/" + move);
-        System.out.println(directory);
         fileCount = Objects.requireNonNull(directory.list()).length;
-        System.out.println(fileCount);
         return fileCount;
     }
 

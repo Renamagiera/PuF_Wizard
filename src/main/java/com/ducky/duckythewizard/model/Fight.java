@@ -1,15 +1,14 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.model.card.Card;
-import com.ducky.duckythewizard.model.color.GameColor;
+import com.ducky.duckythewizard.model.card.CardModel;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 
 import java.util.Random;
 
 public class Fight {
     private Stone stoneInFight;
-    private Card duckyCard;
-    private Card stoneCard;
+    private CardModel duckyCard;
+    private CardModel stoneCard;
     private boolean duckyPlaysFirst;
 
     public Fight(GameColorObject gameColorObject) {
@@ -17,19 +16,19 @@ public class Fight {
         this.duckyPlaysFirst = generateDuckyPlaysFirst();
     }
 
-    public Card getDuckyCard() {
+    public CardModel getDuckyCard() {
         return duckyCard;
     }
 
-    public Card getStoneCard() {
+    public CardModel getStoneCard() {
         return stoneCard;
     }
 
-    public void setStoneCard(Card stoneCard) {
+    public void setStoneCard(CardModel stoneCard) {
         this.stoneCard = stoneCard;
     }
 
-    public void setDuckyCard(Card duckyCard) {
+    public void setDuckyCard(CardModel duckyCard) {
         this.duckyCard = duckyCard;
     }
 

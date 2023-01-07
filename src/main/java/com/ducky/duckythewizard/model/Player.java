@@ -1,7 +1,6 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.model.card.Card;
-import com.ducky.duckythewizard.model.card.CardDeck;
+import com.ducky.duckythewizard.model.card.CardModel;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 
 public class Player {
     private String name = "testname";
-    private ArrayList<Card> handCards;
+    private ArrayList<CardModel> handCards;
     public SimpleIntegerProperty score;
     private int healthPoints;
     private int maxHealthPoints = GameConfig.PLAYER_MAX_HEALTHPOINTS;
@@ -21,13 +20,16 @@ public class Player {
 
     private AnimatedSprite playerSprite;
 
-    public Player(CardDeck deck) {
+    public Player() {
         this.healthPoints = maxHealthPoints;
         this.score = new SimpleIntegerProperty(0);
         this.resetTime = System.nanoTime();
         this.timerProperty = new SimpleStringProperty(Integer.toString(GameConfig.PLAYER_ACTION_TIMER));
-        this.handCards = deck.dealHandCards(deck.getCardDeck());
         this.playableCards = GameConfig.AMOUNT_HAND_CARDS;
+    }
+
+    public void setHandCards(ArrayList<CardModel> handCards) {
+        this.handCards = handCards;
     }
 
     public String getPlayerName() {
@@ -73,7 +75,7 @@ public class Player {
 
     public boolean checkAvailableCards() {
         int cardsAvailable = GameConfig.AMOUNT_HAND_CARDS;
-        for (Card handCard : this.handCards) {
+        for (CardModel handCard : this.handCards) {
             if (handCard.getColor().getName().equals("none")) {
                 cardsAvailable--;
             }
@@ -87,7 +89,7 @@ public class Player {
         this.playableCards--;
     }
 
-    public ArrayList<Card> getHandCards() {
+    public ArrayList<CardModel> getHandCards() {
         return this.handCards;
     }
 

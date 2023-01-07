@@ -1,6 +1,6 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.model.card.Card;
+import com.ducky.duckythewizard.model.card.CardModel;
 import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 public class Stone extends GameObject{
 
     private GameColorObject gameColorObject;
-    private Card card;
+    private CardModel card;
     private CountDownTimer trumpTimer;
 
     private static int count;
@@ -25,13 +25,13 @@ public class Stone extends GameObject{
         count++;
     }
 
-    public void setCard(Card card) {
+    public void setCard(CardModel card) {
         this.card = card;
     }
     public String getId() {
         return id;
     }
-    public Card getCard() {
+    public CardModel getCard() {
         return card;
     }
 

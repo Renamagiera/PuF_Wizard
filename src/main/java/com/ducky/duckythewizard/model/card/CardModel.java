@@ -4,14 +4,14 @@ import com.ducky.duckythewizard.model.color.GameColor;
 
 import java.util.Objects;
 
-public class Card {
+public class CardModel {
     private GameColor color;
     private int value;
     private String imgFileName;
 
-    public Card() {}
+    public CardModel() {}
 
-    public Card(GameColor color, int value, String imgFileName) {
+    public CardModel(GameColor color, int value, String imgFileName) {
         this.color = color;
         this.value = value;
         this.imgFileName = imgFileName;
@@ -21,7 +21,7 @@ public class Card {
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (Card) obj;
+        var that = (CardModel) obj;
         return Objects.equals(this.color, that.color) &&
                 this.value == that.value &&
                 Objects.equals(this.imgFileName, that.imgFileName);
