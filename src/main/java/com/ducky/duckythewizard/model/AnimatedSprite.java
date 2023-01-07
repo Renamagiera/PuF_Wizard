@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
+import java.io.File;
 import java.util.Objects;
 
 public class AnimatedSprite extends Sprite
@@ -26,6 +27,10 @@ public class AnimatedSprite extends Sprite
         WALK,
         FLY
     }
+    private int walkImageAmount;
+    private int flyImageAmount;
+    private int idleImageAmount ;
+
     private String skin;
     private Player player;
     private AnimatedSprite.MovementState state;
@@ -33,8 +38,8 @@ public class AnimatedSprite extends Sprite
 
     private Image[] imageArrayFlyRight;
     private Image[] imageArrayFlyLeft;
-    private Image[] imageArrayIdleLookRight;
-    private Image[] imageArrayIdleLookLeft;
+    private Image[] imageArrayIdleRight;
+    private Image[] imageArrayIdleLeft;
     private Image[] imageArrayWalkRight;
     private Image[] imageArrayWalkLeft;
 
@@ -46,6 +51,7 @@ public class AnimatedSprite extends Sprite
         this.player.resetPlayerTimer();
         this.state = AnimatedSprite.MovementState.FLY;
         this.collisionHandler = collisionHandler;
+        this.initializeFileAmounts();
         this.initializeImageArrays();
         this.frames = imageArrayFlyRight;
     }
@@ -136,9 +142,9 @@ public class AnimatedSprite extends Sprite
         // IDLE
         else if (velocityX == 0 && velocityY == 0) {
             if (this.spriteLooksLeft) {
-                this.frames = imageArrayIdleLookLeft;
+                this.frames = imageArrayIdleLeft;
             } else {
-                this.frames = imageArrayIdleLookRight;
+                this.frames = imageArrayIdleRight;
             }
         }
         // FLY
@@ -183,52 +189,33 @@ public class AnimatedSprite extends Sprite
     }
 
     private void initializeImageArrays() {
-        imageArrayFlyRight = new Image[6];
-        imageArrayFlyLeft = new Image[6];
+        imageArrayFlyRight = new Image[this.flyImageAmount];
+        imageArrayFlyLeft = new Image[this.flyImageAmount];
 
-        imageArrayIdleLookRight = new Image[4];
-        imageArrayIdleLookLeft = new Image[4];
+        imageArrayIdleRight = new Image[this.idleImageAmount];
+        imageArrayIdleLeft = new Image[this.idleImageAmount];
 
-        imageArrayWalkRight = new Image[6];
-        imageArrayWalkLeft = new Image[6];
+        imageArrayWalkRight = new Image[this.walkImageAmount];
+        imageArrayWalkLeft = new Image[this.walkImageAmount];
 
-        // FLY
-        for (int i = 0; i < imageArrayFlyRight.length; i++) {
-            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.skin + "/fly/fly_" + i + ".png")));
+        this.addImages("fly", imageArrayFlyRight, imageArrayFlyLeft);
+        this.addImages("idle", imageArrayIdleRight, imageArrayIdleLeft);
+        this.addImages("walk", imageArrayWalkRight, imageArrayWalkLeft);
+    }
 
-            imageArrayFlyRight[i] = scaleImage(image, rescaleImgWidth(image), rescaleImgHeight(image), true, false);
+    private void addImages(String move, Image[] right, Image[] left) {
+        // add images to movement
+        for (int i = 0; i < right.length; i++) {
+            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.skin + "/" + move + "/" + move + "_" + i + ".png")));
+            right[i] = scaleImage(image, rescaleImgWidth(image), rescaleImgHeight(image), true, false);
         }
-        for (int i = 0; i < imageArrayFlyRight.length; i++) {
-            imageArrayFlyLeft[i] = scaleImage(imageArrayFlyRight[i], imageArrayFlyRight[i].getWidth(), imageArrayFlyRight[i].getHeight(), true, true);
-        }
-
-        // IDLE
-        for (int i = 0; i < imageArrayIdleLookRight.length; i++) {
-            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.skin + "/idle/idle_" + i + ".png")));
-            imageArrayIdleLookRight[i] = scaleImage(image, rescaleImgWidth(image), rescaleImgHeight(image), true, false);
-        }
-        for (int i = 0; i < imageArrayIdleLookRight.length; i++) {
-            imageArrayIdleLookLeft[i] = scaleImage(imageArrayIdleLookRight[i], imageArrayIdleLookRight[i].getWidth(), imageArrayIdleLookRight[i].getHeight(), true, true);
-        }
-
-        // WALK
-        for (int i = 0; i < imageArrayWalkRight.length; i++) {
-            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.skin + "/walk/walk_" + i + ".png")));
-            imageArrayWalkRight[i] = scaleImage(image, rescaleImgWidth(image), rescaleImgHeight(image), true, false);
-        }
-        for (int i = 0; i < imageArrayWalkRight.length; i++) {
-            imageArrayWalkLeft[i] = scaleImage(imageArrayWalkRight[i], imageArrayWalkRight[i].getWidth(), imageArrayWalkRight[i].getHeight(), true, true);
+        // add mirrored images to opposite movement
+        for (int i = 0; i < right.length; i++) {
+            left[i] = scaleImage(right[i], right[i].getWidth(), right[i].getHeight(), true, true);
         }
     }
 
     private Image scaleImage(Image source, double targetWidth, double targetHeight, boolean preserveRatio, boolean mirror) {
-        int width = (int) targetWidth;
-        int height = (int) targetHeight;
-
-        return scaleImage(source, width, height, preserveRatio, mirror);
-    }
-
-    private Image scaleImage(Image source, int targetWidth, int targetHeight, boolean preserveRatio, boolean mirror) {
         SnapshotParameters parameters = new SnapshotParameters();
         parameters.setFill(Color.TRANSPARENT);
         ImageView imageView = new ImageView(source);
@@ -258,5 +245,20 @@ public class AnimatedSprite extends Sprite
     public boolean intersects(Sprite s)
     {
         return s.getBoundary().intersects( this.getBoundary() );
+    }
+
+    private int countFiles(String move) {
+        int fileCount;
+        File directory = new File("src/main/resources/com/ducky/duckythewizard/images/" + this.skin + "/" + move);
+        System.out.println(directory);
+        fileCount = Objects.requireNonNull(directory.list()).length;
+        System.out.println(fileCount);
+        return fileCount;
+    }
+
+    private void initializeFileAmounts() {
+        this.flyImageAmount = countFiles("fly");
+        this.idleImageAmount = countFiles("idle");
+        this.walkImageAmount = countFiles("walk");
     }
 }
