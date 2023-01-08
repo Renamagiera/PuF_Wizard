@@ -39,6 +39,7 @@ public class HelpSceneController extends SceneController {
             case "nextTo2", "backTo2" -> "/com/ducky/duckythewizard/scenes/helpScenes/helpScene2.fxml";
             case "nextTo3" -> "/com/ducky/duckythewizard/scenes/helpScenes/helpScene3.fxml";
             case "controlsButton" -> "/com/ducky/duckythewizard/scenes/helpScenes/settings.fxml";
+            case "scoresButton" -> "/com/ducky/duckythewizard/scenes/helpScenes/scoresScene.fxml";
             default -> "";
         };
         this.root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource(scene)));
