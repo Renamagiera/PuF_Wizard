@@ -217,7 +217,16 @@ public class GameController{
                 overlayHeadline,
                 this.session.getGameColorObject(),
                 this.session.getPlayer().getScore(),
-                this);
+                this
+        );
+        // creating the scores table
+        HBox hbox = new HBox();
+        ScoresController scoresTable = new ScoresController();
+        scoresTable.setGameScore(this.session.getPlayer().getScore());
+        hbox.getChildren().add(scoresTable);
+        hbox.setLayoutX(250);
+        hbox.setLayoutY(175);
+        this.endScene.getChildren().add(hbox);
     }
 
     public void restartGame(MouseEvent event) throws IOException {
@@ -317,19 +326,11 @@ public class GameController{
                 // showing 'You lose' text
                 // lose-scene
                 if(session.getPlayer().getHealthPoints() == 0){
-                    /*String pointsText = "You LOSE\nyour score is " + ducky.getScore();
-                    gc.fillText(pointsText, windowWidth / 3, windowHeight / 3);
-                    gc.strokeText(pointsText, windowWidth / 3, windowHeight / 3);*/
-
-                    //ServerFacade serverFacade = new ServerFacade();
-                    //serverFacade.sendHighScoreToServer("Ducky-Test-19", ducky.getScore());
-
                     session.toggleIsRunning();
                     renderEndScene("duckyLoss");
                 }
 
                 // remove heart if Ducky lost a health point
-                // TODO find solution that uses binding???
                 //LENA Player statt Ducky
                 if(session.getPlayer().getHealthPoints() < heartContainer.getChildren().size()){
                     heartContainer.getChildren().remove(heartContainer.getChildren().size() - 1);
