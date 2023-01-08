@@ -31,7 +31,7 @@ public class AnimatedSprite extends Sprite
     private int flyImageAmount;
     private int idleImageAmount ;
 
-    private String skin;
+    private String sprite;
     private Player player;
     private AnimatedSprite.MovementState state;
     private CollisionHandler collisionHandler;
@@ -45,8 +45,8 @@ public class AnimatedSprite extends Sprite
 
     private boolean spriteLooksLeft = false;
 
-    public AnimatedSprite(CollisionHandler collisionHandler, String skin, Player player) {
-        this.skin = skin;
+    public AnimatedSprite(CollisionHandler collisionHandler, String sprite, Player player) {
+        this.sprite = sprite;
         this.player = player;
         this.player.resetPlayerTimer();
         this.state = AnimatedSprite.MovementState.FLY;
@@ -173,19 +173,13 @@ public class AnimatedSprite extends Sprite
     public int rescaleImgWidth(Image image) {
         int imgWidth = (int) image.getWidth();
         double calculation = imgWidth * GameConfig.SPRITE_SCALE_FACTOR;
-        //TO DO Scalefactor should come from game configuration
-        imgWidth = (int) calculation;
-
-        return imgWidth;
+        return (int) calculation;
     }
 
     public int rescaleImgHeight(Image image) {
         int imgHeight = (int) image.getHeight();
         double calculation = imgHeight * GameConfig.SPRITE_SCALE_FACTOR;
-        //TO DO Scalefactor should come from game configuration
-        imgHeight = (int) calculation;
-
-        return imgHeight;
+        return (int) calculation;
     }
 
     private void initializeImageArrays() {
@@ -206,7 +200,7 @@ public class AnimatedSprite extends Sprite
     private void addImages(String move, Image[] right, Image[] left) {
         // add images to movement
         for (int i = 0; i < right.length; i++) {
-            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.skin + "/" + move + "/" + move + "_" + i + ".png")));
+            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.sprite + "/" + move + "/" + move + "_" + i + ".png")));
             right[i] = scaleImage(image, rescaleImgWidth(image), rescaleImgHeight(image), true, false);
         }
         // add mirrored images to opposite movement
@@ -249,10 +243,8 @@ public class AnimatedSprite extends Sprite
 
     private int countFiles(String move) {
         int fileCount;
-        File directory = new File("src/main/resources/com/ducky/duckythewizard/images/" + this.skin + "/" + move);
-        System.out.println(directory);
+        File directory = new File("src/main/resources/com/ducky/duckythewizard/images/" + this.sprite + "/" + move);
         fileCount = Objects.requireNonNull(directory.list()).length;
-        System.out.println(fileCount);
         return fileCount;
     }
 

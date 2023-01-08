@@ -86,10 +86,10 @@ public class GameController{
         //System.out.println("*** Game Controller is initialized...");
 
         // skin
-        this.session.setSkin(SceneController.getSkin());
+        System.out.println(SceneController.getSprite());
+        this.session.setSprite(SceneController.getSprite());
 
         this.session.setRootAnchorPane(this.rootBox);
-        this.session.setAnchorPaneCards(this.emptyCardSlots);
         this.session.setFightOverlay(this.fightOverlay);
         this.session.setAnchorPaneEndOverlay(this.endScene);
         this.session.getFightView().setAnchorPaneFightOverlay(this.fightOverlay);
@@ -110,7 +110,7 @@ public class GameController{
         this.session.getCardCtrl().cardInit();
 
         // bindings fight-view
-        cards.textProperty().bind(session.getCardDeck().cardsProperty);
+        cards.textProperty().bind(session.getCardDeckModel().cardsProperty);
         trumpColorText.textProperty().bind(session.getFightView().trumpColorTextProperty);
         trumpColorText.styleProperty().bind(session.getFightView().trumpColorTextStyleProperty);
         cardChooseText.textProperty().bind(session.getFightView().cardChooseTextProperty);
@@ -150,7 +150,7 @@ public class GameController{
         gc.setLineWidth(5);
 
         // initialize Ducky
-        ducky = new AnimatedSprite(collisionHandler, this.session.getSkin(), this.session.getPlayer());
+        ducky = new AnimatedSprite(collisionHandler, this.session.getSprite(), this.session.getPlayer());
         ducky.duration = 0.1;
         ducky.setPosition(windowWidth /4 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);
@@ -247,6 +247,24 @@ public class GameController{
         session.toggleIsRunning();
         animationTimer.resetStartingTime();
         animationTimer.start();
+    }
+
+    public String checkEndOfGame(boolean duckyWin) {
+        /*After card was clicked, check if ducky wins or looses the game. Whether player's hand-cards are empty.
+        Or card-deck is empty. Or both.*/
+        int cardsLeft = this.session.getCardDeckModel().getCardDeck().size();
+        if (duckyWin && cardsLeft <= 2) {
+            return "win";
+        } else if (!duckyWin) {
+            if (cardsLeft >= 2) {
+                // card deck is not empty, check if player has hand cards
+                return this.session.getPlayer().checkAvailableCards() ? "no" : "loss";
+            } else {
+                // card deck is now empty, if player played last card, but lost -> loss
+                return this.session.getPlayer().checkAvailableCards() ? "win" : "loss";
+            }
+        }
+        return "no";
     }
 
     class MyAnimationTimer extends AnimationTimer

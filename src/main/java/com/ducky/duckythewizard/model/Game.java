@@ -1,7 +1,7 @@
 package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.controller.*;
-import com.ducky.duckythewizard.model.card.CardDeck;
+import com.ducky.duckythewizard.model.card.CardDeckModel;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.layout.AnchorPane;
@@ -13,16 +13,15 @@ public class Game {
     private boolean isRunning;
     private boolean inFight;
 
-    private String skin;
-    private Player player; //Attribut für Daten zum Spieler selbst (Name etc.)
+    private String sprite;
+    private Player player;
     private Fight activeFight;
     private AnchorPane rootAnchorPane;
     private AnchorPane fightOverlay;
-    private AnchorPane anchorPaneCards;
     private AnchorPane anchorPaneEndOverlay;
 
 
-    private CardDeck cardDeck;
+    private CardDeckModel cardDeckModel;
     private GameColorObject gameColorObject;
 
     //die Game Config wird einmalig zum Start des Games (Erstellung des Game-Klassen-Objekts) erstellt
@@ -45,8 +44,8 @@ public class Game {
         inFight = false;
         gameConfig = new GameConfig();
         this.gameColorObject = new GameColorObject();
-        this.cardDeck = new CardDeck(this.gameColorObject);
-        this.player = new Player(this.cardDeck);
+        this.cardDeckModel = new CardDeckModel();
+        this.player = new Player();
         this.stoneArrayList = new ArrayList<>();
         this.fightView = new FightView();
         this.endSceneView = new EndSceneView();
@@ -107,11 +106,11 @@ public class Game {
         return this.sceneCtrl;
     }
 
-    public String getSkin() {
-        return skin;
+    public String getSprite() {
+        return sprite;
     }
-    public CardDeck getCardDeck() {
-        return this.cardDeck;
+    public CardDeckModel getCardDeckModel() {
+        return this.cardDeckModel;
     }
     public Player getPlayer() {
         return this.player;
@@ -125,9 +124,6 @@ public class Game {
 
     public AnchorPane getRootAnchorPane() {
         return rootAnchorPane;
-    }
-    public AnchorPane getAnchorPaneCards() {
-        return this.anchorPaneCards;
     }
     public AnchorPane getAnchorPaneEndOverlay() {
         return anchorPaneEndOverlay;
@@ -144,9 +140,6 @@ public class Game {
         return gameColorObject;
     }
 
-    public void setAnchorPaneCards(AnchorPane anchorPane) {
-        this.anchorPaneCards = anchorPane;
-    }
     public void setAnchorPaneEndOverlay(AnchorPane anchorPaneEndOverlay) {
         this.anchorPaneEndOverlay = anchorPaneEndOverlay;
     }
@@ -159,8 +152,8 @@ public class Game {
     public void setFightOverlay(AnchorPane fightOverlay) {
         this.fightOverlay = fightOverlay;
     }
-    public void setSkin(String skin) {
-        this.skin = skin;
+    public void setSprite(String sprite) {
+        this.sprite = sprite;
     }
 
 }

@@ -1,7 +1,6 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.model.card.Card;
-import com.ducky.duckythewizard.model.card.CardDeck;
+import com.ducky.duckythewizard.model.card.CardModel;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,43 +9,55 @@ import java.util.ArrayList;
 
 public class Player {
     private String name = "testname";
-    private ArrayList<Card> handCards;
-    public SimpleIntegerProperty score;
+    private ArrayList<CardModel> handCards;
     private int healthPoints;
     private int maxHealthPoints = GameConfig.PLAYER_MAX_HEALTHPOINTS;
     private int playableCards;
 
+    public SimpleIntegerProperty score;
     public SimpleStringProperty timerProperty;
     private long resetTime;
 
     private AnimatedSprite playerSprite;
 
-    public Player(CardDeck deck) {
+    public Player() {
         this.healthPoints = maxHealthPoints;
         this.score = new SimpleIntegerProperty(0);
         this.resetTime = System.nanoTime();
         this.timerProperty = new SimpleStringProperty(Integer.toString(GameConfig.PLAYER_ACTION_TIMER));
-        this.handCards = deck.dealHandCards(deck.getCardDeck());
         this.playableCards = GameConfig.AMOUNT_HAND_CARDS;
     }
 
+    //getter & setter
     public String getPlayerName() {
         return this.name;
     }
     public AnimatedSprite getPlayerSprite() {
         return this.playerSprite;
     }
-
-    public void setPlayerSprite(AnimatedSprite sprite) {
-        this.playerSprite = sprite;
-    }
     public int getHealthPoints() {
         return this.healthPoints;
     }
-
     public int getScore() {
         return this.score.getValue();
     }
+    public ArrayList<CardModel> getHandCards() {
+        return this.handCards;
+    }
+    public int getPlayableCards() {
+        return this.playableCards;
+    }
+
+    public void setHandCards(ArrayList<CardModel> handCards) {
+        this.handCards = handCards;
+    }
+    public void setPlayerSprite(AnimatedSprite sprite) {
+        this.playerSprite = sprite;
+    }
+    public void setPlayableCards(int playableCards) {
+        this.playableCards = playableCards;
+    }
+
 
     public void addToScore (int points) {
         this.score.set(score.getValue() + points);
@@ -71,31 +82,17 @@ public class Player {
         resetPlayerTimer();
     }
 
-    public boolean checkAvailableCards() {
-        int cardsAvailable = GameConfig.AMOUNT_HAND_CARDS;
-        for (Card handCard : this.handCards) {
-            if (handCard.getColor().getName().equals("none")) {
-                cardsAvailable--;
-            }
-        }
-        /*System.out.println("check-method: available cards: " + cardsAvailable);
-        System.out.println("");*/
-        return cardsAvailable >= 1;
-    }
-
     public void decrementHandCards() {
         this.playableCards--;
     }
 
-    public ArrayList<Card> getHandCards() {
-        return this.handCards;
-    }
-
-    public int getPlayableCards() {
-        return this.playableCards;
-    }
-
-    public void setPlayableCards(int playableCards) {
-        this.playableCards = playableCards;
+    public boolean checkAvailableCards() {
+        int cardsAvailable = GameConfig.AMOUNT_HAND_CARDS;
+        for (CardModel handCard : this.handCards) {
+            if (handCard.getColor().getName().equals("none")) {
+                cardsAvailable--;
+            }
+        }
+        return cardsAvailable >= 1;
     }
 }
