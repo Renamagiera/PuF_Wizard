@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root fx:id="scoresRoot" type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml">
+   <children>
+      <TableView fx:id="scoresTable" layoutX="250.0" layoutY="187.0" prefHeight="275.0" prefWidth="300.0">
+        <columns>
+            <TableColumn fx:id="rankColumn" prefWidth="50.0" text="Rank" />
+            <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Name" />
+            <TableColumn fx:id="scoreColumn" prefWidth="100.0" text="Score" />
+        </columns>
+      </TableView>
+   </children>
+</fx:root>

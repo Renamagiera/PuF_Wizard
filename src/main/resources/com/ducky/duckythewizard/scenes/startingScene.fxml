@@ -32,7 +32,7 @@
                   <String fx:value="bgLightBrown" />
                </styleClass>
             </Label>
-            <Label fx:id="scoreButton" alignment="CENTER" layoutX="48.0" layoutY="30.0" prefHeight="50.0" prefWidth="140.0" text="Score">
+            <Label fx:id="scoresButton" alignment="CENTER" layoutX="48.0" layoutY="30.0" onMouseClicked="#switchToScene" prefHeight="50.0" prefWidth="140.0" text="Scores">
                <styleClass>
                   <String fx:value="textGeneral" />
                   <String fx:value="bgLightBrown" />
