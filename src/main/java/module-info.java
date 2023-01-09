@@ -2,6 +2,13 @@ module com.ducky.duckythewizard {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires jakarta.persistence;
+    requires spring.data.commons;
+    requires spring.beans;
+    requires spring.context;
+    requires spring.web;
+    requires spring.boot;
+    requires spring.boot.autoconfigure;
 
 
     //opens com.ducky.duckythewizard to javafx.fxml;

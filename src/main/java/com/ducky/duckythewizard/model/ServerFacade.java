@@ -20,10 +20,10 @@ public class ServerFacade {
         // send high score to sever
 
         // MOCK sending
-        System.out.println("SENDING HIGH SCORE (not really)");
+        // System.out.println("SENDING HIGH SCORE (not really)");
 
 
-        /*String urlParameters  = "name=" + name + "&score=" + score;
+        String urlParameters  = "name=" + name + "&score=" + score;
         byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
         int    postDataLength = postData.length;
         String request        = "http://localhost:8080/add";
@@ -51,7 +51,7 @@ public class ServerFacade {
             conn.getInputStream();
         } catch(Exception e) {
             throw new RuntimeException(e);
-        }*/
+        }
 
 
     }
@@ -68,13 +68,13 @@ public class ServerFacade {
         // get top <number> high scores from server and store them in an ArrayList of HighScore objects
         List<HighScore> topHighScores = new ArrayList<>();
 
-        // MOCK building high score objects from JSON data
+    /*    // MOCK building high score objects from JSON data
         for (int i = 0; i < limit; i++) {
             // test data
             topHighScores.add(i, new HighScore(i + 1, "Name" + (i+1), 100 - (i*10)));
-        }
+        }*/
 
-/*        String url = "http://localhost:8080/top?limit=" + limit;
+        String url = "http://localhost:8080/top?limit=" + limit;
         StringBuffer response = new StringBuffer();
 
         try {
@@ -114,10 +114,7 @@ public class ServerFacade {
             substring = response.substring(startIndex, endIndex);
             startIndex = endIndex + 1;
             topHighScores.add(i, getHighScoreFromString(substring, i + 1));
-
-            // test data
-            // topHighScores.add(i, new HighScore(i + 1, "Name" + (i+1), 1000 - (i*100)));
-        }*/
+        }
 
         return topHighScores;
     }
