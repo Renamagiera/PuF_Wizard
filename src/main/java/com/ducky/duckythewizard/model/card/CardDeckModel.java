@@ -1,7 +1,6 @@
 package com.ducky.duckythewizard.model.card;
 
 import com.ducky.duckythewizard.model.color.GameColor;
-import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;

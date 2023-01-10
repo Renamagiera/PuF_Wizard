@@ -82,7 +82,7 @@ public class CardController extends Controller {
                         // RENDER END-SCENE
                         String endOfGame = getSession().getGameCtrl().checkEndOfGame(duckyWin);
                         if (endOfGame.equals("win") || endOfGame.equals("loss")) {
-                            getSession().getGameCtrl().renderEndScene(endOfGame.equals("win") ? "duckyWin" : "duckyLoss");
+                            getSession().getGameCtrl().renderEndScene(endOfGame.equals("win"));
                         }
 
                         // END FIGHT-SCENE
