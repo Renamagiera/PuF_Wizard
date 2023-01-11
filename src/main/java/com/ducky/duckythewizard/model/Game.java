@@ -35,10 +35,11 @@ public class Game {
 
     private GameController gameCtrl;
     private CardController cardCtrl;
-    private MovementController movementCtrl;
     private StoneController stoneCtrl;
     private FightController fightCtrl;
     private SceneController sceneCtrl;
+
+    private MyAnimationTimer animationTimer;
 
     public Game(){
         isRunning = true;
@@ -84,9 +85,6 @@ public class Game {
     public void createCardCtrlObj() {
         this.cardCtrl = new CardController(this);
     }
-    public void createMovementCtrlObj() {
-        this.movementCtrl = new MovementController(this);
-    }
     public void createStoneCtrlObj() {
         this.stoneCtrl = new StoneController(this);
     }
@@ -106,9 +104,6 @@ public class Game {
     public CardController getCardCtrl() {
         return this.cardCtrl;
     }
-    public MovementController getMovementCtrl() {
-        return this.movementCtrl;
-    }
     public StoneController getStoneCtrl() {
         return stoneCtrl;
     }
@@ -119,7 +114,9 @@ public class Game {
         return this.sceneCtrl;
     }
 
-    public String getSprite() {
+    public MyAnimationTimer getAnimationTimer() { return this.animationTimer;}
+
+    public String getSpriteString() {
         return sprite;
     }
     public CardDeckModel getCardDeckModel() {
@@ -168,5 +165,6 @@ public class Game {
     public void setSprite(String sprite) {
         this.sprite = sprite;
     }
+    public void setAnimationTimer(MyAnimationTimer timer) { this.animationTimer = timer;}
 
 }
