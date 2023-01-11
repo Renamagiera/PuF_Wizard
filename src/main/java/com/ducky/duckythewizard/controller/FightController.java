@@ -42,10 +42,10 @@ public class FightController extends Controller {
         this.getSession().getCardCtrl().addMouseEventHandler();
     }
 
-    public void stopFight(GameController.MyAnimationTimer animationTimer){
+    public void stopFight(MyAnimationTimer animationTimer){
         //System.out.println("----> stopFight");
         if(!this.getSession().getIsRunning()) {
-            animationTimer.resetStartingTime();
+            this.getSession().getAnimationTimer().resetStartingTime();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {

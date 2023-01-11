@@ -43,21 +43,4 @@ public class GameConfig {
     public static final int TRUMP_TIMER = 2000;
 
     /* ** COLOR CONFIGURATION ** */
-
-
-    public int getWindowWidth() {
-        return WINDOW_WIDTH;
-    }
-
-    public int getWindowHeight() {
-
-        return WINDOW_HEIGHT;
-    }
-
-    public double getLevel_cellWidth() {
-        return LEVEL_CELL_WIDTH;
-    }
-    public double getLevel_cellHeight() {
-        return LEVEL_CELL_HEIGHT;
-    }
 }
