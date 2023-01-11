@@ -19,8 +19,15 @@
             <String fx:value="textSizeNormal" />
          </styleClass>
       </Label>
-       <HBox layoutX="250" layoutY="200">
+       <HBox layoutX="175" layoutY="200">
            <ScoresController></ScoresController>
        </HBox>
+      <Label fx:id="backToMenu" alignment="CENTER" onMouseClicked="#backToMenu" layoutX="300.0" layoutY="530" prefHeight="50.0" prefWidth="200.0" text="Menu" textAlignment="CENTER">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="bg-blue" />
+            <String fx:value="green-border" />
+         </styleClass>
+      </Label>
    </children>
 </AnchorPane>

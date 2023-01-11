@@ -12,6 +12,7 @@ public class Game {
 
     private boolean isRunning;
     private boolean inFight;
+    private boolean gameOver;
 
     private String sprite;
     private Player player;
@@ -42,6 +43,7 @@ public class Game {
     public Game(){
         isRunning = true;
         inFight = false;
+        gameOver = false;
         gameConfig = new GameConfig();
         this.gameColorObject = new GameColorObject();
         this.cardDeckModel = new CardDeckModel();
@@ -52,13 +54,24 @@ public class Game {
         //System.out.println("*** Game-object is created.");
     }
     public boolean getIsRunning(){
-        return isRunning;
-    }
-    public void toggleIsRunning() {
-        isRunning = !isRunning;
+        return this.isRunning;
     }
     public boolean getInFight() {
-        return inFight;
+        return this.inFight;
+    }
+    public boolean getGameOver() {
+        return this.gameOver;
+    }
+    public void setRunning(boolean isRunning) {
+        this.isRunning = isRunning;
+    }
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+        System.out.println(this.gameOver);
+    }
+
+    public void toggleIsRunning() {
+        isRunning = !isRunning;
     }
     public void toggleInFight() {
         inFight = !inFight;

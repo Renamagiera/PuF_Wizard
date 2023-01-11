@@ -453,17 +453,17 @@
          </styleClass></Label>
       <AnchorPane fx:id="endScene" prefHeight="650.0" prefWidth="800.0" styleClass="bgEndingScene" stylesheets="@../styles/style.css">
          <children>
-            <AnchorPane fx:id="endSceneMenu" layoutX="150.0" layoutY="45.0" prefHeight="560.0" prefWidth="500.0" styleClass="bgBrown">
+            <AnchorPane fx:id="endSceneMenu" layoutX="150.0" layoutY="45.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="550.0" styleClass="bgBrown">
                <children>
-                  <Label fx:id="endSceneLabel" alignment="CENTER" layoutY="30.0" prefWidth="500.0" styleClass="textGeneral" text="endSceneLabel" />
-                  <Label fx:id="score" alignment="CENTER" layoutY="90.0" prefWidth="500.0" styleClass="textGeneral" text="Your Score" />
-                  <Label fx:id="backToMenu" alignment="CENTER" layoutX="92.0" layoutY="495.0" onMouseClicked="#backToMenu" prefHeight="30.0" prefWidth="115.0" text="menu">
+                  <Label fx:id="endSceneLabel" alignment="CENTER" layoutY="15.0" prefWidth="550.0" styleClass="textGeneral" text="endSceneLabel" />
+                  <Label fx:id="score" alignment="CENTER" layoutY="75.0" prefWidth="550.0" styleClass="textGeneral" text="Your Score" />
+                  <Label fx:id="backToMenu" alignment="CENTER" layoutX="130.0" layoutY="450.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#backToMenu" prefHeight="30.0" prefWidth="115.0" text="menu">
                      <styleClass>
                         <String fx:value="textGeneral" />
                         <String fx:value="bgLightBrown" />
                      </styleClass>
                   </Label>
-                  <Label fx:id="restart" alignment="CENTER" layoutX="292.0" layoutY="495.0" onMouseClicked="#restartGame" prefHeight="30.0" prefWidth="115.0" text="restart">
+                  <Label fx:id="restart" alignment="CENTER" layoutX="305.0" layoutY="450.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#restartGame" prefHeight="30.0" prefWidth="115.0" text="restart">
                      <styleClass>
                         <String fx:value="textGeneral" />
                         <String fx:value="bgLightBrown" />

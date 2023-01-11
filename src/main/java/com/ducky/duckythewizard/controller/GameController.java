@@ -149,7 +149,7 @@ public class GameController{
         gc.setFill(Color.WHITE );
         gc.setLineWidth(5);
 
-        // initialize Ducky
+        // initialize Player's sprite
         ducky = new AnimatedSprite(collisionHandler, this.session.getSprite(), this.session.getPlayer());
         ducky.duration = 0.1;
         ducky.setPosition(windowWidth /4 - ducky.getFrame(0).getWidth()/2, 0);
@@ -170,6 +170,8 @@ public class GameController{
             heartContainer.getChildren().add(imageView);
             heartContainer.setHgrow(imageView, Priority.NEVER);
         }
+        // initialize end-scene local variables
+        this.session.getEndSceneView().initLocalVariables(this.session.getAnchorPaneEndOverlay(), this.session.getGameColorObject());
 
         // main game loop
         animationTimer = new MyAnimationTimer();
@@ -178,18 +180,22 @@ public class GameController{
 
     @FXML
     public void handleOnKeyPressed(KeyEvent keyEvent) {
-        if (!this.session.getInFight()) {
+        if (!this.session.getInFight() && !this.session.getGameOver()) {
             String code = keyEvent.getCode().toString();
             if(code.equals("SPACE")){
                 session.toggleIsRunning();
                 if(session.getIsRunning()){
+                    // end pause-view
                     animationTimer.resetStartingTime();
                     animationTimer.start();
-                    this.endPauseScene();
+                    this.rootBox.requestFocus();
+                    this.session.getEndSceneView().endPause();
                 }
                 else {
+                    // start pause-view
                     animationTimer.stop();
                     this.startPauseScene();
+                    this.addEventEndPauseScene();
                 }
             }
             else if ( session.getIsRunning() && !input.contains(code) )
@@ -211,22 +217,9 @@ public class GameController{
         this.session.getFightCtrl().stopFight(animationTimer);
     }
 
-    public void renderEndScene(String overlayHeadline) {
-        this.session.getEndSceneView().renderEndScene(
-                this.session.getAnchorPaneEndOverlay(),
-                overlayHeadline,
-                this.session.getGameColorObject(),
-                this.session.getPlayer().getScore(),
-                this
-        );
-        // creating the scores table
-        HBox hbox = new HBox();
-        ScoresController scoresTable = new ScoresController();
-        scoresTable.setGameScore(this.session.getPlayer().getScore());
-        hbox.getChildren().add(scoresTable);
-        hbox.setLayoutX(250);
-        hbox.setLayoutY(175);
-        this.endScene.getChildren().add(hbox);
+    public void renderEndScene(boolean playerWin) {
+        this.session.setGameOver(true);
+        this.session.getEndSceneView().renderEndScene(playerWin, this.session.getPlayer().getScore());
     }
 
     public void restartGame(MouseEvent event) throws IOException {
@@ -238,24 +231,23 @@ public class GameController{
     }
 
     public void startPauseScene() {
-        this.session.getEndSceneView().renderEndScene(
-                this.session.getAnchorPaneEndOverlay(),
-                "pause",
-                this.session.getGameColorObject(),
-                this.session.getPlayer().getScore(),
-                this);
+        this.session.getEndSceneView().createPauseMenu(
+        );
     }
 
-    public void endPauseScene() {
-        this.session.getEndSceneView().endScene();
-        this.rootBox.requestFocus();
-    }
-
-    public void resumeGame() {
-        this.rootBox.requestFocus();
-        session.toggleIsRunning();
-        animationTimer.resetStartingTime();
-        animationTimer.start();
+    public void addEventEndPauseScene() {
+        this.session.getEndSceneView().getExitLabel().setText("x");
+        this.session.getEndSceneView().setExitEvent(mouseEvent -> {
+            if (this.session.getEndSceneView().getExitEvent() != null) {
+                this.session.getEndSceneView().getExitLabel().removeEventHandler(MouseEvent.MOUSE_CLICKED, this.session.getEndSceneView().getExitEvent());
+            }
+            this.session.getEndSceneView().endPause();
+            this.rootBox.requestFocus();
+            session.setRunning(true);
+            animationTimer.resetStartingTime();
+            animationTimer.start();
+        });
+        this.session.getEndSceneView().getExitLabel().addEventFilter(MouseEvent.MOUSE_CLICKED, this.session.getEndSceneView().getExitEvent());
     }
 
     public String checkEndOfGame(boolean duckyWin) {
@@ -327,7 +319,7 @@ public class GameController{
                 // lose-scene
                 if(session.getPlayer().getHealthPoints() == 0){
                     session.toggleIsRunning();
-                    renderEndScene("duckyLoss");
+                    renderEndScene(false);
                 }
 
                 // remove heart if Ducky lost a health point

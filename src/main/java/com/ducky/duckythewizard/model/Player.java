@@ -11,7 +11,7 @@ public class Player {
     private String name = "testname";
     private ArrayList<CardModel> handCards;
     private int healthPoints;
-    private int maxHealthPoints = GameConfig.PLAYER_MAX_HEALTHPOINTS;
+    private int maxHealthPoints = GameConfig.PLAYER_MAX_HEALTH_POINTS;
     private int playableCards;
 
     public SimpleIntegerProperty score;

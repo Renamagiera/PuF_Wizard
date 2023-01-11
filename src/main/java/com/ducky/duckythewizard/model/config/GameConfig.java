@@ -28,7 +28,7 @@ public class GameConfig {
     public static final int MIN_CARD_VALUE = gameConfigCards.getMinCardValue();
 
     /* ** PLAYER CONFIGURATION ** */
-    public static final int PLAYER_MAX_HEALTHPOINTS = 3;
+    public static final int PLAYER_MAX_HEALTH_POINTS = 3;
     public static final int PLAYER_ACTION_TIMER = 10;
 
     /* ** SPRITE CONFIGURATION ** */

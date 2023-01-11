@@ -7,16 +7,17 @@
 
 <AnchorPane fx:id="settings" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
    <children>
-      <Label alignment="CENTER" layoutX="160.0" layoutY="230.0" prefHeight="50.0" prefWidth="200.0" text="Skin" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="160.0" layoutY="200.0" prefHeight="50.0" prefWidth="200.0" text="Skin" textAlignment="CENTER">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="bg-blue" />
          </styleClass>
       </Label>
-      <Label fx:id="controls" alignment="CENTER" layoutX="300.0" layoutY="130.0" onMouseClicked="#switchToControls" prefHeight="50.0" prefWidth="200.0" text="Controls" textAlignment="CENTER">
+      <Label fx:id="controls" alignment="CENTER" layoutX="300.0" layoutY="100.0" onMouseClicked="#switchToControls" prefHeight="50.0" prefWidth="200.0" text="Controls" textAlignment="CENTER">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="bg-blue" />
+            <String fx:value="green-border" />
          </styleClass>
       </Label>
       <Label alignment="CENTER" layoutX="760.0" onMouseClicked="#backToMenu" prefHeight="40.0" prefWidth="40.0" text="x">
@@ -25,23 +26,31 @@
             <String fx:value="textSizeNormal" />
          </styleClass>
       </Label>
-      <RadioButton fx:id="batty" layoutX="200.0" layoutY="340.0" mnemonicParsing="false" prefWidth="100.0" styleClass="textGeneral" text="batty" />
-      <RadioButton fx:id="ducky" layoutX="200.0" layoutY="300.0" mnemonicParsing="false" prefWidth="110.0" styleClass="textGeneral" text="ducky" />
-      <Label alignment="CENTER" layoutX="300.0" layoutY="450.0" onMouseClicked="#startGame" prefHeight="60.0" prefWidth="200.0" text="PLAY" textAlignment="CENTER">
+      <RadioButton fx:id="batty" layoutX="200.0" layoutY="310.0" mnemonicParsing="false" prefWidth="100.0" styleClass="textGeneral" text="batty" />
+      <RadioButton fx:id="ducky" layoutX="200.0" layoutY="270.0" mnemonicParsing="false" prefWidth="110.0" styleClass="textGeneral" text="ducky" />
+      <Label alignment="CENTER" layoutX="300.0" layoutY="500.0" onMouseClicked="#startGame" prefHeight="50.0" prefWidth="200.0" text="PLAY" textAlignment="CENTER">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="bg-blue" />
             <String fx:value="textGreen" />
+            <String fx:value="green-border" />
          </styleClass>
       </Label>
-      <Label alignment="CENTER" layoutX="440.0" layoutY="230.0" prefHeight="50.0" prefWidth="200.0" text="Color" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="440.0" layoutY="200.0" prefHeight="50.0" prefWidth="200.0" text="Color" textAlignment="CENTER">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="bg-blue" />
          </styleClass>
       </Label>
-      <RadioButton fx:id="one" layoutX="500.0" layoutY="300.0" mnemonicParsing="false" prefWidth="110.0" styleClass="textGeneral" text="normal" />
-      <RadioButton fx:id="three" layoutX="500.0" layoutY="380.0" mnemonicParsing="false" prefWidth="110.0" styleClass="textGeneral" text="blue" />
-      <RadioButton fx:id="two" layoutX="500.0" layoutY="340.0" mnemonicParsing="false" prefWidth="110.0" styleClass="textGeneral" text="red" />
+      <RadioButton fx:id="one" layoutX="500.0" layoutY="270.0" mnemonicParsing="false" prefWidth="110.0" styleClass="textGeneral" text="normal" />
+      <RadioButton fx:id="three" layoutX="500.0" layoutY="350.0" mnemonicParsing="false" prefWidth="110.0" styleClass="textGeneral" text="blue" />
+      <RadioButton fx:id="two" layoutX="500.0" layoutY="310.0" mnemonicParsing="false" prefWidth="110.0" styleClass="textGeneral" text="red" />
+      <Label alignment="CENTER" layoutX="300.0" layoutY="420.0" onMouseClicked="#backToMenu" prefHeight="50.0" prefWidth="200.0" text="Menu">
+         <styleClass>
+            <String fx:value="bg-blue" />
+            <String fx:value="textGeneral" />
+            <String fx:value="green-border" />
+         </styleClass>
+      </Label>
    </children>
 </AnchorPane>
