@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.scenes.MenuController">
    <children>
       <Label alignment="CENTER" prefHeight="650.0" prefWidth="800.0" text="By the way: fate decides who starts a turn!&#10;&#10;And also, if no Wizards and no trump-colored cards are played, the first played card decides wich color is the winning color - and then it only counts wich card has the higher value.&#10;&#10;Stones that are not tinted in any special color (no blue, green, red or yellow) have no trump color! Wich again makes the first played card the decider of fates (see above).&#10;&#10;If you've fought against a stone it will take a while before you can fight it again.&#10;&#10;Good luck, Ducky!" textAlignment="CENTER" wrapText="true">
          <styleClass>

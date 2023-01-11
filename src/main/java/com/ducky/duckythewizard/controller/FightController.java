@@ -20,9 +20,9 @@ public class FightController extends Controller {
             this.getSession().getActiveFight().setStoneCard(stone.getCard());
             this.getSession().getActiveFight().setStoneInFight(stone);
 
-            this.getSession().getFightView().renderFightScene(
-                    this.getSession().getActiveFight(),
-                    this.getSession().getGameColorObject());
+            this.getSession().getFightView().showFightScene(
+                    this.getSession().getActiveFight()
+            );
 
             // starting fight in new thread
             Thread one = new Thread() {

@@ -84,8 +84,8 @@ public class ServerFacade {
             con.setRequestMethod("GET");
 
             int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
+            /*System.out.println("\nSending 'GET' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);*/
 
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
@@ -99,7 +99,7 @@ public class ServerFacade {
             throw new RuntimeException(e);
         }
         //print result
-        System.out.println(response);
+        //System.out.println(response);
 
         int startIndex = 0;
         int endIndex = 0;

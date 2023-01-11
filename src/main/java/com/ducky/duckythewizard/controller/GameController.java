@@ -1,8 +1,8 @@
 package com.ducky.duckythewizard.controller;
 
+import com.ducky.duckythewizard.controller.scenes.MenuController;
 import com.ducky.duckythewizard.model.*;
 import com.ducky.duckythewizard.model.config.GameConfig;
-import javafx.animation.AnimationTimer;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -72,6 +72,8 @@ public class GameController{
     private Label endSceneLabel;
     @FXML
     private Label score;
+    @FXML
+    private Label exitLabelEndView;
     private ArrayList<String> input = new ArrayList<>();
     private CollisionHandler collisionHandler;
     private AnimatedSprite ducky;
@@ -81,13 +83,15 @@ public class GameController{
         //System.out.println("*** Game Controller is initialized...");
 
         // skin
-        System.out.println(SceneController.getSprite());
-        this.session.setSprite(SceneController.getSprite());
+        //System.out.println(SceneController.getSprite());
+        this.session.setSprite(MenuController.getSprite());
 
         this.session.setRootAnchorPane(this.rootBox);
         this.session.setFightOverlay(this.fightOverlay);
         this.session.setAnchorPaneEndOverlay(this.endScene);
-        this.session.getFightView().setAnchorPaneFightOverlay(this.fightOverlay);
+
+        // initialize fight-view-scene local variables
+        this.session.getFightView().initLocalVariables(this.session.getGameColorObject(), this.fightOverlay);
 
         // fight- and end-overlay not visible
         this.fightOverlay.setVisible(false);
@@ -98,7 +102,9 @@ public class GameController{
         this.session.createCardCtrlObj();
         this.session.createStoneCtrlObj();
         this.session.createFightCtrlObj();
-        this.session.createSceneCtrlObj();
+        this.session.createMenuCtrlObj();
+        this.session.createEndSceneCtrl();
+        this.session.createFightSceneCtrl();
 
         // initialize cards: set card-anchor-pane, render hand-cards
         this.session.getCardCtrl().cardInit();
@@ -119,6 +125,7 @@ public class GameController{
         endSceneLabel.styleProperty().bind(session.getEndSceneView().endSceneLabelStyleProperty);
         endScene.getChildren().get(0).styleProperty().bind(session.getEndSceneView().endSceneStyleProperty);
         score.textProperty().bind(session.getEndSceneView().scoreProperty);
+        exitLabelEndView.textProperty().bind(session.getEndSceneView().exitLabelEndViewProperty);
 
         // initialize Level map
         Level level = new Level(levelGrid);
@@ -166,7 +173,9 @@ public class GameController{
             heartContainer.setHgrow(imageView, Priority.NEVER);
         }
         // initialize end-scene local variables
-        this.session.getEndSceneView().initLocalVariables(this.session.getAnchorPaneEndOverlay(), this.session.getGameColorObject());
+        this.session.getEndSceneView().initLocalVariables(this.session.getRootAnchorPane(),
+                this.session.getAnchorPaneEndOverlay(),
+                this.session.getGameColorObject());
 
         // main game loop
         this.session.setAnimationTimer(new MyAnimationTimer(this.session, input));
@@ -213,16 +222,22 @@ public class GameController{
     }
 
     public void renderEndScene(boolean playerWin) {
+        /*Add event-handler to minimize end-scene. Set game-over true. Show end-scene*/
         this.session.setGameOver(true);
-        this.session.getEndSceneView().renderEndScene(playerWin, this.session.getPlayer().getScore());
+        this.session.getEndSceneCtrl().addMinEventHandler();
+        this.session.getEndSceneView().showEndScene(playerWin, this.session.getPlayer().getScore());
+    }
+
+    public void maximizeEndScene() {
+        //this.session.getEndSceneCtrl().addMaxEventHandler();
     }
 
     public void restartGame(MouseEvent event) throws IOException {
-        this.session.getSceneCtrl().startGame(event);
+        this.session.getMenuCtrl().startGame(event);
     }
 
     public void backToMenu(Event event) throws IOException {
-        this.session.getSceneCtrl().backToMenu(event);
+        this.session.getMenuCtrl().backToMenu(event);
     }
 
     public void startPauseScene() {

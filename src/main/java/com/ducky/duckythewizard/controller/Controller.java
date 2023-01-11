@@ -2,6 +2,7 @@ package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.Game;
 import com.ducky.duckythewizard.model.config.GameConfig;
+import javafx.scene.layout.VBox;
 
 import java.util.ResourceBundle;
 
