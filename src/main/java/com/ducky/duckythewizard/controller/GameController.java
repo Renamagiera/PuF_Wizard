@@ -1,6 +1,7 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
+import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.animation.AnimationTimer;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -71,15 +72,9 @@ public class GameController{
     private Label endSceneLabel;
     @FXML
     private Label score;
-
-    private int windowWidth = this.session.getGameConfig().getWindowWidth();
-    private int windowHeight = this.session.getGameConfig().getWindowHeight();
-    private double cellWidth = this.session.getGameConfig().getLevel_cellWidth();
-    private double cellHeight = this.session.getGameConfig().getLevel_cellHeight();
     private ArrayList<String> input = new ArrayList<>();
     private CollisionHandler collisionHandler;
     private AnimatedSprite ducky;
-    private MyAnimationTimer animationTimer;
 
     @FXML
     public void initialize() {
@@ -101,7 +96,6 @@ public class GameController{
         //zum Start des Games werden die Controller erstellt und erhalten in ihren Konstruktoren einen Verweis auf das Game-Objekt
         this.session.createGameCtrlObj(this);
         this.session.createCardCtrlObj();
-        this.session.createMovementCtrlObj();
         this.session.createStoneCtrlObj();
         this.session.createFightCtrlObj();
         this.session.createSceneCtrlObj();
@@ -133,14 +127,14 @@ public class GameController{
         // initialize stones: search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
         this.session.getStoneCtrl().initializeStones(this.levelGrid);
 
-        mainCanvas.setHeight(windowHeight);
-        mainCanvas.setWidth(windowWidth);
+        mainCanvas.setHeight(GameConfig.WINDOW_HEIGHT);
+        mainCanvas.setWidth(GameConfig.WINDOW_WIDTH);
 
         // graphics context for displaying moving entities and changing texts in level
         gc = mainCanvas.getGraphicsContext2D();
 
         // initialize CollisionHandler
-        collisionHandler = new CollisionHandler(this, session.objectGrid, cellHeight, cellWidth);
+        collisionHandler = new CollisionHandler(this, session.objectGrid, GameConfig.LEVEL_CELL_HEIGHT, GameConfig.LEVEL_CELL_WIDTH);
 
         // initialize font for texts that are shown
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
@@ -150,9 +144,10 @@ public class GameController{
         gc.setLineWidth(5);
 
         // initialize Player's sprite
-        ducky = new AnimatedSprite(collisionHandler, this.session.getSprite(), this.session.getPlayer());
+        ducky = new AnimatedSprite(collisionHandler, this.session.getSpriteString(), this.session.getPlayer());
+        this.session.getPlayer().setPlayerSprite(ducky);
         ducky.duration = 0.1;
-        ducky.setPosition(windowWidth /4 - ducky.getFrame(0).getWidth()/2, 0);
+        ducky.setPosition(GameConfig.WINDOW_WIDTH /4 - ducky.getFrame(0).getWidth()/2, 0);
         ducky.setVelocity(0,100);
 
         // binding timerLabel to Ducky's timer
@@ -165,7 +160,7 @@ public class GameController{
         heartContainer.setSpacing(10.0); // PLAYER statt Ducky
         for(int i = 0; i < this.session.getPlayer().getHealthPoints(); i++) {
             ImageView imageView = new ImageView(new Image(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/life-heart.png")));
-            imageView.setFitHeight(cellHeight - 10);
+            imageView.setFitHeight(GameConfig.LEVEL_CELL_HEIGHT - 10);
             imageView.setPreserveRatio(true);
             heartContainer.getChildren().add(imageView);
             heartContainer.setHgrow(imageView, Priority.NEVER);
@@ -174,8 +169,8 @@ public class GameController{
         this.session.getEndSceneView().initLocalVariables(this.session.getAnchorPaneEndOverlay(), this.session.getGameColorObject());
 
         // main game loop
-        animationTimer = new MyAnimationTimer();
-        animationTimer.start();
+        this.session.setAnimationTimer(new MyAnimationTimer(this.session, input));
+        this.session.getAnimationTimer().start();
     }
 
     @FXML
@@ -186,14 +181,14 @@ public class GameController{
                 session.toggleIsRunning();
                 if(session.getIsRunning()){
                     // end pause-view
-                    animationTimer.resetStartingTime();
-                    animationTimer.start();
+                    this.session.getAnimationTimer().resetStartingTime();
+                    this.session.getAnimationTimer().start();
                     this.rootBox.requestFocus();
                     this.session.getEndSceneView().endPause();
                 }
                 else {
                     // start pause-view
-                    animationTimer.stop();
+                    this.session.getAnimationTimer().stop();
                     this.startPauseScene();
                     this.addEventEndPauseScene();
                 }
@@ -214,7 +209,7 @@ public class GameController{
     }
 
     public void endCollision() {
-        this.session.getFightCtrl().stopFight(animationTimer);
+        this.session.getFightCtrl().stopFight(this.session.getAnimationTimer());
     }
 
     public void renderEndScene(boolean playerWin) {
@@ -243,11 +238,33 @@ public class GameController{
             }
             this.session.getEndSceneView().endPause();
             this.rootBox.requestFocus();
-            session.setRunning(true);
-            animationTimer.resetStartingTime();
-            animationTimer.start();
+            this.session.setRunning(true);
+            this.session.getAnimationTimer().resetStartingTime();
+            this.session.getAnimationTimer().start();
         });
         this.session.getEndSceneView().getExitLabel().addEventFilter(MouseEvent.MOUSE_CLICKED, this.session.getEndSceneView().getExitEvent());
+    }
+
+    public void checkPlayerHealth() {
+        // showing 'You lose' text
+        // lose-scene
+        if(this.session.getPlayer().getHealthPoints() == 0){
+            session.toggleIsRunning();
+            renderEndScene(false);
+        }
+
+        // remove heart if Ducky lost a health point
+        if(session.getPlayer().getHealthPoints() < heartContainer.getChildren().size()){
+            heartContainer.getChildren().remove(heartContainer.getChildren().size() - 1);
+        }
+    }
+
+    public void clearGC() {
+        gc.clearRect(0, 0, GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT);
+    }
+
+    public void drawImageOnGC(double t) {
+        gc.drawImage(ducky.getFrame(t), ducky.getPositionX(), ducky.getPositionY());
     }
 
     public String checkEndOfGame(boolean duckyWin) {
@@ -266,76 +283,5 @@ public class GameController{
             }
         }
         return "no";
-    }
-
-    class MyAnimationTimer extends AnimationTimer
-    {
-        long startNanoTime = System.nanoTime();
-        LongValue lastNanoTime = new LongValue( System.nanoTime() );
-        public void handle(long currentNanoTime)
-        {
-            if(session.getIsRunning())
-            {
-                double t = (currentNanoTime - startNanoTime) / 1000000000.0;
-                // calculate time since last update.
-                double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
-                lastNanoTime.value = currentNanoTime;
-
-                if (input.contains("UP") || input.contains("W")) {
-                    ducky.setVelocityY(-100);   // moving UP
-                } else {
-                    ducky.setVelocityY(100);    // falling DOWN
-                }
-                if (input.contains("LEFT") || input.contains("A")) {
-                    ducky.setVelocityX(-100);   // moving LEFT
-                } else if (input.contains("RIGHT") || input.contains("D")) {
-                    ducky.setVelocityX(100);    // moving RIGHT
-                } else {
-                    ducky.setVelocityX(0);      // not moving left or right
-                }
-
-                // bouncing back from left level boundary
-                if (ducky.getPositionX() <= 0) {
-                    ducky.setVelocity(100, 0);
-                    System.out.println("LEFT");
-                }
-                // bouncing back from right level boundary
-                if (ducky.getPositionX() >= windowWidth - ducky.getFrame(t).getWidth()) {
-                    ducky.setVelocity(-100, 0);
-                    System.out.println("RIGHT");
-                }
-                // bouncing back from upper level boundary
-                if (ducky.getPositionY() <= 0) {
-                    ducky.setVelocity(0, 100);
-                    System.out.println("UPPER");
-                }
-
-                ducky.update(elapsedTime);
-
-                // clear prior ducky image
-                gc.clearRect(0, 0, windowWidth, windowHeight);
-
-                // showing 'You lose' text
-                // lose-scene
-                if(session.getPlayer().getHealthPoints() == 0){
-                    session.toggleIsRunning();
-                    renderEndScene(false);
-                }
-
-                // remove heart if Ducky lost a health point
-                //LENA Player statt Ducky
-                if(session.getPlayer().getHealthPoints() < heartContainer.getChildren().size()){
-                    heartContainer.getChildren().remove(heartContainer.getChildren().size() - 1);
-                }
-
-                // drawing Ducky frame on Ducky's position
-                gc.drawImage(ducky.getFrame(t), ducky.getPositionX(), ducky.getPositionY());
-            }
-        }
-
-        public void resetStartingTime(){
-            startNanoTime = System.nanoTime();
-            lastNanoTime = new LongValue( System.nanoTime() );
-        }
     }
 }

@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class AnimatedSprite extends Sprite
@@ -31,7 +32,7 @@ public class AnimatedSprite extends Sprite
     private int flyImageAmount;
     private int idleImageAmount ;
 
-    private String sprite;
+    private String spriteString;
     private Player player;
     private AnimatedSprite.MovementState state;
     private CollisionHandler collisionHandler;
@@ -45,8 +46,8 @@ public class AnimatedSprite extends Sprite
 
     private boolean spriteLooksLeft = false;
 
-    public AnimatedSprite(CollisionHandler collisionHandler, String sprite, Player player) {
-        this.sprite = sprite;
+    public AnimatedSprite(CollisionHandler collisionHandler, String spriteString, Player player) {
+        this.spriteString = spriteString;
         this.player = player;
         this.player.resetPlayerTimer();
         this.state = AnimatedSprite.MovementState.FLY;
@@ -110,6 +111,7 @@ public class AnimatedSprite extends Sprite
     public void update(double time)
     {
         this.player.reducePlayerTimer();
+
         // if collision --> revert position and adjust velocity, depending on direction in which collision occurred
         positionX += velocityX * time;
         if(collisionHandler.isCollision(this.getBoundary())){
@@ -129,45 +131,88 @@ public class AnimatedSprite extends Sprite
         }
 
         // set animation frames according to movement
-        // WALK
         if (velocityY == 0 && velocityX != 0) {
-            if (velocityX > 0) {
-                this.spriteLooksLeft = false;
-                this.frames = imageArrayWalkRight;
-            } else if (velocityX < 0) {
-                this.spriteLooksLeft = true;
-                this.frames = imageArrayWalkLeft;
-            }
+            setFramesForWalking();
         }
-        // IDLE
         else if (velocityX == 0 && velocityY == 0) {
-            if (this.spriteLooksLeft) {
-                this.frames = imageArrayIdleLeft;
-            } else {
-                this.frames = imageArrayIdleRight;
-            }
+            setFramesForIdling();
         }
-        // FLY
         else {
-            if (velocityX > 0) {
-                this.spriteLooksLeft = false;
-                this.frames = imageArrayFlyRight;
-            } else if (velocityX < 0){
-                this.spriteLooksLeft = true;
-                this.frames = imageArrayFlyLeft;
-            } else {
-                // ducky is just falling
-                if (this.spriteLooksLeft) {
-                    this.frames = imageArrayFlyLeft;
-                } else {
-                    this.frames = imageArrayFlyRight;
-                }
-            }
+            setFramesForFlying();
         }
     }
 
     public void setState(AnimatedSprite.MovementState state) {
         this.state = state;
+    }
+
+    private void setFramesForWalking() {
+        if (velocityX > 0) {
+            this.spriteLooksLeft = false;
+            this.frames = imageArrayWalkRight;
+        } else if (velocityX < 0) {
+            this.spriteLooksLeft = true;
+            this.frames = imageArrayWalkLeft;
+        }
+    }
+
+    private void setFramesForIdling() {
+        if (this.spriteLooksLeft) {
+            this.frames = imageArrayIdleLeft;
+        } else {
+            this.frames = imageArrayIdleRight;
+        }
+    }
+
+    private void setFramesForFlying() {
+        if (velocityX > 0) {
+            this.spriteLooksLeft = false;
+            this.frames = imageArrayFlyRight;
+        } else if (velocityX < 0){
+            this.spriteLooksLeft = true;
+            this.frames = imageArrayFlyLeft;
+        } else {
+            // ducky is just falling
+            if (this.spriteLooksLeft) {
+                this.frames = imageArrayFlyLeft;
+            } else {
+                this.frames = imageArrayFlyRight;
+            }
+        }
+    }
+
+    public void translateKeyPressesIntoMovement(ArrayList<String> input) {
+        if (input.contains("UP") || input.contains("W")) {
+            setVelocityY(-100);   // moving UP
+        } else {
+            setVelocityY(100);    // falling DOWN
+        }
+        if (input.contains("LEFT") || input.contains("A")) {
+            setVelocityX(-100);   // moving LEFT
+        } else if (input.contains("RIGHT") || input.contains("D")) {
+            setVelocityX(100);    // moving RIGHT
+        } else {
+            setVelocityX(0);      // not moving left or right
+        }
+
+    }
+
+    public void checkLevelBoundaryContact(double t) {
+        // bouncing back from left level boundary
+        if (getPositionX() <= 0) {
+            setVelocity(100, 0);
+            System.out.println("LEFT"); //TODO remove console print
+        }
+        // bouncing back from right level boundary
+        if (getPositionX() >= GameConfig.WINDOW_WIDTH - getFrame(t).getWidth()) {
+            setVelocity(-100, 0);
+            System.out.println("RIGHT"); //TODO remove console print
+        }
+        // bouncing back from upper level boundary
+        if (getPositionY() <= 0) {
+            setVelocity(0, 100);
+            System.out.println("UPPER"); //TODO remove console print
+        }
     }
 
     public int rescaleImgWidth(Image image) {
@@ -200,7 +245,7 @@ public class AnimatedSprite extends Sprite
     private void addImages(String move, Image[] right, Image[] left) {
         // add images to movement
         for (int i = 0; i < right.length; i++) {
-            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.sprite + "/" + move + "/" + move + "_" + i + ".png")));
+            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.spriteString + "/" + move + "/" + move + "_" + i + ".png")));
             right[i] = scaleImage(image, rescaleImgWidth(image), rescaleImgHeight(image), true, false);
         }
         // add mirrored images to opposite movement
@@ -243,7 +288,7 @@ public class AnimatedSprite extends Sprite
 
     private int countFiles(String move) {
         int fileCount;
-        File directory = new File("src/main/resources/com/ducky/duckythewizard/images/" + this.sprite + "/" + move);
+        File directory = new File("src/main/resources/com/ducky/duckythewizard/images/" + this.spriteString + "/" + move);
         fileCount = Objects.requireNonNull(directory.list()).length;
         return fileCount;
     }
