@@ -5,7 +5,7 @@ public class GameConfigCards {
     public static final int AMOUNT_CARDS = 56;
     public static final int AMOUNT_WIZARDS = 4;
     public static int WIZARD_POINTS = 199;
-    public static final int MAX_CARD_VALUE = 12;
+    public static final int MAX_CARD_VALUE = 3;
     public static final int MIN_CARD_VALUE = 0;
     public static final int AMOUNT_HAND_CARDS = 5;
     public static final String EMPTY_CARD_FILENAME = "/com/ducky/duckythewizard/images/cards/empty.png";

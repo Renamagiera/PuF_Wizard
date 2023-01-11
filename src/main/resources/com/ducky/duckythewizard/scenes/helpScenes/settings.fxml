@@ -17,7 +17,7 @@
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="bg-blue" />
-            <String fx:value="green-border" />
+            <String fx:value="light-brown-border" />
          </styleClass>
       </Label>
       <Label alignment="CENTER" layoutX="760.0" onMouseClicked="#backToMenu" prefHeight="40.0" prefWidth="40.0" text="x">
@@ -49,7 +49,7 @@
          <styleClass>
             <String fx:value="bg-blue" />
             <String fx:value="textGeneral" />
-            <String fx:value="green-border" />
+            <String fx:value="light-brown-border" />
          </styleClass>
       </Label>
    </children>

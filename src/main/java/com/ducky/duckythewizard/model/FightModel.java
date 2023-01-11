@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.Objects;
 
-public class FightView {
+public class FightModel {
 
     public SimpleStringProperty trumpColorTextProperty;
     public SimpleStringProperty trumpColorTextStyleProperty;
@@ -21,8 +21,8 @@ public class FightView {
     public SimpleStringProperty winLossLabelStyleProperty;
     public SimpleStringProperty fightOverlayStyleProperty;
 
-    private static final Image BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightView.class.getResourceAsStream(GameConfig.BACK_CARD_FILENAME)));
-    private static final Image EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightView.class.getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
+    private static final Image BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightModel.class.getResourceAsStream(GameConfig.BACK_CARD_FILENAME)));
+    private static final Image EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightModel.class.getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
 
     private AnchorPane anchorPaneFightOverlay;
     private Fight activeFight;
@@ -32,7 +32,7 @@ public class FightView {
 
     private Label exitLabel;
 
-    public FightView() {
+    public FightModel() {
         this.trumpColorTextProperty = new SimpleStringProperty("");
         this.trumpColorTextStyleProperty = new SimpleStringProperty("");
         this.cardChooseTextProperty = new SimpleStringProperty("");

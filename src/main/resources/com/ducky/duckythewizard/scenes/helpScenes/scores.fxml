@@ -9,9 +9,9 @@
    <children>
       <TableView fx:id="scoresTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="450.0" stylesheets="@../../styles/style.css">
         <columns>
-            <TableColumn fx:id="rankColumn" minWidth="100.0" prefWidth="100.0" text="Rank" />
-            <TableColumn fx:id="nameColumn" minWidth="200.0" prefWidth="200.0" text="Name" />
-            <TableColumn fx:id="scoreColumn" minWidth="150.0" prefWidth="150.0" text="Score" />
+            <TableColumn fx:id="rankColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Rank" />
+            <TableColumn fx:id="nameColumn" minWidth="200.0" prefWidth="200.0" resizable="false" text="Name" />
+            <TableColumn fx:id="scoreColumn" minWidth="150.0" prefWidth="150.0" resizable="false" text="Score" />
         </columns>
          <styleClass>
             <String fx:value="textGeneral" />

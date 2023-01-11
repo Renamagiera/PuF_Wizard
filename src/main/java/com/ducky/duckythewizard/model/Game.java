@@ -30,7 +30,7 @@ public class Game {
     public GameObject[][] objectGrid; // [row][column] - is filled in GameController
     private ArrayList<Stone> stoneArrayList;
 
-    private FightView fightView;
+    private FightModel fightModel;
     private EndSceneView endSceneView;
 
     private GameController gameCtrl;
@@ -49,7 +49,7 @@ public class Game {
         this.cardDeckModel = new CardDeckModel();
         this.player = new Player();
         this.stoneArrayList = new ArrayList<>();
-        this.fightView = new FightView();
+        this.fightModel = new FightModel();
         this.endSceneView = new EndSceneView();
         //System.out.println("*** Game-object is created.");
     }
@@ -142,8 +142,8 @@ public class Game {
         return anchorPaneEndOverlay;
     }
 
-    public FightView getFightView() {
-        return fightView;
+    public FightModel getFightView() {
+        return fightModel;
     }
     public EndSceneView getEndSceneView() {
         return this.endSceneView;
