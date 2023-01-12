@@ -20,10 +20,10 @@ public class MyAnimationTimer extends AnimationTimer
     {
         if(this.session.getIsRunning())
         {
-            double t = (currentNanoTime - startNanoTime) / 1000000000.0;
+            double t = (currentNanoTime - this.startNanoTime) / 1000000000.0;
             // calculate time since last update.
-            double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
-            lastNanoTime.value = currentNanoTime;
+            double elapsedTime = (currentNanoTime - this.lastNanoTime.value) / 1000000000.0;
+            this.lastNanoTime.value = currentNanoTime;
 
             AnimatedSprite ducky = this.session.getPlayer().getPlayerSprite();
 
@@ -44,7 +44,7 @@ public class MyAnimationTimer extends AnimationTimer
     }
 
     public void resetStartingTime(){
-        startNanoTime = System.nanoTime();
-        lastNanoTime = new LongValue( System.nanoTime() );
+        this.startNanoTime = System.nanoTime();
+        this.lastNanoTime = new LongValue( System.nanoTime() );
     }
 }

@@ -16,12 +16,6 @@ public class AnimatedSprite extends Sprite
 {
     public Image[] frames;
     public double duration;
-//    private double positionX;
-//    private double positionY;
-//    private double velocityX;
-//    private double velocityY;
-//    private double width;
-//    private double height;
 
     public enum MovementState {
         IDLE,
@@ -74,71 +68,39 @@ public class AnimatedSprite extends Sprite
         return positionY;
     }
 
-//    public double getVelocityX() {
-//        return velocityX;
-//    }
-//
-//    public double getVelocityY() {
-//        return velocityY;
-//    }
-
-//    public void setPosition(double x, double y)
-//    {
-//        positionX = x;
-//        positionY = y;
-//    }
-
-//    public void setVelocity(double x, double y)
-//    {
-//        velocityX = x;
-//        velocityY = y;
-//    }
-
-//    public void addVelocity(double x, double y)
-//    {
-//        velocityX += x;
-//        velocityY += y;
-//        //System.out.println("addVelocity, x: " + velocityX);
-//    }
-
-//    public void update(double time)
-//    {
-//        positionX += velocityX * time;
-//        positionY += velocityY * time;
-//    }
-
     @Override
     public void update(double time)
     {
         this.player.reducePlayerTimer();
 
         // if collision --> revert position and adjust velocity, depending on direction in which collision occurred
-        positionX += velocityX * time;
-        if(collisionHandler.isCollision(this.getBoundary())){
-            positionX -= velocityX * time;  // revert position
-            velocityX = velocityX * (-1);   // invert velocity
+        this.positionX += this.velocityX * time;
+        if(this.collisionHandler.isCollision(this.getBoundary())){
+            this.positionX -= this.velocityX * time;  // revert position
+            this.velocityX = this.velocityX * (-1);   // invert velocity
         }
-        positionY += velocityY * time;
 
-        if(collisionHandler.isCollision(this.getBoundary())){
-            positionY -= velocityY * time;  // revert position
-            if (velocityY > 0){             // if Ducky was falling, stop falling
-                velocityY = 0;
+        this.positionY += this.velocityY * time;
+
+        if(this.collisionHandler.isCollision(this.getBoundary())){
+            this.positionY -= this.velocityY * time;  // revert position
+            if (this.velocityY > 0){             // if Ducky was falling, stop falling
+                this.velocityY = 0;
             }
             else {
-                velocityY = 100;            // if Ducky was flying upwards, invert velocity
+                this.velocityY = 100;            // if Ducky was flying upwards, invert velocity
             }
         }
 
         // set animation frames according to movement
-        if (velocityY == 0 && velocityX != 0) {
-            setFramesForWalking();
+        if (this.velocityY == 0 && this.velocityX != 0) {
+            this.setFramesForWalking();
         }
-        else if (velocityX == 0 && velocityY == 0) {
-            setFramesForIdling();
+        else if (this.velocityX == 0 && this.velocityY == 0) {
+            this.setFramesForIdling();
         }
         else {
-            setFramesForFlying();
+            this.setFramesForFlying();
         }
     }
 
@@ -147,7 +109,7 @@ public class AnimatedSprite extends Sprite
     }
 
     private void setFramesForWalking() {
-        if (velocityX > 0) {
+        if (this.velocityX > 0) {
             this.spriteLooksLeft = false;
             this.frames = imageArrayWalkRight;
         } else if (velocityX < 0) {
@@ -165,10 +127,10 @@ public class AnimatedSprite extends Sprite
     }
 
     private void setFramesForFlying() {
-        if (velocityX > 0) {
+        if (this.velocityX > 0) {
             this.spriteLooksLeft = false;
             this.frames = imageArrayFlyRight;
-        } else if (velocityX < 0){
+        } else if (this.velocityX < 0){
             this.spriteLooksLeft = true;
             this.frames = imageArrayFlyLeft;
         } else {
@@ -183,34 +145,34 @@ public class AnimatedSprite extends Sprite
 
     public void translateKeyPressesIntoMovement(ArrayList<String> input) {
         if (input.contains("UP") || input.contains("W")) {
-            setVelocityY(-100);   // moving UP
+            this.setVelocityY(-100);   // moving UP
         } else {
-            setVelocityY(100);    // falling DOWN
+            this.setVelocityY(100);    // falling DOWN
         }
         if (input.contains("LEFT") || input.contains("A")) {
-            setVelocityX(-100);   // moving LEFT
+            this.setVelocityX(-100);   // moving LEFT
         } else if (input.contains("RIGHT") || input.contains("D")) {
-            setVelocityX(100);    // moving RIGHT
+            this.setVelocityX(100);    // moving RIGHT
         } else {
-            setVelocityX(0);      // not moving left or right
+            this.setVelocityX(0);      // not moving left or right
         }
 
     }
 
     public void checkLevelBoundaryContact(double t) {
         // bouncing back from left level boundary
-        if (getPositionX() <= 0) {
-            setVelocity(100, 0);
+        if (this.getPositionX() <= 0) {
+            this.setVelocity(100, 0);
             System.out.println("LEFT"); //TODO remove console print
         }
         // bouncing back from right level boundary
-        if (getPositionX() >= GameConfig.WINDOW_WIDTH - getFrame(t).getWidth()) {
-            setVelocity(-100, 0);
+        if (this.getPositionX() >= GameConfig.WINDOW_WIDTH - this.getFrame(t).getWidth()) {
+            this.setVelocity(-100, 0);
             System.out.println("RIGHT"); //TODO remove console print
         }
         // bouncing back from upper level boundary
-        if (getPositionY() <= 0) {
-            setVelocity(0, 100);
+        if (this.getPositionY() <= 0) {
+            this.setVelocity(0, 100);
             System.out.println("UPPER"); //TODO remove console print
         }
     }

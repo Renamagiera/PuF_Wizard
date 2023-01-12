@@ -11,7 +11,6 @@ public class TextObject {
     private String fontSize;
     private String textObjectId;
     private Label textLabel;
-    private GameColorObject gameColorObject;
 
     public TextObject() {
         this.textLabel = new Label();

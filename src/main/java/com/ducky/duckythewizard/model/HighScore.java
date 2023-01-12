@@ -14,14 +14,14 @@ public class HighScore {
     }
 
     public int getRank() {
-        return rank;
+        return this.rank;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public int getScore() {
-        return score;
+        return this.score;
     }
 }

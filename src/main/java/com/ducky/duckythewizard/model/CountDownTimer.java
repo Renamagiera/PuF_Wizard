@@ -13,8 +13,8 @@ public class CountDownTimer extends Observable { // ??? deprecated, need alterna
 
     // !!! example code, needs to be changed !!!
     public void tick() {
-        if (countdown > 0) {
-            countdown--;
+        if (this.countdown > 0) {
+            this.countdown--;
             setChanged(); // geerbt von Observable
         }
         notifyObservers(); // geerbt von Observable

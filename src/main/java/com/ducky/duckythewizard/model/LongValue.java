@@ -6,6 +6,6 @@ public class LongValue
 
     public LongValue(long i)
     {
-        value = i;
+        this.value = i;
     }
 }

@@ -61,8 +61,8 @@ public class GameColorObject {
     }
 
     private void setSpecialCardsMap() {
-        SPECIAL_CARDS.put("wizard", this.trumpColorObject.getWizard());
-        SPECIAL_CARDS.put("none", this.trumpColorObject.getNone());
+        this.SPECIAL_CARDS.put("wizard", this.trumpColorObject.getWizard());
+        this.SPECIAL_CARDS.put("none", this.trumpColorObject.getNone());
     }
 
     private void setHexCodesToMap() {
@@ -93,17 +93,17 @@ public class GameColorObject {
     }
 
     public GameColor generateRandomTrump() {
-        return trumpColors.get((int) Math.floor(Math.random()*(this.colorAmount)));
+        return this.trumpColors.get((int) Math.floor(Math.random()*(this.colorAmount)));
     }
 
     public void toStringTrumpColors() {
-        for (GameColor color : trumpColors) {
+        for (GameColor color : this.trumpColors) {
             System.out.println("color name: " + color.getName());
         }
     }
 
     public void toStringLayoutColors() {
-        for (GameColor color : layoutColors) {
+        for (GameColor color : this.layoutColors) {
             System.out.println("color name: " + color.getName());
         }
     }
