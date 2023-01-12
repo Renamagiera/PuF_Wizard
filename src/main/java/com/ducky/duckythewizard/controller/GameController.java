@@ -246,7 +246,7 @@ public class GameController{
     }
 
     public void addEventEndPauseScene() {
-        this.session.getEndSceneView().getExitLabel().setText("x");
+        //this.session.getEndSceneView().getExitLabel().setText("x");
         this.session.getEndSceneView().setExitEvent(mouseEvent -> {
             if (this.session.getEndSceneView().getExitEvent() != null) {
                 this.session.getEndSceneView().getExitLabel().removeEventHandler(MouseEvent.MOUSE_CLICKED, this.session.getEndSceneView().getExitEvent());

@@ -26,7 +26,7 @@
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="bg-blue" />
-            <String fx:value="green-border" />
+            <String fx:value="light-brown-border" />
          </styleClass>
       </Label>
    </children>

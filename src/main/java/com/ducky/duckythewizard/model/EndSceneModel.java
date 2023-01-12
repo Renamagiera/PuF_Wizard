@@ -55,13 +55,13 @@ public class EndSceneModel {
         this.menuLabel = (Label) anchorPaneRoot.lookup("#backToMenu");
         this.restartLabel = (Label) anchorPaneRoot.lookup("#restart");
         this.maxLabel = (Label) anchorPaneRoot.lookup("#maximizeLabelEndView");
+        this.exitLabel = (Label) anchorPaneRoot.lookup("#exitLabelEndView");
     }
 
     public void showEndScene(boolean playerWin, int score) {
         this.score = score;
-        this.exitLabel = (Label) this.anchorPaneEndScene.lookup("#exitLabelEndView");
         this.updateStylesEndScene(playerWin);
-        this.updateVisibility();
+        this.makeVisible();
     }
 
     private void updateStylesEndScene(boolean playerWin) {
@@ -94,11 +94,12 @@ public class EndSceneModel {
 
     public void createPauseMenu() {
         this.setPauseStyles();
-        this.updateVisibility();
+        this.makeVisible();
     }
 
     public void endPause() {
         this.anchorPaneEndScene.setVisible(false);
+        this.exitLabel.setVisible(false);
     }
 
     public void setPauseStyles() {
@@ -109,7 +110,6 @@ public class EndSceneModel {
     }
 
     public void updateExitLabel(boolean pause) {
-        // TODO view methods should not be here
         if (pause) {
             this.exitLabelEndViewProperty.set("x");
         } else {
@@ -118,9 +118,10 @@ public class EndSceneModel {
     }
 
     // help-methods
-    private void updateVisibility() {
+    private void makeVisible() {
         this.anchorPaneEndScene.setVisible(true);
         this.anchorPaneEndScene.requestFocus();
+        this.exitLabel.setVisible(true);
     }
 
     private void updateLayoutYNewHighScore(boolean newHighScore) {
