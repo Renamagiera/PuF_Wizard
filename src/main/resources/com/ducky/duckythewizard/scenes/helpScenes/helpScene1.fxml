@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="650.0" prefWidth="800.0" styleClass="bg-blue" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+<AnchorPane prefHeight="650.0" prefWidth="800.0" styleClass="bg-blue" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.scenes.MenuController">
    <children>
       <Label alignment="CENTER" prefHeight="650.0" prefWidth="800.0" text="You are Ducky, a noble duck in search of adventure. Deep in the forest you encounter enchanted stones. The Wizard Stones!!! You finally found them. But ... what is happening? They are evil and want to fight you!&#10;&#10;In your backpack you carry 5 magical cards with whomst you must fight to save your soul.&#10;&#10;If you win against a stone, you receive a new card. If you lose, you must continue fighting with less cards. If you lose all your cards ... well ... may the gods have mercy on your soul ...&#10;&#10;Continue to learn how you can win a fight!" textAlignment="CENTER" wrapText="true">
          <styleClass>

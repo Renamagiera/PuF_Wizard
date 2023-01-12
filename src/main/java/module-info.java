@@ -23,4 +23,6 @@ module com.ducky.duckythewizard {
     opens com.ducky.duckythewizard.model.color to javafx.fxml;
     exports com.ducky.duckythewizard.model.card;
     opens com.ducky.duckythewizard.model.card to javafx.fxml;
+    exports com.ducky.duckythewizard.controller.scenes;
+    opens com.ducky.duckythewizard.controller.scenes to javafx.fxml;
 }

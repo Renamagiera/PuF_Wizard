@@ -83,8 +83,8 @@ public class ScoresController extends VBox {
             grid.setPadding(new Insets(10, 10, 10, 10));
             grid.setVgap(5);
             grid.setHgap(5);
-            /*grid.setLayoutX(225);
-            grid.setLayoutY(500);*/
+            grid.setLayoutX(225);
+            grid.setLayoutY(500);
 
             // defining a label and the Name text field
             final Label scoreLabel = new Label();
@@ -126,17 +126,9 @@ public class ScoresController extends VBox {
     }
 
     private void setTable() {
-        int cellHeight = 50;
-        this.scoresTable.setFixedCellSize(cellHeight);
-        double heightNoHeader = cellHeight * this.topHighScoresObservable.size();
-        double header = 30;
-        this.scoresTable.setPrefHeight(heightNoHeader + header);
-
-        // TODO Britta do we need this?
-        scoresTable.minHeightProperty().bind(scoresTable.prefHeightProperty());
-        scoresTable.maxHeightProperty().bind(scoresTable.prefHeightProperty());
-
-        scoresTable.addEventFilter(ScrollEvent.ANY, Event::consume);
-        scoresTable.addEventFilter(MouseEvent.ANY, Event::consume);
+        this.scoresTable.setFixedCellSize(50);
+        this.scoresTable.prefHeight((50 * topHighScoresObservable.size()) + 30);
+        this.scoresTable.addEventFilter(ScrollEvent.ANY, Event::consume);
+        this.scoresTable.addEventFilter(MouseEvent.ANY, Event::consume);
     }
 }

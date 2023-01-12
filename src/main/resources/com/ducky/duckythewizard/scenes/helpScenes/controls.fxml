@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.scenes.MenuController">
    <children>
       <Label alignment="CENTER" prefHeight="650.0" prefWidth="800.0" text="Ducky can move UP, LEFT and RIGHT usind the arrow keys or the W, A, and D keys.&#10;&#10;Ducky starts a fight by walking into a stone.&#10;&#10;After you've played your card in a fight you can leave the fight using the ESC key - or simply click the 'x' button with your mouse.&#10;&#10;After you've dealt all your cards (in a good or a bad way) you can restart by clicking the RESTART button.&#10;&#10;Now go and have fun!" textAlignment="CENTER" wrapText="true">
          <styleClass>

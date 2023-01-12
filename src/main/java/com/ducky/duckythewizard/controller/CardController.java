@@ -64,7 +64,7 @@ public class CardController extends Controller {
                     if (clickedCard != null) {
                         // if ducky played first, the stone card needs to be rendered after clicking a card
                         if (getSession().getActiveFight().getDuckyPlaysFirst()) {
-                            getSession().getFightView().renderFightViewCard(false);
+                            getSession().getFightView().updateFightViewCardProp(false);
                         }
 
                         // HANDLE PLAYER'S CLICKED CARD
@@ -73,7 +73,7 @@ public class CardController extends Controller {
                         // DETERMINE WINNER
                         // set win- or loss-label, add score to player
                         boolean duckyWin = getSession().getActiveFight().determineWinner();
-                        getSession().getFightView().updateWinLossLabel(duckyWin);
+                        getSession().getFightView().updateWinLossLabelProp(duckyWin);
                         getSession().getPlayer().addToScore(duckyWin ? 100 : 0);
 
                         // MAKE NO MORE CARD CLICKABLE
@@ -118,7 +118,7 @@ public class CardController extends Controller {
         int clickPosition = getSession().getCardDeckModel().returnHandCardPosition(event);
         getSession().getActiveFight().setDuckyCard(clickedCard);
         this.removeCardFromHandCardsAddDummy(clickPosition);
-        getSession().getFightView().renderFightViewCard(true);
+        getSession().getFightView().updateFightViewCardProp(true);
     }
 
 
