@@ -1,23 +1,35 @@
-package com.ducky.duckythewizard.controller;
+package com.ducky.duckythewizard.controller.scenes;
 
+import com.ducky.duckythewizard.controller.Controller;
+import com.ducky.duckythewizard.controller.WizardMainApplication;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
-public class HelpSceneController extends SceneController {
+public class MenuController extends Controller {
+    /*Controller for all scenes, that are not game-view*/
     private Parent root;
     private Map<String, Map<String, String>> skins;
     private ToggleGroup groupSprites;
     private ToggleGroup groupSkins;
+    String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/style.css")).toExternalForm();
+    private static String sprite = "ducky";
+    private static String skin = "normal";
 
-    public HelpSceneController() {
+    public MenuController() {
         this.skins = new HashMap<>();
         skins.put("ducky", new HashMap<>() {{
             put("one", "normal");
@@ -31,6 +43,21 @@ public class HelpSceneController extends SceneController {
         }});
     }
 
+    // getter & setter
+    public static String getSprite() {
+        return sprite;
+    }
+    public static String getSkin() {
+        return skin;
+    }
+    public void setSprite(String spriteP) {
+        sprite = spriteP;
+    }
+    public void setSkin(String skin) {
+        MenuController.skin = skin;
+    }
+
+    // TODO maybe this can be in help-scene-ctrl
     @FXML
     private void switchToScene(Event event) throws IOException {
         String labelId = ((Label)event.getSource()).getId();
@@ -43,21 +70,26 @@ public class HelpSceneController extends SceneController {
             default -> "";
         };
         this.root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource(scene)));
-        super.getWindowStage(event, this.root);
+        this.getWindowStage(event, this.root);
         addRadioButtonsToGroup();
     }
 
     public void startGame(Event event) throws IOException {
-        super.startGame(event);
+        AnchorPane newRoot = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/game-view.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.getScene().setRoot(newRoot);
+        newRoot.requestFocus();
     }
 
     public void backToMenu(Event event) throws IOException {
-        super.backToMenu(event);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        WizardMainApplication reload = new WizardMainApplication();
+        reload.start(stage);
     }
 
     public void switchToControls(Event event) throws IOException {
         this.root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/helpScenes/controls.fxml")));
-        super.getWindowStage(event, this.root);
+        this.getWindowStage(event, this.root);
     }
 
     private void addRadioButtonsToGroup() {
@@ -67,7 +99,7 @@ public class HelpSceneController extends SceneController {
             for (String sprite : this.skins.keySet()) {
                 RadioButton buttonSprite = (RadioButton) this.root.lookup("#" + sprite);
                 buttonSprite.setToggleGroup(groupSprites);
-                if (SceneController.getSprite().equals(sprite)) {
+                if (getSprite().equals(sprite)) {
                     buttonSprite.setSelected(true);
                 }
             }
@@ -85,7 +117,7 @@ public class HelpSceneController extends SceneController {
                 RadioButton buttonSkin = (RadioButton) this.root.lookup("#" + skinKey);
                 buttonSkin.setToggleGroup(this.groupSkins);
                 buttonSkin.setText(this.skins.get(spriteId).get(skinKey));
-                if (SceneController.getSkin().equals(this.skins.get(spriteId).get(skinKey))) {
+                if (getSkin().equals(this.skins.get(spriteId).get(skinKey))) {
                     buttonSkin.setSelected(true);
                 }
             }
@@ -97,19 +129,29 @@ public class HelpSceneController extends SceneController {
             RadioButton clickedButton = (RadioButton) toggleGroup.getSelectedToggle();
             if (clickedButton != null) {
                 if (sprite) {
-                    super.setSprite(clickedButton.getText());
+                    this.setSprite(clickedButton.getText());
                     // reset skin to default (first skin)
-                    super.setSkin(this.resetToDefaultSkin());
+                    this.setSkin(this.resetToDefaultSkin());
                     this.updateSkinButtons();
                 } else {
-                    super.setSkin(clickedButton.getText());
+                    this.setSkin(clickedButton.getText());
                 }
             }
         });
     }
 
     private String resetToDefaultSkin() {
-        String sprite = SceneController.getSprite();
+        String sprite = getSprite();
         return this.skins.get(sprite).get("one");
+    }
+
+    public void getWindowStage(Event event, Parent root) {
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        // show is always in controller class
+        stage.show();
     }
 }

@@ -5,7 +5,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="settings" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+<AnchorPane fx:id="settings" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.scenes.MenuController">
    <children>
       <Label alignment="CENTER" layoutX="160.0" layoutY="200.0" prefHeight="50.0" prefWidth="200.0" text="Skin" textAlignment="CENTER">
          <styleClass>
@@ -17,7 +17,7 @@
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="bg-blue" />
-            <String fx:value="green-border" />
+            <String fx:value="light-brown-border" />
          </styleClass>
       </Label>
       <Label alignment="CENTER" layoutX="760.0" onMouseClicked="#backToMenu" prefHeight="40.0" prefWidth="40.0" text="x">
@@ -49,7 +49,7 @@
          <styleClass>
             <String fx:value="bg-blue" />
             <String fx:value="textGeneral" />
-            <String fx:value="green-border" />
+            <String fx:value="light-brown-border" />
          </styleClass>
       </Label>
    </children>

@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.scene.Group?>
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
 <AnchorPane fx:id="rootBox" onKeyPressed="#handleOnKeyPressed" onKeyReleased="#handleOnKeyReleased" prefHeight="650.0" prefWidth="800.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.GameController">
     <children>
         <Group fx:id="backgroundImageGroup">
@@ -469,8 +463,20 @@
                         <String fx:value="bgLightBrown" />
                      </styleClass>
                   </Label>
+                  <Label fx:id="exitLabelEndView" layoutX="508.0" layoutY="10.0">
+                     <styleClass>
+                        <String fx:value="textGeneral" />
+                        <String fx:value="textSizeNormal" />
+                     </styleClass>
+                  </Label>
                </children>
             </AnchorPane>
+             <Label fx:id="maximizeLabelEndView" alignment="CENTER" onMouseClicked="#maximizeEndScene" prefHeight="30.0" prefWidth="115.0" text="score">
+                 <styleClass>
+                     <String fx:value="textGeneral" />
+                     <String fx:value="bgLightBrown" />
+                 </styleClass>
+             </Label>
          </children>
       </AnchorPane>
     </children>

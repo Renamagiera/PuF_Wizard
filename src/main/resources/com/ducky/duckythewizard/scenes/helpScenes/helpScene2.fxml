@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" styleClass="bg-blue" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.HelpSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" styleClass="bg-blue" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.scenes.MenuController">
    <children>
       <Label alignment="CENTER" prefHeight="650.0" prefWidth="800.0" text="You have differently colored cards. The rules are: the highest value wins! But be careful, not only values count! Colors can change your fate as well. There are colors that can &quot;trump&quot; all the others.&#10;&#10;If you possess a red card and choose to fight a stone that is currently red in color, then your red cards will be infused with more power (higher value)! In turn, if the red stone has a red card as well, its card will also receive a higher value.&#10;&#10;The most powerful cards are the Wizard cards. These cards defeat all other number/color cards. If two Wizards are played in a round, the first played Wizard wins." textAlignment="CENTER" wrapText="true">
          <styleClass>

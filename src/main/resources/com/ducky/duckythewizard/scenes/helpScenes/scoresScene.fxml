@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import com.ducky.duckythewizard.controller.ScoresController?>
-<AnchorPane fx:id="scoresAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.ScoresSceneController">
+<AnchorPane fx:id="scoresAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.scenes.ScoresSceneController">
    <children>
       <Label fx:id="headlineLabel" alignment="CENTER" layoutX="300.0" layoutY="95.0" prefHeight="50.0" prefWidth="200.0" text="High Scores" textAlignment="CENTER">
          <styleClass>
@@ -19,14 +19,14 @@
             <String fx:value="textSizeNormal" />
          </styleClass>
       </Label>
-       <HBox layoutX="175" layoutY="200">
-           <ScoresController></ScoresController>
-       </HBox>
+      <HBox layoutX="175" layoutY="200">
+         <ScoresController></ScoresController>
+      </HBox>
       <Label fx:id="backToMenu" alignment="CENTER" onMouseClicked="#backToMenu" layoutX="300.0" layoutY="530" prefHeight="50.0" prefWidth="200.0" text="Menu" textAlignment="CENTER">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="bg-blue" />
-            <String fx:value="green-border" />
+            <String fx:value="light-brown-border" />
          </styleClass>
       </Label>
    </children>

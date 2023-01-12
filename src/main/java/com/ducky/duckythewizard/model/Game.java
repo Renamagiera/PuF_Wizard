@@ -1,6 +1,9 @@
 package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.controller.*;
+import com.ducky.duckythewizard.controller.scenes.EndSceneController;
+import com.ducky.duckythewizard.controller.scenes.FightSceneController;
+import com.ducky.duckythewizard.controller.scenes.MenuController;
 import com.ducky.duckythewizard.model.card.CardDeckModel;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
@@ -30,14 +33,16 @@ public class Game {
     public GameObject[][] objectGrid; // [row][column] - is filled in GameController
     private ArrayList<Stone> stoneArrayList;
 
-    private FightView fightView;
-    private EndSceneView endSceneView;
+    private FightSceneModel fightSceneModel;
+    private EndSceneModel endSceneModel;
 
     private GameController gameCtrl;
     private CardController cardCtrl;
     private StoneController stoneCtrl;
     private FightController fightCtrl;
-    private SceneController sceneCtrl;
+    private MenuController menuCtrl;
+    private EndSceneController endSceneCtrl;
+    private FightSceneController fightSceneCtrl;
 
     private MyAnimationTimer animationTimer;
 
@@ -50,8 +55,8 @@ public class Game {
         this.cardDeckModel = new CardDeckModel();
         this.player = new Player();
         this.stoneArrayList = new ArrayList<>();
-        this.fightView = new FightView();
-        this.endSceneView = new EndSceneView();
+        this.fightSceneModel = new FightSceneModel();
+        this.endSceneModel = new EndSceneModel();
         //System.out.println("*** Game-object is created.");
     }
     public boolean getIsRunning(){
@@ -68,7 +73,6 @@ public class Game {
     }
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
-        System.out.println(this.gameOver);
     }
 
     public void toggleIsRunning() {
@@ -91,8 +95,15 @@ public class Game {
     public void createFightCtrlObj() {
         this.fightCtrl = new FightController(this);
     }
-    public void createSceneCtrlObj() {
-        this.sceneCtrl = new SceneController(); }
+    public void createMenuCtrlObj() {
+        this.menuCtrl = new MenuController();
+    }
+    public void createEndSceneCtrl() {
+        this.endSceneCtrl = new EndSceneController(this);
+    }
+    public void createFightSceneCtrl() {
+        this.fightSceneCtrl = new FightSceneController(this);
+    }
 
     public GameConfig getGameConfig() {
         return this.gameConfig;
@@ -110,8 +121,14 @@ public class Game {
     public FightController getFightCtrl() {
         return fightCtrl;
     }
-    public SceneController getSceneCtrl() {
-        return this.sceneCtrl;
+    public MenuController getMenuCtrl() {
+        return menuCtrl;
+    }
+    public EndSceneController getEndSceneCtrl() {
+        return endSceneCtrl;
+    }
+    public FightSceneController getFightSceneCtrl() {
+        return fightSceneCtrl;
     }
 
     public MyAnimationTimer getAnimationTimer() { return this.animationTimer;}
@@ -139,11 +156,11 @@ public class Game {
         return anchorPaneEndOverlay;
     }
 
-    public FightView getFightView() {
-        return fightView;
+    public FightSceneModel getFightView() {
+        return fightSceneModel;
     }
-    public EndSceneView getEndSceneView() {
-        return this.endSceneView;
+    public EndSceneModel getEndSceneView() {
+        return this.endSceneModel;
     }
 
     public GameColorObject getGameColorObject() {
