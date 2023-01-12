@@ -68,16 +68,16 @@ public class FightView {
 
     private void updateLabelTrumpColor() {
         if (!this.trumpColorName.equals("none")) {
-            this.trumpColorTextProperty.set("Trump color is " + this.trumpColorName);
+            this.trumpColorTextProperty.set("Trump color is " + this.trumpColorName + ".");
         } else {
-            this.trumpColorTextProperty.set("No trump color");
+            this.trumpColorTextProperty.set("No trump color!");
         }
         this.trumpColorTextStyleProperty.set("-fx-text-fill: " + this.trumpColorHexCode + ";");
     }
 
     private void updateCardChooseLabel() {
         if (activeFight.getDuckyPlaysFirst()) {
-            this.cardChooseTextProperty.set("Choose a card to start");
+            this.cardChooseTextProperty.set("Choose a card to start.");
         } else {
             this.cardChooseTextProperty.set("Try to beat this card!");
         }

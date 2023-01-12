@@ -1,12 +1,14 @@
 package com.ducky.duckythewizard.model.color;
 
+import com.ducky.duckythewizard.model.config.GameConfig;
+
 public class TrumpColor {
-    private static final GameColor RED = new GameColor("red", "#ff6666");
-    private static final GameColor BLUE = new GameColor("blue", "#66ccff");
-    private static final GameColor GREEN = new GameColor("green", "#91ff66");
-    private static final GameColor YELLOW = new GameColor("yellow", "#ffe366");
-    private static final GameColor WIZARD = new GameColor("wizard", "null");
-    private static final GameColor NONE = new GameColor("none", "#ffffff");
+    private static final GameColor RED = new GameColor(GameConfig.COLOR_RED_HEXCODE.getValue0(),GameConfig.COLOR_RED_HEXCODE.getValue1());
+    private static final GameColor BLUE = new GameColor(GameConfig.COLOR_BLUE_HEXCODE.getValue0(),GameConfig.COLOR_BLUE_HEXCODE.getValue1());
+    private static final GameColor GREEN = new GameColor(GameConfig.COLOR_GREEN_HEXCODE.getValue0(),GameConfig.COLOR_GREEN_HEXCODE.getValue1());
+    private static final GameColor YELLOW = new GameColor(GameConfig.COLOR_YELLOW_HEXCODE.getValue0(),GameConfig.COLOR_YELLOW_HEXCODE.getValue1());
+    private static final GameColor WIZARD = new GameColor(GameConfig.COLOR_WIZARD_HEXCODE.getValue0(),GameConfig.COLOR_WIZARD_HEXCODE.getValue1());
+    private static final GameColor NONE = new GameColor(GameConfig.COLOR_NONE_HEXCODE.getValue0(),GameConfig.COLOR_NONE_HEXCODE.getValue1());
     private int colorAmount;
 
     public TrumpColor() {}
