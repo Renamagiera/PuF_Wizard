@@ -86,6 +86,14 @@ public class GameColorObject {
         RGB_MAP.put("red", Color.rgb(208,32,144));
         //
         RGB_MAP.put("none", Color.rgb(255,255,255));
+        //
+        RGB_MAP.put("grey", Color.rgb(150,150,150));
+        //
+        RGB_MAP.put("test", Color.rgb(40,30,255));
+        //
+        RGB_MAP.put("test2", Color.rgb(255,255,0));
+        //
+        RGB_MAP.put("test3", Color.rgb(150,150,255));
     }
 
     public String getHexCodeFromMap(String color) {
@@ -109,16 +117,18 @@ public class GameColorObject {
     }
 
     public void tintStone(ImageView imageView, String stoneColorName) {
-        Color targetStoneColor = RGB_MAP.get("none");
-        if (stoneColorName.equals("red")) {
-            targetStoneColor = RGB_MAP.get("red");
-        } else if (stoneColorName.equals("blue")) {
-            targetStoneColor = RGB_MAP.get("blue");
-        } else if (stoneColorName.equals("green")) {
-            targetStoneColor = RGB_MAP.get("green");
-        } else if (stoneColorName.equals("yellow")) {
-            targetStoneColor = RGB_MAP.get("yellow");
-        }
+        RGB_MAP.get("none");
+        Color targetStoneColor = switch (stoneColorName) {
+            case "red" -> RGB_MAP.get("red");
+            case "blue" -> RGB_MAP.get("blue");
+            case "green" -> RGB_MAP.get("green");
+            case "yellow" -> RGB_MAP.get("yellow");
+            case "grey" -> RGB_MAP.get("grey");
+            case "test" -> RGB_MAP.get("test");
+            case "test2" -> RGB_MAP.get("test2");
+            case "test3" -> RGB_MAP.get("test3");
+            default -> RGB_MAP.get("none");
+        };
 
         ColorAdjust colorAdjust = new ColorAdjust();
 
@@ -131,6 +141,10 @@ public class GameColorObject {
         colorAdjust.setBrightness(brightness);
 
         imageView.setEffect(colorAdjust);
+    }
+
+    public void setOpacityImageView(ImageView imageView, double opacity) {
+        imageView.setOpacity(opacity);
     }
 
     public static double map(double value, double start, double stop, double targetStart, double targetStop) {

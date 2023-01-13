@@ -57,7 +57,7 @@ public class FightController extends Controller {
             });
             this.getSession().toggleIsRunning();
             this.getSession().toggleInFight();
-            stone.setInactive();
+            this.getSession().getStoneCtrl().setInactive(stone);
         }
     }
 }

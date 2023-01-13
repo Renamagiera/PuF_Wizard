@@ -79,7 +79,7 @@ public class GameController{
     private AnimatedSprite ducky;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws InterruptedException {
         //System.out.println("*** Game Controller is initialized...");
 
         // skin
@@ -214,15 +214,18 @@ public class GameController{
     }
 
     public void startCollision(Stone collisionStone) {
+        //this.session.getStoneCtrl().interruptThread();
         this.session.getFightCtrl().startFight(collisionStone);
     }
 
     public void endCollision() {
+        //this.session.getStoneCtrl().restartThread();
         this.session.getFightCtrl().stopFight(this.session.getAnimationTimer());
     }
 
     public void renderEndScene(boolean playerWin) {
         /*Add event-handler to minimize end-scene. Set game-over true. Show end-scene*/
+        //this.session.getStoneCtrl().interruptThread();
         this.session.setGameOver(true);
         this.session.getEndSceneCtrl().addMinEventHandler();
         this.session.getEndSceneView().showEndScene(playerWin, this.session.getPlayer().getScore());
