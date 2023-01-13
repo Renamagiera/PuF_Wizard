@@ -23,12 +23,19 @@
             </ImageView>
         </Group>
         <HBox fx:id="heartContainer" prefHeight="50.0" prefWidth="180.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
-        <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" prefHeight="42.0" prefWidth="50.0" text="Label" textAlignment="CENTER">
+       <!--Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" prefHeight="42.0" prefWidth="50.0" text="Label" textAlignment="CENTER"-->
+        <Label fx:id="timertextLabel" alignment="CENTER" text="Take Action:" AnchorPane.rightAnchor="365.0" AnchorPane.topAnchor="10.0">
+            <styleClass>
+                <String fx:value="textGeneral" />
+                <String fx:value="bgBrown" />
+                <String fx:value="textSizeNormal" />
+            </styleClass></Label>
+        <Label fx:id="timerLabel" alignment="TOP_RIGHT" AnchorPane.rightAnchor="325.0" AnchorPane.topAnchor="10.0">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="textSizeNormal" />
          </styleClass></Label>
-        <Label fx:id="punkteTextLabel" alignment="TOP_RIGHT" text="Punkte: " AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0">
+        <Label fx:id="scoreTextLabel" alignment="TOP_RIGHT" text="Score: " AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="textSizeNormal" />

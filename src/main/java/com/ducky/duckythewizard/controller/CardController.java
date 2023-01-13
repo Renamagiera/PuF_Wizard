@@ -74,7 +74,8 @@ public class CardController extends Controller {
                         // set win- or loss-label, add score to player
                         boolean duckyWin = getSession().getActiveFight().determineWinner();
                         getSession().getFightView().updateWinLossLabelProp(duckyWin);
-                        getSession().getPlayer().addToScore(duckyWin ? 100 : 0);
+                        //getSession().getPlayer().addToScore(duckyWin ? 100 : 0);
+                        getSession().getPlayer().addToScore(getSession().getActiveFight().calculateScore(duckyWin));
 
                         // MAKE NO MORE CARD CLICKABLE
                         this.removeAllClickHandlers();

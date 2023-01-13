@@ -104,7 +104,7 @@ public class EndSceneModel {
 
     public void setPauseStyles() {
         this.updateExitLabel(true);
-        this.setStyles("Pause", "white");
+        this.setStyles("Pause", GameConfig.COLOR_WHITE_STRING);
         this.anchorPaneEndSceneMenu.setPrefHeight(200);
         this.setLabelLayouts(50);
     }

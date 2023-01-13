@@ -9,7 +9,7 @@ public class GameObject {
     }
 
     public boolean getCanPassThrough(){
-        return canPassThrough;
+        return this.canPassThrough;
     }
 
 }

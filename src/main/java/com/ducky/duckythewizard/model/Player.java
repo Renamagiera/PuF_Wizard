@@ -61,14 +61,14 @@ public class Player {
 
     public void addToScore (int points) {
         this.score.set(score.getValue() + points);
-        System.out.println("==> adding " + points + " to score, score is now: " + score.getValue());
+        System.out.println("==> adding " + points + " to score, TOTAL SCORE is now: " + score.getValue());
     }
 
     public void reducePlayerTimer() {
         int time = (int)((System.nanoTime() - this.resetTime) / 1000000000.0);
         this.timerProperty.set(Integer.toString(GameConfig.PLAYER_ACTION_TIMER - time <= 0 ? 0 : GameConfig.PLAYER_ACTION_TIMER - time));
         if(this.timerProperty.getValue().equals("0")) {
-            reducePlayerLife();
+            this.reducePlayerLife();
         }
     }
 
@@ -79,7 +79,7 @@ public class Player {
 
     private void reducePlayerLife(){
         this.healthPoints = this.healthPoints <= 0 ? 0 : this.healthPoints - 1;
-        resetPlayerTimer();
+        this.resetPlayerTimer();
     }
 
     public void decrementHandCards() {
