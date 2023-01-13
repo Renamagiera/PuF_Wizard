@@ -65,9 +65,13 @@ public class GameController{
     private Label score;
     @FXML
     private Label exitLabelEndView;
+    @FXML
+    private Label timerTextLabel;
     private ArrayList<String> input = new ArrayList<>();
     private CollisionHandler collisionHandler;
     private AnimatedSprite ducky;
+    private static final Object monitor = new Object();
+    private static boolean fileProcessed = false;
 
     @FXML
     public void initialize() {
@@ -118,6 +122,9 @@ public class GameController{
         this.score.textProperty().bind(session.getEndSceneView().scoreProperty);
         this.exitLabelEndView.textProperty().bind(session.getEndSceneView().exitLabelEndViewProperty);
 
+        // bindings game-view
+        this.timerTextLabel.styleProperty().bind(session.getPlayer().timerTextLabel);
+
         // initialize Level map
         Level level = new Level(levelGrid);
         this.session.objectGrid = level.getGameObjectGrid();
@@ -150,6 +157,7 @@ public class GameController{
 
         // binding timerLabel to Ducky's timer
         this.timerLabel.textProperty().bind(this.session.getPlayer().timerProperty); // LENA Player statt DUcky
+        this.timerLabel.styleProperty().bind(this.session.getPlayer().timerLabelStyle);
 
         // binding scoreLabel to Ducky's score
         this.scoreLabel.textProperty().bind(this.session.getPlayer().score.asString()); // LENA Player statt DUcky
@@ -205,15 +213,18 @@ public class GameController{
     }
 
     public void startCollision(Stone collisionStone) {
+        //this.session.getStoneCtrl().interruptThread();
         this.session.getFightCtrl().startFight(collisionStone);
     }
 
     public void endCollision() {
+        //this.session.getStoneCtrl().restartThread();
         this.session.getFightCtrl().stopFight(this.session.getAnimationTimer());
     }
 
     public void renderEndScene(boolean playerWin) {
         /*Add event-handler to minimize end-scene. Set game-over true. Show end-scene*/
+        //this.session.getStoneCtrl().interruptThread();
         this.session.setGameOver(true);
         this.session.getEndSceneCtrl().addMinEventHandler();
         this.session.getEndSceneView().showEndScene(playerWin, this.session.getPlayer().getScore());

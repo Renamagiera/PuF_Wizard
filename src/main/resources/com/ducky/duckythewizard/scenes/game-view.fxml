@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.*?>
+<?import java.lang.String?>
 <?import javafx.scene.Group?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import java.lang.*?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
 <AnchorPane fx:id="rootBox" onKeyPressed="#handleOnKeyPressed" onKeyReleased="#handleOnKeyReleased" prefHeight="650.0" prefWidth="800.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.GameController">
     <children>
         <Group fx:id="backgroundImageGroup">
@@ -24,26 +30,29 @@
         </Group>
         <HBox fx:id="heartContainer" prefHeight="50.0" prefWidth="180.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
        <!--Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" prefHeight="42.0" prefWidth="50.0" text="Label" textAlignment="CENTER"-->
-        <Label fx:id="timertextLabel" alignment="CENTER" text="Take Action:" AnchorPane.rightAnchor="365.0" AnchorPane.topAnchor="10.0">
+        <Label fx:id="timerTextLabel" alignment="CENTER" text="Take Action:" AnchorPane.rightAnchor="365.0" AnchorPane.topAnchor="10.0">
             <styleClass>
                 <String fx:value="textGeneral" />
-                <String fx:value="bgBrown" />
                 <String fx:value="textSizeNormal" />
+                <String fx:value="outline" />
             </styleClass></Label>
         <Label fx:id="timerLabel" alignment="TOP_RIGHT" AnchorPane.rightAnchor="325.0" AnchorPane.topAnchor="10.0">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="textSizeNormal" />
+            <String fx:value="outline" />
          </styleClass></Label>
         <Label fx:id="scoreTextLabel" alignment="TOP_RIGHT" text="Score: " AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="10.0">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="textSizeNormal" />
+            <String fx:value="outline" />
          </styleClass></Label>
         <Label fx:id="scoreLabel" alignment="TOP_RIGHT" text="SCORE" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="textSizeNormal" />
+            <String fx:value="outline" />
          </styleClass></Label>
 
       <GridPane fx:id="levelGrid" prefHeight="650.0" prefWidth="800.0">
@@ -486,5 +495,6 @@
              </Label>
          </children>
       </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
     </children>
 </AnchorPane>

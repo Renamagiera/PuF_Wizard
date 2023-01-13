@@ -61,8 +61,8 @@ public class GameColorObject {
     }
 
     private void setSpecialCardsMap() {
-        this.SPECIAL_CARDS.put("wizard", this.trumpColorObject.getWizard());
-        this.SPECIAL_CARDS.put("none", this.trumpColorObject.getNone());
+        SPECIAL_CARDS.put("wizard", this.trumpColorObject.getWizard());
+        SPECIAL_CARDS.put("none", this.trumpColorObject.getNone());
     }
 
     private void setHexCodesToMap() {
@@ -129,6 +129,10 @@ public class GameColorObject {
         colorAdjust.setBrightness(brightness);
 
         imageView.setEffect(colorAdjust);
+    }
+
+    public void setOpacityImageView(ImageView imageView, double opacity) {
+        imageView.setOpacity(opacity);
     }
 
     public static double map(double value, double start, double stop, double targetStart, double targetStop) {

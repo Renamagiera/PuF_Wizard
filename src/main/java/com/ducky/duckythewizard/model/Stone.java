@@ -5,6 +5,8 @@ import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
+
 public class Stone extends GameObject{
 
     private CardModel card;
@@ -31,43 +33,14 @@ public class Stone extends GameObject{
     public CardModel getCard() {
         return this.card;
     }
-
     public boolean isActive() {
         return isActive;
     }
 
-    public void setInactive() {
-        this.isActive = false;
-        // starting timer to set stone active again in new thread
-        Thread thread = new Thread(() -> {
-            try {
-                Thread.sleep(GameConfig.STONE_INACTIVE_TIMER);
-                isActive = true;
-            } catch (InterruptedException ie) {
-                System.out.println(ie);
-            }
-        });
-        thread.start();
-    }
-
-    public void setInactiveColorChange() {
-        this.isActive = false;
-        // starting timer to set stone active again in new thread
-        Thread thread = new Thread(() -> {
-            try {
-                Thread.sleep(2000);
-                this.isActive = true;
-            } catch (InterruptedException ie) {
-                System.out.println(ie);
-            }
-        });
-        thread.start();
-    }
-
+    // getter & setter
     public void setActive(boolean active) {
         isActive = active;
     }
-
     public void setRandomTrumpColorStone(GameColor randomTrumpColorStone) {
         this.randomTrumpColorStone = randomTrumpColorStone;
     }
@@ -85,4 +58,6 @@ public class Stone extends GameObject{
     public boolean getActive() {
         return this.isActive;
     }
+
+
 }
