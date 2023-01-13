@@ -65,12 +65,16 @@ public class GameController{
     private Label score;
     @FXML
     private Label exitLabelEndView;
+    @FXML
+    private Label timerTextLabel;
     private ArrayList<String> input = new ArrayList<>();
     private CollisionHandler collisionHandler;
     private AnimatedSprite ducky;
+    private static final Object monitor = new Object();
+    private static boolean fileProcessed = false;
 
     @FXML
-    public void initialize() throws InterruptedException {
+    public void initialize() {
         //System.out.println("*** Game Controller is initialized...");
 
         // skin
@@ -118,6 +122,9 @@ public class GameController{
         this.score.textProperty().bind(session.getEndSceneView().scoreProperty);
         this.exitLabelEndView.textProperty().bind(session.getEndSceneView().exitLabelEndViewProperty);
 
+        // bindings game-view
+        this.timerTextLabel.styleProperty().bind(session.getPlayer().timerTextLabel);
+
         // initialize Level map
         Level level = new Level(levelGrid);
         this.session.objectGrid = level.getGameObjectGrid();
@@ -150,6 +157,7 @@ public class GameController{
 
         // binding timerLabel to Ducky's timer
         this.timerLabel.textProperty().bind(this.session.getPlayer().timerProperty); // LENA Player statt DUcky
+        this.timerLabel.styleProperty().bind(this.session.getPlayer().timerLabelStyle);
 
         // binding scoreLabel to Ducky's score
         this.scoreLabel.textProperty().bind(this.session.getPlayer().score.asString()); // LENA Player statt DUcky

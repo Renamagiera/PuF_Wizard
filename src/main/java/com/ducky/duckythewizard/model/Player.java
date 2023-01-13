@@ -16,6 +16,9 @@ public class Player {
 
     public SimpleIntegerProperty score;
     public SimpleStringProperty timerProperty;
+    public SimpleStringProperty timerTextLabel;
+    public SimpleStringProperty timerLabel;
+    public SimpleStringProperty timerLabelStyle;
     private long resetTime;
 
     private AnimatedSprite playerSprite;
@@ -25,6 +28,9 @@ public class Player {
         this.score = new SimpleIntegerProperty(0);
         this.resetTime = System.nanoTime();
         this.timerProperty = new SimpleStringProperty(Integer.toString(GameConfig.PLAYER_ACTION_TIMER));
+        this.timerTextLabel = new SimpleStringProperty();
+        this.timerLabel = new SimpleStringProperty();
+        this.timerLabelStyle = new SimpleStringProperty();
         this.playableCards = GameConfig.AMOUNT_HAND_CARDS;
     }
 
@@ -67,8 +73,12 @@ public class Player {
     public void reducePlayerTimer() {
         int time = (int)((System.nanoTime() - this.resetTime) / 1000000000.0);
         this.timerProperty.set(Integer.toString(GameConfig.PLAYER_ACTION_TIMER - time <= 0 ? 0 : GameConfig.PLAYER_ACTION_TIMER - time));
+        if(this.timerProperty.getValue().equals("3")) {
+            this.updateTimerLabel(true);
+        }
         if(this.timerProperty.getValue().equals("0")) {
             this.reducePlayerLife();
+            this.updateTimerLabel(false);
         }
     }
 
@@ -94,5 +104,15 @@ public class Player {
             }
         }
         return cardsAvailable >= 1;
+    }
+
+    public void updateTimerLabel(boolean critical) {
+        if (critical) {
+            this.timerTextLabel.set("-fx-text-fill: red; -fx-stroke: red; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 1px;");
+            this.timerLabelStyle.set("-fx-text-fill: red; -fx-stroke: red; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 1px;");
+        } else {
+            this.timerTextLabel.set("-fx-stroke: black; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 2px;");
+            this.timerLabelStyle.set("-fx-stroke: black; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 2px;");
+        }
     }
 }
