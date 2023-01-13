@@ -2,7 +2,6 @@ package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.card.CardModel;
 import com.ducky.duckythewizard.model.color.GameColor;
-import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.image.ImageView;
 
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 public class Stone extends GameObject{
 
     private CardModel card;
-    private CountDownTimer trumpTimer;
 
     private static int count;
     private String id;
@@ -30,10 +28,10 @@ public class Stone extends GameObject{
         this.card = card;
     }
     public String getId() {
-        return id;
+        return this.id;
     }
     public CardModel getCard() {
-        return card;
+        return this.card;
     }
     public boolean isActive() {
         return isActive;
@@ -51,10 +49,10 @@ public class Stone extends GameObject{
     }
 
     public GameColor getRandomTrumpColorStone() {
-        return randomTrumpColorStone;
+        return this.randomTrumpColorStone;
     }
     public ImageView getStoneImgView() {
-        return stoneImgView;
+        return this.stoneImgView;
     }
 
     public boolean getActive() {

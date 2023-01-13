@@ -3,8 +3,6 @@ package com.ducky.duckythewizard.model;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
-
 public class Level {
 
     private GameObject[][] gameObjectGrid;
@@ -29,6 +27,6 @@ public class Level {
     }
 
     public GameObject[][] getGameObjectGrid() {
-        return gameObjectGrid;
+        return this.gameObjectGrid;
     }
 }

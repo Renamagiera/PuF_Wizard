@@ -62,7 +62,7 @@ public class StoneController extends Controller {
     public void changeStoneTrump(Stone stone) {
         stone.setRandomTrumpColorStone(getSession().getGameColorObject().generateRandomTrump());
         String stoneRandomTrumpColor = stone.getRandomTrumpColorStone().getName();
-        getSession().getGameColorObject().tintStone(stone.getStoneImgView(), stoneRandomTrumpColor);
+        getSession().getGameColorObject().tintObject(stone.getStoneImgView(), stoneRandomTrumpColor);
 
     }
 
@@ -81,7 +81,7 @@ public class StoneController extends Controller {
         for (Stone stone : this.getSession().getStoneArrayList()) {
             stone.setRandomTrumpColorStone(this.getSession().getGameColorObject().generateRandomTrump());
             String stoneRandomTrumpColor = stone.getRandomTrumpColorStone().getName();
-            this.getSession().getGameColorObject().tintStone(stone.getStoneImgView(), stoneRandomTrumpColor);
+            this.getSession().getGameColorObject().tintObject(stone.getStoneImgView(), stoneRandomTrumpColor);
         }
     }
 

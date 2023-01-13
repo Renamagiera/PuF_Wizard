@@ -47,10 +47,10 @@ public class Game {
     private MyAnimationTimer animationTimer;
 
     public Game(){
-        isRunning = true;
-        inFight = false;
-        gameOver = false;
-        gameConfig = new GameConfig();
+        this.isRunning = true;
+        this.inFight = false;
+        this.gameOver = false;
+        this.gameConfig = new GameConfig();
         this.gameColorObject = new GameColorObject();
         this.cardDeckModel = new CardDeckModel();
         this.player = new Player();
@@ -76,10 +76,10 @@ public class Game {
     }
 
     public void toggleIsRunning() {
-        isRunning = !isRunning;
+        this.isRunning = !isRunning;
     }
     public void toggleInFight() {
-        inFight = !inFight;
+        this.inFight = !inFight;
     }
 
     // create anstatt set, weil hier ein neues Controller-Objekt erstellt wird
@@ -110,31 +110,31 @@ public class Game {
     }
 
     public GameController getGameCtrl() {
-        return gameCtrl;
+        return this.gameCtrl;
     }
     public CardController getCardCtrl() {
         return this.cardCtrl;
     }
     public StoneController getStoneCtrl() {
-        return stoneCtrl;
+        return this.stoneCtrl;
     }
     public FightController getFightCtrl() {
-        return fightCtrl;
+        return this.fightCtrl;
     }
     public MenuController getMenuCtrl() {
-        return menuCtrl;
+        return this.menuCtrl;
     }
     public EndSceneController getEndSceneCtrl() {
-        return endSceneCtrl;
+        return this.endSceneCtrl;
     }
     public FightSceneController getFightSceneCtrl() {
-        return fightSceneCtrl;
+        return this.fightSceneCtrl;
     }
 
     public MyAnimationTimer getAnimationTimer() { return this.animationTimer;}
 
     public String getSpriteString() {
-        return sprite;
+        return this.sprite;
     }
     public CardDeckModel getCardDeckModel() {
         return this.cardDeckModel;
@@ -146,7 +146,7 @@ public class Game {
         return this.stoneArrayList;
     }
     public Fight getActiveFight() {
-        return activeFight;
+        return this.activeFight;
     }
 
     public AnchorPane getRootAnchorPane() {
@@ -157,14 +157,14 @@ public class Game {
     }
 
     public FightSceneModel getFightView() {
-        return fightSceneModel;
+        return this.fightSceneModel;
     }
     public EndSceneModel getEndSceneView() {
         return this.endSceneModel;
     }
 
     public GameColorObject getGameColorObject() {
-        return gameColorObject;
+        return this.gameColorObject;
     }
 
     public void setAnchorPaneEndOverlay(AnchorPane anchorPaneEndOverlay) {

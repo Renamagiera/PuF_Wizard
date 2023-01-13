@@ -1,5 +1,6 @@
 package com.ducky.duckythewizard.model.color;
 
+import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.effect.ColorAdjust;
 
 import javafx.scene.image.ImageView;
@@ -65,35 +66,26 @@ public class GameColorObject {
     }
 
     private void setHexCodesToMap() {
-        HEX_CODES.put("red", "#FF6666");
-        HEX_CODES.put("blue", "#66CCFF");
-        HEX_CODES.put("green", "#91FF66");
-        HEX_CODES.put("yellow", "#FFE366");
-        HEX_CODES.put("white", "#FFFFFF");
-        HEX_CODES.put("black", "#000000");
-        HEX_CODES.put("brown", "#412B0F");
-        HEX_CODES.put("orange", "#D68139");
+        HEX_CODES.put(GameConfig.COLOR_RED_HEXCODE.getValue0(),GameConfig.COLOR_RED_HEXCODE.getValue1());
+        HEX_CODES.put(GameConfig.COLOR_BLUE_HEXCODE.getValue0(),GameConfig.COLOR_BLUE_HEXCODE.getValue1());
+        HEX_CODES.put(GameConfig.COLOR_GREEN_HEXCODE.getValue0(),GameConfig.COLOR_GREEN_HEXCODE.getValue1());
+        HEX_CODES.put(GameConfig.COLOR_YELLOW_HEXCODE.getValue0(),GameConfig.COLOR_YELLOW_HEXCODE.getValue1());
+        HEX_CODES.put(GameConfig.COLOR_WHITE_HEXCODE.getValue0(),GameConfig.COLOR_WHITE_HEXCODE.getValue1());
+        HEX_CODES.put(GameConfig.COLOR_BLACK_HEXCODE.getValue0(), GameConfig.COLOR_BLACK_HEXCODE.getValue1());
+        HEX_CODES.put(GameConfig.COLOR_BLACK_HEXCODE.getValue0(), GameConfig.COLOR_BLACK_HEXCODE.getValue1());
+        HEX_CODES.put(GameConfig.COLOR_ORANGE_HEXCODE.getValue0(), GameConfig.COLOR_ORANGE_HEXCODE.getValue1());
     }
 
     private void setRgbMap() {
-        //
-        RGB_MAP.put("yellow", Color.rgb(255,102,102));
-        //
-        RGB_MAP.put("blue", Color.rgb(100,205,124));
-        //
-        RGB_MAP.put("green", Color.rgb(255,255,150));
-        //
-        RGB_MAP.put("red", Color.rgb(208,32,144));
-        //
-        RGB_MAP.put("none", Color.rgb(255,255,255));
-        //
-        RGB_MAP.put("grey", Color.rgb(150,150,150));
-        //
-        RGB_MAP.put("test", Color.rgb(40,30,255));
-        //
-        RGB_MAP.put("test2", Color.rgb(255,255,0));
-        //
-        RGB_MAP.put("test3", Color.rgb(150,150,255));
+        RGB_MAP.put(GameConfig.COLOR_RED_HEXCODE.getValue0(), Color.rgb(GameConfig.COLOR_RED_RGB.getValue0(),GameConfig.COLOR_RED_RGB.getValue1(),GameConfig.COLOR_RED_RGB.getValue2()));
+
+        RGB_MAP.put(GameConfig.COLOR_BLUE_HEXCODE.getValue0(), Color.rgb(GameConfig.COLOR_BLUE_RGB.getValue0(),GameConfig.COLOR_BLUE_RGB.getValue1(),GameConfig.COLOR_BLUE_RGB.getValue2()));
+
+        RGB_MAP.put(GameConfig.COLOR_GREEN_HEXCODE.getValue0(), Color.rgb(GameConfig.COLOR_GREEN_RGB.getValue0(),GameConfig.COLOR_GREEN_RGB.getValue1(),GameConfig.COLOR_GREEN_RGB.getValue2()));
+
+        RGB_MAP.put(GameConfig.COLOR_YELLOW_HEXCODE.getValue0(), Color.rgb(GameConfig.COLOR_YELLOW_RGB.getValue0(),GameConfig.COLOR_YELLOW_RGB.getValue1(),GameConfig.COLOR_YELLOW_RGB.getValue2()));
+
+        RGB_MAP.put(GameConfig.COLOR_NONE_HEXCODE.getValue0(), Color.rgb(GameConfig.COLOR_NONE_RGB.getValue0(),GameConfig.COLOR_NONE_RGB.getValue1(),GameConfig.COLOR_NONE_RGB.getValue2()));
     }
 
     public String getHexCodeFromMap(String color) {
@@ -101,40 +93,36 @@ public class GameColorObject {
     }
 
     public GameColor generateRandomTrump() {
-        return trumpColors.get((int) Math.floor(Math.random()*(this.colorAmount)));
+        return this.trumpColors.get((int) Math.floor(Math.random()*(this.colorAmount)));
     }
 
     public void toStringTrumpColors() {
-        for (GameColor color : trumpColors) {
+        for (GameColor color : this.trumpColors) {
             System.out.println("color name: " + color.getName());
         }
     }
 
     public void toStringLayoutColors() {
-        for (GameColor color : layoutColors) {
+        for (GameColor color : this.layoutColors) {
             System.out.println("color name: " + color.getName());
         }
     }
 
-    public void tintStone(ImageView imageView, String stoneColorName) {
-        RGB_MAP.get("none");
-        Color targetStoneColor = switch (stoneColorName) {
-            case "red" -> RGB_MAP.get("red");
-            case "blue" -> RGB_MAP.get("blue");
-            case "green" -> RGB_MAP.get("green");
-            case "yellow" -> RGB_MAP.get("yellow");
-            case "grey" -> RGB_MAP.get("grey");
-            case "test" -> RGB_MAP.get("test");
-            case "test2" -> RGB_MAP.get("test2");
-            case "test3" -> RGB_MAP.get("test3");
-            default -> RGB_MAP.get("none");
-        };
+    public void tintObject(ImageView imageView, String colorName) {
+        Color targetColor = RGB_MAP.get("none");
+
+        for (int i = 0; i < GameConfig.trumpColorsString.length - 1; i++) {
+            if(colorName.equals(GameConfig.trumpColorsString[i])) {
+                targetColor = RGB_MAP.get(GameConfig.trumpColorsString[i]);
+                break;
+            }
+        }
 
         ColorAdjust colorAdjust = new ColorAdjust();
 
-        double hue = map((targetStoneColor.getHue() + 180) % 360, 0, 360, -1, 1);
-        double saturation = targetStoneColor.getSaturation();
-        double brightness = map(targetStoneColor.getBrightness(), 0, 1, -1,0);
+        double hue = map((targetColor.getHue() + 180) % 360, 0, 360, -1, 1);
+        double saturation = targetColor.getSaturation();
+        double brightness = map(targetColor.getBrightness(), 0, 1, -1,0);
 
         colorAdjust.setHue(hue);
         colorAdjust.setSaturation(saturation);

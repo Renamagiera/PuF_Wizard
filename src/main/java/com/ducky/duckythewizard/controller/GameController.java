@@ -38,16 +38,7 @@ public class GameController{
     @FXML
     public AnchorPane emptyCardSlots;
     private GraphicsContext gc;
-    @FXML
-    private ImageView stone0;
-    @FXML
-    private ImageView stone1;
-    @FXML
-    private ImageView stone2;
-    @FXML
-    private ImageView stone3;
-    @FXML
-    private ImageView stone4;
+
     @FXML
     private Label timerLabel;
     @FXML
@@ -110,61 +101,61 @@ public class GameController{
         this.session.getCardCtrl().cardInit();
 
         // bindings fight-view
-        cards.textProperty().bind(session.getCardDeckModel().cardsProperty);
-        trumpColorText.textProperty().bind(session.getFightView().trumpColorTextProperty);
-        trumpColorText.styleProperty().bind(session.getFightView().trumpColorTextStyleProperty);
-        cardChooseText.textProperty().bind(session.getFightView().cardChooseTextProperty);
-        stoneCard.imageProperty().bind(session.getFightView().stoneCardProperty.imageProperty());
-        duckyCard.imageProperty().bind(session.getFightView().duckyCardProperty.imageProperty());
-        winLossLabel.textProperty().bind(session.getFightView().winLossLabelProperty);
-        winLossLabel.styleProperty().bind(session.getFightView().winLossLabelStyleProperty);
-        fightOverlay.styleProperty().bind(session.getFightView().fightOverlayStyleProperty);
+        this.cards.textProperty().bind(session.getCardDeckModel().cardsProperty);
+        this.trumpColorText.textProperty().bind(session.getFightView().trumpColorTextProperty);
+        this.trumpColorText.styleProperty().bind(session.getFightView().trumpColorTextStyleProperty);
+        this.cardChooseText.textProperty().bind(session.getFightView().cardChooseTextProperty);
+        this.stoneCard.imageProperty().bind(session.getFightView().stoneCardProperty.imageProperty());
+        this.duckyCard.imageProperty().bind(session.getFightView().duckyCardProperty.imageProperty());
+        this.winLossLabel.textProperty().bind(session.getFightView().winLossLabelProperty);
+        this.winLossLabel.styleProperty().bind(session.getFightView().winLossLabelStyleProperty);
+        this.fightOverlay.styleProperty().bind(session.getFightView().fightOverlayStyleProperty);
 
         // bindings end-scene
-        endSceneLabel.textProperty().bind(session.getEndSceneView().endSceneLabelProperty);
-        endSceneLabel.styleProperty().bind(session.getEndSceneView().endSceneLabelStyleProperty);
-        endScene.getChildren().get(0).styleProperty().bind(session.getEndSceneView().endSceneStyleProperty);
-        score.textProperty().bind(session.getEndSceneView().scoreProperty);
-        exitLabelEndView.textProperty().bind(session.getEndSceneView().exitLabelEndViewProperty);
+        this.endSceneLabel.textProperty().bind(session.getEndSceneView().endSceneLabelProperty);
+        this.endSceneLabel.styleProperty().bind(session.getEndSceneView().endSceneLabelStyleProperty);
+        this.endScene.getChildren().get(0).styleProperty().bind(session.getEndSceneView().endSceneStyleProperty);
+        this.score.textProperty().bind(session.getEndSceneView().scoreProperty);
+        this.exitLabelEndView.textProperty().bind(session.getEndSceneView().exitLabelEndViewProperty);
 
         // initialize Level map
         Level level = new Level(levelGrid);
-        session.objectGrid = level.getGameObjectGrid();
+        this.session.objectGrid = level.getGameObjectGrid();
 
         // initialize stones: search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
         this.session.getStoneCtrl().initializeStones(this.levelGrid);
 
-        mainCanvas.setHeight(GameConfig.WINDOW_HEIGHT);
-        mainCanvas.setWidth(GameConfig.WINDOW_WIDTH);
+        this.mainCanvas.setHeight(GameConfig.WINDOW_HEIGHT);
+        this.mainCanvas.setWidth(GameConfig.WINDOW_WIDTH);
 
         // graphics context for displaying moving entities and changing texts in level
-        gc = mainCanvas.getGraphicsContext2D();
+        this.gc = mainCanvas.getGraphicsContext2D();
 
         // initialize CollisionHandler
-        collisionHandler = new CollisionHandler(this, session.objectGrid, GameConfig.LEVEL_CELL_HEIGHT, GameConfig.LEVEL_CELL_WIDTH);
+        this.collisionHandler = new CollisionHandler(this, session.objectGrid, GameConfig.LEVEL_CELL_HEIGHT, GameConfig.LEVEL_CELL_WIDTH);
 
         // initialize font for texts that are shown
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
-        gc.setFont( theFont );
-        gc.setStroke(Color.BLACK);
-        gc.setFill(Color.WHITE );
-        gc.setLineWidth(5);
+        this.gc.setFont( theFont );
+        this.gc.setStroke(Color.BLACK);
+        this.gc.setFill(Color.WHITE );
+        this.gc.setLineWidth(5);
 
         // initialize Player's sprite
-        ducky = new AnimatedSprite(collisionHandler, this.session.getSpriteString(), this.session.getPlayer());
+        this.ducky = new AnimatedSprite(collisionHandler, this.session.getSpriteString(), this.session.getPlayer());
         this.session.getPlayer().setPlayerSprite(ducky);
-        ducky.duration = 0.1;
-        ducky.setPosition(GameConfig.WINDOW_WIDTH /4 - ducky.getFrame(0).getWidth()/2, 0);
-        ducky.setVelocity(0,100);
+        this.ducky.duration = 0.1;
+        this.ducky.setPosition(GameConfig.WINDOW_WIDTH /4 - ducky.getFrame(0).getWidth()/2, 0);
+        this.ducky.setVelocity(0,100);
 
         // binding timerLabel to Ducky's timer
-        timerLabel.textProperty().bind(this.session.getPlayer().timerProperty); // LENA Player statt DUcky
+        this.timerLabel.textProperty().bind(this.session.getPlayer().timerProperty); // LENA Player statt DUcky
 
         // binding scoreLabel to Ducky's score
-        scoreLabel.textProperty().bind(this.session.getPlayer().score.asString()); // LENA Player statt DUcky
+        this.scoreLabel.textProperty().bind(this.session.getPlayer().score.asString()); // LENA Player statt DUcky
 
         // add hearts to screen representing Ducky's health points
-        heartContainer.setSpacing(10.0); // PLAYER statt Ducky
+        this.heartContainer.setSpacing(10.0); // PLAYER statt Ducky
         for(int i = 0; i < this.session.getPlayer().getHealthPoints(); i++) {
             ImageView imageView = new ImageView(new Image(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/life-heart.png")));
             imageView.setFitHeight(GameConfig.LEVEL_CELL_HEIGHT - 10);
@@ -187,8 +178,8 @@ public class GameController{
         if (!this.session.getInFight() && !this.session.getGameOver()) {
             String code = keyEvent.getCode().toString();
             if(code.equals("SPACE")){
-                session.toggleIsRunning();
-                if(session.getIsRunning()){
+                this.session.toggleIsRunning();
+                if(this.session.getIsRunning()){
                     // end pause-view
                     this.session.getAnimationTimer().resetStartingTime();
                     this.session.getAnimationTimer().start();
@@ -203,14 +194,14 @@ public class GameController{
                 }
             }
             else if ( session.getIsRunning() && !input.contains(code) )
-                input.add( code );
+                this.input.add( code );
         }
     }
 
     @FXML
     public void handleOnKeyReleased(KeyEvent keyEvent) {
         String code = keyEvent.getCode().toString();
-        input.remove( code );
+        this.input.remove( code );
     }
 
     public void startCollision(Stone collisionStone) {
@@ -267,22 +258,22 @@ public class GameController{
         // showing 'You lose' text
         // lose-scene
         if(this.session.getPlayer().getHealthPoints() == 0){
-            session.toggleIsRunning();
+            this.session.toggleIsRunning();
             renderEndScene(false);
         }
 
         // remove heart if Ducky lost a health point
-        if(session.getPlayer().getHealthPoints() < heartContainer.getChildren().size()){
-            heartContainer.getChildren().remove(heartContainer.getChildren().size() - 1);
+        if(this.session.getPlayer().getHealthPoints() < this.heartContainer.getChildren().size()){
+            this.heartContainer.getChildren().remove(this.heartContainer.getChildren().size() - 1);
         }
     }
 
     public void clearGC() {
-        gc.clearRect(0, 0, GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT);
+        this.gc.clearRect(0, 0, GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT);
     }
 
     public void drawImageOnGC(double t) {
-        gc.drawImage(ducky.getFrame(t), ducky.getPositionX(), ducky.getPositionY());
+        this.gc.drawImage(ducky.getFrame(t), this.ducky.getPositionX(), this.ducky.getPositionY());
     }
 
     public String checkEndOfGame(boolean duckyWin) {
