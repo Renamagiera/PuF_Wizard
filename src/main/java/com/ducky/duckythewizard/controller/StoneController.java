@@ -43,8 +43,7 @@ public class StoneController extends Controller {
                 for (Stone stone : getSession().getStoneArrayList()) {
                     if (stone.getActive()) {
                         try {
-                            int sleepTime = new Random().nextInt(4000 - 2000 + 1) + 2000;
-                            System.out.println(sleepTime);
+                            int sleepTime = (new Random().nextInt(4 - 2 + 1) + 2) * 1000;
                             Thread.sleep(sleepTime);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
