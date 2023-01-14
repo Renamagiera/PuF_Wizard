@@ -44,6 +44,7 @@ public class StoneController extends Controller {
                     if (stone.getActive()) {
                         try {
                             int sleepTime = (new Random().nextInt(4 - 2 + 1) + 2) * 1000;
+                            System.out.println(sleepTime);
                             Thread.sleep(sleepTime);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
@@ -66,7 +67,7 @@ public class StoneController extends Controller {
         Thread t = new Thread(() -> {
             stone.setActive(false);
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
