@@ -26,8 +26,8 @@ public class MenuController extends Controller {
     private ToggleGroup groupSprites;
     private ToggleGroup groupSkins;
     String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/style.css")).toExternalForm();
-    private static String sprite = "ducky";
-    private static String skin = "normal";
+    private static String spriteSkin = "ducky";
+    private static String spriteSkinColor = "normal";
 
     public MenuController() {
         this.skins = new HashMap<>();
@@ -44,17 +44,17 @@ public class MenuController extends Controller {
     }
 
     // getter & setter
-    public static String getSprite() {
-        return sprite;
+    public static String getSpriteSkin() {
+        return spriteSkin;
     }
-    public static String getSkin() {
-        return skin;
+    public static String getSpriteSkinColor() {
+        return spriteSkinColor;
     }
-    public void setSprite(String spriteP) {
-        sprite = spriteP;
+    public void setSpriteSkin(String spriteP) {
+        spriteSkin = spriteP;
     }
-    public void setSkin(String skin) {
-        MenuController.skin = skin;
+    public void setSpriteSkinColor(String skinColor) {
+        MenuController.spriteSkinColor = skinColor;
     }
 
     // TODO maybe this can be in help-scene-ctrl
@@ -99,7 +99,7 @@ public class MenuController extends Controller {
             for (String sprite : this.skins.keySet()) {
                 RadioButton buttonSprite = (RadioButton) this.root.lookup("#" + sprite);
                 buttonSprite.setToggleGroup(groupSprites);
-                if (getSprite().equals(sprite)) {
+                if (getSpriteSkin().equals(sprite)) {
                     buttonSprite.setSelected(true);
                 }
             }
@@ -117,7 +117,7 @@ public class MenuController extends Controller {
                 RadioButton buttonSkin = (RadioButton) this.root.lookup("#" + skinKey);
                 buttonSkin.setToggleGroup(this.groupSkins);
                 buttonSkin.setText(this.skins.get(spriteId).get(skinKey));
-                if (getSkin().equals(this.skins.get(spriteId).get(skinKey))) {
+                if (getSpriteSkinColor().equals(this.skins.get(spriteId).get(skinKey))) {
                     buttonSkin.setSelected(true);
                 }
             }
@@ -129,19 +129,19 @@ public class MenuController extends Controller {
             RadioButton clickedButton = (RadioButton) toggleGroup.getSelectedToggle();
             if (clickedButton != null) {
                 if (sprite) {
-                    this.setSprite(clickedButton.getText());
+                    this.setSpriteSkin(clickedButton.getText());
                     // reset skin to default (first skin)
-                    this.setSkin(this.resetToDefaultSkin());
+                    this.setSpriteSkinColor(this.resetToDefaultSkin());
                     this.updateSkinButtons();
                 } else {
-                    this.setSkin(clickedButton.getText());
+                    this.setSpriteSkinColor(clickedButton.getText());
                 }
             }
         });
     }
 
     private String resetToDefaultSkin() {
-        String sprite = getSprite();
+        String sprite = getSpriteSkin();
         return this.skins.get(sprite).get("one");
     }
 

@@ -26,7 +26,8 @@ public class AnimatedSprite extends Sprite
     private int flyImageAmount;
     private int idleImageAmount ;
 
-    private String spriteString;
+    private String spriteSkinString;
+    private String spriteSkinColorString;
     private Player player;
     private AnimatedSprite.MovementState state;
     private CollisionHandler collisionHandler;
@@ -40,8 +41,9 @@ public class AnimatedSprite extends Sprite
 
     private boolean spriteLooksLeft = false;
 
-    public AnimatedSprite(CollisionHandler collisionHandler, String spriteString, Player player) {
-        this.spriteString = spriteString;
+    public AnimatedSprite(CollisionHandler collisionHandler, String spriteSkinString, String spriteSkinColorString, Player player) {
+        this.spriteSkinString = spriteSkinString;
+        this.spriteSkinColorString = spriteSkinColorString;
         this.player = player;
         this.player.resetPlayerTimer();
         this.state = AnimatedSprite.MovementState.FLY;
@@ -207,7 +209,9 @@ public class AnimatedSprite extends Sprite
     private void addImages(String move, Image[] right, Image[] left) {
         // add images to movement
         for (int i = 0; i < right.length; i++) {
-            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.spriteString + "/" + move + "/" + move + "_" + i + ".png")));
+            System.out.println("SKin: " + this.spriteSkinString + " and Colour: " + this.spriteSkinColorString);
+            Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.spriteSkinString + "/" + this.spriteSkinColorString + "/" + move + "/" + move + "_" + i + ".png")));
+            System.out.println("gotImage in addImage");
             right[i] = scaleImage(image, rescaleImgWidth(image), rescaleImgHeight(image), true, false);
         }
         // add mirrored images to opposite movement
@@ -250,7 +254,7 @@ public class AnimatedSprite extends Sprite
 
     private int countFiles(String move) {
         int fileCount;
-        File directory = new File("src/main/resources/com/ducky/duckythewizard/images/" + this.spriteString + "/" + move);
+        File directory = new File("src/main/resources/com/ducky/duckythewizard/images/" + this.spriteSkinString + "/" + this.spriteSkinColorString + "/" + move);
         fileCount = Objects.requireNonNull(directory.list()).length;
         return fileCount;
     }

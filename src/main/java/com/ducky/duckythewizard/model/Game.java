@@ -17,7 +17,6 @@ public class Game {
     private boolean inFight;
     private boolean gameOver;
 
-    private String sprite;
     private Player player;
     private Fight activeFight;
     private AnchorPane rootAnchorPane;
@@ -133,9 +132,6 @@ public class Game {
 
     public MyAnimationTimer getAnimationTimer() { return this.animationTimer;}
 
-    public String getSpriteString() {
-        return this.sprite;
-    }
     public CardDeckModel getCardDeckModel() {
         return this.cardDeckModel;
     }
@@ -178,9 +174,6 @@ public class Game {
     }
     public void setFightOverlay(AnchorPane fightOverlay) {
         this.fightOverlay = fightOverlay;
-    }
-    public void setSprite(String sprite) {
-        this.sprite = sprite;
     }
     public void setAnimationTimer(MyAnimationTimer timer) { this.animationTimer = timer;}
 
