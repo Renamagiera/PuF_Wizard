@@ -2,16 +2,18 @@ package com.ducky.duckythewizard.controller.scenes;
 
 import com.ducky.duckythewizard.controller.Controller;
 import com.ducky.duckythewizard.controller.WizardMainApplication;
+import com.ducky.duckythewizard.model.Host;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,13 +23,25 @@ import java.util.Objects;
 
 public class MenuController extends Controller {
     /*Controller for all scenes, that are not game-view*/
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private BorderPane startBorderPane;
     private Parent root;
     private Map<String, Map<String, String>> skins;
     private ToggleGroup groupSprites;
     private ToggleGroup groupSkins;
-    String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/style.css")).toExternalForm();
     private static String sprite = "ducky";
     private static String skin = "normal";
+
+    @FXML
+    public void initialize() {
+        if(nameLabel != null) {
+            nameLabel.setText(Host.getInstance().getPlayerName());
+            nameLabel.setAlignment(Pos.CENTER_RIGHT);
+            startBorderPane.getCenter().toBack();
+        }
+    }
 
     public MenuController() {
         this.skins = new HashMap<>();
@@ -143,15 +157,5 @@ public class MenuController extends Controller {
     private String resetToDefaultSkin() {
         String sprite = getSprite();
         return this.skins.get(sprite).get("one");
-    }
-
-    public void getWindowStage(Event event, Parent root) {
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().clear();
-        scene.getStylesheets().add(css);
-        stage.setScene(scene);
-        // show is always in controller class
-        stage.show();
     }
 }

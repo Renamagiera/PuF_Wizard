@@ -263,7 +263,6 @@ public class GameController{
     }
 
     public void checkPlayerHealth() {
-        // showing 'You lose' text
         // lose-scene
         if(this.session.getPlayer().getHealthPoints() == 0){
             this.session.toggleIsRunning();

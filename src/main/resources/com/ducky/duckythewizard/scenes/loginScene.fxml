@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.LoginSceneController">
+        <ImageView fitHeight="538.0" fitWidth="956.0" layoutX="-58.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/helpScenes/bg.png" />
+            </image>
+        </ImageView>
+        <Pane layoutX="-24.0" layoutY="527.0" prefHeight="124.0" prefWidth="824.0" style="-fx-background-color: #072130;" BorderPane.alignment="CENTER">
+            <children>
+            <Label fx:id="registerButton" alignment="CENTER" layoutX="424.0" layoutY="30.0" onMouseClicked="#registerUser" prefHeight="50.0" prefWidth="140.0" text="Register">
+               <styleClass>
+                  <String fx:value="textSizeStartLabels" />
+                  <String fx:value="textGeneral" />
+                  <String fx:value="bgLightBrown" />
+               </styleClass>
+            </Label>
+            <Label alignment="CENTER" layoutX="236.0" layoutY="30.0" onMouseClicked="#loginUser" prefHeight="50.0" prefWidth="140.0" text="Login">
+               <styleClass>
+                  <String fx:value="textGeneral" />
+                  <String fx:value="bgLightBrown" />
+                  <String fx:value="textSizeStartLabels" />
+               </styleClass>
+            </Label>
+            </children>
+        </Pane>
+      <TextField fx:id="userTextField" layoutX="262.0" layoutY="446.0" prefHeight="50.0" prefWidth="229.0" promptText="USERNAME">
+        <styleClass>
+            <String fx:value="light-brown-border" />
+            <String fx:value="textInput" />
+        </styleClass>
+      </TextField>
+   <Label fx:id="infoLabel" layoutX="219.0" layoutY="505.0" prefHeight="44.0" prefWidth="314.0" text="Label" textAlignment="CENTER">
+        <styleClass>
+            <String fx:value="outline" />
+            <String fx:value="infoLabel" />
+            <String fx:value="warning" />
+        </styleClass>
+   </Label>
+</AnchorPane>

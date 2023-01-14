@@ -53,7 +53,8 @@ public class Game {
         this.gameConfig = new GameConfig();
         this.gameColorObject = new GameColorObject();
         this.cardDeckModel = new CardDeckModel();
-        this.player = new Player();
+        this.player = Host.getInstance();
+        player.resetPlayer();
         this.stoneArrayList = new ArrayList<>();
         this.fightSceneModel = new FightSceneModel();
         this.endSceneModel = new EndSceneModel();

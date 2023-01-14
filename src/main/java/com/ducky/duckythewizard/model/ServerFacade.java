@@ -1,20 +1,23 @@
 package com.ducky.duckythewizard.model;
 
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
+import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.net.http.HttpClient;
 
 // used pattern: FACADE
 public class ServerFacade {
+
+    private String serverUrl = "http://localhost:8080/";
 
     public void sendHighScoreToServer(String name, int score) {
         // send high score to sever
@@ -26,7 +29,7 @@ public class ServerFacade {
         String urlParameters  = "name=" + name + "&score=" + score;
         byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
         int    postDataLength = postData.length;
-        String request        = "http://localhost:8080/add";
+        String request        = "http://localhost:8080/addScore";
         URL url            = null;
         HttpURLConnection conn= null;
         try {
@@ -74,48 +77,39 @@ public class ServerFacade {
             topHighScores.add(i, new HighScore(i + 1, "Name" + (i+1), 100 - (i*10)));
         }*/
 
-        String url = "http://localhost:8080/top?limit=" + limit;
-        StringBuffer response = new StringBuffer();
+        String url = serverUrl + "top?limit=" + limit;
 
+        HttpResponse<String> response = null;
         try {
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .GET()
+                    .build();
 
-            con.setRequestMethod("GET");
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            int responseCode = con.getResponseCode();
-            /*System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);*/
-
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-        }catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        //print result
-        //System.out.println(response);
-
-        int startIndex = 0;
-        int endIndex = 0;
-        String substring = null;
-
-        // building high score objects from JSON data
-        for (int i = 0; i < limit; i++) {
-            endIndex = response.indexOf("}", startIndex);
-            if (endIndex == -1){
-                break;
-            }
-            substring = response.substring(startIndex, endIndex);
-            startIndex = endIndex + 1;
-            topHighScores.add(i, getHighScoreFromString(substring, i + 1));
+        } catch(Exception e) {
+            System.out.println("ERROR: " + e.getMessage());
         }
 
+        if (response != null){
+            String responseString = response.body();
+            int startIndex = 0;
+            int endIndex = 0;
+            String substring = null;
+
+            // building high score objects from JSON data
+            for (int i = 0; i < limit; i++) {
+                endIndex = responseString.indexOf("}}", startIndex) + 1;
+                if (endIndex == 0){
+                    break;
+                }
+                substring = responseString.substring(startIndex, endIndex);
+                startIndex = endIndex + 1;
+                topHighScores.add(i, getHighScoreFromString(substring, i + 1));
+            }
+        }
         return topHighScores;
     }
 
@@ -123,9 +117,57 @@ public class ServerFacade {
         int nameStartIndex = text.indexOf("name") + 7;
         int nameEndIndex = text.indexOf("\"", nameStartIndex);
         int scoreStartIndex = text.indexOf("score") + 7;
+        int scoreEndIndex = text.indexOf(",", scoreStartIndex);
         String name = text.substring(nameStartIndex, nameEndIndex);
-        int score = Integer.parseInt(text.substring(scoreStartIndex));
+        int score = Integer.parseInt(text.substring(scoreStartIndex, scoreEndIndex));
         HighScore highScore = new HighScore(rank, name, score);
         return highScore;
+    }
+
+    // adds new user, returns true if successful, false if not
+    public boolean addNewUser(String name) {
+        HttpResponse<String> response = null;
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(serverUrl + "addUser"))
+                    .POST(HttpRequest.BodyPublishers.ofString(name))
+                    .build();
+
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        }catch(Exception e){
+            System.out.println("ERROR: " + e.getMessage());
+        }
+        if (response != null && response.body().contains("Saved")){
+            return true;
+        }
+        else if (response != null && response.body().contains("ERROR")) {
+            return false;
+        }
+        return false;
+    }
+
+    public boolean getIfUserExists(String name){
+        HttpResponse<String> response = null;
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(serverUrl + "getUser?name="+ name))
+                    .GET()
+                    .build();
+
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        }catch(Exception e){
+            System.out.println("ERROR: " + e.getMessage());
+        }
+        if (response != null && response.body().contains("true")){
+            return true;
+        }
+        else if (response != null && response.body().contains("false")) {
+            System.out.println("==> ERROR");
+            return false;
+        }
+        return false;
     }
 }

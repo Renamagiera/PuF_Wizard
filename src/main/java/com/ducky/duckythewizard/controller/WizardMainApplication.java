@@ -1,5 +1,6 @@
 package com.ducky.duckythewizard.controller;
 
+import com.ducky.duckythewizard.model.Host;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +14,12 @@ public class WizardMainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/startingScene.fxml")));
+        Parent root;
+        if (Host.getInstance() == null){
+            root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/loginScene.fxml")));
+        } else {
+            root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/startingScene.fxml")));
+        }
         Scene scene = new Scene(root);
         stage.setTitle("Ducky and the Wizard Stones");
         String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/style.css")).toExternalForm();
