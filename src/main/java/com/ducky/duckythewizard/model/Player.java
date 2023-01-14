@@ -24,6 +24,10 @@ public class Player {
     private AnimatedSprite playerSprite;
 
     public Player() {
+        this.resetPlayer();
+    }
+
+    public void resetPlayer(){
         this.healthPoints = maxHealthPoints;
         this.score = new SimpleIntegerProperty(0);
         this.resetTime = System.nanoTime();
@@ -35,6 +39,10 @@ public class Player {
     }
 
     //getter & setter
+
+    public void setPlayerName(String name) {
+        this.name = name;
+    }
     public String getPlayerName() {
         return this.name;
     }
@@ -73,12 +81,9 @@ public class Player {
     public void reducePlayerTimer() {
         int time = (int)((System.nanoTime() - this.resetTime) / 1000000000.0);
         this.timerProperty.set(Integer.toString(GameConfig.PLAYER_ACTION_TIMER - time <= 0 ? 0 : GameConfig.PLAYER_ACTION_TIMER - time));
-        if(this.timerProperty.getValue().equals("3")) {
-            this.updateTimerLabel(true);
-        }
+        this.updateTimerLabel(Integer.parseInt(this.timerProperty.getValue()) <= 3);
         if(this.timerProperty.getValue().equals("0")) {
             this.reducePlayerLife();
-            this.updateTimerLabel(false);
         }
     }
 

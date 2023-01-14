@@ -85,9 +85,6 @@ public class GameController{
         this.session.setFightOverlay(this.fightOverlay);
         this.session.setAnchorPaneEndOverlay(this.endScene);
 
-        // initialize fight-view-scene local variables
-        this.session.getFightView().initLocalVariables(this.session.getGameColorObject(), this.fightOverlay);
-
         // fight- and end-overlay not visible
         this.fightOverlay.setVisible(false);
         this.endScene.setVisible(false);
@@ -100,6 +97,10 @@ public class GameController{
         this.session.createMenuCtrlObj();
         this.session.createEndSceneCtrl();
         this.session.createFightSceneCtrl();
+        this.session.createGameColorObj();
+
+        // initialize fight-view-scene local variables
+        this.session.getFightView().initLocalVariables(this.session.getGameColorObject(), this.fightOverlay);
 
         // initialize cards: set card-anchor-pane, render hand-cards
         this.session.getCardCtrl().cardInit();
@@ -263,7 +264,6 @@ public class GameController{
     }
 
     public void checkPlayerHealth() {
-        // showing 'You lose' text
         // lose-scene
         if(this.session.getPlayer().getHealthPoints() == 0){
             this.session.toggleIsRunning();

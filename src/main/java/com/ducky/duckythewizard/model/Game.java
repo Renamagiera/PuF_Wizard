@@ -51,9 +51,10 @@ public class Game {
         this.inFight = false;
         this.gameOver = false;
         this.gameConfig = new GameConfig();
-        this.gameColorObject = new GameColorObject();
+        //this.gameColorObject = new GameColorObject();
         this.cardDeckModel = new CardDeckModel();
-        this.player = new Player();
+        this.player = Host.getInstance();
+        player.resetPlayer();
         this.stoneArrayList = new ArrayList<>();
         this.fightSceneModel = new FightSceneModel();
         this.endSceneModel = new EndSceneModel();
@@ -104,6 +105,9 @@ public class Game {
     public void createFightSceneCtrl() {
         this.fightSceneCtrl = new FightSceneController(this);
     }
+    public void createGameColorObj() {
+        this.gameColorObject = new GameColorObject();
+    }
 
     public GameConfig getGameConfig() {
         return this.gameConfig;
@@ -129,6 +133,9 @@ public class Game {
     }
     public FightSceneController getFightSceneCtrl() {
         return this.fightSceneCtrl;
+    }
+    public GameColorObject getGameColorObject() {
+        return this.gameColorObject;
     }
 
     public MyAnimationTimer getAnimationTimer() { return this.animationTimer;}
@@ -161,10 +168,6 @@ public class Game {
     }
     public EndSceneModel getEndSceneView() {
         return this.endSceneModel;
-    }
-
-    public GameColorObject getGameColorObject() {
-        return this.gameColorObject;
     }
 
     public void setAnchorPaneEndOverlay(AnchorPane anchorPaneEndOverlay) {
