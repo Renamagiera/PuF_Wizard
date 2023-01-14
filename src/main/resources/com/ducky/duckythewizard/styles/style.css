@@ -100,3 +100,24 @@
     -fx-border-color: #412B0F;
 }
 
+.textInput {
+    -fx-font-family: 'Alagard';
+    -fx-font-size: 25px;
+    -fx-text-fill: black;
+    -fx-background-color: white;
+}
+
+.infoLabel {
+    -fx-font-family: 'Alagard';
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+
+    -fx-stroke: black;
+    -fx-stroke-type: OUTSIDE;
+    -fx-stroke-width: 2px;
+}
+
+.warning {
+    -fx-text-fill: red;
+}
