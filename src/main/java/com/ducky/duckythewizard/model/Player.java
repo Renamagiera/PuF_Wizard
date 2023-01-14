@@ -24,6 +24,10 @@ public class Player {
     private AnimatedSprite playerSprite;
 
     public Player() {
+        this.resetPlayer();
+    }
+
+    public void resetPlayer(){
         this.healthPoints = maxHealthPoints;
         this.score = new SimpleIntegerProperty(0);
         this.resetTime = System.nanoTime();
@@ -35,6 +39,10 @@ public class Player {
     }
 
     //getter & setter
+
+    public void setPlayerName(String name) {
+        this.name = name;
+    }
     public String getPlayerName() {
         return this.name;
     }

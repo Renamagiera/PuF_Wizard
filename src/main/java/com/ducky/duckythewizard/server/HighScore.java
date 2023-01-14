@@ -1,9 +1,6 @@
 package com.ducky.duckythewizard.server;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class HighScore {
@@ -11,9 +8,11 @@ public class HighScore {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    private String name;
-
     private int score;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
 
     public int getId() {
         return id;
@@ -23,14 +22,6 @@ public class HighScore {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getScore() {
         return score;
     }
@@ -38,4 +29,8 @@ public class HighScore {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public User getUser() { return user; }
+
+    public void setUser(User user) { this.user = user; }
 }

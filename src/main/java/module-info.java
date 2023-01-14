@@ -9,6 +9,7 @@ module com.ducky.duckythewizard {
     requires spring.web;
     requires spring.boot;
     requires spring.boot.autoconfigure;
+    requires java.net.http;
     requires javatuples;
 
 
