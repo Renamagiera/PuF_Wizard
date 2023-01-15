@@ -156,7 +156,7 @@ public class GameController{
         this.ducky.setVelocity(0,100);
 
         // binding timerLabel to Ducky's timer
-        this.timerLabel.textProperty().bind(this.session.getPlayer().timerProperty); // LENA Player statt DUcky
+        this.timerLabel.textProperty().bind(this.session.getPlayer().timerProperty.asString());
         this.timerLabel.styleProperty().bind(this.session.getPlayer().timerLabelStyle);
 
         // binding scoreLabel to Ducky's score

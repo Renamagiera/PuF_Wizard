@@ -2,10 +2,13 @@ package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.card.CardModel;
 import com.ducky.duckythewizard.model.config.GameConfig;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Player {
     private String name = "testname";
@@ -15,27 +18,55 @@ public class Player {
     private int playableCards;
 
     public SimpleIntegerProperty score;
-    public SimpleStringProperty timerProperty;
+    public SimpleIntegerProperty timerProperty;
     public SimpleStringProperty timerTextLabel;
     public SimpleStringProperty timerLabel;
     public SimpleStringProperty timerLabelStyle;
-    private long resetTime;
 
+    private Game session;
     private AnimatedSprite playerSprite;
 
     public Player() {
         this.resetPlayer();
+        this.startTimer();
     }
 
     public void resetPlayer(){
         this.healthPoints = maxHealthPoints;
         this.score = new SimpleIntegerProperty(0);
-        this.resetTime = System.nanoTime();
-        this.timerProperty = new SimpleStringProperty(Integer.toString(GameConfig.PLAYER_ACTION_TIMER));
+        this.timerProperty = new SimpleIntegerProperty(GameConfig.PLAYER_ACTION_TIMER);
         this.timerTextLabel = new SimpleStringProperty();
         this.timerLabel = new SimpleStringProperty();
         this.timerLabelStyle = new SimpleStringProperty();
         this.playableCards = GameConfig.AMOUNT_HAND_CARDS;
+    }
+
+    private void startTimer(){
+        Runnable timerRunnable = new Runnable() {
+            public void run() {
+                if (session != null && session.getIsRunning()){
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            timerProperty.setValue(timerProperty.getValue() - 1);
+                            if (timerProperty.getValue() == 0) {
+                                reducePlayerLife();
+                            }else if(timerProperty.getValue() == 3){
+                                updateTimerLabel(true);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1,
+            r -> {
+                Thread t = Executors.defaultThreadFactory().newThread(r);
+                t.setDaemon(true);
+                return t;
+            }
+        );
+        executor.scheduleAtFixedRate(timerRunnable, 0, 1, TimeUnit.SECONDS);
     }
 
     //getter & setter
@@ -72,27 +103,18 @@ public class Player {
         this.playableCards = playableCards;
     }
 
+    public void setSession(Game session){
+        this.session = session;
+    }
 
     public void addToScore (int points) {
         this.score.set(score.getValue() + points);
         System.out.println("==> adding " + points + " to score, TOTAL SCORE is now: " + score.getValue());
     }
 
-    public void reducePlayerTimer() {
-        int time = (int)((System.nanoTime() - this.resetTime) / 1000000000.0);
-        this.timerProperty.set(Integer.toString(GameConfig.PLAYER_ACTION_TIMER - time <= 0 ? 0 : GameConfig.PLAYER_ACTION_TIMER - time));
-        if(this.timerProperty.getValue().equals("3")) {
-            this.updateTimerLabel(true);
-        }
-        if(this.timerProperty.getValue().equals("0")) {
-            this.reducePlayerLife();
-            this.updateTimerLabel(false);
-        }
-    }
-
     public void resetPlayerTimer() {
-        this.timerProperty.set(Integer.toString(GameConfig.PLAYER_ACTION_TIMER));
-        this.resetTime = System.nanoTime();
+        this.timerProperty.set(GameConfig.PLAYER_ACTION_TIMER);
+        this.updateTimerLabel(false);
     }
 
     private void reducePlayerLife(){
