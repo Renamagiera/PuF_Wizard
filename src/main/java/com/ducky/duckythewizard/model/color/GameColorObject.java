@@ -2,7 +2,7 @@ package com.ducky.duckythewizard.model.color;
 
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.effect.ColorAdjust;
-
+import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
@@ -34,10 +34,6 @@ public class GameColorObject {
     // get Color Objects
     public TrumpColor getTrumpColorObject() {
         return trumpColorObject;
-    }
-
-    public LayoutColor getLayoutColorObject() {
-        return layoutColorObject;
     }
 
     public ArrayList<GameColor> getTrumpColors() { return trumpColors; }
@@ -96,19 +92,7 @@ public class GameColorObject {
         return this.trumpColors.get((int) Math.floor(Math.random()*(this.colorAmount)));
     }
 
-    public void toStringTrumpColors() {
-        for (GameColor color : this.trumpColors) {
-            System.out.println("color name: " + color.getName());
-        }
-    }
-
-    public void toStringLayoutColors() {
-        for (GameColor color : this.layoutColors) {
-            System.out.println("color name: " + color.getName());
-        }
-    }
-
-    public void tintObject(ImageView imageView, String colorName) {
+    public void tintObject(ImageView imageView, String colorName, boolean glow) {
         Color targetColor = RGB_MAP.get("none");
 
         for (int i = 0; i < GameConfig.trumpColorsString.length - 1; i++) {
@@ -128,7 +112,14 @@ public class GameColorObject {
         colorAdjust.setSaturation(saturation);
         colorAdjust.setBrightness(brightness);
 
-        imageView.setEffect(colorAdjust);
+        if (glow) {
+            Glow glowEffect = new Glow();
+            glowEffect.setLevel(0.9);
+            glowEffect.setInput(colorAdjust);
+            imageView.setEffect(glowEffect);
+        } else {
+            imageView.setEffect(colorAdjust);
+        }
     }
 
     public void setOpacityImageView(ImageView imageView, double opacity) {

@@ -81,12 +81,9 @@ public class Player {
     public void reducePlayerTimer() {
         int time = (int)((System.nanoTime() - this.resetTime) / 1000000000.0);
         this.timerProperty.set(Integer.toString(GameConfig.PLAYER_ACTION_TIMER - time <= 0 ? 0 : GameConfig.PLAYER_ACTION_TIMER - time));
-        if(this.timerProperty.getValue().equals("3")) {
-            this.updateTimerLabel(true);
-        }
+        this.updateTimerLabel(Integer.parseInt(this.timerProperty.getValue()) <= 3);
         if(this.timerProperty.getValue().equals("0")) {
             this.reducePlayerLife();
-            this.updateTimerLabel(false);
         }
     }
 
