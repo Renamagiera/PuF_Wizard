@@ -33,7 +33,7 @@ public class CollisionHandler {
                         //System.out.println("STONE");
 
                         Stone stone = (Stone)this.levelObjects[row][column];
-                        if(stone.isActive()) {
+                        if(stone.isActive() && !stone.getIsChangingColor()) {
                             this.myGameController.startCollision(stone);
                         }
                     }

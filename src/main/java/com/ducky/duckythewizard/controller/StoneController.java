@@ -118,13 +118,15 @@ public class StoneController extends Controller {
     }
 
     public void setInactive(Stone stone) {
-        stone.setActive(false);
+        //stone.setActive(false);
+        stone.setIsChangingColor(true);
         // starting timer to set stone active again in new thread
         Thread thread = new Thread(() -> {
             try {
                 this.getSession().getGameColorObject().setOpacityImageView(stone.getStoneImgView(), 0.4);
                 Thread.sleep(GameConfig.STONE_INACTIVE_TIMER);
-                stone.setActive(true);
+                //stone.setActive(true);
+                stone.setIsChangingColor(false);
                 this.getSession().getGameColorObject().setOpacityImageView(stone.getStoneImgView(), 1);
             } catch (InterruptedException ie) {
                 System.out.println(ie);
