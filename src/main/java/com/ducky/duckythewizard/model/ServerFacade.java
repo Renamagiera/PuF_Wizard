@@ -1,16 +1,9 @@
 package com.ducky.duckythewizard.model;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.net.http.HttpClient;
 
@@ -20,48 +13,34 @@ public class ServerFacade {
     private String serverUrl = "http://localhost:8080/";
 
     public void sendHighScoreToServer(String name, int score) {
-        // send high score to sever
+        // send high score to server
 
-        // MOCK sending
-        // System.out.println("SENDING HIGH SCORE (not really)");
+        String postBody = "{\r\n    \"score\":" + score + ",\r\n    \"name\":\"" + name + "\"\r\n}";
 
-
-        String urlParameters  = "name=" + name + "&score=" + score;
-        byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
-        int    postDataLength = postData.length;
-        String request        = "http://localhost:8080/addScore";
-        URL url            = null;
-        HttpURLConnection conn= null;
+        HttpResponse<String> response = null;
         try {
-            url = new URL( request );
-            conn = (HttpURLConnection) url.openConnection();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        conn.setDoOutput( true );
-        conn.setInstanceFollowRedirects( false );
-        try {
-            conn.setRequestMethod( "POST" );
-        } catch (ProtocolException e) {
-            throw new RuntimeException(e);
-        }
-        conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
-        conn.setRequestProperty( "charset", "utf-8");
-        conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
-        conn.setUseCaches( false );
-        try( OutputStream wr = conn.getOutputStream()) {
-            wr.write( postData );
-            conn.getInputStream();
-        } catch(Exception e) {
-            throw new RuntimeException(e);
-        }
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(serverUrl + "addScore"))
+                    .headers("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(postBody))
+                    .build();
 
-
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        }catch(Exception e){
+            System.out.println("ERROR: " + e.getMessage());
+        }
+        if (response != null && response.body().contains("Saved")){
+            System.out.println("=> new HighScore saved");
+        }
+        else if (response != null && response.body().contains("ERROR")) {
+            System.out.println("=> Something went wrong while trying to save high score");
+        }
     }
 
     // not needed, therefore not implemented
-    public HashMap<String, Integer> getAllHighScoresFromServer() {
-        HashMap<String, Integer> highScores = new HashMap<String, Integer>();
+    public List<HighScore> getAllHighScoresFromServer() {
+        List<HighScore> highScores = new ArrayList<>();
 
         // get all high scores from server and store them in a hashmap
         return highScores;
@@ -71,7 +50,7 @@ public class ServerFacade {
         // get top <number> high scores from server and store them in an ArrayList of HighScore objects
         List<HighScore> topHighScores = new ArrayList<>();
 
-    /*    // MOCK building high score objects from JSON data
+    /*    // MOCK building high score objects from JSON data for testing purposes
         for (int i = 0; i < limit; i++) {
             // test data
             topHighScores.add(i, new HighScore(i + 1, "Name" + (i+1), 100 - (i*10)));
