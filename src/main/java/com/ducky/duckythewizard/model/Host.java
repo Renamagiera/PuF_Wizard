@@ -19,4 +19,8 @@ public class Host extends Player{
             INSTANCE = new Host(name);
         }
     }
+
+    public static void logoutHost(){
+        INSTANCE.setPlayerName(null);
+    }
 }
