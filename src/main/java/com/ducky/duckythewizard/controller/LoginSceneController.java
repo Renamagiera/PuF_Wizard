@@ -75,7 +75,12 @@ public class LoginSceneController extends Controller{
     }
 
     private void createHostAndNavigateToStartScreen(MouseEvent mouseEvent, String userName){
-        Host.createHostInstance(userName);
+        if (Host.getInstance() == null){
+            Host.createHostInstance(userName);
+        } else {
+            Host.getInstance().setPlayerName(userName);
+        }
+
         // navigate to menu
         String scene = "/com/ducky/duckythewizard/scenes/startingScene.fxml";
 
