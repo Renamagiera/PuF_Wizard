@@ -7,8 +7,7 @@ Kurze Beschreibung des Projektes
 2. [Technologien](#technologien)
 3. [Installation](#installation)
     1. [IntelliJ](#intelliJ)
-    2. [Eclipse](#eclipse)
-    3. [POM-Datei]()
+    2. [POM-Datei](#pom)
 
 
 <a name="allgemeine-info"></a>
@@ -55,6 +54,6 @@ Bei der IDE IntelliJ gibt es dafür den Button "Get from VCS".\
 6. Run Application (WizardMainApplication) (Strg + Umschalt + F10)
 
 
-<a name="eclipse"></a>
-### Eclipse
+<a name="pom"></a>
+### POM-Datei
 
