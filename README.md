@@ -7,7 +7,7 @@ Kurze Beschreibung des Projektes
 2. [Technologien](#technologien)
 3. [Installation](#installation)
     1. [IntelliJ](#intelliJ)
-    2. [Eclipse]()
+    2. [Eclipse](#eclipse)
     3. [POM-Datei]()
 
 
@@ -52,4 +52,9 @@ Bei der IDE IntelliJ gibt es dafür den Button "Get from VCS".\
               6. sollte es hier zu einem JAVA_HOME not found Error kommen: File -> Settings -> Tools -> Terminal Environment Variable eintragen: 
               JAVA_HOME=**"JDK-Pfad"**
 5. Build Project (Strg + F9) 
-6. Run Application (WizardMainApplication)
+6. Run Application (WizardMainApplication) (Strg + Umschalt + F10)
+
+
+<a name="eclipse"></a>
+### Eclipse
+
