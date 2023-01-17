@@ -51,4 +51,4 @@ Bei der IDE IntelliJ gibt es dafür den Button "Get from VCS".\
               5. Server starten mit dem Befehl **./mvnw spring-boot:run**\
               6. sollte es hier zu einem JAVA_HOME not found Error kommen: File -> Settings -> Tools -> Terminal Environment Variable eintragen: 
               JAVA_HOME=**"JDK-Pfad"**
-5. start 
+5. Build Project (Strg + F9) 
