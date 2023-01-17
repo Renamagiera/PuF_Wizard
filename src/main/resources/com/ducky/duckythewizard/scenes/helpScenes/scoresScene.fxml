@@ -20,14 +20,25 @@
          </styleClass>
       </Label>
       <HBox layoutX="175" layoutY="200">
-         <ScoresController></ScoresController>
+         <ScoresController fx:id="scoresController"></ScoresController>
       </HBox>
-      <Label fx:id="backToMenu" alignment="CENTER" onMouseClicked="#backToMenu" layoutX="300.0" layoutY="530" prefHeight="50.0" prefWidth="200.0" text="Menu" textAlignment="CENTER">
-         <styleClass>
-            <String fx:value="textGeneral" />
-            <String fx:value="bg-blue" />
-            <String fx:value="light-brown-border" />
-         </styleClass>
-      </Label>
+      <HBox prefHeight="50.0" prefWidth="800.00" layoutY="530" spacing="50.0" alignment="CENTER">
+         <children>
+            <Label fx:id="backToMenu" onMouseClicked="#backToMenu" prefHeight="50.0" prefWidth="200.0" text="Menu" textAlignment="CENTER" alignment="CENTER">
+               <styleClass>
+                  <String fx:value="textGeneral" />
+                  <String fx:value="bg-blue" />
+                  <String fx:value="light-brown-border" />
+               </styleClass>
+            </Label>
+            <Label fx:id="toggleScoresLabel" onMouseClicked="#toggleScores" prefHeight="50.0" prefWidth="200.0" text="My Scores" textAlignment="CENTER" alignment="CENTER">
+               <styleClass>
+                  <String fx:value="textGeneral" />
+                  <String fx:value="bg-blue" />
+                  <String fx:value="light-brown-border" />
+               </styleClass>
+            </Label>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

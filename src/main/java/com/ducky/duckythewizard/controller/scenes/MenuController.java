@@ -1,12 +1,12 @@
 package com.ducky.duckythewizard.controller.scenes;
 
 import com.ducky.duckythewizard.controller.Controller;
+import com.ducky.duckythewizard.controller.ScoresController;
 import com.ducky.duckythewizard.controller.WizardMainApplication;
 import com.ducky.duckythewizard.model.Host;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -28,6 +28,9 @@ public class MenuController extends Controller {
     private Label nameLabel;
     @FXML
     private BorderPane startBorderPane;
+    @FXML
+    private ScoresController scoresController;
+    @FXML Label toggleScoresLabel;
     private Parent root;
     private Map<String, Map<String, String>> skins;
     private ToggleGroup groupSprites;
@@ -167,5 +170,11 @@ public class MenuController extends Controller {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void toggleScores() {
+        scoresController.toggleTableView();
+        String labelText = toggleScoresLabel.getText().equals("All Scores") ? "My Scores" : "All Scores";
+        toggleScoresLabel.setText(labelText);
     }
 }

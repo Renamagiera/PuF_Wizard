@@ -43,10 +43,11 @@ public class MainController {
         return userRepository.existsUserByName(name);
     }
 
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<HighScore> getAllHighScores() {
-        // This returns a JSON or XML with the users
-        return highScoreRepository.findAll();
+    @GetMapping(path="/allOfUser")
+    public @ResponseBody Iterable<HighScore> getAllHighScoresOfUser(@RequestParam String name) {
+        // This returns a JSON or XML with the high scores
+        User user = userRepository.getUserByName(name);
+        return highScoreRepository.findAllByUserOrderByScoreDesc(user);
     }
 
     @GetMapping(path="/top")
