@@ -47,7 +47,7 @@ public class ServerFacade {
     }
 
     public List<HighScore> getTopHighScoresFromServer(int limit) {
-        // get top <number> high scores from server and store them in an ArrayList of HighScore objects
+        // get top <limit> high scores from server and store them in an ArrayList of HighScore objects
         List<HighScore> topHighScores = new ArrayList<>();
 
     /*    // MOCK building high score objects from JSON data for testing purposes
@@ -90,6 +90,47 @@ public class ServerFacade {
             }
         }
         return topHighScores;
+    }
+
+    public List<HighScore> getAllHighScoresOfUser(String name) {
+        // get all high scores of one user from server and store them in an ArrayList of HighScore objects
+        List<HighScore> userHighScores = new ArrayList<>();
+
+        String url = serverUrl + "allOfUser?name=" + name;
+
+        HttpResponse<String> response = null;
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .GET()
+                    .build();
+
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        } catch(Exception e) {
+            System.out.println("ERROR: " + e.getMessage());
+        }
+
+        if (response != null){
+            String responseString = response.body();
+            int startIndex = 0;
+            int endIndex = 0;
+            String substring = null;
+            int i = 0;
+            // building high score objects from JSON data
+            do {
+                endIndex = responseString.indexOf("}}", startIndex) + 1;
+                if (endIndex == 0){
+                    break;
+                }
+                substring = responseString.substring(startIndex, endIndex);
+                startIndex = endIndex + 1;
+                userHighScores.add(i, getHighScoreFromString(substring, i + 1));
+                i++;
+            } while (endIndex != 0);
+        }
+        return userHighScores;
     }
 
     private HighScore getHighScoreFromString(String text, int rank){
@@ -144,7 +185,6 @@ public class ServerFacade {
             return true;
         }
         else if (response != null && response.body().contains("false")) {
-            System.out.println("==> ERROR");
             return false;
         }
         return false;
