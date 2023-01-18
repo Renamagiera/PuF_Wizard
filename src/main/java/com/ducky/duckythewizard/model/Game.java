@@ -20,7 +20,6 @@ public class Game {
     private Player player;
     private Fight activeFight;
     private AnchorPane rootAnchorPane;
-    private AnchorPane fightOverlay;
     private AnchorPane anchorPaneEndOverlay;
 
 
@@ -177,7 +176,6 @@ public class Game {
         this.rootAnchorPane = rootAnchorPane;
     }
     public void setFightOverlay(AnchorPane fightOverlay) {
-        this.fightOverlay = fightOverlay;
     }
     public void setAnimationTimer(MyAnimationTimer timer) { this.animationTimer = timer;}
 

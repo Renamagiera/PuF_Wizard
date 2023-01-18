@@ -39,16 +39,16 @@ public class CardController extends Controller {
         this.handCards = this.getSession().getPlayer().getHandCards();
         this.anchorPaneCards = (AnchorPane) this.getSession().getRootAnchorPane().lookup("#emptyCardSlots");
         // render all hand-card images to card-anchor-pane
-        this.getSession().getCardDeckModel().changeAllHandCardImages(this.handCards, this.anchorPaneCards);
+        this.getSession().getCardDeckModel().updateAllHandCardImages(this.handCards);
     }
 
     public ArrayList<CardModel> dealHandCards() {
         ArrayList<CardModel> takenCards = new ArrayList<>();
-        for (int i = GameConfig.MIN_CARD_VALUE; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
+        for (int i = 0; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
             takenCards.add(this.cardDeckModel.getCardDeck().remove(0));
         }
         // update deck-size
-        this.cardDeckModel.setCardsProperty(Integer.toString(this.cardDeckModel.getCardDeck().size()));
+        this.cardDeckModel.cardsProperty.set(Integer.toString(this.cardDeckModel.getCardDeck().size()));
         return takenCards;
     }
 
@@ -74,7 +74,6 @@ public class CardController extends Controller {
                         // set win- or loss-label, add score to player
                         boolean duckyWin = getSession().getActiveFight().determineWinner();
                         getSession().getFightView().updateWinLossLabelProp(duckyWin);
-                        //getSession().getPlayer().addToScore(duckyWin ? 100 : 0);
                         getSession().getPlayer().addToScore(getSession().getActiveFight().calculateScore(duckyWin));
 
                         // MAKE NO MORE CARD CLICKABLE
@@ -118,14 +117,8 @@ public class CardController extends Controller {
         and render it. Render clicked card at fight-scene.*/
         int clickPosition = getSession().getCardDeckModel().returnHandCardPosition(event);
         getSession().getActiveFight().setDuckyCard(clickedCard);
-        this.removeCardFromHandCardsAddDummy(clickPosition);
+        this.cardDeckModel.updateToEmptyCardImage(clickPosition);
         getSession().getFightView().updateFightViewCardProp(true);
-    }
-
-
-    public void removeCardFromHandCardsAddDummy(int clickedCardPosition) {
-        this.handCards.add(clickedCardPosition, this.removeHandCard(clickedCardPosition, false));
-        this.cardDeckModel.changeToEmptyCard((ImageView) this.anchorPaneCards.getChildren().get(clickedCardPosition));
     }
 
     private void removeAllClickHandlers() {
@@ -136,32 +129,18 @@ public class CardController extends Controller {
         clickHandlers.clear();
     }
 
-    private void endFight(int clickPosition, boolean duckyWin) {
+    private void endFight(int pos, boolean duckyWin) {
         /*End Fight. Close Fight-Scene, GameCtrl restarts everything. New cards are dealt from deck.*/
         getSession().getGameCtrl().endCollision();
-        this.dealNewCardsFromDeck(clickPosition, duckyWin);
+        this.dealNewCardsFromDeck(pos, duckyWin);
     }
 
-    // TODO CardDeck-Controller?
-    private void dealNewCardsFromDeck(int clickedPosition, boolean duckyWin) {
+    private void dealNewCardsFromDeck(int pos, boolean duckyWin) {
         /*give ducky one new card. If he won the fight he gets one new card from deck.
-        Otherwise, ducky gets an empty card.*/
-        if (duckyWin) {
-            this.handCards.add(clickedPosition, this.removeHandCard(clickedPosition, true));
-        } else {
-            this.handCards.add(clickedPosition, this.removeHandCard(clickedPosition, false));
-            this.getSession().getPlayer().decrementHandCards();
-        }
-        // render ducky's new card
-        this.cardDeckModel.changeHandCardImage(clickedPosition, this.handCards, this.anchorPaneCards);
-        // new card for stone
+        Otherwise, ducky gets an empty card. Update images.*/
+        this.cardDeckModel.addNewHandCard(duckyWin, pos, this.handCards);
+        this.cardDeckModel.updateHandCardImage(pos, this.handCards);
         this.getSession().getActiveFight().getStoneInFight().setCard(this.cardDeckModel.dealOneNewCardFromDeck());
-    }
-
-    // TODO Back to CardDeckModel? Or maybe to PlayerModel
-    public CardModel removeHandCard(int handCardPosition, boolean newCardFromDeck) {
-        this.handCards.remove(handCardPosition);
-        return newCardFromDeck ? this.cardDeckModel.dealOneNewCardFromDeck() : new CardModel(this.getSession().getGameColorObject().getTrumpColorObject().getNone(), 0, GameConfig.EMPTY_CARD_FILENAME);
     }
 
     public void addCardToStones() {

@@ -15,7 +15,7 @@ public class Controller {
 
     private Game session;
     private GameConfig config;
-    String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/style.css")).toExternalForm();
+    private final String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/style.css")).toExternalForm();
 
 
     public Controller() {
@@ -34,7 +34,7 @@ public class Controller {
         return this.config;
     }
 
-    public void getWindowStage(Event event, Parent root) {
+    public void showWindowStage(Event event, Parent root) {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().clear();

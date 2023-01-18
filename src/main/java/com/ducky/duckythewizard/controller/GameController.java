@@ -30,13 +30,9 @@ public class GameController{
     @FXML
     private AnchorPane rootBox;
     @FXML
-    private AnchorPane fightOverlay;
-    @FXML
     private Canvas mainCanvas;
     @FXML
     private GridPane levelGrid;
-    @FXML
-    public AnchorPane emptyCardSlots;
     private GraphicsContext gc;
 
     @FXML
@@ -47,6 +43,22 @@ public class GameController{
     private HBox heartContainer;
     @FXML
     private Label cards;
+
+    /*player's hand-cards*/
+    @FXML
+    private ImageView handCard0;
+    @FXML
+    private ImageView handCard1;
+    @FXML
+    private ImageView handCard2;
+    @FXML
+    private ImageView handCard3;
+    @FXML
+    private ImageView handCard4;
+
+    /*fight-scene*/
+    @FXML
+    private AnchorPane fightOverlay;
     @FXML
     private Label trumpColorText;
     @FXML
@@ -57,6 +69,8 @@ public class GameController{
     private ImageView duckyCard;
     @FXML
     private Label winLossLabel;
+
+    /*end-scene*/
     @FXML
     private AnchorPane endScene;
     @FXML
@@ -100,6 +114,13 @@ public class GameController{
 
         // initialize cards: set card-anchor-pane, render hand-cards
         this.session.getCardCtrl().cardInit();
+
+        // bindings player's hand-cards
+        this.handCard0.imageProperty().bind(this.session.getCardDeckModel().handCard0.imageProperty());
+        this.handCard1.imageProperty().bind(this.session.getCardDeckModel().handCard1.imageProperty());
+        this.handCard2.imageProperty().bind(this.session.getCardDeckModel().handCard2.imageProperty());
+        this.handCard3.imageProperty().bind(this.session.getCardDeckModel().handCard3.imageProperty());
+        this.handCard4.imageProperty().bind(this.session.getCardDeckModel().handCard4.imageProperty());
 
         // bindings fight-view
         this.cards.textProperty().bind(session.getCardDeckModel().cardsProperty);
@@ -227,10 +248,6 @@ public class GameController{
         this.session.getEndSceneView().showEndScene(playerWin, this.session.getPlayer().getScore());
     }
 
-    public void maximizeEndScene() {
-        //this.session.getEndSceneCtrl().addMaxEventHandler();
-    }
-
     public void restartGame(MouseEvent event) throws IOException {
         this.session.getMenuCtrl().startGame(event);
     }
@@ -245,7 +262,6 @@ public class GameController{
     }
 
     public void addEventEndPauseScene() {
-        //this.session.getEndSceneView().getExitLabel().setText("x");
         this.session.getEndSceneView().setExitEvent(mouseEvent -> {
             if (this.session.getEndSceneView().getExitEvent() != null) {
                 this.session.getEndSceneView().getExitLabel().removeEventHandler(MouseEvent.MOUSE_CLICKED, this.session.getEndSceneView().getExitEvent());
@@ -287,6 +303,7 @@ public class GameController{
         if (duckyWin && cardsLeft <= 2) {
             return "win";
         } else if (!duckyWin) {
+            this.session.getPlayer().decrementHandCardsCount();
             if (cardsLeft >= 2) {
                 // card deck is not empty, check if player has hand cards
                 return this.session.getPlayer().checkAvailableCards() ? "no" : "loss";

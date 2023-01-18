@@ -22,14 +22,6 @@ public class Sprite
         this.velocityY = 0;
     }
 
-    public double getVelocityX() {
-        return this.velocityX;
-    }
-
-    public double getVelocityY() {
-        return this.velocityY;
-    }
-
     public void setImage(Image i)
     {
         this.image = i;
@@ -51,11 +43,8 @@ public class Sprite
 
     public void setVelocity(double x, double y)
     {
-//        System.out.println("setVelocity");
-//        System.out.println("VORHER => x = " + velocityX + ", y = " + velocityY);
         this.velocityX = x;
         this.velocityY = y;
-//        System.out.println("NACHHER => x = " + velocityX + ", y = " + velocityY);
     }
 
     public void setVelocityX(double x) {
@@ -65,41 +54,15 @@ public class Sprite
         velocityY = y;
     }
 
-    public void addVelocity(double x, double y)
-    {
-//        System.out.println("addVelocity");
-//        System.out.println("VORHER => x = " + velocityX + ", y = " + velocityY);
-        this.velocityX += x;
-        this.velocityY += y;
-//        System.out.println("NACHHER => x = " + velocityX + ", y = " + velocityY);
-    }
-
-    public void invertVelocity() {
-        //System.out.println("VORHER => x = " + velocityX + ", y = " + velocityY);
-        this.velocityX = velocityX * (-1);
-        this.velocityY = velocityY * (-1);
-        //System.out.println("NACHHER => x = " + velocityX + ", y = " + velocityY);
-    }
-
     public void update(double time)
     {
         this.positionX += this.velocityX * time;
         this.positionY += this.velocityY * time;
     }
 
-    public void render(GraphicsContext gc)
-    {
-        gc.drawImage( this.image, this.positionX, this.positionY );
-    }
-
     public Rectangle2D getBoundary()
     {
         return new Rectangle2D(this.positionX, this.positionY, this.width, this.height);
-    }
-
-    public boolean intersects(Sprite s)
-    {
-        return s.getBoundary().intersects( this.getBoundary() );
     }
 
     public String toString()

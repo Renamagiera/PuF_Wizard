@@ -21,9 +21,6 @@ public class FightSceneModel {
     public SimpleStringProperty winLossLabelStyleProperty;
     public SimpleStringProperty fightOverlayStyleProperty;
 
-    private static final Image BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.BACK_CARD_FILENAME)));
-    private static final Image EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
-
     private AnchorPane anchorPaneFightOverlay;
     private Fight activeFight;
     private GameColorObject gameColorObject;
@@ -36,8 +33,8 @@ public class FightSceneModel {
         this.trumpColorTextProperty = new SimpleStringProperty("");
         this.trumpColorTextStyleProperty = new SimpleStringProperty("");
         this.cardChooseTextProperty = new SimpleStringProperty("");
-        this.stoneCardProperty = new ImageView(EMPTY_CARD_IMAGE);
-        this.duckyCardProperty = new ImageView(EMPTY_CARD_IMAGE);
+        this.stoneCardProperty = new ImageView(GameConfig.EMPTY_CARD_IMAGE);
+        this.duckyCardProperty = new ImageView(GameConfig.EMPTY_CARD_IMAGE);
         this.winLossLabelProperty = new SimpleStringProperty("");
         this.winLossLabelStyleProperty = new SimpleStringProperty("");
         this.fightOverlayStyleProperty = new SimpleStringProperty("");
@@ -71,8 +68,8 @@ public class FightSceneModel {
     }
 
     private void updateImageViews() {
-        this.duckyCardProperty.imageProperty().set(EMPTY_CARD_IMAGE);
-        this.stoneCardProperty.imageProperty().set(this.activeFight.getDuckyPlaysFirst() ? BACK_CARD_IMAGE : newImage(this.activeFight.getStoneCard().getImgFileName()));
+        this.duckyCardProperty.imageProperty().set(GameConfig.EMPTY_CARD_IMAGE);
+        this.stoneCardProperty.imageProperty().set(this.activeFight.getDuckyPlaysFirst() ? GameConfig.BACK_CARD_IMAGE : newImage(this.activeFight.getStoneCard().getImgFileName()));
     }
 
     private void updateLabelTrumpColor() {

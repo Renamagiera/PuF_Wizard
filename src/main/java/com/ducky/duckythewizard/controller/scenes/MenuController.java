@@ -88,7 +88,7 @@ public class MenuController extends Controller {
             default -> "";
         };
         this.root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource(scene)));
-        this.getWindowStage(event, this.root);
+        this.showWindowStage(event, this.root);
         addRadioButtonsToGroup();
     }
 
@@ -107,7 +107,7 @@ public class MenuController extends Controller {
 
     public void switchToControls(Event event) throws IOException {
         this.root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/scenes/helpScenes/controls.fxml")));
-        this.getWindowStage(event, this.root);
+        this.showWindowStage(event, this.root);
     }
 
     private void addRadioButtonsToGroup() {
