@@ -47,10 +47,13 @@ public class LoginSceneController extends Controller{
     }
 
     public void registerUser(MouseEvent mouseEvent) {
-        boolean success = serverFacade.addNewUser(userTextField.getText());
         this.infoLabel.setVisible(true);
-        if (success){
-            infoLabel.setText("SUCCESS");
+        if(userTextField.getText().length() == 0){
+            infoLabel.setText("Please enter a name");
+            return;
+        }
+        boolean success = serverFacade.addNewUser(userTextField.getText());
+        if (success) {
             createHostAndNavigateToStartScreen(mouseEvent, userTextField.getText());
         } else {
             infoLabel.setText("Username already exists");
@@ -58,10 +61,13 @@ public class LoginSceneController extends Controller{
     }
 
     public void loginUser(MouseEvent mouseEvent) {
-        boolean success = serverFacade.getIfUserExists(userTextField.getText());
         infoLabel.setVisible(true);
-        if(success){
-            infoLabel.setText("Logged in");
+        if(userTextField.getText().length() == 0){
+            infoLabel.setText("Please enter a name");
+            return;
+        }
+        boolean success = serverFacade.getIfUserExists(userTextField.getText());
+        if (success) {
             createHostAndNavigateToStartScreen(mouseEvent, userTextField.getText());
         } else {
             infoLabel.setText("User not found");
@@ -69,7 +75,12 @@ public class LoginSceneController extends Controller{
     }
 
     private void createHostAndNavigateToStartScreen(MouseEvent mouseEvent, String userName){
-        Host.createHostInstance(userName);
+        if (Host.getInstance() == null){
+            Host.createHostInstance(userName);
+        } else {
+            Host.getInstance().setPlayerName(userName);
+        }
+
         // navigate to menu
         String scene = "/com/ducky/duckythewizard/scenes/startingScene.fxml";
 

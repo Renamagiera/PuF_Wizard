@@ -7,7 +7,6 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -52,10 +51,6 @@ public class AnimatedSprite extends Sprite
     }
     public Image getFrame(double time)
     {
-//        System.out.println("time: " + time);
-//        System.out.println("frames.length: " + frames.length);
-//        System.out.println("duration: " + duration);
-//        System.out.println((int)((time % (frames.length * duration)) / duration));
         int index = (int)((time % (frames.length * duration)) / duration);
         return frames[index];
     }
@@ -71,8 +66,6 @@ public class AnimatedSprite extends Sprite
     @Override
     public void update(double time)
     {
-        this.player.reducePlayerTimer();
-
         // if collision --> revert position and adjust velocity, depending on direction in which collision occurred
         this.positionX += this.velocityX * time;
         if(this.collisionHandler.isCollision(this.getBoundary())){

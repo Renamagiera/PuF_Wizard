@@ -10,4 +10,5 @@ import java.util.List;
 public interface HighScoreRepository extends CrudRepository<HighScore, Integer> {
 
     List<HighScore> findAllByOrderByScoreDesc(Pageable pageable);
+    List<HighScore> findAllByUserOrderByScoreDesc(User user);
 }

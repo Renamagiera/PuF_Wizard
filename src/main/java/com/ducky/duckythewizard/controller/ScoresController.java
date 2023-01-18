@@ -6,6 +6,7 @@ import com.ducky.duckythewizard.model.ServerFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -20,6 +21,11 @@ import java.io.IOException;
 
 public class ScoresController extends VBox {
 
+    private enum HighScoreContext {
+        ALL,
+        USER
+    }
+
     @FXML
     private VBox scoresRoot;
     @FXML
@@ -33,7 +39,14 @@ public class ScoresController extends VBox {
 
     private int limit = 5;
     private ObservableList<HighScore> topHighScoresObservable;
-    ServerFacade serverFacade;
+    private ServerFacade serverFacade;
+    private HighScoreContext highScoreContext = HighScoreContext.ALL;
+    private EventHandler<ScrollEvent> scrollEventEventHandler = new EventHandler<ScrollEvent>() {
+        @Override
+        public void handle(ScrollEvent scrollEvent) {
+            scrollEvent.consume();
+        }
+    };
 
     public ScoresController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -73,7 +86,7 @@ public class ScoresController extends VBox {
     }
 
     public boolean setGameScore(int score) {
-        // let player enter their name if score is high enough
+        // send player name and score to server if score is high enough
         if (score > 0 &&
                 (topHighScoresObservable.size() < limit || score > topHighScoresObservable.get(limit-1).getScore())) {
 
@@ -97,9 +110,30 @@ public class ScoresController extends VBox {
     }
 
     private void setTable() {
+        this.scoresTable.setPlaceholder(new Label("No High Scores Yet"));
         this.scoresTable.setFixedCellSize(50);
         this.scoresTable.prefHeight((50 * topHighScoresObservable.size()) + 30);
-        this.scoresTable.addEventFilter(ScrollEvent.ANY, Event::consume);
+        this.scoresTable.addEventFilter(ScrollEvent.ANY, scrollEventEventHandler);
         this.scoresTable.addEventFilter(MouseEvent.ANY, Event::consume);
+    }
+
+    // toggles between:
+    // showing top 5 high scores of all users and
+    // all high scores of logged-in user
+    public void toggleTableView() {
+        if (highScoreContext == HighScoreContext.USER){
+            highScoreContext = HighScoreContext.ALL;
+            topHighScoresObservable =
+                    FXCollections.observableList(serverFacade.getTopHighScoresFromServer(limit));
+            scoresTable.setItems(topHighScoresObservable);
+            this.scoresTable.addEventFilter(ScrollEvent.ANY, scrollEventEventHandler);
+        } else {
+            highScoreContext = HighScoreContext.USER;
+            topHighScoresObservable =
+                    FXCollections.observableList(
+                            serverFacade.getAllHighScoresOfUser(Host.getInstance().getPlayerName()));
+            scoresTable.setItems(topHighScoresObservable);
+            this.scoresTable.removeEventFilter(ScrollEvent.ANY, scrollEventEventHandler);
+        }
     }
 }

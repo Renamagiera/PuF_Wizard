@@ -16,14 +16,12 @@ public class MainController {
     private UserRepository userRepository;
 
     @PostMapping(path="/addScore") // Map ONLY POST Requests
-    public @ResponseBody String addNewHighScore(@RequestParam String name
-            , @RequestParam Integer score) {
+    public @ResponseBody String addNewHighScore(@RequestBody HighScoreData highScoreData) {
         // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
         HighScore n = new HighScore();
-        User user = userRepository.getUserByName(name);
+        User user = userRepository.getUserByName(highScoreData.getName());
         n.setUser(user);
-        n.setScore(score);
+        n.setScore(highScoreData.getScore());
         highScoreRepository.save(n);
         return "Saved";
     }
@@ -45,10 +43,11 @@ public class MainController {
         return userRepository.existsUserByName(name);
     }
 
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<HighScore> getAllHighScores() {
-        // This returns a JSON or XML with the users
-        return highScoreRepository.findAll();
+    @GetMapping(path="/allOfUser")
+    public @ResponseBody Iterable<HighScore> getAllHighScoresOfUser(@RequestParam String name) {
+        // This returns a JSON or XML with the high scores
+        User user = userRepository.getUserByName(name);
+        return highScoreRepository.findAllByUserOrderByScoreDesc(user);
     }
 
     @GetMapping(path="/top")
