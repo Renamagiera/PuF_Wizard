@@ -209,9 +209,7 @@ public class AnimatedSprite extends Sprite
     private void addImages(String move, Image[] right, Image[] left) {
         // add images to movement
         for (int i = 0; i < right.length; i++) {
-            System.out.println("SKin: " + this.spriteSkinString + " and Colour: " + this.spriteSkinColorString);
             Image image = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/" + this.spriteSkinString + "/" + this.spriteSkinColorString + "/" + move + "/" + move + "_" + i + ".png")));
-            System.out.println("gotImage in addImage");
             right[i] = scaleImage(image, rescaleImgWidth(image), rescaleImgHeight(image), true, false);
         }
         // add mirrored images to opposite movement
