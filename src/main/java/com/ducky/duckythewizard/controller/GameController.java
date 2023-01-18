@@ -35,8 +35,6 @@ public class GameController{
     private Canvas mainCanvas;
     @FXML
     private GridPane levelGrid;
-    @FXML
-    public AnchorPane emptyCardSlots;
     private GraphicsContext gc;
 
     @FXML

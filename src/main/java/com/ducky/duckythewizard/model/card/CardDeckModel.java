@@ -14,8 +14,9 @@ public class CardDeckModel {
     /*Model-class for card-deck. How card-deck-data will be accessed, created, stored and changed.*/
 
     private ArrayList<CardModel> cardDeck;
-    private static final Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
     private ArrayList<GameColor> trumpColors;
+    private static final Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
+
     private GameColor wizard;
     private GameColor none;
     public SimpleStringProperty cardsProperty;
@@ -30,9 +31,6 @@ public class CardDeckModel {
     public ArrayList<CardModel> getCardDeck() {
         return cardDeck;
     }
-    public void setCardsProperty(String cardsProperty) {
-        this.cardsProperty.set(cardsProperty);
-    }
     public void setTrumpColors(ArrayList<GameColor> trumpColors) {
         this.trumpColors = trumpColors;
     }
@@ -43,7 +41,7 @@ public class CardDeckModel {
         this.none = none;
     }
 
-    public void createCardSlotTitles() {
+    private void createCardSlotTitles() {
         CARD_SLOT_POSITION.put("handCard0", 0);
         CARD_SLOT_POSITION.put("handCard1", 1);
         CARD_SLOT_POSITION.put("handCard2", 2);
@@ -77,28 +75,6 @@ public class CardDeckModel {
         Collections.shuffle(cardDeck);
     }
 
-    public void changeAllHandCardImages(ArrayList<CardModel> handCards, AnchorPane anchorPaneCards) {
-        double spaceBetweenCards = 40.0;
-        double xPosition = calcSpaceLeftRight(spaceBetweenCards, GameConfig.AMOUNT_HAND_CARDS, GameConfig.WINDOW_WIDTH);
-        for (int i = 0; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
-            ImageView imgView = (ImageView) anchorPaneCards.getChildren().get(i);
-            imgView.setLayoutX(xPosition);
-            xPosition = xPosition + GameConfig.CARD_WIDTH + spaceBetweenCards;
-            createNewImage(handCards.get(i).getImgFileName(), (ImageView) anchorPaneCards.getChildren().get(i));
-        }
-    }
-
-    public void changeHandCardImage(int clickPosition, ArrayList<CardModel> handCards, AnchorPane anchorPaneCards) {
-        ImageView imageView = (ImageView) anchorPaneCards.getChildren().get(clickPosition);
-        imageView.setPickOnBounds(true);
-        createNewImage(handCards.get(clickPosition).getImgFileName(), imageView);
-    }
-
-    public void changeToEmptyCard(ImageView imageView) {
-        imageView.setPickOnBounds(false);
-        createNewImage(GameConfig.EMPTY_CARD_FILENAME, imageView);
-    }
-
     public int returnHandCardPosition(MouseEvent event) {
         return CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
     }
@@ -107,13 +83,36 @@ public class CardDeckModel {
         if (this.cardDeck.size() != 0) {
             CardModel card = this.cardDeck.remove(0);
             // update deck-size
-            this.setCardsProperty(Integer.toString(this.cardDeck.size()));
+            this.cardsProperty.set(Integer.toString(this.cardDeck.size()));
             return card;
         } else {
             return null;
         }
     }
 
+    /*****************************************************************************/
+    // TODO this is a view method and should be changed to data binding
+    public void changeAllHandCardImages(ArrayList<CardModel> handCards, AnchorPane pane) {
+        double spaceBetweenCards = 40.0;
+        double xPosition = calcSpaceLeftRight(spaceBetweenCards, GameConfig.AMOUNT_HAND_CARDS, GameConfig.WINDOW_WIDTH);
+        for (int i = 0; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
+            ImageView imgView = (ImageView) pane.getChildren().get(i);
+            imgView.setLayoutX(xPosition);
+            xPosition = xPosition + GameConfig.CARD_WIDTH + spaceBetweenCards;
+            createNewImage(handCards.get(i).getImgFileName(), (ImageView) pane.getChildren().get(i));
+        }
+    }
+    public void changeHandCardImage(int pos, ArrayList<CardModel> handCards, AnchorPane pane) {
+        ImageView imageView = (ImageView) pane.getChildren().get(pos);
+        imageView.setPickOnBounds(true);
+        createNewImage(handCards.get(pos).getImgFileName(), imageView);
+    }
+    public void changeToEmptyCard(ImageView imageView) {
+        imageView.setPickOnBounds(false);
+        createNewImage(GameConfig.EMPTY_CARD_FILENAME, imageView);
+    }
+
+    // help methods
     public double calcSpaceLeftRight(double spaceBetweenCards, int amountCards, double nodeWidth) {
         double handCardsWithoutSpace = GameConfig.CARD_WIDTH * amountCards;
         double handCardsWithSpace = handCardsWithoutSpace + ((amountCards - 1) * spaceBetweenCards);
@@ -124,4 +123,6 @@ public class CardDeckModel {
         Image newImage =  new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileName)));
         imgView.setImage(newImage);
     }
+    /*****************************************************************************/
+
 }

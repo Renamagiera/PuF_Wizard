@@ -79,6 +79,6 @@ public class LoginSceneController extends Controller{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        super.getWindowStage(mouseEvent, root);
+        super.showWindowStage(mouseEvent, root);
     }
 }
