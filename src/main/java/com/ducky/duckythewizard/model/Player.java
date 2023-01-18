@@ -14,17 +14,16 @@ public class Player {
     private String name = "testname";
     private ArrayList<CardModel> handCards;
     private int healthPoints;
-    private int maxHealthPoints = GameConfig.PLAYER_MAX_HEALTH_POINTS;
     private int playableCards;
+    private Game session;
+    private AnimatedSprite playerSprite;
 
+    /*bindings*/
     public SimpleIntegerProperty score;
     public SimpleIntegerProperty timerProperty;
     public SimpleStringProperty timerTextLabel;
     public SimpleStringProperty timerLabel;
     public SimpleStringProperty timerLabelStyle;
-
-    private Game session;
-    private AnimatedSprite playerSprite;
 
     public Player() {
         this.resetPlayer();
@@ -32,7 +31,7 @@ public class Player {
     }
 
     public void resetPlayer(){
-        this.healthPoints = maxHealthPoints;
+        this.healthPoints = GameConfig.PLAYER_MAX_HEALTH_POINTS;
         this.score = new SimpleIntegerProperty(0);
         this.timerProperty = new SimpleIntegerProperty(GameConfig.PLAYER_ACTION_TIMER);
         this.timerTextLabel = new SimpleStringProperty();
@@ -70,10 +69,6 @@ public class Player {
     }
 
     //getter & setter
-
-    public void setPlayerName(String name) {
-        this.name = name;
-    }
     public String getPlayerName() {
         return this.name;
     }
@@ -89,20 +84,16 @@ public class Player {
     public ArrayList<CardModel> getHandCards() {
         return this.handCards;
     }
-    public int getPlayableCards() {
-        return this.playableCards;
-    }
 
+    public void setPlayerName(String name) {
+        this.name = name;
+    }
     public void setHandCards(ArrayList<CardModel> handCards) {
         this.handCards = handCards;
     }
     public void setPlayerSprite(AnimatedSprite sprite) {
         this.playerSprite = sprite;
     }
-    public void setPlayableCards(int playableCards) {
-        this.playableCards = playableCards;
-    }
-
     public void setSession(Game session){
         this.session = session;
     }
@@ -122,18 +113,12 @@ public class Player {
         this.resetPlayerTimer();
     }
 
-    public void decrementHandCards() {
+    public void decrementHandCardsCount() {
         this.playableCards--;
     }
 
     public boolean checkAvailableCards() {
-        int cardsAvailable = GameConfig.AMOUNT_HAND_CARDS;
-        for (CardModel handCard : this.handCards) {
-            if (handCard.getColor().getName().equals("none")) {
-                cardsAvailable--;
-            }
-        }
-        return cardsAvailable >= 1;
+        return this.playableCards >= 1;
     }
 
     public void updateTimerLabel(boolean critical) {

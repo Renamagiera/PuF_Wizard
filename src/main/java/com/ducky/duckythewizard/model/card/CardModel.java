@@ -17,6 +17,10 @@ public class CardModel {
         this.imgFileName = imgFileName;
     }
 
+    public CardModel(String imgFileName) {
+        this.imgFileName = imgFileName;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;

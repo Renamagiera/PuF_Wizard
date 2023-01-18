@@ -1,10 +1,10 @@
 package com.ducky.duckythewizard.model.config;
 
-import com.ducky.duckythewizard.model.color.GameColor;
-import javafx.scene.paint.Color;
+import com.ducky.duckythewizard.model.FightSceneModel;
+import javafx.scene.image.Image;
 import org.javatuples.*;
 
-import java.sql.Array;
+import java.util.Objects;
 
 public class GameConfig {
 
@@ -12,8 +12,6 @@ public class GameConfig {
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 650;
     public static final int WINDOW_WIDTH_FIGHT_SCENE = 400;
-    public static final int WINDOW_HEIGHT_FIGHT_SCENE = 300;
-    public static final int LAYOUT_Y_FIGHT_SCENE = 130;
 
     /* ** LEVEL CONFIGURATION ** */
     public static final double LEVEL_CELL_WIDTH = 50.0;
@@ -24,14 +22,13 @@ public class GameConfig {
     public static final String EMPTY_CARD_FILENAME = gameConfigCards.getEmptyCardFilename();
     public static final String BACK_CARD_FILENAME = gameConfigCards.getBackCardFilename();
     public static final String WIZARD_FILENAME = gameConfigCards.getWizardFilename();
-    public static final double CARD_HEIGHT = gameConfigCards.getCardHeight();
-    public static final double CARD_WIDTH = gameConfigCards.getCardWidth();
-    public static final int AMOUNT_CARDS = gameConfigCards.getAmountCards();
     public static final int AMOUNT_WIZARDS = gameConfigCards.getAmountWizards();
     public static final int AMOUNT_HAND_CARDS = gameConfigCards.getAmountHandCards();
     public static int WIZARD_POINTS = gameConfigCards.getWizardPoints();
     public static final int MAX_CARD_VALUE = gameConfigCards.getMaxCardValue();
     public static final int MIN_CARD_VALUE = gameConfigCards.getMinCardValue();
+    public static final Image EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
+    public static final Image BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.BACK_CARD_FILENAME)));
 
     /* ** PLAYER CONFIGURATION ** */
     public static final int PLAYER_MAX_HEALTH_POINTS = 3;
@@ -42,14 +39,13 @@ public class GameConfig {
 
     /* ** STONE CONFIGURATION ** */
     public static final String STONE_IMAGE_FILE_NAME = "/com/ducky/duckythewizard/images/forest/rock_50px.png";
-    public static final String STONE_IMAGE_FILE_NAME_CROPPED = "/com/ducky/duckythewizard/images/forest/rock_50px_cropped.png";
     public static final int STONE_INACTIVE_TIMER = 10000;
     public static final int STONE_CHANGE_COLOR_RATE_MIN = 5;
     public static final int STONE_CHANGE_COLOR_RATE_MAX = 10;
     public static final int TRUMP_TIMER = 2000;
 
     /* ** COLOR CONFIGURATION: TRUMP COLORS - STRING ** */
-    public static final String[] trumpColorsString = {"red", "blue", "green", "yellow", "none"};
+    public static final String[] TRUMP_COLORS_STRING = {"red", "blue", "green", "yellow", "none"};
     public static final String COLOR_RED_STRING = "red";
     public static final String COLOR_BLUE_STRING = "blue";
     public static final String COLOR_GREEN_STRING = "green";

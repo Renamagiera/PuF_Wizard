@@ -95,9 +95,9 @@ public class GameColorObject {
     public void tintObject(ImageView imageView, String colorName, boolean glow) {
         Color targetColor = RGB_MAP.get("none");
 
-        for (int i = 0; i < GameConfig.trumpColorsString.length - 1; i++) {
-            if(colorName.equals(GameConfig.trumpColorsString[i])) {
-                targetColor = RGB_MAP.get(GameConfig.trumpColorsString[i]);
+        for (int i = 0; i < GameConfig.TRUMP_COLORS_STRING.length - 1; i++) {
+            if(colorName.equals(GameConfig.TRUMP_COLORS_STRING[i])) {
+                targetColor = RGB_MAP.get(GameConfig.TRUMP_COLORS_STRING[i]);
                 break;
             }
         }

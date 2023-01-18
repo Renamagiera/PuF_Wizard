@@ -406,23 +406,23 @@
         <Canvas fx:id="mainCanvas" />
         <AnchorPane fx:id="emptyCardSlots" layoutY="500.0" prefHeight="104.0" prefWidth="800.0">
             <children>
-                <ImageView fx:id="handCard0" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="handCard0" layoutX="157.5" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/cards/empty.png" />
                     </image></ImageView>
-                <ImageView fx:id="handCard1" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="handCard1" layoutX="262.5" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/cards/empty.png" />
                     </image></ImageView>
-                <ImageView fx:id="handCard2" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="handCard2" layoutX="367.5" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/cards/empty.png" />
                     </image></ImageView>
-                <ImageView fx:id="handCard3" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="handCard3" layoutX="472.5" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/cards/empty.png" />
                     </image></ImageView>
-                <ImageView fx:id="handCard4" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="handCard4" layoutX="577.5" fitHeight="104.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/cards/empty.png" />
                     </image></ImageView>
@@ -487,7 +487,7 @@
                   </Label>
                </children>
             </AnchorPane>
-             <Label fx:id="maximizeLabelEndView" alignment="CENTER" onMouseClicked="#maximizeEndScene" prefHeight="30.0" prefWidth="115.0" text="score">
+             <Label fx:id="maximizeLabelEndView" alignment="CENTER" prefHeight="30.0" prefWidth="115.0" text="score">
                  <styleClass>
                      <String fx:value="textGeneral" />
                      <String fx:value="bgLightBrown" />
