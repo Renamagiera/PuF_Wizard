@@ -72,7 +72,7 @@ public class CardController extends Controller {
 
                         // DETERMINE WINNER
                         // set win- or loss-label, add score to player
-                        boolean duckyWin = getSession().getActiveFight().determineWinner();
+                        boolean duckyWin = getSession().getActiveFight().determineIfDuckyIsWinner();
                         getSession().getFightView().updateWinLossLabelProp(duckyWin);
                         getSession().getPlayer().addToScore(getSession().getActiveFight().calculateScore(duckyWin));
 

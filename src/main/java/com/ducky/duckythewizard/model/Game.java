@@ -2,7 +2,6 @@ package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.controller.*;
 import com.ducky.duckythewizard.controller.scenes.EndSceneController;
-import com.ducky.duckythewizard.controller.scenes.FightSceneController;
 import com.ducky.duckythewizard.controller.scenes.MenuController;
 import com.ducky.duckythewizard.model.card.CardDeckModel;
 import com.ducky.duckythewizard.model.color.GameColorObject;
@@ -10,6 +9,10 @@ import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
+
+/**This class constructs a Game object which in turn is the heart of
+ each running game client. Every important Game object such as sprites and scenes, controllers etc.
+ is saved into the game's attributes.*/
 
 public class Game {
 
@@ -40,7 +43,6 @@ public class Game {
     private FightController fightCtrl;
     private MenuController menuCtrl;
     private EndSceneController endSceneCtrl;
-    private FightSceneController fightSceneCtrl;
     private CollisionController collisionController;
 
     private MyAnimationTimer animationTimer;
@@ -102,9 +104,6 @@ public class Game {
     public void createEndSceneCtrlObj() {
         this.endSceneCtrl = new EndSceneController(this);
     }
-    public void createFightSceneCtrlObj() {
-        this.fightSceneCtrl = new FightSceneController(this);
-    }
     public void createGameColorObj() {
         this.gameColorObject = new GameColorObject();
     }
@@ -132,9 +131,6 @@ public class Game {
     }
     public EndSceneController getEndSceneCtrl() {
         return this.endSceneCtrl;
-    }
-    public FightSceneController getFightSceneCtrl() {
-        return this.fightSceneCtrl;
     }
     public GameColorObject getGameColorObject() {
         return this.gameColorObject;

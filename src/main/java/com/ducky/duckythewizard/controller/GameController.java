@@ -102,7 +102,6 @@ public class GameController{
         this.session.createFightCtrlObj();
         this.session.createMenuCtrlObj();
         this.session.createEndSceneCtrlObj();
-        this.session.createFightSceneCtrlObj();
         this.session.createGameColorObj();
 
         // initialize fight-view-scene local variables

@@ -3,6 +3,7 @@ package com.ducky.duckythewizard.model;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
+/** This is a general Sprite class.*/
 public class Sprite
 {
     protected Image image;
