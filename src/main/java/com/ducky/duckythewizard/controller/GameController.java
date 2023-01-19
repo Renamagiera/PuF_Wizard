@@ -84,8 +84,6 @@ public class GameController{
     private ArrayList<String> input = new ArrayList<>();
     private CollisionHandler collisionHandler;
     private AnimatedSprite ducky;
-    private static final Object monitor = new Object();
-    private static boolean fileProcessed = false;
 
     @FXML
     public void initialize() {
