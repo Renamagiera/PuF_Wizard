@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.scenes.MenuController">
    <children>
-      <Label alignment="CENTER" prefHeight="650.0" prefWidth="800.0" text="By the way: fate decides who starts a turn!&#10;&#10;And also, if no Wizards and no trump-colored cards are played, the first played card decides wich color is the winning color - and then it only counts wich card has the higher value.&#10;&#10;Stones that are not tinted in any special color (no blue, green, red or yellow) have no trump color! Wich again makes the first played card the decider of fates (see above).&#10;&#10;If you've fought against a stone it will take a while before you can fight it again.&#10;&#10;" textAlignment="CENTER" wrapText="true">
+      <Label alignment="CENTER" prefHeight="650.0" prefWidth="800.0" text="If you don't only want to fight&#10;till the glorious end but also want to earn&#10;the highest points, keep the following in mind:&#10;&#10;Winning fights earns you points,&#10;losing loses you points (of course)!&#10;&#10;Winning when playing first or winning a no trump fight earns you additional points.&#10;&#10;Playing your high value cards will not earn you the highest honor -- I mean, points.&#10;The closer your winning card's value is to the losing card, the more points you earn.&#10;&#10;Good luck, Ducky!" textAlignment="CENTER" wrapText="true">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="textPaddingSmall" />
@@ -14,14 +14,7 @@
             <String fx:value="bg-blue" />
          </styleClass>
       </Label>
-      <Label fx:id="nextTo4" alignment="CENTER" layoutX="730.0" layoutY="580.0" onMouseClicked="#switchToScene" prefHeight="60.0" prefWidth="60.0" text="&gt;">
-         <styleClass>
-            <String fx:value="textGeneral" />
-            <String fx:value="textGreen" />
-            <String fx:value="textSizeVeryBig" />
-         </styleClass>
-      </Label>
-      <Label fx:id="backTo2" alignment="CENTER" layoutX="650.0" layoutY="580.0" onMouseClicked="#switchToScene" prefHeight="60.0" prefWidth="60.0" text="&lt;">
+      <Label fx:id="backTo3" alignment="CENTER" layoutX="650.0" layoutY="580.0" onMouseClicked="#switchToScene" prefHeight="60.0" prefWidth="60.0" text="&lt;">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="textGreen" />
@@ -29,6 +22,13 @@
          </styleClass>
       </Label>
       <Label alignment="CENTER" layoutX="760.0" onMouseClicked="#backToMenu" prefHeight="40.0" prefWidth="40.0" text="x">
+         <styleClass>
+            <String fx:value="textGeneral" />
+            <String fx:value="textGreen" />
+            <String fx:value="textSizeNormal" />
+         </styleClass>
+      </Label>
+      <Label fx:id="play" alignment="CENTER" layoutX="720.0" layoutY="595.0" onMouseClicked="#startGame" prefHeight="35.0" prefWidth="60.0" text="play">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="textGreen" />

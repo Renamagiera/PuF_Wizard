@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class MenuController extends Controller {
+
     /*Controller for all scenes, that are not game-view*/
     @FXML
     private Label nameLabel;
@@ -81,7 +82,8 @@ public class MenuController extends Controller {
         String scene = switch (labelId) {
             case "helpButton", "backTo1" -> "/com/ducky/duckythewizard/scenes/helpScenes/helpScene1.fxml";
             case "nextTo2", "backTo2" -> "/com/ducky/duckythewizard/scenes/helpScenes/helpScene2.fxml";
-            case "nextTo3" -> "/com/ducky/duckythewizard/scenes/helpScenes/helpScene3.fxml";
+            case "nextTo3", "backTo3" -> "/com/ducky/duckythewizard/scenes/helpScenes/helpScene3.fxml";
+            case "nextTo4" -> "/com/ducky/duckythewizard/scenes/helpScenes/helpScene4.fxml";
             case "controlsButton" -> "/com/ducky/duckythewizard/scenes/helpScenes/settings.fxml";
             case "scoresButton" -> "/com/ducky/duckythewizard/scenes/helpScenes/scoresScene.fxml";
             case "nameLabel" -> "/com/ducky/duckythewizard/scenes/loginScene.fxml";

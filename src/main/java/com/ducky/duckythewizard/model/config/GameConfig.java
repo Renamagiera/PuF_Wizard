@@ -34,6 +34,9 @@ public class GameConfig {
     /* ** PLAYER CONFIGURATION ** */
     public static final int PLAYER_MAX_HEALTH_POINTS = 3;
     public static final int PLAYER_ACTION_TIMER = 10;
+    public static final int PLAYER_ACTION_TIMER_CRITICAL = 3;
+    public static final int PLAYER_ACTION_TIMER_INITIAL_DELAY = 0;
+    public static final int PLAYER_ACTION_TIMER_PERIOD = 1;
 
     /* ** SPRITE CONFIGURATION ** */
     public static final double SPRITE_SCALE_FACTOR = 2;
@@ -55,25 +58,25 @@ public class GameConfig {
     public static final String COLOR_NONE_STRING = "none";
 
     /* ** COLOR CONFIGURATION: TRUMP COLORS - STRING & HEXCODES ** */
-    public static final Pair<String, String> COLOR_RED_HEXCODE = new Pair<String, String>(COLOR_RED_STRING, "#ff6666");
-    public static final Pair<String, String> COLOR_BLUE_HEXCODE = new Pair<String, String>(COLOR_BLUE_STRING, "#66ccff");
-    public static final Pair<String, String> COLOR_GREEN_HEXCODE = new Pair<String, String>(COLOR_GREEN_STRING, "#91ff66");
-    public static final Pair<String, String> COLOR_YELLOW_HEXCODE = new Pair<String, String>(COLOR_YELLOW_STRING, "#ffe366");
-    public static final Pair<String, String> COLOR_WIZARD_HEXCODE = new Pair<String, String>("wizard", "null");
-    public static final Pair<String, String> COLOR_NONE_HEXCODE = new Pair<String, String>(COLOR_NONE_STRING, "#ffffff");
+    public static final Pair<String, String> COLOR_RED_HEXCODE = new Pair<>(COLOR_RED_STRING, "#ff6666");
+    public static final Pair<String, String> COLOR_BLUE_HEXCODE = new Pair<>(COLOR_BLUE_STRING, "#66ccff");
+    public static final Pair<String, String> COLOR_GREEN_HEXCODE = new Pair<>(COLOR_GREEN_STRING, "#91ff66");
+    public static final Pair<String, String> COLOR_YELLOW_HEXCODE = new Pair<>(COLOR_YELLOW_STRING, "#ffe366");
+    public static final Pair<String, String> COLOR_WIZARD_HEXCODE = new Pair<>("wizard", "null");
+    public static final Pair<String, String> COLOR_NONE_HEXCODE = new Pair<>(COLOR_NONE_STRING, "#ffffff");
 
     /* ** COLOR CONFIGURATION: TRUMP COLORS - RGB ** */
-    public static final Triplet<Integer,Integer,Integer> COLOR_RED_RGB = new Triplet<Integer,Integer,Integer>(208,32,144);
-    public static final Triplet<Integer,Integer,Integer> COLOR_BLUE_RGB = new Triplet<Integer,Integer,Integer>(100,205,124);
-    public static final Triplet<Integer,Integer,Integer> COLOR_GREEN_RGB = new Triplet<Integer,Integer,Integer>(255,255,150);
-    public static final Triplet<Integer,Integer,Integer> COLOR_YELLOW_RGB = new Triplet<Integer,Integer,Integer>(255,102,102);
-    public static final Triplet<Integer,Integer,Integer> COLOR_NONE_RGB = new Triplet<Integer,Integer,Integer>(255,255,255);
+    public static final Triplet<Integer,Integer,Integer> COLOR_RED_RGB = new Triplet<>(208,32,144);
+    public static final Triplet<Integer,Integer,Integer> COLOR_BLUE_RGB = new Triplet<>(100,205,124);
+    public static final Triplet<Integer,Integer,Integer> COLOR_GREEN_RGB = new Triplet<>(255,255,150);
+    public static final Triplet<Integer,Integer,Integer> COLOR_YELLOW_RGB = new Triplet<>(255,102,102);
+    public static final Triplet<Integer,Integer,Integer> COLOR_NONE_RGB = new Triplet<>(255,255,255);
 
     /* ** COLOR CONFIGURATION: LAYOUT COLORS - HEXCODES ** */
-    public static final Pair<String, String> COLOR_WHITE_HEXCODE = new Pair<String, String>("white", "#ffffff");
-    public static final Pair<String, String> COLOR_BLACK_HEXCODE = new Pair<String, String>("black", "#000000");
-    public static final Pair<String, String> COLOR_BROWN_HEXCODE = new Pair<String, String>("brown", "#412b0f");
-    public static final Pair<String, String> COLOR_ORANGE_HEXCODE = new Pair<String, String>("orange", "#d68139");
+    public static final Pair<String, String> COLOR_WHITE_HEXCODE = new Pair<>("white", "#ffffff");
+    public static final Pair<String, String> COLOR_BLACK_HEXCODE = new Pair<>("black", "#000000");
+    public static final Pair<String, String> COLOR_BROWN_HEXCODE = new Pair<>("brown", "#412b0f");
+    public static final Pair<String, String> COLOR_ORANGE_HEXCODE = new Pair<>("orange", "#d68139");
 
     /* ** COLOR CONFIGURATION: LAYOUT COLORS - STRING ** */
     public static final String COLOR_WHITE_STRING = "white";

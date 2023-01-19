@@ -147,17 +147,14 @@ public class AnimatedSprite extends Sprite
         // bouncing back from left level boundary
         if (this.getPositionX() <= 0) {
             this.setVelocity(100, 0);
-            //System.out.println("LEFT"); //TODO remove console print
         }
         // bouncing back from right level boundary
         if (this.getPositionX() >= GameConfig.WINDOW_WIDTH - this.getFrame(t).getWidth()) {
             this.setVelocity(-100, 0);
-            //System.out.println("RIGHT"); //TODO remove console print
         }
         // bouncing back from upper level boundary
         if (this.getPositionY() <= 0) {
             this.setVelocity(0, 100);
-            //System.out.println("UPPER"); //TODO remove console print
         }
     }
 
