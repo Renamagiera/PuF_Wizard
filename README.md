@@ -6,8 +6,6 @@ Kurze Beschreibung des Projektes
 1. [Allgemeine Info](#allgemeine-info)
 2. [Technologien](#technologien)
 3. [Installation](#installation)
-    1. [IntelliJ](#intelliJ)
-    2. [POM-Datei](#pom)
 
 
 <a name="allgemeine-info"></a>
@@ -25,19 +23,18 @@ ebenfalls in der Version 19 verwendet.
 <a name="installation"></a>
 ## Installation
 Für eine einfache Installation des Projektes haben wir eine Schritt-für-Schritt Anleitung verfasst.\
-Die Anleitung gibt es für die IDE's IntelliJ und Eclipse. Über die POM-Datei des Projektes kann die Anwendung alternativ installiert werden.
+Wir haben unser Projekt mit Maven gebaut. Sobald das Repo geklont und in einer IDE als Projekt erstellt wurde, kann das Projekt durchgebaut werden. Für unsere Server-Schnittstelle haben wir eine Spring Application eingebunden. Diese muss gestartet werden, damit unser Spiel korrekt laufen kann. Die Schritt-für-Schritt Anleitung haben wir für die IDE IntelliJ erstellt. Es kann jedoch jede andere IDE verwendet werden, die ein Maven Projekt bauen kann.
 
-Für die Ausführung des Programms wird eine MySQL-Instanz benötigt. Wir empfehlen dafür "XAMPP". Die URL, Nutzername und Passwort müssen mit dem übereinstimmen, 
+Für die Ausführung der Spring App wird eine MySQL-Instanz benötigt. Wir empfehlen dafür "XAMPP". Die URL, Nutzername und Passwort müssen mit dem übereinstimmen, 
 was in der Datei application.properties steht. 
 
 Nutzername:   **root**\
 **kein Passwort**
 
-<a name="intelliJ"></a>
 ### IntelliJ (Unlimited Version)
 Da wir das Projekt mit der IDE IntelliJ erstellt und weiterentwickelt haben empfehlen wir diese zu benutzten. Sie können das Repository clonen und 
 in Ihrer IDE als Projekt erstellen. Dafür klicken Sie auf den grünen Button "Clone" und erstellen in Ihrere IDE ein Projekt aus einer Versionskontrolle.
-Bei der IDE IntelliJ gibt es dafür den Button "Get from VCS".\
+Bei der IDE IntelliJ gibt es dafür den Button "Get from VCS".
 
 1. Neues Projekt in IntelliJ öffnen "File > New > Project from Version Control"
 2. Die GitHub URL klonen und eingeben
@@ -52,8 +49,5 @@ Bei der IDE IntelliJ gibt es dafür den Button "Get from VCS".\
               JAVA_HOME=**"JDK-Pfad"**
 5. Build Project (Strg + F9) 
 6. Run Application (WizardMainApplication) (Strg + Umschalt + F10)
-
-
-<a name="pom"></a>
-### POM-Datei
+7. Viel Spaß
 
