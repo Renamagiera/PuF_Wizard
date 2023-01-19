@@ -1,6 +1,5 @@
 package com.ducky.duckythewizard.controller;
 
-import com.ducky.duckythewizard.controller.scenes.MenuController;
 import com.ducky.duckythewizard.model.*;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.event.Event;
@@ -82,7 +81,6 @@ public class GameController{
     @FXML
     private Label timerTextLabel;
     private ArrayList<String> input = new ArrayList<>();
-    private CollisionHandler collisionHandler;
     private AnimatedSprite ducky;
 
     @FXML
@@ -103,8 +101,8 @@ public class GameController{
         this.session.createStoneCtrlObj();
         this.session.createFightCtrlObj();
         this.session.createMenuCtrlObj();
-        this.session.createEndSceneCtrl();
-        this.session.createFightSceneCtrl();
+        this.session.createEndSceneCtrlObj();
+        this.session.createFightSceneCtrlObj();
         this.session.createGameColorObj();
 
         // initialize fight-view-scene local variables
@@ -155,7 +153,7 @@ public class GameController{
         this.gc = mainCanvas.getGraphicsContext2D();
 
         // initialize CollisionHandler
-        this.collisionHandler = new CollisionHandler(this, session.objectGrid, GameConfig.LEVEL_CELL_HEIGHT, GameConfig.LEVEL_CELL_WIDTH);
+        this.session.createCollisionHandlerObj();
 
         // initialize font for texts that are shown
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
@@ -165,11 +163,12 @@ public class GameController{
         this.gc.setLineWidth(5);
 
         // initialize Player's sprite
-        this.ducky = new AnimatedSprite(collisionHandler, MenuController.getSpriteSkin(), MenuController.getSpriteSkinColor(), this.session.getPlayer());
-        this.session.getPlayer().setPlayerSprite(ducky);
-        this.ducky.duration = 0.1;
+        this.session.getPlayer().createPlayerSprite(this.session.getCollisionHandler());
+        this.ducky = this.session.getPlayer().getPlayerSprite();
+        this.ducky.setDuration(0.1);
         this.ducky.setPosition(GameConfig.WINDOW_WIDTH /4 - ducky.getFrame(0).getWidth()/2, 0);
         this.ducky.setVelocity(0,100);
+
 
         // binding timerLabel to Ducky's timer
         this.timerLabel.textProperty().bind(this.session.getPlayer().timerProperty.asString());
@@ -291,7 +290,7 @@ public class GameController{
     }
 
     public void drawImageOnGC(double t) {
-        this.gc.drawImage(ducky.getFrame(t), this.ducky.getPositionX(), this.ducky.getPositionY());
+        this.gc.drawImage(this.ducky.getFrame(t), this.ducky.getPositionX(), this.ducky.getPositionY());
     }
 
     public String checkEndOfGame(boolean duckyWin) {

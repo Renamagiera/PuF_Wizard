@@ -41,6 +41,7 @@ public class Game {
     private MenuController menuCtrl;
     private EndSceneController endSceneCtrl;
     private FightSceneController fightSceneCtrl;
+    private CollisionHandler collisionHandler;
 
     private MyAnimationTimer animationTimer;
 
@@ -98,15 +99,16 @@ public class Game {
     public void createMenuCtrlObj() {
         this.menuCtrl = new MenuController();
     }
-    public void createEndSceneCtrl() {
+    public void createEndSceneCtrlObj() {
         this.endSceneCtrl = new EndSceneController(this);
     }
-    public void createFightSceneCtrl() {
+    public void createFightSceneCtrlObj() {
         this.fightSceneCtrl = new FightSceneController(this);
     }
     public void createGameColorObj() {
         this.gameColorObject = new GameColorObject();
     }
+    public void createCollisionHandlerObj() { this.collisionHandler = new CollisionHandler(this.gameCtrl, this.objectGrid, GameConfig.LEVEL_CELL_HEIGHT, GameConfig.LEVEL_CELL_WIDTH);}
 
     public GameConfig getGameConfig() {
         return this.gameConfig;
@@ -136,6 +138,7 @@ public class Game {
     public GameColorObject getGameColorObject() {
         return this.gameColorObject;
     }
+    public CollisionHandler getCollisionHandler() { return this.collisionHandler;}
 
     public MyAnimationTimer getAnimationTimer() { return this.animationTimer;}
 

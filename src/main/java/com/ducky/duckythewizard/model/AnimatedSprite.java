@@ -14,7 +14,7 @@ import java.util.Objects;
 public class AnimatedSprite extends Sprite
 {
     public Image[] frames;
-    public double duration;
+    private double duration;
 
     private int walkImageAmount;
     private int flyImageAmount;
@@ -58,6 +58,8 @@ public class AnimatedSprite extends Sprite
         return positionY;
     }
 
+    public double getDuration() { return duration;}
+
     @Override
     public void update(double time)
     {
@@ -90,6 +92,10 @@ public class AnimatedSprite extends Sprite
         else {
             this.setFramesForFlying();
         }
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
     }
 
     private void setFramesForWalking() {
