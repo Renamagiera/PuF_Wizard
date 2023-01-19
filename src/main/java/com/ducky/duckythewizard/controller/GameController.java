@@ -84,16 +84,10 @@ public class GameController{
     private ArrayList<String> input = new ArrayList<>();
     private CollisionHandler collisionHandler;
     private AnimatedSprite ducky;
-    private static final Object monitor = new Object();
-    private static boolean fileProcessed = false;
 
     @FXML
     public void initialize() {
         //System.out.println("*** Game Controller is initialized...");
-
-        // skin
-        //System.out.println(SceneController.getSprite());
-        this.session.setSprite(MenuController.getSprite());
 
         this.session.setRootAnchorPane(this.rootBox);
         this.session.setFightOverlay(this.fightOverlay);
@@ -171,7 +165,7 @@ public class GameController{
         this.gc.setLineWidth(5);
 
         // initialize Player's sprite
-        this.ducky = new AnimatedSprite(collisionHandler, this.session.getSpriteString(), this.session.getPlayer());
+        this.ducky = new AnimatedSprite(collisionHandler, MenuController.getSpriteSkin(), MenuController.getSpriteSkinColor(), this.session.getPlayer());
         this.session.getPlayer().setPlayerSprite(ducky);
         this.ducky.duration = 0.1;
         this.ducky.setPosition(GameConfig.WINDOW_WIDTH /4 - ducky.getFrame(0).getWidth()/2, 0);
@@ -182,10 +176,10 @@ public class GameController{
         this.timerLabel.styleProperty().bind(this.session.getPlayer().timerLabelStyle);
 
         // binding scoreLabel to Ducky's score
-        this.scoreLabel.textProperty().bind(this.session.getPlayer().score.asString()); // LENA Player statt DUcky
+        this.scoreLabel.textProperty().bind(this.session.getPlayer().score.asString());
 
         // add hearts to screen representing Ducky's health points
-        this.heartContainer.setSpacing(10.0); // PLAYER statt Ducky
+        this.heartContainer.setSpacing(10.0);
         for(int i = 0; i < this.session.getPlayer().getHealthPoints(); i++) {
             ImageView imageView = new ImageView(new Image(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/life-heart.png")));
             imageView.setFitHeight(GameConfig.LEVEL_CELL_HEIGHT - 10);

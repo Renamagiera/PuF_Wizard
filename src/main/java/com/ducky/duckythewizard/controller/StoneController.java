@@ -3,27 +3,25 @@ package com.ducky.duckythewizard.controller;
 import com.ducky.duckythewizard.model.Game;
 import com.ducky.duckythewizard.model.Stone;
 import com.ducky.duckythewizard.model.config.GameConfig;
+import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.*;
 
 public class StoneController extends Controller {
-    private GridPane levelGrid;
 
     public StoneController (Game game) {
         super(game);
     }
 
     // getter & setter
-    public static void setAppIsRunningFalse() {
-    }
 
     public void initializeStones(GridPane levelGrid) {
-        this.levelGrid = levelGrid;
         this.addStonesToArrayList();
         this.setStoneImages(levelGrid);
         this.tintAllStones();
@@ -53,22 +51,15 @@ public class StoneController extends Controller {
                 }
             }
         };
-        // change rate is random number generated separately for each stone
-        int stoneChangeColorRate = new Random().nextInt(
-                GameConfig.STONE_CHANGE_COLOR_RATE_MAX - GameConfig.STONE_CHANGE_COLOR_RATE_MIN + 1) + GameConfig.STONE_CHANGE_COLOR_RATE_MIN;
         executorService.scheduleAtFixedRate(stoneColorRunnable, 3, 3, TimeUnit.SECONDS);
     }
 
     public void changeStoneTrump(Stone stone) {
         String stoneRandomTrumpColorBefore = stone.getRandomTrumpColorStone().getName();
         getSession().getGameColorObject().tintObject(stone.getStoneImgView(), stoneRandomTrumpColorBefore, true);
-        Thread t = new Thread(() -> {
-            stone.setActive(false);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        stone.setActive(false);
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(2));
+        pauseTransition.setOnFinished(event -> {
             stone.setActive(true);
             String newTrump = newStoneTrumpColor(stone);
             while (newTrump.equals(stoneRandomTrumpColorBefore)) {
@@ -76,7 +67,7 @@ public class StoneController extends Controller {
             }
             getSession().getGameColorObject().tintObject(stone.getStoneImgView(), newTrump, false);
         });
-        t.start();
+        pauseTransition.play();
     }
 
     private String newStoneTrumpColor(Stone stone) {
