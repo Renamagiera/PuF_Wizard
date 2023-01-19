@@ -28,7 +28,7 @@ public class MainController {
 
     @PostMapping(path="/addUser") // Map ONLY POST Requests
     public @ResponseBody String addNewUser(@RequestBody String name) {
-        System.out.println("===> reqestBody name: " + name);
+        //System.out.println("===> reqestBody name: " + name);
         if(userRepository.existsUserByName(name)){
             return "ERROR: User " + name + " already exists";
         }

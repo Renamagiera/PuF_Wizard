@@ -15,7 +15,7 @@ public class FightController extends Controller {
             this.getSession().toggleInFight();
             this.stone = stone;
             // start new fight-object
-            this.getSession().setActiveFight(new Fight(this.getSession().getGameColorObject()));
+            this.getSession().setActiveFight(new Fight());
             // set stone-card and stone object to fight-object
             this.getSession().getActiveFight().setStoneCard(stone.getCard());
             this.getSession().getActiveFight().setStoneInFight(stone);

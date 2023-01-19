@@ -100,7 +100,7 @@ public class Player {
 
     public void addToScore (int points) {
         this.score.set(score.getValue() + points);
-        System.out.println("==> adding " + points + " to score, TOTAL SCORE is now: " + score.getValue());
+        //System.out.println("==> adding " + points + " to score, TOTAL SCORE is now: " + score.getValue());
     }
 
     public void resetPlayerTimer() {

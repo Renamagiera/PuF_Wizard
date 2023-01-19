@@ -1,7 +1,6 @@
 package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.card.CardModel;
-import com.ducky.duckythewizard.model.color.GameColorObject;
 
 import java.util.Random;
 
@@ -11,9 +10,9 @@ public class Fight {
     private CardModel stoneCard;
 
     private String trump;
-    private boolean duckyPlaysFirst;
+    private final boolean duckyPlaysFirst;
 
-    public Fight(GameColorObject gameColorObject) {
+    public Fight() {
         // who starts
         this.duckyPlaysFirst = generateDuckyPlaysFirst();
     }
@@ -100,35 +99,35 @@ public class Fight {
         if (duckyWin) {
             //each win earns 20 points
             score += 20;
-            System.out.println("WIN! Score Calc Start: " + score);
+            //System.out.println("WIN! Score Calc Start: " + score);
 
             int duckyCardValue = this.duckyCard.getValue() + 1;
 
             if (this.duckyPlaysFirst) {
                 //if you've won without knowing the stone's card you get extra points
                 score += 5;
-                System.out.println("Won without seeing stone card!: score is now: " + score);
+                //System.out.println("Won without seeing stone card!: score is now: " + score);
             }
 
             if (this.trump.equals("none")) {
                 //winning a no trump round earns extra points
                 score += 15;
-                System.out.println("won a no trump round!: score is now: " + score);
+                //System.out.println("won a no trump round!: score is now: " + score);
             }
 
             //if you've won without a wizard or trump, you can earn more points the closer your card value is to the stone card value
             if ((this.duckyCard.getValue() != 199) && (!this.duckyCard.getColor().getName().equals(this.trump))) {
                 int difference = this.duckyCard.getValue() - this.stoneCard.getValue();
-                System.out.println("Difference is " + difference);
+                //System.out.println("Difference is " + difference);
 
                 if (difference < 4) {
                     score += duckyCardValue * 2;
-                    System.out.println("Difference is smaller than 4: score is now " + score);
+                    //System.out.println("Difference is smaller than 4: score is now " + score);
                 }
                 else {
                     if (difference < duckyCardValue) {
                         score += duckyCardValue - difference;
-                        System.out.println("Difference is bigger than 4: score is now: " + score);
+                        //System.out.println("Difference is bigger than 4: score is now: " + score);
                     }
                 }
             }
