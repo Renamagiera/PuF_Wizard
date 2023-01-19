@@ -161,7 +161,7 @@ public class GameController{
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
         this.gc.setFont( theFont );
         this.gc.setStroke(Color.BLACK);
-        this.gc.setFill(Color.WHITE );
+        this.gc.setFill(Color.WHITE);
         this.gc.setLineWidth(5);
 
         // initialize Player's sprite

@@ -33,8 +33,8 @@ public class FightSceneModel {
         this.trumpColorTextProperty = new SimpleStringProperty("");
         this.trumpColorTextStyleProperty = new SimpleStringProperty("");
         this.cardChooseTextProperty = new SimpleStringProperty("");
-        this.stoneCardProperty = new ImageView(GameConfig.EMPTY_CARD_IMAGE);
-        this.duckyCardProperty = new ImageView(GameConfig.EMPTY_CARD_IMAGE);
+        this.stoneCardProperty = new ImageView(GameConfig.CARDS_EMPTY_CARD_IMAGE);
+        this.duckyCardProperty = new ImageView(GameConfig.CARDS_EMPTY_CARD_IMAGE);
         this.winLossLabelProperty = new SimpleStringProperty("");
         this.winLossLabelStyleProperty = new SimpleStringProperty("");
         this.fightOverlayStyleProperty = new SimpleStringProperty("");
@@ -68,8 +68,8 @@ public class FightSceneModel {
     }
 
     private void updateImageViews() {
-        this.duckyCardProperty.imageProperty().set(GameConfig.EMPTY_CARD_IMAGE);
-        this.stoneCardProperty.imageProperty().set(this.activeFight.getDuckyPlaysFirst() ? GameConfig.BACK_CARD_IMAGE : newImage(this.activeFight.getStoneCard().getImgFileName()));
+        this.duckyCardProperty.imageProperty().set(GameConfig.CARDS_EMPTY_CARD_IMAGE);
+        this.stoneCardProperty.imageProperty().set(this.activeFight.getDuckyPlaysFirst() ? GameConfig.CARDS_BACK_CARD_IMAGE : newImage(this.activeFight.getStoneCard().getImgFileName()));
     }
 
     private void updateLabelTrumpColor() {

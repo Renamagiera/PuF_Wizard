@@ -19,7 +19,6 @@ public class StoneController extends Controller {
         super(game);
     }
 
-    // getter & setter
 
     public void initializeStones(GridPane levelGrid) {
         this.addStonesToArrayList();
@@ -41,7 +40,7 @@ public class StoneController extends Controller {
                 for (Stone stone : getSession().getStoneArrayList()) {
                     if (stone.getActive()) {
                         try {
-                            int sleepTime = (new Random().nextInt(4 - 2 + 1) + 2) * 1000;
+                            int sleepTime = (new Random().nextInt(GameConfig.STONE_CHANGE_COLOR_RATE_MAX - GameConfig.STONE_CHANGE_COLOR_RATE_MIN + 1) + GameConfig.STONE_CHANGE_COLOR_RATE_MIN) * 1000;
                             Thread.sleep(sleepTime);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
@@ -51,7 +50,7 @@ public class StoneController extends Controller {
                 }
             }
         };
-        executorService.scheduleAtFixedRate(stoneColorRunnable, 3, 3, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(stoneColorRunnable, GameConfig.STONE_TRUMP_INITIAL_DELAY, GameConfig.STONE_TRUMP_PERIOD, TimeUnit.SECONDS);
     }
 
     public void changeStoneTrump(Stone stone) {

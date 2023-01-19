@@ -2,10 +2,7 @@ package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.card.CardModel;
 import com.ducky.duckythewizard.model.color.GameColor;
-import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.image.ImageView;
-
-import java.util.ArrayList;
 
 public class Stone extends GameObject{
 

@@ -1,6 +1,5 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
