@@ -41,7 +41,7 @@ public class Game {
     private MenuController menuCtrl;
     private EndSceneController endSceneCtrl;
     private FightSceneController fightSceneCtrl;
-    private CollisionHandler collisionHandler;
+    private CollisionController collisionController;
 
     private MyAnimationTimer animationTimer;
 
@@ -108,8 +108,9 @@ public class Game {
     public void createGameColorObj() {
         this.gameColorObject = new GameColorObject();
     }
-    public void createCollisionHandlerObj() { this.collisionHandler = new CollisionHandler(this.gameCtrl, this.objectGrid, GameConfig.LEVEL_CELL_HEIGHT, GameConfig.LEVEL_CELL_WIDTH);}
+    public void createCollisionCtrlObj() { this.collisionController = new CollisionController(this, GameConfig.LEVEL_CELL_HEIGHT, GameConfig.LEVEL_CELL_WIDTH);}
 
+    public GameObject[][] getObjectGrid() {return this.objectGrid;}
     public GameConfig getGameConfig() {
         return this.gameConfig;
     }
@@ -138,7 +139,7 @@ public class Game {
     public GameColorObject getGameColorObject() {
         return this.gameColorObject;
     }
-    public CollisionHandler getCollisionHandler() { return this.collisionHandler;}
+    public CollisionController getCollisionCtrl() { return this.collisionController;}
 
     public MyAnimationTimer getAnimationTimer() { return this.animationTimer;}
 
@@ -167,6 +168,9 @@ public class Game {
     }
     public EndSceneModel getEndSceneView() {
         return this.endSceneModel;
+    }
+    public void setObjectGrid(GameObject[][] grid) {
+        this.objectGrid = grid;
     }
 
     public void setAnchorPaneEndOverlay(AnchorPane anchorPaneEndOverlay) {

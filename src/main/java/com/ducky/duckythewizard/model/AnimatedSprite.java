@@ -1,6 +1,6 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.controller.CollisionHandler;
+import com.ducky.duckythewizard.controller.CollisionController;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.SnapshotParameters;
@@ -23,7 +23,7 @@ public class AnimatedSprite extends Sprite
     private String spriteSkinString;
     private String spriteSkinColorString;
     private Player player;
-    private CollisionHandler collisionHandler;
+    private CollisionController collisionController;
 
     private Image[] imageArrayFlyRight;
     private Image[] imageArrayFlyLeft;
@@ -34,12 +34,12 @@ public class AnimatedSprite extends Sprite
 
     private boolean spriteLooksLeft = false;
 
-    public AnimatedSprite(CollisionHandler collisionHandler, String spriteSkinString, String spriteSkinColorString, Player player) {
+    public AnimatedSprite(CollisionController collisionController, String spriteSkinString, String spriteSkinColorString, Player player) {
         this.spriteSkinString = spriteSkinString;
         this.spriteSkinColorString = spriteSkinColorString;
         this.player = player;
         this.player.resetPlayerTimer();
-        this.collisionHandler = collisionHandler;
+        this.collisionController = collisionController;
         this.initializeFileAmounts();
         this.initializeImageArrays();
         this.frames = imageArrayFlyRight;
@@ -65,14 +65,14 @@ public class AnimatedSprite extends Sprite
     {
         // if collision --> revert position and adjust velocity, depending on direction in which collision occurred
         this.positionX += this.velocityX * time;
-        if(this.collisionHandler.isCollision(this.getBoundary())){
+        if(this.collisionController.isCollision(this.getBoundary())){
             this.positionX -= this.velocityX * time;  // revert position
             this.velocityX = this.velocityX * (-1);   // invert velocity
         }
 
         this.positionY += this.velocityY * time;
 
-        if(this.collisionHandler.isCollision(this.getBoundary())){
+        if(this.collisionController.isCollision(this.getBoundary())){
             this.positionY -= this.velocityY * time;  // revert position
             if (this.velocityY > 0){             // if Ducky was falling, stop falling
                 this.velocityY = 0;

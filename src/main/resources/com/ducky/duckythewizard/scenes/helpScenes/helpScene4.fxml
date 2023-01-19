@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.scenes.MenuController">
    <children>
-      <Label alignment="CENTER" prefHeight="650.0" prefWidth="800.0" text="If you don't only want to fight&#10;till the glorious end but also want to earn&#10;the highest points, keep the following in mind:&#10;&#10;Winning fights earns you points,&#10;losing loses you points (of course)!&#10;&#10;Winning when playing first or winning a no trump fight earns you additional points.&#10;&#10;Playing your high value cards will not earn you the highest honor -- I mean, points.&#10;The closer your winning card's value is to the losing card, the more points you earn.&#10;&#10;Good luck, Ducky!" textAlignment="CENTER" wrapText="true">
+      <Label alignment="CENTER" prefHeight="650.0" prefWidth="800.0" text="If you don't only want to fight&#10;till the glorious end but also want to earn&#10;the highest points, keep the following in mind:&#10;&#10;Winning fights earns you points,&#10;losing loses you points (of course)!&#10;&#10;Winning when playing first or winning a no trump fight earns you additional points.&#10;&#10;Playing your high value cards will not earn you the highest honor -- I mean, points.&#10;The closer your non-trump winning card's value is to the losing card, the more points you earn.&#10;&#10;Good luck, Ducky!" textAlignment="CENTER" wrapText="true">
          <styleClass>
             <String fx:value="textGeneral" />
             <String fx:value="textPaddingSmall" />

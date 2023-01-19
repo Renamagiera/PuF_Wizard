@@ -141,7 +141,7 @@ public class GameController{
 
         // initialize Level map
         Level level = new Level(levelGrid);
-        this.session.objectGrid = level.getGameObjectGrid();
+        this.session.setObjectGrid(level.getGameObjectGrid());
 
         // initialize stones: search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
         this.session.getStoneCtrl().initializeStones(this.levelGrid);
@@ -153,7 +153,7 @@ public class GameController{
         this.gc = mainCanvas.getGraphicsContext2D();
 
         // initialize CollisionHandler
-        this.session.createCollisionHandlerObj();
+        this.session.createCollisionCtrlObj();
 
         // initialize font for texts that are shown
         Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
@@ -163,7 +163,7 @@ public class GameController{
         this.gc.setLineWidth(5);
 
         // initialize Player's sprite
-        this.session.getPlayer().createPlayerSprite(this.session.getCollisionHandler());
+        this.session.getPlayer().createPlayerSprite(this.session.getCollisionCtrl());
         this.ducky = this.session.getPlayer().getPlayerSprite();
         this.ducky.setDuration(0.1);
         this.ducky.setPosition(GameConfig.WINDOW_WIDTH /4 - ducky.getFrame(0).getWidth()/2, 0);

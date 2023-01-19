@@ -1,5 +1,6 @@
-package com.ducky.duckythewizard.controller;
+package com.ducky.duckythewizard.controller.scenes;
 
+import com.ducky.duckythewizard.controller.Controller;
 import com.ducky.duckythewizard.model.Host;
 import com.ducky.duckythewizard.model.ServerFacade;
 import javafx.beans.value.ChangeListener;
@@ -15,7 +16,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 
-public class LoginSceneController extends Controller{
+public class LoginSceneController extends Controller {
 
     @FXML
     private TextField userTextField;

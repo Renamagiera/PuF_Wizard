@@ -1,6 +1,6 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.controller.CollisionHandler;
+import com.ducky.duckythewizard.controller.CollisionController;
 import com.ducky.duckythewizard.controller.scenes.MenuController;
 import com.ducky.duckythewizard.model.card.CardModel;
 import com.ducky.duckythewizard.model.config.GameConfig;
@@ -94,8 +94,8 @@ public class Player {
         this.handCards = handCards;
     }
 
-    public void createPlayerSprite(CollisionHandler collisionHandler) {
-        this.playerSprite = new AnimatedSprite(collisionHandler, MenuController.getSpriteSkin(), MenuController.getSpriteSkinColor(), this);
+    public void createPlayerSprite(CollisionController collisionController) {
+        this.playerSprite = new AnimatedSprite(collisionController, MenuController.getSpriteSkin(), MenuController.getSpriteSkinColor(), this);
     }
     public void setSession(Game session){
         this.session = session;
