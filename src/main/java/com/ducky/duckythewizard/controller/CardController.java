@@ -44,7 +44,7 @@ public class CardController extends Controller {
 
     public ArrayList<CardModel> dealHandCards() {
         ArrayList<CardModel> takenCards = new ArrayList<>();
-        for (int i = 0; i < GameConfig.AMOUNT_HAND_CARDS; i++) {
+        for (int i = 0; i < GameConfig.CARDS_AMOUNT_HANDCARDS; i++) {
             takenCards.add(this.cardDeckModel.getCardDeck().remove(0));
         }
         // update deck-size
@@ -122,7 +122,7 @@ public class CardController extends Controller {
     }
 
     private void removeAllClickHandlers() {
-        for (int i = 0; i < GameConfig.AMOUNT_HAND_CARDS; i++){
+        for (int i = 0; i < GameConfig.CARDS_AMOUNT_HANDCARDS; i++){
             ImageView imgView = (ImageView) this.anchorPaneCards.getChildren().get(i);
             imgView.removeEventFilter(MouseEvent.MOUSE_CLICKED, clickHandlers.get(i));
         }

@@ -18,17 +18,18 @@ public class GameConfig {
     public static final double LEVEL_CELL_HEIGHT = 50.0;
 
     /* ** CARD CONFIGURATION ** */
-    public static GameConfigCards gameConfigCards = new GameConfigCards();
-    public static final String EMPTY_CARD_FILENAME = gameConfigCards.getEmptyCardFilename();
-    public static final String BACK_CARD_FILENAME = gameConfigCards.getBackCardFilename();
-    public static final String WIZARD_FILENAME = gameConfigCards.getWizardFilename();
-    public static final int AMOUNT_WIZARDS = gameConfigCards.getAmountWizards();
-    public static final int AMOUNT_HAND_CARDS = gameConfigCards.getAmountHandCards();
-    public static int WIZARD_POINTS = gameConfigCards.getWizardPoints();
-    public static final int MAX_CARD_VALUE = gameConfigCards.getMaxCardValue();
-    public static final int MIN_CARD_VALUE = gameConfigCards.getMinCardValue();
-    public static final Image EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.EMPTY_CARD_FILENAME)));
-    public static final Image BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.BACK_CARD_FILENAME)));
+    public static final String CARDS_EMPTY_CARD_FILENAME = "/com/ducky/duckythewizard/images/cards/empty.png";
+    public static final String CARDS_BACK_CARD_FILENAME = "/com/ducky/duckythewizard/images/cards/back.png";
+    public static final String CARDS_WIZARD_FILENAME = "/com/ducky/duckythewizard/images/cards/wizard.png";
+
+    public static final int CARDS_AMOUNT_TOTAL = 56;
+    public static final int CARDS_AMOUNT_WIZARDS = 4;
+    public static final int CARDS_AMOUNT_HANDCARDS = 5;
+    public static int CARDS_VALUE_WIZARD = 199;
+    public static final int CARDS_VALUE_MAX = 12;
+    public static final int CARDS_VALUE_MIN = 0;
+    public static final Image CARDS_EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_EMPTY_CARD_FILENAME)));
+    public static final Image CARDS_BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_BACK_CARD_FILENAME)));
 
     /* ** PLAYER CONFIGURATION ** */
     public static final int PLAYER_MAX_HEALTH_POINTS = 3;
@@ -40,9 +41,10 @@ public class GameConfig {
     /* ** STONE CONFIGURATION ** */
     public static final String STONE_IMAGE_FILE_NAME = "/com/ducky/duckythewizard/images/forest/rock_50px.png";
     public static final int STONE_INACTIVE_TIMER = 10000;
-    public static final int STONE_CHANGE_COLOR_RATE_MIN = 5;
-    public static final int STONE_CHANGE_COLOR_RATE_MAX = 10;
-    public static final int TRUMP_TIMER = 2000;
+    public static final int STONE_CHANGE_COLOR_RATE_MIN = 2;
+    public static final int STONE_CHANGE_COLOR_RATE_MAX = 4;
+    public static final int STONE_TRUMP_INITIAL_DELAY = 3;
+    public static final int STONE_TRUMP_PERIOD = 3;
 
     /* ** COLOR CONFIGURATION: TRUMP COLORS - STRING ** */
     public static final String[] TRUMP_COLORS_STRING = {"red", "blue", "green", "yellow", "none"};

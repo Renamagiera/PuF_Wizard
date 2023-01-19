@@ -37,7 +37,7 @@ public class Player {
         this.timerTextLabel = new SimpleStringProperty();
         this.timerLabel = new SimpleStringProperty();
         this.timerLabelStyle = new SimpleStringProperty();
-        this.playableCards = GameConfig.AMOUNT_HAND_CARDS;
+        this.playableCards = GameConfig.CARDS_AMOUNT_HANDCARDS;
     }
 
     private void startTimer(){

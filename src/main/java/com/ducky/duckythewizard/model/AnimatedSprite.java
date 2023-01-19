@@ -16,11 +16,6 @@ public class AnimatedSprite extends Sprite
     public Image[] frames;
     public double duration;
 
-    public enum MovementState {
-        IDLE,
-        WALK,
-        FLY
-    }
     private int walkImageAmount;
     private int flyImageAmount;
     private int idleImageAmount ;
@@ -28,7 +23,6 @@ public class AnimatedSprite extends Sprite
     private String spriteSkinString;
     private String spriteSkinColorString;
     private Player player;
-    private AnimatedSprite.MovementState state;
     private CollisionHandler collisionHandler;
 
     private Image[] imageArrayFlyRight;
@@ -45,7 +39,6 @@ public class AnimatedSprite extends Sprite
         this.spriteSkinColorString = spriteSkinColorString;
         this.player = player;
         this.player.resetPlayerTimer();
-        this.state = AnimatedSprite.MovementState.FLY;
         this.collisionHandler = collisionHandler;
         this.initializeFileAmounts();
         this.initializeImageArrays();
@@ -97,10 +90,6 @@ public class AnimatedSprite extends Sprite
         else {
             this.setFramesForFlying();
         }
-    }
-
-    public void setState(AnimatedSprite.MovementState state) {
-        this.state = state;
     }
 
     private void setFramesForWalking() {
