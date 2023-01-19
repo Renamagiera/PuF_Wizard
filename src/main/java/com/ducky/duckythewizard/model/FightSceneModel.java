@@ -131,7 +131,7 @@ public class FightSceneModel {
     }
 
     // VIEW !! Added exit-label manually, because it should just appear after card-click
-    // TODO add label in fxml and set it visible/not visible, delete event-handler. After this, it should stay in model because of data change
+    //TODO add label in fxml and set it visible/not visible, delete event-handler. After this, it should stay in model because of data change
     public void addExitLabel() {
         this.exitLabel = new Label("x");
         this.exitLabel.setId("exitLabel");

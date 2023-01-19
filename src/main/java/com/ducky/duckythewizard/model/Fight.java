@@ -4,7 +4,12 @@ import com.ducky.duckythewizard.model.card.CardModel;
 
 import java.util.Random;
 
+/**In this class all objects relevant to the current fight are saved (the stone Ducky is fighting against,
+ * which cards have been played in the fight, what colour is trump etc. - all collected facts of the fight
+ * are then used to determine who has won.*/
+
 public class Fight {
+
     private Stone stoneInFight;
     private CardModel duckyCard;
     private CardModel stoneCard;
@@ -13,47 +18,32 @@ public class Fight {
     private final boolean duckyPlaysFirst;
 
     public Fight() {
-        // who starts
+        // determine who starts
         this.duckyPlaysFirst = generateDuckyPlaysFirst();
     }
 
 
-    public void setStoneCard(CardModel stoneCard) {
-        this.stoneCard = stoneCard;
-    }
+    public void setStoneCard(CardModel stoneCard) { this.stoneCard = stoneCard; }
 
-    public void setDuckyCard(CardModel duckyCard) {
-        this.duckyCard = duckyCard;
-    }
+    public void setDuckyCard(CardModel duckyCard) { this.duckyCard = duckyCard; }
 
     public void setStoneInFight(Stone stoneInFight) { this.stoneInFight = stoneInFight; }
 
-    public void setTrump(Stone stone) { this.trump =stone.getRandomTrumpColorStone().getName(); }
+    public void setTrump(Stone stone) { this.trump = stone.getRandomTrumpColorStone().getName(); }
 
-    public CardModel getDuckyCard() {
-        return this.duckyCard;
-    }
+    public CardModel getDuckyCard() { return this.duckyCard; }
 
-    public CardModel getStoneCard() {
-        return this.stoneCard;
-    }
+    public CardModel getStoneCard() { return this.stoneCard; }
 
-    public Stone getStoneInFight() {
-        return this.stoneInFight;
-    }
+    public Stone getStoneInFight() { return this.stoneInFight; }
 
-    public boolean getDuckyPlaysFirst() {
-        return this.duckyPlaysFirst;
-    }
+    public boolean getDuckyPlaysFirst() { return this.duckyPlaysFirst; }
 
-    private boolean generateDuckyPlaysFirst() {
-        return new Random().nextBoolean();
-    }
+    private boolean generateDuckyPlaysFirst() { return new Random().nextBoolean(); }
 
-    /*This method check's who wins the fight according to the rules set
-    by the developer ladies. Depending on who wins, a text object is
-    rendered to the fight scene to inform the player if they have lost or won.*/
-    public boolean determineWinner() {
+    /**This method check's if Ducky wins the fight according to the rules set by the developer ladies.
+     * The boolean result is used elsewhere to determine which screen to show to the player (win/loss of fight).*/
+    public boolean determineIfDuckyIsWinner() {
         int stoneScore = stoneCard.getValue();
         int duckyScore = duckyCard.getValue();
 
@@ -93,6 +83,9 @@ public class Fight {
         return duckyScore > stoneScore;
     }
 
+    /**This method calculates how many points Ducky has earned according to if he won and with what card in what setting.
+     *
+     * @param duckyWin informs if Ducky has won the fight*/
     public int calculateScore(boolean duckyWin) {
         int score = 0;
 
@@ -134,7 +127,7 @@ public class Fight {
 
         }
         else {
-            //each loss causes loss of 10 points
+            //each lost fight causes loss of 10 points
             score -= 10;
         }
 

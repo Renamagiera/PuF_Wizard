@@ -1,5 +1,7 @@
 package com.ducky.duckythewizard.model;
 
+import com.ducky.duckythewizard.controller.CollisionController;
+import com.ducky.duckythewizard.controller.scenes.MenuController;
 import com.ducky.duckythewizard.model.card.CardModel;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.application.Platform;
@@ -50,7 +52,7 @@ public class Player {
                             timerProperty.setValue(timerProperty.getValue() - 1);
                             if (timerProperty.getValue() == 0) {
                                 reducePlayerLife();
-                            }else if(timerProperty.getValue() == 3){
+                            }else if(timerProperty.getValue() == GameConfig.PLAYER_ACTION_TIMER_CRITICAL){
                                 updateTimerLabel(true);
                             }
                         }
@@ -65,7 +67,7 @@ public class Player {
                 return t;
             }
         );
-        executor.scheduleAtFixedRate(timerRunnable, 0, 1, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(timerRunnable, GameConfig.PLAYER_ACTION_TIMER_INITIAL_DELAY, GameConfig.PLAYER_ACTION_TIMER_PERIOD, TimeUnit.SECONDS);
     }
 
     //getter & setter
@@ -91,8 +93,9 @@ public class Player {
     public void setHandCards(ArrayList<CardModel> handCards) {
         this.handCards = handCards;
     }
-    public void setPlayerSprite(AnimatedSprite sprite) {
-        this.playerSprite = sprite;
+
+    public void createPlayerSprite(CollisionController collisionController) {
+        this.playerSprite = new AnimatedSprite(collisionController, MenuController.getSpriteSkin(), MenuController.getSpriteSkinColor(), this);
     }
     public void setSession(Game session){
         this.session = session;
@@ -108,6 +111,16 @@ public class Player {
         this.updateTimerLabel(false);
     }
 
+    public void updateTimerLabel(boolean critical) {
+        if (critical) {
+            this.timerTextLabel.set("-fx-text-fill: red; -fx-stroke: red; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 1px;");
+            this.timerLabelStyle.set("-fx-text-fill: red; -fx-stroke: red; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 1px;");
+        } else {
+            this.timerTextLabel.set("-fx-stroke: black; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 2px;");
+            this.timerLabelStyle.set("-fx-stroke: black; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 2px;");
+        }
+    }
+
     private void reducePlayerLife(){
         this.healthPoints = this.healthPoints <= 0 ? 0 : this.healthPoints - 1;
         this.resetPlayerTimer();
@@ -121,13 +134,4 @@ public class Player {
         return this.playableCards >= 1;
     }
 
-    public void updateTimerLabel(boolean critical) {
-        if (critical) {
-            this.timerTextLabel.set("-fx-text-fill: red; -fx-stroke: red; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 1px;");
-            this.timerLabelStyle.set("-fx-text-fill: red; -fx-stroke: red; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 1px;");
-        } else {
-            this.timerTextLabel.set("-fx-stroke: black; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 2px;");
-            this.timerLabelStyle.set("-fx-stroke: black; -fx-stroke-type: OUTSIDE; -fx-stroke-width: 2px;");
-        }
-    }
 }
