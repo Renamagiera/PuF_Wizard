@@ -66,9 +66,10 @@ public class  GameColorObject {
         HEX_CODES.put(GameConfig.COLOR_BLUE_HEXCODE.getValue0(),GameConfig.COLOR_BLUE_HEXCODE.getValue1());
         HEX_CODES.put(GameConfig.COLOR_GREEN_HEXCODE.getValue0(),GameConfig.COLOR_GREEN_HEXCODE.getValue1());
         HEX_CODES.put(GameConfig.COLOR_YELLOW_HEXCODE.getValue0(),GameConfig.COLOR_YELLOW_HEXCODE.getValue1());
+        HEX_CODES.put(GameConfig.COLOR_NONE_HEXCODE.getValue0(),GameConfig.COLOR_NONE_HEXCODE.getValue1());
         HEX_CODES.put(GameConfig.COLOR_WHITE_HEXCODE.getValue0(),GameConfig.COLOR_WHITE_HEXCODE.getValue1());
         HEX_CODES.put(GameConfig.COLOR_BLACK_HEXCODE.getValue0(), GameConfig.COLOR_BLACK_HEXCODE.getValue1());
-        HEX_CODES.put(GameConfig.COLOR_BLACK_HEXCODE.getValue0(), GameConfig.COLOR_BLACK_HEXCODE.getValue1());
+        HEX_CODES.put(GameConfig.COLOR_BROWN_HEXCODE.getValue0(), GameConfig.COLOR_BROWN_HEXCODE.getValue1());
         HEX_CODES.put(GameConfig.COLOR_ORANGE_HEXCODE.getValue0(), GameConfig.COLOR_ORANGE_HEXCODE.getValue1());
     }
 
@@ -84,7 +85,7 @@ public class  GameColorObject {
         RGB_MAP.put(GameConfig.COLOR_NONE_HEXCODE.getValue0(), Color.rgb(GameConfig.COLOR_NONE_RGB.getValue0(),GameConfig.COLOR_NONE_RGB.getValue1(),GameConfig.COLOR_NONE_RGB.getValue2()));
     }
 
-    public String getHexCodeFromMap(String color) {
+    public static String getHexCodeFromMap(String color) {
         return HEX_CODES.get(color);
     }
 

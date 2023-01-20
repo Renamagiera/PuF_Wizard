@@ -73,7 +73,7 @@ public class StoneController extends Controller {
 
     public void changeStoneTrump(Stone stone) {
         stone.setIsChangingColor(true);
-        String stoneRandomTrumpColorBefore = stone.getRandomTrumpColorStone().getName();
+        String stoneRandomTrumpColorBefore = stone.getRandomTrumpColorStone();
         getSession().getGameColorObject().tintObject(stone.getStoneImgView(), stoneRandomTrumpColorBefore, true);
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(2));
         pauseTransition.setOnFinished(event -> {
@@ -88,8 +88,8 @@ public class StoneController extends Controller {
     }
 
     private String newStoneTrumpColor(Stone stone) {
-        stone.setRandomTrumpColorStone(getSession().getGameColorObject().generateRandomTrump());
-        return stone.getRandomTrumpColorStone().getName();
+        stone.setRandomTrumpColorStone(getSession().getGameColorObject().generateRandomTrump().getName());
+        return stone.getRandomTrumpColorStone();
     }
 
     private void addStonesToArrayList() {
@@ -106,8 +106,8 @@ public class StoneController extends Controller {
     private void tintAllStones() {
         // color the stones to the trump-color
         for (Stone stone : this.getSession().getStoneArrayList()) {
-            stone.setRandomTrumpColorStone(this.getSession().getGameColorObject().generateRandomTrump());
-            String stoneRandomTrumpColor = stone.getRandomTrumpColorStone().getName();
+            stone.setRandomTrumpColorStone(this.getSession().getGameColorObject().generateRandomTrump().getName());
+            String stoneRandomTrumpColor = stone.getRandomTrumpColorStone();
             this.getSession().getGameColorObject().tintObject(stone.getStoneImgView(), stoneRandomTrumpColor, false);
         }
     }
