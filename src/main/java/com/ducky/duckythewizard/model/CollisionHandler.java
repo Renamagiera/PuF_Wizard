@@ -1,18 +1,12 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.controller.Controller;
-import com.ducky.duckythewizard.controller.GameController;
-import com.ducky.duckythewizard.model.GameObject;
-import com.ducky.duckythewizard.model.Stone;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Rectangle2D;
 
-public class CollisionHandler extends Controller {
+public class CollisionHandler {
 
-
-    private GameController myGameController;
     private GameObject[][] levelObjectGrid;
     private double tileHeight = GameConfig.LEVEL_CELL_HEIGHT;
     private double tileWidth = GameConfig.LEVEL_CELL_WIDTH;
