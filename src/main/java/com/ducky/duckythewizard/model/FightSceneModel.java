@@ -2,8 +2,9 @@ package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +21,8 @@ public class FightSceneModel {
     public SimpleStringProperty winLossLabelProperty;
     public SimpleStringProperty winLossLabelStyleProperty;
     public SimpleStringProperty fightOverlayStyleProperty;
+    public BooleanProperty fightOverlayVisible;
+    public BooleanProperty exitFightViewVisible;
 
     private AnchorPane anchorPaneFightOverlay;
     private Fight activeFight;
@@ -27,25 +30,23 @@ public class FightSceneModel {
     private String trumpColorHexCode;
     private String trumpColorName;
 
-    private Label exitLabel;
 
     public FightSceneModel() {
-        this.trumpColorTextProperty = new SimpleStringProperty("");
-        this.trumpColorTextStyleProperty = new SimpleStringProperty("");
-        this.cardChooseTextProperty = new SimpleStringProperty("");
+        this.trumpColorTextProperty = new SimpleStringProperty();
+        this.trumpColorTextStyleProperty = new SimpleStringProperty();
+        this.cardChooseTextProperty = new SimpleStringProperty();
         this.stoneCardProperty = new ImageView(GameConfig.CARDS_EMPTY_CARD_IMAGE);
         this.duckyCardProperty = new ImageView(GameConfig.CARDS_EMPTY_CARD_IMAGE);
-        this.winLossLabelProperty = new SimpleStringProperty("");
-        this.winLossLabelStyleProperty = new SimpleStringProperty("");
-        this.fightOverlayStyleProperty = new SimpleStringProperty("");
+        this.winLossLabelProperty = new SimpleStringProperty();
+        this.winLossLabelStyleProperty = new SimpleStringProperty();
+        this.fightOverlayStyleProperty = new SimpleStringProperty();
+        this.fightOverlayVisible = new SimpleBooleanProperty(false);
+        this.exitFightViewVisible = new SimpleBooleanProperty(false);
     }
 
     // getter & setter
     public AnchorPane getAnchorPaneFightOverlay() {
         return anchorPaneFightOverlay;
-    }
-    public Label getExitLabel() {
-        return exitLabel;
     }
 
     public void initLocalVariables(GameColorObject gameColorObject, AnchorPane anchorPaneFight) {
@@ -54,7 +55,7 @@ public class FightSceneModel {
     }
 
     public void showFightScene(Fight activeFight) {
-        this.anchorPaneFightOverlay.setVisible(true);
+        this.fightOverlayVisible.set(true);
         this.activeFight = activeFight;
         this.trumpColorName = activeFight.getStoneInFight().getRandomTrumpColorStone().getName();
         this.trumpColorHexCode = activeFight.getStoneInFight().getRandomTrumpColorStone().getHexCode();
@@ -69,7 +70,7 @@ public class FightSceneModel {
 
     private void updateImageViews() {
         this.duckyCardProperty.imageProperty().set(GameConfig.CARDS_EMPTY_CARD_IMAGE);
-        this.stoneCardProperty.imageProperty().set(this.activeFight.getDuckyPlaysFirst() ? GameConfig.CARDS_BACK_CARD_IMAGE : newImage(this.activeFight.getStoneCard().getImgFileName()));
+        this.stoneCardProperty.imageProperty().set(this.activeFight.getDuckyPlaysFirst() ? GameConfig.CARDS_BACK_CARD_IMAGE : loadNewImage(this.activeFight.getStoneCard().getImgFileName()));
     }
 
     private void updateLabelTrumpColor() {
@@ -109,36 +110,18 @@ public class FightSceneModel {
 
     public void updateFightViewCardProp(boolean ducky) {
         if (ducky) {
-            this.duckyCardProperty.imageProperty().set(newImage(this.activeFight.getDuckyCard().getImgFileName()));
+            this.duckyCardProperty.imageProperty().set(loadNewImage(this.activeFight.getDuckyCard().getImgFileName()));
         } else {
-            this.stoneCardProperty.imageProperty().set(newImage(this.activeFight.getStoneCard().getImgFileName()));
+            this.stoneCardProperty.imageProperty().set(loadNewImage(this.activeFight.getStoneCard().getImgFileName()));
         }
     }
 
-    // help-methods
-    private Image newImage(String fileName) {
+    private Image loadNewImage(String fileName) {
         return new Image(Objects.requireNonNull(getClass().getResourceAsStream(fileName)));
     }
 
-
-
-
-
-    // CONTROLLER
     public void endFightScene() {
-        this.anchorPaneFightOverlay.setVisible(false);
-        this.anchorPaneFightOverlay.getChildren().remove(this.exitLabel);
+        this.fightOverlayVisible.set(false);
+        this.exitFightViewVisible.set(false);
     }
-
-    // VIEW !! Added exit-label manually, because it should just appear after card-click
-    //TODO add label in fxml and set it visible/not visible, delete event-handler. After this, it should stay in model because of data change
-    public void addExitLabel() {
-        this.exitLabel = new Label("x");
-        this.exitLabel.setId("exitLabel");
-        this.exitLabel.setLayoutX(358);
-        this.exitLabel.setLayoutY(5);
-        this.exitLabel.setStyle("-fx-font-family: 'Alagard'; -fx-text-fill: white; -fx-font-size: 30px;");
-        this.anchorPaneFightOverlay.getChildren().add(this.exitLabel);
-    }
-    // VIEW !! Added exit-label manually, because it should just appear after card-click
 }

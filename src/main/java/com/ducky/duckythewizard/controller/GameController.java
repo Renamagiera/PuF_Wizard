@@ -68,6 +68,8 @@ public class GameController{
     private ImageView duckyCard;
     @FXML
     private Label winLossLabel;
+    @FXML
+    private Label exitFightView;
 
     /*end-scene*/
     @FXML
@@ -127,6 +129,8 @@ public class GameController{
         this.winLossLabel.textProperty().bind(session.getFightView().winLossLabelProperty);
         this.winLossLabel.styleProperty().bind(session.getFightView().winLossLabelStyleProperty);
         this.fightOverlay.styleProperty().bind(session.getFightView().fightOverlayStyleProperty);
+        this.fightOverlay.visibleProperty().bind(session.getFightView().fightOverlayVisible);
+        this.exitFightView.visibleProperty().bind(session.getFightView().exitFightViewVisible);
 
         // bindings end-scene
         this.endSceneLabel.textProperty().bind(session.getEndSceneView().endSceneLabelProperty);
