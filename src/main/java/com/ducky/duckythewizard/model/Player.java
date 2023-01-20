@@ -12,7 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Player {
-    private String name = "testname";
+    private String name = "defaultName";
     private ArrayList<Card> handCards;
     private int healthPoints;
     private int playableCards;

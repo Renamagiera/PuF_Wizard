@@ -20,7 +20,7 @@ public class Level {
             if(node.getStyleClass().contains("stone")){
                 this.objectGrid[row][column] = new Stone();
             }
-            else { // if (node.getStyleClass().contains("earth-tile")) // TODO add styleclass to earth tiles??
+            else {
                 this.objectGrid[row][column] = new GameObject(false);
             }
         }

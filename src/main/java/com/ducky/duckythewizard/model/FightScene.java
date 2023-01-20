@@ -60,8 +60,8 @@ public class FightScene {
     public void showFightScene(Fight activeFight) {
         this.fightOverlayVisible.set(true);
         this.activeFight = activeFight;
-        this.trumpColorName = activeFight.getStoneInFight().getRandomTrumpColorStone().getName();
-        this.trumpColorHexCode = activeFight.getStoneInFight().getRandomTrumpColorStone().getHexCode();
+        this.trumpColorName = activeFight.getStoneInFight().getRandomTrumpColorStone();
+        this.trumpColorHexCode = GameColorObject.getHexCodeFromMap(this.trumpColorName);
 
         // property change, changing data in some way -> model
         this.updateImageViews();
