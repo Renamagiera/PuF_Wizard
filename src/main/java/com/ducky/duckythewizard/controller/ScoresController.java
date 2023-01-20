@@ -101,9 +101,8 @@ public class ScoresController extends VBox {
 
             serverFacade.sendHighScoreToServer(Host.getInstance().getPlayerName(), score);
             // getting updated high score list from server
-            topHighScoresObservable =
-                    FXCollections.observableList(serverFacade.getTopHighScoresFromServer(limit));
-            scoresTable.setItems(topHighScoresObservable);
+            topHighScoresObservable.setAll(FXCollections.observableList(
+                    serverFacade.getTopHighScoresFromServer(limit)));
             return true;
         }
         return false;
@@ -118,21 +117,18 @@ public class ScoresController extends VBox {
     }
 
     // toggles between:
-    // showing top 5 high scores of all users and
+    // showing top <limit> high scores of all users and
     // all high scores of logged-in user
     public void toggleTableView() {
         if (highScoreContext == HighScoreContext.USER){
             highScoreContext = HighScoreContext.ALL;
-            topHighScoresObservable =
-                    FXCollections.observableList(serverFacade.getTopHighScoresFromServer(limit));
-            scoresTable.setItems(topHighScoresObservable);
+            topHighScoresObservable.setAll(FXCollections.observableList(
+                    serverFacade.getTopHighScoresFromServer(limit)));
             this.scoresTable.addEventFilter(ScrollEvent.ANY, scrollEventEventHandler);
         } else {
             highScoreContext = HighScoreContext.USER;
-            topHighScoresObservable =
-                    FXCollections.observableList(
-                            serverFacade.getAllHighScoresOfUser(Host.getInstance().getPlayerName()));
-            scoresTable.setItems(topHighScoresObservable);
+            topHighScoresObservable.setAll(FXCollections.observableList(
+                    serverFacade.getAllHighScoresOfUser(Host.getInstance().getPlayerName())));
             this.scoresTable.removeEventFilter(ScrollEvent.ANY, scrollEventEventHandler);
         }
     }
