@@ -4,6 +4,7 @@ import com.ducky.duckythewizard.model.Game;
 import com.ducky.duckythewizard.model.Stone;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -15,6 +16,8 @@ import java.util.concurrent.*;
 
 public class StoneController extends Controller {
 
+    private Thread changeTrumpThread;
+
     public StoneController (Game game) {
         super(game);
     }
@@ -25,46 +28,60 @@ public class StoneController extends Controller {
         this.setStoneImages(levelGrid);
         this.tintAllStones();
         this.getSession().getCardCtrl().addCardToStones();
-        this.createRunnable();
+        this.changeTrumpColor();
     }
 
-    private void createRunnable() {
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(this.getSession().getStoneArrayList().size(),
-                r -> {
-                    Thread t = Executors.defaultThreadFactory().newThread(r);
-                    t.setDaemon(true);
-                    return t;
-                });
-        Runnable stoneColorRunnable = () -> {
-            if (getSession().getIsRunning()) {
-                for (Stone stone : getSession().getStoneArrayList()) {
-                    if (stone.getActive()) {
-                        try {
-                            int sleepTime = (new Random().nextInt(GameConfig.STONE_CHANGE_COLOR_RATE_MAX - GameConfig.STONE_CHANGE_COLOR_RATE_MIN + 1) + GameConfig.STONE_CHANGE_COLOR_RATE_MIN) * 1000;
-                            Thread.sleep(sleepTime);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
+    public void changeTrumpColor() {
+        ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(1, r -> {
+            this.changeTrumpThread = Executors.defaultThreadFactory().newThread(r);
+            this.changeTrumpThread.setDaemon(true);
+            return this.changeTrumpThread;
+        });
+        Thread t = new Thread(() -> {
+            while (this.getSession().getIsRunning()) {
+                try {
+                    for (Stone stone : this.getSession().getStoneArrayList()) {
+                        int sleepTime = (new Random().nextInt(GameConfig.STONE_CHANGE_COLOR_RATE_MAX - GameConfig.STONE_CHANGE_COLOR_RATE_MIN + 1) + GameConfig.STONE_CHANGE_COLOR_RATE_MIN) * 1000;
+                        Thread.sleep(sleepTime);
+                        if (Platform.isFxApplicationThread()) {
+                            this.changeStoneTrump(stone);
+                        } else {
+                            Platform.runLater(() -> changeStoneTrump(stone));
                         }
-                        changeStoneTrump(stone);
+
+                    }
+                } catch (InterruptedException e) {
+                    while (!this.getSession().getIsRunning()) {
+                        try {
+                            this.getSession().getFightCtrl().getFightThread().join();
+                        } catch (InterruptedException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
             }
-        };
-        executorService.scheduleAtFixedRate(stoneColorRunnable, GameConfig.STONE_TRUMP_INITIAL_DELAY, GameConfig.STONE_TRUMP_PERIOD, TimeUnit.SECONDS);
+        });
+        t.setDaemon(true);
+        threadPool.scheduleAtFixedRate(t, GameConfig.STONE_TRUMP_INITIAL_DELAY, GameConfig.STONE_TRUMP_PERIOD, TimeUnit.SECONDS);
     }
 
+    public Thread getChangeTrumpThread() {
+        return this.changeTrumpThread;
+    }
+
+
     public void changeStoneTrump(Stone stone) {
+        stone.setIsChangingColor(true);
         String stoneRandomTrumpColorBefore = stone.getRandomTrumpColorStone().getName();
         getSession().getGameColorObject().tintObject(stone.getStoneImgView(), stoneRandomTrumpColorBefore, true);
-        stone.setActive(false);
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(2));
         pauseTransition.setOnFinished(event -> {
-            stone.setActive(true);
             String newTrump = newStoneTrumpColor(stone);
             while (newTrump.equals(stoneRandomTrumpColorBefore)) {
                 newTrump = newStoneTrumpColor(stone);
             }
             getSession().getGameColorObject().tintObject(stone.getStoneImgView(), newTrump, false);
+            stone.setIsChangingColor(false);
         });
         pauseTransition.play();
     }
@@ -108,15 +125,13 @@ public class StoneController extends Controller {
     }
 
     public void setInactive(Stone stone) {
-        //stone.setActive(false);
-        stone.setIsChangingColor(true);
+        stone.setActive(false);
         // starting timer to set stone active again in new thread
         Thread thread = new Thread(() -> {
             try {
                 this.getSession().getGameColorObject().setOpacityImageView(stone.getStoneImgView(), 0.4);
                 Thread.sleep(GameConfig.STONE_INACTIVE_TIMER);
-                //stone.setActive(true);
-                stone.setIsChangingColor(false);
+                stone.setActive(true);
                 this.getSession().getGameColorObject().setOpacityImageView(stone.getStoneImgView(), 1);
             } catch (InterruptedException ie) {
                 System.out.println(ie);

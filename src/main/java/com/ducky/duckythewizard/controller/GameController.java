@@ -231,13 +231,11 @@ public class GameController{
     }
 
     public void startCollision(Stone collisionStone) {
-        //this.session.getStoneCtrl().interruptThread();
         this.session.getFightCtrl().startFight(collisionStone);
     }
 
     public void endCollision() {
-        //this.session.getStoneCtrl().restartThread();
-        this.session.getFightCtrl().stopFight(this.session.getAnimationTimer());
+        this.session.getFightCtrl().stopFight();
     }
 
     public void renderEndScene(boolean playerWin) {

@@ -28,8 +28,6 @@ public class GameConfig {
     public static int CARDS_VALUE_WIZARD = 199;
     public static final int CARDS_VALUE_MAX = 12;
     public static final int CARDS_VALUE_MIN = 0;
-    public static final Image CARDS_EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_EMPTY_CARD_FILENAME)));
-    public static final Image CARDS_BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_BACK_CARD_FILENAME)));
 
     /* ** PLAYER CONFIGURATION ** */
     public static final int PLAYER_MAX_HEALTH_POINTS = 3;
@@ -46,7 +44,7 @@ public class GameConfig {
     public static final int STONE_INACTIVE_TIMER = 10000;
     public static final int STONE_CHANGE_COLOR_RATE_MIN = 2;
     public static final int STONE_CHANGE_COLOR_RATE_MAX = 4;
-    public static final int STONE_TRUMP_INITIAL_DELAY = 3;
+    public static final int STONE_TRUMP_INITIAL_DELAY = 2;
     public static final int STONE_TRUMP_PERIOD = 3;
 
     /* ** COLOR CONFIGURATION: TRUMP COLORS - STRING ** */
