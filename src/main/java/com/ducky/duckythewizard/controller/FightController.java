@@ -5,8 +5,13 @@ import javafx.application.Platform;
 
 public class FightController extends Controller {
     private Stone stone;
+    private Thread fightThread;
     public FightController(Game game) {
         super(game);
+    }
+
+    public Thread getFightThread() {
+        return this.fightThread;
     }
 
     public void startFight(Stone stone) {
@@ -26,16 +31,15 @@ public class FightController extends Controller {
             );
 
             // starting fight in new thread
-            Thread one = new Thread() {
-                public void run() {
-                    try {
-                        setFightHandler();
-                    } catch (Exception v) {
-                        System.out.println(v);
-                    }
+            this.fightThread = new Thread(() -> {
+                try {
+                    this.getSession().getStoneCtrl().getChangeTrumpThread().interrupt();
+                    setFightHandler();
+                } catch (Exception v) {
+                    System.out.println(v);
                 }
-            };
-            one.start();
+            });
+            this.fightThread.start();
         }
     }
 
@@ -43,19 +47,14 @@ public class FightController extends Controller {
         this.getSession().getCardCtrl().addMouseEventHandler();
     }
 
-    public void stopFight(MyAnimationTimer animationTimer){
-        //System.out.println("----> stopFight");
+    public void stopFight(){
         if(!this.getSession().getIsRunning()) {
             this.getSession().getAnimationTimer().resetStartingTime();
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    getSession().getPlayer().resetPlayerTimer();
-                    getSession().getFightView().endFightScene();
-                    // get focus back
-                    getSession().getRootAnchorPane().requestFocus();
-                }
+            Platform.runLater(() -> {
+                getSession().getPlayer().resetPlayerTimer();
             });
+            this.getSession().getFightView().endFightScene();
+            this.getSession().getRootAnchorPane().requestFocus();
             this.getSession().toggleIsRunning();
             this.getSession().toggleInFight();
             this.getSession().getCollisionHndlr().stoneHit.set(false);

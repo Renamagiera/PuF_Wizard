@@ -231,8 +231,7 @@ public class GameController{
     }
 
     public void endCollision() {
-
-        this.session.getFightCtrl().stopFight(this.session.getAnimationTimer());
+        this.session.getFightCtrl().stopFight();
     }
 
     public void renderEndScene(boolean playerWin) {

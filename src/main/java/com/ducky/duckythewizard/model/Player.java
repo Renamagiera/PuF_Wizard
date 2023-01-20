@@ -42,18 +42,22 @@ public class Player {
     }
 
     private void startTimer(){
-        Runnable timerRunnable = new Runnable() {
-            public void run() {
-                if (session != null && session.getIsRunning()){
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            timerProperty.setValue(timerProperty.getValue() - 1);
-                            if (timerProperty.getValue() == 0) {
-                                reducePlayerLife();
-                            }else if(timerProperty.getValue() == GameConfig.PLAYER_ACTION_TIMER_CRITICAL){
-                                updateTimerLabel(true);
-                            }
+        Runnable timerRunnable = () -> {
+            if (session != null && session.getIsRunning()){
+                if (Platform.isFxApplicationThread()) {
+                    timerProperty.setValue(timerProperty.getValue() - 1);
+                    if (timerProperty.getValue() == 0) {
+                        reducePlayerLife();
+                    }else if(timerProperty.getValue() == GameConfig.PLAYER_ACTION_TIMER_CRITICAL){
+                        updateTimerLabel(true);
+                    }
+                } else {
+                    Platform.runLater(() -> {
+                        timerProperty.setValue(timerProperty.getValue() - 1);
+                        if (timerProperty.getValue() == 0) {
+                            reducePlayerLife();
+                        }else if(timerProperty.getValue() == GameConfig.PLAYER_ACTION_TIMER_CRITICAL){
+                            updateTimerLabel(true);
                         }
                     });
                 }

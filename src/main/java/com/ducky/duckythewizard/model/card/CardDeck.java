@@ -1,5 +1,6 @@
 package com.ducky.duckythewizard.model.card;
 
+import com.ducky.duckythewizard.model.FightSceneModel;
 import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,6 +16,7 @@ public class CardDeck {
     private final ArrayList<Card> cardDeck;
     private ArrayList<GameColor> trumpColors;
     private static final Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
+    private static final Image CARDS_EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_EMPTY_CARD_FILENAME)));
 
     private GameColor wizard;
     private GameColor none;
@@ -33,11 +35,11 @@ public class CardDeck {
         this.cardDeck = new ArrayList<>();
         this.createCardSlotTitles();
         this.cardsProperty = new SimpleStringProperty(Integer.toString(cardDeck.size()));
-        this.handCard0 = new ImageView(GameConfig.CARDS_EMPTY_CARD_IMAGE);
-        this.handCard1 = new ImageView(GameConfig.CARDS_EMPTY_CARD_IMAGE);
-        this.handCard2 = new ImageView(GameConfig.CARDS_EMPTY_CARD_IMAGE);
-        this.handCard3 = new ImageView(GameConfig.CARDS_EMPTY_CARD_IMAGE);
-        this.handCard4 = new ImageView(GameConfig.CARDS_EMPTY_CARD_IMAGE);
+        this.handCard0 = new ImageView(CARDS_EMPTY_CARD_IMAGE);
+        this.handCard1 = new ImageView(CARDS_EMPTY_CARD_IMAGE);
+        this.handCard2 = new ImageView(CARDS_EMPTY_CARD_IMAGE);
+        this.handCard3 = new ImageView(CARDS_EMPTY_CARD_IMAGE);
+        this.handCard4 = new ImageView(CARDS_EMPTY_CARD_IMAGE);
         this.handCardsImages.add(this.handCard0);
         this.handCardsImages.add(this.handCard1);
         this.handCardsImages.add(this.handCard2);
@@ -108,7 +110,7 @@ public class CardDeck {
     }
 
     public void updateToEmptyCardImage(int pos) {
-        this.handCardsImages.get(pos).imageProperty().set(GameConfig.CARDS_EMPTY_CARD_IMAGE);
+        this.handCardsImages.get(pos).imageProperty().set(CARDS_EMPTY_CARD_IMAGE);
     }
 
     public Card dealOneNewCardFromDeck() {
