@@ -44,7 +44,7 @@ public class Game {
     private FightController fightCtrl;
     private MenuController menuCtrl;
     private EndSceneController endSceneCtrl;
-    private CollisionController collisionController;
+    private CollisionHandler collisionHndlr;
 
     private MyAnimationTimer animationTimer;
 
@@ -107,7 +107,7 @@ public class Game {
     public void createGameColorObj() {
         this.gameColorObject = new GameColorObject();
     }
-    public void createCollisionCtrlObj() { this.collisionController = new CollisionController(this, GameConfig.LEVEL_CELL_HEIGHT, GameConfig.LEVEL_CELL_WIDTH);}
+    public void createCollisionHndlrObj() { this.collisionHndlr = new CollisionHandler(this.getLevel().getObjectGrid());}
     public void createLevelObj(GridPane levelGrid) {
         this.level = new Level(levelGrid);
     }
@@ -136,7 +136,7 @@ public class Game {
     public GameColorObject getGameColorObject() {
         return this.gameColorObject;
     }
-    public CollisionController getCollisionCtrl() { return this.collisionController;}
+    public CollisionHandler getCollisionHndlr() { return this.collisionHndlr;}
     public Level getLevel() {
         return this.level;
     }
