@@ -1,12 +1,12 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.model.card.CardModel;
+import com.ducky.duckythewizard.model.card.Card;
 import com.ducky.duckythewizard.model.color.GameColor;
 import javafx.scene.image.ImageView;
 
 public class Stone extends GameObject{
 
-    private CardModel card;
+    private Card card;
 
     private static int count;
     private String id;
@@ -22,13 +22,13 @@ public class Stone extends GameObject{
         count++;
     }
 
-    public void setCard(CardModel card) {
+    public void setCard(Card card) {
         this.card = card;
     }
     public String getId() {
         return this.id;
     }
-    public CardModel getCard() {
+    public Card getCard() {
         return this.card;
     }
     public boolean isActive() {

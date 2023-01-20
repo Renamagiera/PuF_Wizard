@@ -2,7 +2,7 @@ package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.controller.CollisionController;
 import com.ducky.duckythewizard.controller.scenes.MenuController;
-import com.ducky.duckythewizard.model.card.CardModel;
+import com.ducky.duckythewizard.model.card.Card;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Player {
     private String name = "testname";
-    private ArrayList<CardModel> handCards;
+    private ArrayList<Card> handCards;
     private int healthPoints;
     private int playableCards;
     private Game session;
@@ -87,14 +87,14 @@ public class Player {
     public int getScore() {
         return this.score.getValue();
     }
-    public ArrayList<CardModel> getHandCards() {
+    public ArrayList<Card> getHandCards() {
         return this.handCards;
     }
 
     public void setPlayerName(String name) {
         this.name = name;
     }
-    public void setHandCards(ArrayList<CardModel> handCards) {
+    public void setHandCards(ArrayList<Card> handCards) {
         this.handCards = handCards;
     }
 

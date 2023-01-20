@@ -1,6 +1,6 @@
 package com.ducky.duckythewizard.model.config;
 
-import com.ducky.duckythewizard.model.FightSceneModel;
+import com.ducky.duckythewizard.model.FightScene;
 import javafx.scene.image.Image;
 import org.javatuples.*;
 

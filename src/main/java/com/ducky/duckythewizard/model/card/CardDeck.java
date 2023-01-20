@@ -10,10 +10,10 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.*;
 
-public class CardDeckModel {
+public class CardDeck {
     /*Model-class for card-deck. How card-deck-data will be accessed, created, stored and changed.*/
 
-    private final ArrayList<CardModel> cardDeck;
+    private final ArrayList<Card> cardDeck;
     private ArrayList<GameColor> trumpColors;
     private static final Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
     private static final Image CARDS_EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_EMPTY_CARD_FILENAME)));
@@ -31,7 +31,7 @@ public class CardDeckModel {
 
     private final ArrayList<ImageView> handCardsImages = new ArrayList<>();
 
-    public CardDeckModel() {
+    public CardDeck() {
         this.cardDeck = new ArrayList<>();
         this.createCardSlotTitles();
         this.cardsProperty = new SimpleStringProperty(Integer.toString(cardDeck.size()));
@@ -48,7 +48,7 @@ public class CardDeckModel {
     }
 
     // getter & setter
-    public ArrayList<CardModel> getCardDeck() {
+    public ArrayList<Card> getCardDeck() {
         return cardDeck;
     }
     public void setTrumpColors(ArrayList<GameColor> trumpColors) {
@@ -76,7 +76,7 @@ public class CardDeckModel {
             for (int i = GameConfig.CARDS_VALUE_MIN; i <= GameConfig.CARDS_VALUE_MAX; i++) {
                 String colorName = color.getName();
                 String imgFileName = "/com/ducky/duckythewizard/images/cards/"+colorName+"/"+colorName+i+".png";
-                this.cardDeck.add(new CardModel(color, i, imgFileName));
+                this.cardDeck.add(new Card(color, i, imgFileName));
             }
         }
         this.addWizards();
@@ -87,7 +87,7 @@ public class CardDeckModel {
         /*Add wizards to card-deck using fix amount from game-config,
         so amount of wizards can be increased dynamically*/
         for (int i = 0; i < GameConfig.CARDS_AMOUNT_WIZARDS; i++) {
-            cardDeck.add(new CardModel(this.wizard, GameConfig.CARDS_VALUE_WIZARD, GameConfig.CARDS_WIZARD_FILENAME));
+            cardDeck.add(new Card(this.wizard, GameConfig.CARDS_VALUE_WIZARD, GameConfig.CARDS_WIZARD_FILENAME));
         }
     }
 
@@ -99,13 +99,13 @@ public class CardDeckModel {
         return CARD_SLOT_POSITION.get(((ImageView)event.getSource()).getId());
     }
 
-    public void updateAllHandCardImages(ArrayList<CardModel> handCards) {
+    public void updateAllHandCardImages(ArrayList<Card> handCards) {
         for (int i = 0; i < GameConfig.CARDS_AMOUNT_HANDCARDS; i++) {
             this.handCardsImages.get(i).imageProperty().set(new Image(Objects.requireNonNull(getClass().getResourceAsStream(handCards.get(i).getImgFileName()))));
         }
     }
 
-    public void updateHandCardImage(int pos, ArrayList<CardModel> handCards) {
+    public void updateHandCardImage(int pos, ArrayList<Card> handCards) {
         this.handCardsImages.get(pos).imageProperty().set(new Image(Objects.requireNonNull(getClass().getResourceAsStream(handCards.get(pos).getImgFileName()))));
     }
 
@@ -113,9 +113,9 @@ public class CardDeckModel {
         this.handCardsImages.get(pos).imageProperty().set(CARDS_EMPTY_CARD_IMAGE);
     }
 
-    public CardModel dealOneNewCardFromDeck() {
+    public Card dealOneNewCardFromDeck() {
         if (this.cardDeck.size() != 0) {
-            CardModel card = this.cardDeck.remove(0);
+            Card card = this.cardDeck.remove(0);
             // update deck-size
             this.cardsProperty.set(Integer.toString(this.cardDeck.size()));
             return card;
@@ -124,8 +124,8 @@ public class CardDeckModel {
         }
     }
 
-    public void addNewHandCard(boolean duckyWin, int pos, ArrayList<CardModel> handCards) {
+    public void addNewHandCard(boolean duckyWin, int pos, ArrayList<Card> handCards) {
         handCards.remove(pos);
-        handCards.add(pos, duckyWin ? this.dealOneNewCardFromDeck() : new CardModel(this.none, 0, GameConfig.CARDS_EMPTY_CARD_FILENAME));
+        handCards.add(pos, duckyWin ? this.dealOneNewCardFromDeck() : new Card(this.none, 0, GameConfig.CARDS_EMPTY_CARD_FILENAME));
     }
 }

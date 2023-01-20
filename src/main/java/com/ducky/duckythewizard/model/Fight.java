@@ -1,6 +1,6 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.model.card.CardModel;
+import com.ducky.duckythewizard.model.card.Card;
 
 import java.util.Random;
 
@@ -11,8 +11,8 @@ import java.util.Random;
 public class Fight {
 
     private Stone stoneInFight;
-    private CardModel duckyCard;
-    private CardModel stoneCard;
+    private Card duckyCard;
+    private Card stoneCard;
 
     private String trump;
     private final boolean duckyPlaysFirst;
@@ -23,17 +23,17 @@ public class Fight {
     }
 
 
-    public void setStoneCard(CardModel stoneCard) { this.stoneCard = stoneCard; }
+    public void setStoneCard(Card stoneCard) { this.stoneCard = stoneCard; }
 
-    public void setDuckyCard(CardModel duckyCard) { this.duckyCard = duckyCard; }
+    public void setDuckyCard(Card duckyCard) { this.duckyCard = duckyCard; }
 
     public void setStoneInFight(Stone stoneInFight) { this.stoneInFight = stoneInFight; }
 
     public void setTrump(Stone stone) { this.trump = stone.getRandomTrumpColorStone().getName(); }
 
-    public CardModel getDuckyCard() { return this.duckyCard; }
+    public Card getDuckyCard() { return this.duckyCard; }
 
-    public CardModel getStoneCard() { return this.stoneCard; }
+    public Card getStoneCard() { return this.stoneCard; }
 
     public Stone getStoneInFight() { return this.stoneInFight; }
 

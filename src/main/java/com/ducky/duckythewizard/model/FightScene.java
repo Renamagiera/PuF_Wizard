@@ -11,7 +11,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.Objects;
 
-public class FightSceneModel {
+public class FightScene {
 
     public SimpleStringProperty trumpColorTextProperty;
     public SimpleStringProperty trumpColorTextStyleProperty;
@@ -34,7 +34,7 @@ public class FightSceneModel {
     private static final Image CARDS_EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_EMPTY_CARD_FILENAME)));
 
 
-    public FightSceneModel() {
+    public FightScene() {
         this.trumpColorTextProperty = new SimpleStringProperty();
         this.trumpColorTextStyleProperty = new SimpleStringProperty();
         this.cardChooseTextProperty = new SimpleStringProperty();

@@ -15,10 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -143,8 +139,7 @@ public class GameController{
         this.timerTextLabel.styleProperty().bind(session.getPlayer().timerTextLabel);
 
         // initialize Level map
-        Level level = new Level(levelGrid);
-        this.session.setObjectGrid(level.getGameObjectGrid());
+        this.session.createLevelObj(levelGrid);
 
         // initialize stones: search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
         this.session.getStoneCtrl().initializeStones(this.levelGrid);
@@ -157,13 +152,6 @@ public class GameController{
 
         // initialize CollisionHandler
         this.session.createCollisionCtrlObj();
-
-        // initialize font for texts that are shown
-        Font theFont = Font.font( "Helvetica", FontWeight.BOLD, 50 );
-        this.gc.setFont( theFont );
-        this.gc.setStroke(Color.BLACK);
-        this.gc.setFill(Color.WHITE);
-        this.gc.setLineWidth(5);
 
         // initialize Player's sprite
         this.session.getPlayer().createPlayerSprite(this.session.getCollisionCtrl());
@@ -240,7 +228,6 @@ public class GameController{
 
     public void renderEndScene(boolean playerWin) {
         /*Add event-handler to minimize end-scene. Set game-over true. Show end-scene*/
-        //this.session.getStoneCtrl().interruptThread();
         this.session.setGameOver(true);
         this.session.getEndSceneCtrl().addMinEventHandler();
         this.session.getEndSceneView().showEndScene(playerWin, this.session.getPlayer().getScore());
