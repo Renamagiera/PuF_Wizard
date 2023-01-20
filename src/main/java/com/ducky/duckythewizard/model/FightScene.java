@@ -11,7 +11,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.Objects;
 
-public class FightSceneModel {
+public class FightScene {
 
     public SimpleStringProperty trumpColorTextProperty;
     public SimpleStringProperty trumpColorTextStyleProperty;
@@ -31,7 +31,7 @@ public class FightSceneModel {
     private String trumpColorName;
 
 
-    public FightSceneModel() {
+    public FightScene() {
         this.trumpColorTextProperty = new SimpleStringProperty();
         this.trumpColorTextStyleProperty = new SimpleStringProperty();
         this.cardChooseTextProperty = new SimpleStringProperty();

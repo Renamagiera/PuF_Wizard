@@ -3,10 +3,11 @@ package com.ducky.duckythewizard.model;
 import com.ducky.duckythewizard.controller.*;
 import com.ducky.duckythewizard.controller.scenes.EndSceneController;
 import com.ducky.duckythewizard.controller.scenes.MenuController;
-import com.ducky.duckythewizard.model.card.CardDeckModel;
+import com.ducky.duckythewizard.model.card.CardDeck;
 import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
@@ -26,16 +27,16 @@ public class Game {
     private AnchorPane anchorPaneEndOverlay;
 
 
-    private CardDeckModel cardDeckModel;
+    private CardDeck cardDeck;
     private GameColorObject gameColorObject;
 
     //die Game Config wird einmalig zum Start des Games (Erstellung des Game-Klassen-Objekts) erstellt
     private GameConfig gameConfig;
-    public GameObject[][] objectGrid; // [row][column] - is filled in GameController
+    public Level level;
     private ArrayList<Stone> stoneArrayList;
 
-    private FightSceneModel fightSceneModel;
-    private EndSceneModel endSceneModel;
+    private FightScene fightScene;
+    private EndScene endScene;
 
     private GameController gameCtrl;
     private CardController cardCtrl;
@@ -52,14 +53,13 @@ public class Game {
         this.inFight = false;
         this.gameOver = false;
         this.gameConfig = new GameConfig();
-        //this.gameColorObject = new GameColorObject();
-        this.cardDeckModel = new CardDeckModel();
+        this.cardDeck = new CardDeck();
         this.player = Host.getInstance();
         this.player.resetPlayer();
         this.player.setSession(this);
         this.stoneArrayList = new ArrayList<>();
-        this.fightSceneModel = new FightSceneModel();
-        this.endSceneModel = new EndSceneModel();
+        this.fightScene = new FightScene();
+        this.endScene = new EndScene();
         //System.out.println("*** Game-object is created.");
     }
     public boolean getIsRunning(){
@@ -108,8 +108,9 @@ public class Game {
         this.gameColorObject = new GameColorObject();
     }
     public void createCollisionCtrlObj() { this.collisionController = new CollisionController(this, GameConfig.LEVEL_CELL_HEIGHT, GameConfig.LEVEL_CELL_WIDTH);}
-
-    public GameObject[][] getObjectGrid() {return this.objectGrid;}
+    public void createLevelObj(GridPane levelGrid) {
+        this.level = new Level(levelGrid);
+    }
     public GameConfig getGameConfig() {
         return this.gameConfig;
     }
@@ -136,11 +137,14 @@ public class Game {
         return this.gameColorObject;
     }
     public CollisionController getCollisionCtrl() { return this.collisionController;}
+    public Level getLevel() {
+        return this.level;
+    }
 
     public MyAnimationTimer getAnimationTimer() { return this.animationTimer;}
 
-    public CardDeckModel getCardDeckModel() {
-        return this.cardDeckModel;
+    public CardDeck getCardDeckModel() {
+        return this.cardDeck;
     }
     public Player getPlayer() {
         return this.player;
@@ -159,15 +163,13 @@ public class Game {
         return anchorPaneEndOverlay;
     }
 
-    public FightSceneModel getFightView() {
-        return this.fightSceneModel;
+    public FightScene getFightView() {
+        return this.fightScene;
     }
-    public EndSceneModel getEndSceneView() {
-        return this.endSceneModel;
+    public EndScene getEndSceneView() {
+        return this.endScene;
     }
-    public void setObjectGrid(GameObject[][] grid) {
-        this.objectGrid = grid;
-    }
+
 
     public void setAnchorPaneEndOverlay(AnchorPane anchorPaneEndOverlay) {
         this.anchorPaneEndOverlay = anchorPaneEndOverlay;

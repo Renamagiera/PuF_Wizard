@@ -1,6 +1,7 @@
 package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.Game;
+import com.ducky.duckythewizard.model.GameObject;
 import com.ducky.duckythewizard.model.Stone;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.animation.PauseTransition;
@@ -75,10 +76,11 @@ public class StoneController extends Controller {
     }
 
     private void addStonesToArrayList() {
-        for (int i = 0; i < this.getSession().objectGrid.length; i++) {
-            for (int y = 0; y < this.getSession().objectGrid[i].length; y++) {
-                if (this.getSession().objectGrid[i][y] instanceof Stone) {
-                    this.getSession().getStoneArrayList().add((Stone)this.getSession().objectGrid[i][y]);
+        GameObject[][] objectGrid = this.getSession().getLevel().getObjectGrid();
+        for (int i = 0; i < objectGrid.length; i++) {
+            for (int y = 0; y < objectGrid[i].length; y++) {
+                if (objectGrid[i][y] instanceof Stone) {
+                    this.getSession().getStoneArrayList().add((Stone)objectGrid[i][y]);
                 }
             }
         }

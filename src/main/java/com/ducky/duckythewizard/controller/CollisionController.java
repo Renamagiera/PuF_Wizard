@@ -16,7 +16,7 @@ public class CollisionController extends Controller {
     public CollisionController(Game game, double tileHeight, double tileWidth){
         super(game);
         this.myGameController = this.getSession().getGameCtrl();
-        this.levelObjectGrid = this.getSession().getObjectGrid();
+        this.levelObjectGrid = this.getSession().getLevel().getObjectGrid();
         this.tileHeight = tileHeight;
         this.tileWidth = tileWidth;
     }

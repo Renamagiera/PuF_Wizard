@@ -5,7 +5,7 @@ import javafx.scene.layout.GridPane;
 
 public class Level {
 
-    private GameObject[][] gameObjectGrid;
+    private GameObject[][] objectGrid; //[row][column]
 
 
     public Level(GridPane levelGrid) {
@@ -13,20 +13,20 @@ public class Level {
     }
 
     private void initializeGrid(GridPane levelGrid) {
-        this.gameObjectGrid = new GameObject[levelGrid.getRowCount()][levelGrid.getColumnCount()];
+        this.objectGrid = new GameObject[levelGrid.getRowCount()][levelGrid.getColumnCount()];
         for(Node node: levelGrid.getChildren()) {
             int row = levelGrid.getRowIndex(node);
             int column = levelGrid.getColumnIndex(node);
             if(node.getStyleClass().contains("stone")){
-                this.gameObjectGrid[row][column] = new Stone();
+                this.objectGrid[row][column] = new Stone();
             }
             else { // if (node.getStyleClass().contains("earth-tile")) // TODO add styleclass to earth tiles??
-                this.gameObjectGrid[row][column] = new GameObject(false);
+                this.objectGrid[row][column] = new GameObject(false);
             }
         }
     }
 
-    public GameObject[][] getGameObjectGrid() {
-        return this.gameObjectGrid;
+    public GameObject[][] getObjectGrid() {
+        return this.objectGrid;
     }
 }
