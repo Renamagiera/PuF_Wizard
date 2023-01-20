@@ -1,11 +1,12 @@
 package com.ducky.duckythewizard.controller;
 
-import com.ducky.duckythewizard.model.*;
+import com.ducky.duckythewizard.model.AnimatedSprite;
+import com.ducky.duckythewizard.model.Game;
+import com.ducky.duckythewizard.model.MyAnimationTimer;
+import com.ducky.duckythewizard.model.Stone;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -19,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
