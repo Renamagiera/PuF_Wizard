@@ -2,6 +2,10 @@ package com.ducky.duckythewizard.controller;
 
 import com.ducky.duckythewizard.model.*;
 import com.ducky.duckythewizard.model.config.GameConfig;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -80,6 +84,7 @@ public class GameController{
     private Label timerTextLabel;
     private ArrayList<String> input = new ArrayList<>();
     private AnimatedSprite ducky;
+    private BooleanProperty collisionDetected = new SimpleBooleanProperty(false);
 
     @FXML
     public void initialize() {
@@ -151,10 +156,10 @@ public class GameController{
         this.gc = mainCanvas.getGraphicsContext2D();
 
         // initialize CollisionHandler
-        this.session.createCollisionCtrlObj();
+        this.session.createCollisionHndlrObj();
 
         // initialize Player's sprite
-        this.session.getPlayer().createPlayerSprite(this.session.getCollisionCtrl());
+        this.session.getPlayer().createPlayerSprite(this.session.getCollisionHndlr());
         this.ducky = this.session.getPlayer().getPlayerSprite();
         this.ducky.setDuration(0.1);
         this.ducky.setPosition(GameConfig.WINDOW_WIDTH /4 - ducky.getFrame(0).getWidth()/2, 0);
@@ -185,6 +190,9 @@ public class GameController{
         // main game loop
         this.session.setAnimationTimer(new MyAnimationTimer(this.session, input));
         this.session.getAnimationTimer().start();
+
+        // add listener
+        this.addCollisionListener();
     }
 
     @FXML
@@ -223,6 +231,7 @@ public class GameController{
     }
 
     public void endCollision() {
+
         this.session.getFightCtrl().stopFight(this.session.getAnimationTimer());
     }
 
@@ -258,6 +267,16 @@ public class GameController{
             this.session.getAnimationTimer().start();
         });
         this.session.getEndSceneView().getExitLabel().addEventFilter(MouseEvent.MOUSE_CLICKED, this.session.getEndSceneView().getExitEvent());
+    }
+
+    public void addCollisionListener() {
+        this.collisionDetected.bind(this.session.getCollisionHndlr().stoneHit);
+
+        this.collisionDetected.addListener((observableValue, aBoolean, t1) -> {
+            if (collisionDetected.getValue()) {
+                startCollision(session.getCollisionHndlr().getCurrentCollidedStone());
+            }
+        });
     }
 
     public void checkPlayerHealth() {

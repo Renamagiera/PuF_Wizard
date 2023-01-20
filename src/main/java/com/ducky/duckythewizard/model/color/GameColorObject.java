@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameColorObject {
+public class  GameColorObject {
     private TrumpColor trumpColorObject;
     private LayoutColor layoutColorObject;
     private ArrayList<GameColor> trumpColors;

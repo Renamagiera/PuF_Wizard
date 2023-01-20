@@ -58,6 +58,7 @@ public class FightController extends Controller {
             });
             this.getSession().toggleIsRunning();
             this.getSession().toggleInFight();
+            this.getSession().getCollisionHndlr().stoneHit.set(false);
             this.getSession().getStoneCtrl().setInactive(stone);
         }
     }
