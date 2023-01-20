@@ -86,11 +86,15 @@ public class CardController extends Controller {
                         }
 
                         // END FIGHT-SCENE
-                        // end fight-view clicking x-Label
-                        getSession().getFightView().addExitLabel();
-                        getSession().getFightView().getExitLabel().addEventHandler(MouseEvent.MOUSE_CLICKED, exitMouseClick -> {
-                            this.endFight(getSession().getCardDeckModel().returnHandCardPosition(cardMouseClick), duckyWin);
-                        });
+                        this.getSession().getFightView().exitFightViewVisible.set(true);
+                        EventHandler<MouseEvent> exitEvent = new EventHandler<>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                getSession().getRootAnchorPane().lookup("#exitFightView").removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
+                                endFight(getSession().getCardDeckModel().returnHandCardPosition(cardMouseClick), duckyWin);
+                            }
+                        };
+                        this.getSession().getRootAnchorPane().lookup("#exitFightView").addEventHandler(MouseEvent.MOUSE_CLICKED, exitEvent);
                         // end fight-view clicking ESC
                         getSession().getFightView().getAnchorPaneFightOverlay().setOnKeyPressed(keyEvent -> {
                             if (keyEvent.getCode() == KeyCode.ESCAPE) {
