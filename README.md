@@ -16,15 +16,18 @@ Allgemeine Infos
 <a name="technologien"></a>
 ## Technologien
 Die Anwendung haben wir in der Programmiersprache Java in der Version 19 entwickelt. Als JDK haben wir uns für das 
-[Oracle OpenJDK version 19.0.1](https://jdk.java.net/19/) entschieden. Zur Erstellung der Java-App wurde das JavaFX-Framework, 
+[Oracle OpenJDK version 19.0.1](https://jdk.java.net/19/) entschieden. Zur Erstellung der Java-Client-App wurde das JavaFX-Framework, 
 ebenfalls in der Version 19 verwendet.
+Der Server wurde als Spring-Boot-Applikation erstellt mit der Spring Boot Version 3.0.
+Als Datenbank wird eine MySQL-Datenbank genutzt.
+Die Datenhaltung auf dem Server und die Kommunikation mit der Datenbank erfolgen durch Spring Data JPA und Hibernate als ORM.
 
 
 <a name="installation"></a>
 ## Installation
 Für eine einfache Installation des Projektes haben wir eine Schritt-für-Schritt Anleitung verfasst.
 
-Wir haben unser Projekt mit Maven gebaut. Sobald das Repo geklont und in einer IDE als Projekt erstellt wurde, kann das Projekt durchgebaut werden. Für unsere Server-Schnittstelle haben wir eine Spring Application eingebunden. Diese muss gestartet werden, damit unser Spiel korrekt laufen kann. Die Schritt-für-Schritt Anleitung haben wir für die IDE IntelliJ erstellt. Da wir das Projekt mit der IDE IntelliJ erstellt und weiterentwickelt haben empfehlen wir diese zu benutzten.  Es kann jedoch jede andere IDE verwendet werden, die ein Maven Projekt bauen kann.
+Wir haben unser Projekt mit Maven gebaut. Sobald das Repo geklont und in einer IDE als Projekt erstellt wurde, kann das Projekt durchgebaut werden. Für unsere Server-Schnittstelle haben wir eine Spring Application eingebunden. Diese muss gestartet werden, damit unser Spiel korrekt laufen kann. Die Schritt-für-Schritt Anleitung haben wir für die IDE IntelliJ erstellt. Da wir das Projekt mit der IDE IntelliJ erstellt und weiterentwickelt haben, empfehlen wir diese zu benutzten.  Es kann jedoch jede andere IDE verwendet werden, die ein Maven Projekt bauen kann.
 
 Für die Ausführung der Spring App wird eine MySQL-Instanz benötigt. Wir empfehlen dafür "XAMPP". Die URL, Nutzername und Passwort müssen mit dem übereinstimmen, 
 was in der Datei application.properties steht. 
