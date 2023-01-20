@@ -1,6 +1,6 @@
 package com.ducky.duckythewizard.model.config;
 
-import com.ducky.duckythewizard.model.FightSceneModel;
+import com.ducky.duckythewizard.model.FightScene;
 import javafx.scene.image.Image;
 import org.javatuples.*;
 
@@ -28,8 +28,8 @@ public class GameConfig {
     public static int CARDS_VALUE_WIZARD = 199;
     public static final int CARDS_VALUE_MAX = 12;
     public static final int CARDS_VALUE_MIN = 0;
-    public static final Image CARDS_EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_EMPTY_CARD_FILENAME)));
-    public static final Image CARDS_BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_BACK_CARD_FILENAME)));
+    public static final Image CARDS_EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightScene.class.getResourceAsStream(GameConfig.CARDS_EMPTY_CARD_FILENAME)));
+    public static final Image CARDS_BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightScene.class.getResourceAsStream(GameConfig.CARDS_BACK_CARD_FILENAME)));
 
     /* ** PLAYER CONFIGURATION ** */
     public static final int PLAYER_MAX_HEALTH_POINTS = 3;

@@ -139,8 +139,7 @@ public class GameController{
         this.timerTextLabel.styleProperty().bind(session.getPlayer().timerTextLabel);
 
         // initialize Level map
-        Level level = new Level(levelGrid);
-        this.session.setObjectGrid(level.getGameObjectGrid());
+        this.session.createLevelObj(levelGrid);
 
         // initialize stones: search for stones in levelGrid and add to ArrayList, deal Card from deck, color stones
         this.session.getStoneCtrl().initializeStones(this.levelGrid);

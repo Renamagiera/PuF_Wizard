@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
-public class EndSceneModel {
+public class EndScene {
     private AnchorPane anchorPaneEndScene;
     private AnchorPane anchorPaneEndSceneMenu;
     private Label menuLabel;
@@ -29,7 +29,7 @@ public class EndSceneModel {
     private int score;
     boolean newHighScore;
 
-    public EndSceneModel() {
+    public EndScene() {
         this.endSceneLabelProperty = new SimpleStringProperty();
         this.endSceneLabelStyleProperty = new SimpleStringProperty();
         this.endSceneStyleProperty = new SimpleStringProperty();
