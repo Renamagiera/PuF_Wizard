@@ -7,6 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+/**This controller-class handles all interactions that interrelate with the end-scene. The end-scene is an AnchorPane.
+ * The controller adds Event-Handler and assign them to Elements within the End-Scene AnchorPane*/
+
 public class EndSceneController extends Controller {
     private final Label minLabel;
     private final Label maxLabel;
