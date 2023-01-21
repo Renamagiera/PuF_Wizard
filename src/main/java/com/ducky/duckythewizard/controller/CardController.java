@@ -13,6 +13,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import java.util.ArrayList;
 
+/**This controller-class handles all interactions that interrelate with cards. Adding cards to deck,
+ * dealing hand-cards to the player, handling card-clicked event.*/
+
 public class CardController extends Controller {
     private ArrayList<Card> handCards;
     private CardDeck cardDeck;
@@ -50,6 +53,9 @@ public class CardController extends Controller {
         return takenCards;
     }
 
+    /**This method adds an event-handler to every player's hand-card image-view. It shows stone card, if the player
+     * started the fight, determines if player won this fight, checks if player won the game and adds exit options
+     * for the fight-scene.*/
     public void addMouseEventHandler() {
         for (Node node : this.anchorPaneCards.getChildren()) {
             ImageView imgView = (ImageView) node;
@@ -108,15 +114,15 @@ public class CardController extends Controller {
     }
 
     public Card determineClickedCard(MouseEvent event) {
-        /*determine with card from player's hand-cards was clicked. Return hand-card just if it's not empty*/
+        //determine with card from player's hand-cards was clicked. Return hand-card just if it's not empty
         int clickedCardPosition = this.cardDeck.returnHandCardPosition(event);
         Card clickedCard = this.handCards.get(clickedCardPosition);
         return !clickedCard.getColor().getName().equals("none") ? clickedCard : null;
     }
 
     private void handleCardClick(MouseEvent event, Card clickedCard) {
-        /*First set player fight-card in fight-object. Replace an empty card at player's clicked position in hand-cards
-        and render it. Render clicked card at fight-scene.*/
+        //First set player fight-card in fight-object. Replace an empty card at player's clicked position in hand-cards
+        //and update image. Update clicked card's image at fight-scene.
         int clickPosition = getSession().getCardDeckModel().returnHandCardPosition(event);
         getSession().getActiveFight().setPlayerCard(clickedCard);
         this.cardDeck.updateToEmptyCardImage(clickPosition);
@@ -132,14 +138,14 @@ public class CardController extends Controller {
     }
 
     private void endFight(int pos, boolean playerWin) {
-        /*End Fight. Close Fight-Scene, GameCtrl restarts everything. New cards are dealt from deck.*/
+        //End Fight. Close Fight-Scene, GameCtrl restarts everything. New cards are dealt from deck.
         getSession().getGameCtrl().endCollision();
         this.dealNewCardsFromDeck(pos, playerWin);
     }
 
     private void dealNewCardsFromDeck(int pos, boolean playerWin) {
-        /*give ducky one new card. If he won the fight he gets one new card from deck.
-        Otherwise, ducky gets an empty card. Update images.*/
+        //give ducky one new card. If he won the fight he gets one new card from deck.
+        //Otherwise, ducky gets an empty card. Update images.
         this.cardDeck.addNewHandCard(playerWin, pos, this.handCards);
         this.cardDeck.updateHandCardImage(pos, this.handCards);
         this.getSession().getActiveFight().getStoneInFight().setCard(this.cardDeck.dealOneNewCardFromDeck());
