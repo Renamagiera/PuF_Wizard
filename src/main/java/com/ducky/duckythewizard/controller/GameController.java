@@ -82,6 +82,9 @@ public class GameController{
     private AnimatedSprite ducky;
 
     @FXML
+    private HandCardsController handCardsCtrl;
+
+    @FXML
     public void initialize() {
         //System.out.println("*** Game Controller is initialized...");
 
@@ -101,6 +104,7 @@ public class GameController{
         this.session.createMenuCtrlObj();
         this.session.createEndSceneCtrlObj();
         this.session.createGameColorObj();
+        this.session.createHandCardsCtrl(this.handCardsCtrl);
 
         // initialize fight-view-scene local variables
         this.session.getFightView().initLocalVariables(this.session.getGameColorObject(), this.fightOverlay);

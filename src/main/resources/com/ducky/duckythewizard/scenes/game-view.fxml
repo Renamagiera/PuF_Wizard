@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import com.ducky.duckythewizard.controller.HandCardsController?>
 <AnchorPane fx:id="rootBox" onKeyPressed="#handleOnKeyPressed" onKeyReleased="#handleOnKeyReleased" prefHeight="650.0" prefWidth="800.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.GameController">
     <children>
         <Group fx:id="backgroundImageGroup">
@@ -404,6 +405,7 @@
             </children>
         </GridPane>
         <Canvas fx:id="mainCanvas" />
+        <HandCardsController fx:id="handCardsCtrl"/>
         <AnchorPane fx:id="emptyCardSlots" layoutY="500.0" prefHeight="104.0" prefWidth="800.0">
             <children>
                 <ImageView fx:id="handCard0" fitHeight="104.0" fitWidth="65.0" layoutX="157.5" pickOnBounds="true" preserveRatio="true">

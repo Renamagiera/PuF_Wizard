@@ -45,6 +45,7 @@ public class Game {
     private MenuController menuCtrl;
     private EndSceneController endSceneCtrl;
     private CollisionController collisionController;
+    private HandCardsController handCardsController;
 
     private MyAnimationTimer animationTimer;
 
@@ -111,6 +112,9 @@ public class Game {
     public void createLevelObj(GridPane levelGrid) {
         this.level = new Level(levelGrid);
     }
+    public void createHandCardsCtrl(HandCardsController handCardsCtrl) {
+        this.handCardsController = handCardsCtrl;
+    }
     public GameConfig getGameConfig() {
         return this.gameConfig;
     }
@@ -137,6 +141,10 @@ public class Game {
         return this.gameColorObject;
     }
     public CollisionController getCollisionCtrl() { return this.collisionController;}
+    public HandCardsController getHandCardsController() {
+        return handCardsController;
+    }
+
     public Level getLevel() {
         return this.level;
     }

@@ -125,3 +125,8 @@
 .clickableLabel {
     -fx-cursor: hand;
 }
+
+#emptyCardSlots2 {
+    -fx-border-color: hotpink;
+    -fx-border-width: 3px;
+}

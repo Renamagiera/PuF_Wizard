@@ -1,6 +1,5 @@
 package com.ducky.duckythewizard.model.card;
 
-import com.ducky.duckythewizard.model.FightSceneModel;
 import com.ducky.duckythewizard.model.color.GameColor;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,7 +15,7 @@ public class CardDeck {
     private final ArrayList<Card> cardDeck;
     private ArrayList<GameColor> trumpColors;
     private static final Map<String, Integer> CARD_SLOT_POSITION = new HashMap<>();
-    private static final Image CARDS_EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_EMPTY_CARD_FILENAME)));
+    private static final Image CARDS_EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(CardDeck.class.getResourceAsStream(GameConfig.CARDS_EMPTY_CARD_FILENAME)));
 
     private GameColor wizard;
     private GameColor none;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root fx:id="scoresRoot" layoutY="50.0" type="javafx.scene.layout.VBox" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <AnchorPane fx:id="emptyCardSlots2" layoutY="500.0" prefHeight="104.0" prefWidth="800.0">
+        <children>
+            <ImageView fx:id="handCard0" fitHeight="104.0" fitWidth="65.0" layoutX="157.5" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../images/cards/empty.png" />
+                </image></ImageView>
+            <ImageView fx:id="handCard1" fitHeight="104.0" fitWidth="65.0" layoutX="262.5" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../images/cards/empty.png" />
+                </image></ImageView>
+            <ImageView fx:id="handCard2" fitHeight="104.0" fitWidth="65.0" layoutX="367.5" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../images/cards/empty.png" />
+                </image></ImageView>
+            <ImageView fx:id="handCard3" fitHeight="104.0" fitWidth="65.0" layoutX="472.5" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../images/cards/empty.png" />
+                </image></ImageView>
+            <ImageView fx:id="handCard4" fitHeight="104.0" fitWidth="65.0" layoutX="577.5" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../images/cards/empty.png" />
+                </image></ImageView>
+        </children>
+    </AnchorPane>
+</fx:root>
