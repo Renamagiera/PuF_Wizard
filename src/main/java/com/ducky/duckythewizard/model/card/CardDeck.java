@@ -123,8 +123,8 @@ public class CardDeck {
         }
     }
 
-    public void addNewHandCard(boolean duckyWin, int pos, ArrayList<Card> handCards) {
+    public void addNewHandCard(boolean playerWin, int pos, ArrayList<Card> handCards) {
         handCards.remove(pos);
-        handCards.add(pos, duckyWin ? this.dealOneNewCardFromDeck() : new Card(this.none, 0, GameConfig.CARDS_EMPTY_CARD_FILENAME));
+        handCards.add(pos, playerWin ? this.dealOneNewCardFromDeck() : new Card(this.none, 0, GameConfig.CARDS_EMPTY_CARD_FILENAME));
     }
 }
