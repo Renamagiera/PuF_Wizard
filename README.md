@@ -1,5 +1,6 @@
 # PuF_Wizard
-Kurze Beschreibung des Projektes
+Ein Spiel über magische Steine und einer heldenhaften Ente oder einer düsteren Fledermaus.\
+Dieses Spiel wurde in einer Gruppenarbeit für das Modul "Patterns & Frameworks" an der BHT Berlin im Studiengang Medieninformatik Online (B.Sc.) entwickelt. Ziel des Moduls und des Projektes war es ein lauffähiges Spiel zu entwickeln. Das Spiel sollte mit dem Framework FavaFX entwickelt werden & verschiedene Anforderungen erfüllen. Herausgekommen ist "Ducky and the Wizard Stones", angelehnt an das zauberhafte Stichspiel "Wizard".
 
 
 ## Inhaltsverzeichnis
