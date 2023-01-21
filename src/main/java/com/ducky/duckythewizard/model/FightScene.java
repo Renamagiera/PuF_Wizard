@@ -16,7 +16,7 @@ public class FightScene {
     public SimpleStringProperty trumpColorTextStyleProperty;
     public SimpleStringProperty cardChooseTextProperty;
     public ImageView stoneCardProperty;
-    public ImageView duckyCardProperty;
+    public ImageView playerCardProperty;
     public SimpleStringProperty winLossLabelProperty;
     public SimpleStringProperty winLossLabelStyleProperty;
     public SimpleStringProperty fightOverlayStyleProperty;
@@ -37,7 +37,7 @@ public class FightScene {
         this.trumpColorTextStyleProperty = new SimpleStringProperty();
         this.cardChooseTextProperty = new SimpleStringProperty();
         this.stoneCardProperty = new ImageView(CARDS_EMPTY_CARD_IMAGE);
-        this.duckyCardProperty = new ImageView(CARDS_EMPTY_CARD_IMAGE);
+        this.playerCardProperty = new ImageView(CARDS_EMPTY_CARD_IMAGE);
         this.winLossLabelProperty = new SimpleStringProperty();
         this.winLossLabelStyleProperty = new SimpleStringProperty();
         this.fightOverlayStyleProperty = new SimpleStringProperty();
@@ -70,8 +70,8 @@ public class FightScene {
     }
 
     private void updateImageViews() {
-        this.duckyCardProperty.imageProperty().set(CARDS_EMPTY_CARD_IMAGE);
-        this.stoneCardProperty.imageProperty().set(this.activeFight.getDuckyPlaysFirst() ? CARDS_BACK_CARD_IMAGE : loadNewImage(this.activeFight.getStoneCard().getImgFileName()));
+        this.playerCardProperty.imageProperty().set(CARDS_EMPTY_CARD_IMAGE);
+        this.stoneCardProperty.imageProperty().set(this.activeFight.getPlayerStart() ? CARDS_BACK_CARD_IMAGE : loadNewImage(this.activeFight.getStoneCard().getImgFileName()));
     }
 
     private void updateLabelTrumpColor() {
@@ -88,7 +88,7 @@ public class FightScene {
     }
 
     private void updateCardChooseLabel() {
-        if (activeFight.getDuckyPlaysFirst()) {
+        if (activeFight.getPlayerStart()) {
             this.cardChooseTextProperty.set("Choose a card to start.");
         } else {
             this.cardChooseTextProperty.set("Try to beat this card!");
@@ -99,8 +99,8 @@ public class FightScene {
         this.winLossLabelProperty.set("");
     }
 
-    public void updateWinLossLabelProp(boolean duckyWin) {
-        if (duckyWin) {
+    public void updateWinLossLabelProp(boolean playerWin) {
+        if (playerWin) {
             this.winLossLabelProperty.set("Win!");
             this.winLossLabelStyleProperty.set("-fx-text-fill: " + this.gameColorObject.getHexCodeFromMap("green") + ";");
         } else {
@@ -111,7 +111,7 @@ public class FightScene {
 
     public void updateFightViewCardProp(boolean ducky) {
         if (ducky) {
-            this.duckyCardProperty.imageProperty().set(loadNewImage(this.activeFight.getDuckyCard().getImgFileName()));
+            this.playerCardProperty.imageProperty().set(loadNewImage(this.activeFight.getPlayerCard().getImgFileName()));
         } else {
             this.stoneCardProperty.imageProperty().set(loadNewImage(this.activeFight.getStoneCard().getImgFileName()));
         }

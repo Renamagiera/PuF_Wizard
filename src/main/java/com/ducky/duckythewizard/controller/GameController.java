@@ -65,7 +65,7 @@ public class GameController{
     @FXML
     private ImageView stoneCard;
     @FXML
-    private ImageView duckyCard;
+    private ImageView playerCard;
     @FXML
     private Label winLossLabel;
     @FXML
@@ -124,7 +124,7 @@ public class GameController{
         this.trumpColorText.styleProperty().bind(session.getFightView().trumpColorTextStyleProperty);
         this.cardChooseText.textProperty().bind(session.getFightView().cardChooseTextProperty);
         this.stoneCard.imageProperty().bind(session.getFightView().stoneCardProperty.imageProperty());
-        this.duckyCard.imageProperty().bind(session.getFightView().duckyCardProperty.imageProperty());
+        this.playerCard.imageProperty().bind(session.getFightView().playerCardProperty.imageProperty());
         this.winLossLabel.textProperty().bind(session.getFightView().winLossLabelProperty);
         this.winLossLabel.styleProperty().bind(session.getFightView().winLossLabelStyleProperty);
         this.fightOverlay.styleProperty().bind(session.getFightView().fightOverlayStyleProperty);
@@ -163,14 +163,14 @@ public class GameController{
         this.session.getPlayer().getPlayerSprite().setVelocity(0,100);
 
 
-        // binding timerLabel to Ducky's timer
+        // binding timerLabel to player's timer
         this.timerLabel.textProperty().bind(this.session.getPlayer().timerProperty.asString());
         this.timerLabel.styleProperty().bind(this.session.getPlayer().timerLabelStyle);
 
-        // binding scoreLabel to Ducky's score
+        // binding scoreLabel to player's score
         this.scoreLabel.textProperty().bind(this.session.getPlayer().score.asString());
 
-        // add hearts to screen representing Ducky's health points
+        // add hearts to screen representing player's health points
         this.heartContainer.setSpacing(10.0);
         for(int i = 0; i < this.session.getPlayer().getHealthPoints(); i++) {
             ImageView imageView = new ImageView(new Image(this.getClass().getResourceAsStream("/com/ducky/duckythewizard/images/life-heart.png")));
@@ -282,7 +282,7 @@ public class GameController{
             renderEndScene(false);
         }
 
-        // remove heart if Ducky lost a health point
+        // remove heart if player lost a health point
         if(this.session.getPlayer().getHealthPoints() < this.heartContainer.getChildren().size()){
             this.heartContainer.getChildren().remove(this.heartContainer.getChildren().size() - 1);
         }
@@ -296,13 +296,13 @@ public class GameController{
         this.gc.drawImage(this.session.getPlayer().getPlayerSprite().getFrame(t), this.session.getPlayer().getPlayerSprite().getPositionX(), this.session.getPlayer().getPlayerSprite().getPositionY());
     }
 
-    public String checkEndOfGame(boolean duckyWin) {
-        /*After card was clicked, check if ducky wins or looses the game. Whether player's hand-cards are empty.
+    public String checkEndOfGame(boolean playerWin) {
+        /*After card was clicked, check if player wins or looses the game. Whether player's hand-cards are empty.
         Or card-deck is empty. Or both.*/
         int cardsLeft = this.session.getCardDeckModel().getCardDeck().size();
-        if (duckyWin && cardsLeft <= 2) {
+        if (playerWin && cardsLeft <= 2) {
             return "win";
-        } else if (!duckyWin) {
+        } else if (!playerWin) {
             this.session.getPlayer().decrementHandCardsCount();
             if (cardsLeft >= 2) {
                 // card deck is not empty, check if player has hand cards
