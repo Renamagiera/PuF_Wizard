@@ -1,7 +1,11 @@
 package com.ducky.duckythewizard.controller;
 
-import com.ducky.duckythewizard.model.*;
+import com.ducky.duckythewizard.model.Game;
+import com.ducky.duckythewizard.model.MyAnimationTimer;
+import com.ducky.duckythewizard.model.Stone;
 import com.ducky.duckythewizard.model.config.GameConfig;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -15,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -79,7 +84,7 @@ public class GameController{
     @FXML
     private Label timerTextLabel;
     private ArrayList<String> input = new ArrayList<>();
-    private AnimatedSprite ducky;
+    private BooleanProperty collisionDetected = new SimpleBooleanProperty(false);
 
     @FXML
     public void initialize() {
@@ -151,14 +156,13 @@ public class GameController{
         this.gc = mainCanvas.getGraphicsContext2D();
 
         // initialize CollisionHandler
-        this.session.createCollisionCtrlObj();
+        this.session.createCollisionHndlrObj();
 
         // initialize Player's sprite
-        this.session.getPlayer().createPlayerSprite(this.session.getCollisionCtrl());
-        this.ducky = this.session.getPlayer().getPlayerSprite();
-        this.ducky.setDuration(0.1);
-        this.ducky.setPosition(GameConfig.WINDOW_WIDTH /4 - ducky.getFrame(0).getWidth()/2, 0);
-        this.ducky.setVelocity(0,100);
+        this.session.getPlayer().createPlayerSprite(this.session.getCollisionHndlr());
+        this.session.getPlayer().getPlayerSprite().setDuration(0.1);
+        this.session.getPlayer().getPlayerSprite().setPosition(GameConfig.WINDOW_WIDTH/4 - this.session.getPlayer().getPlayerSprite().getFrame(0).getWidth()/2, 0);
+        this.session.getPlayer().getPlayerSprite().setVelocity(0,100);
 
 
         // binding timerLabel to Ducky's timer
@@ -185,6 +189,9 @@ public class GameController{
         // main game loop
         this.session.setAnimationTimer(new MyAnimationTimer(this.session, input));
         this.session.getAnimationTimer().start();
+
+        // add listener
+        this.addCollisionListener();
     }
 
     @FXML
@@ -260,6 +267,16 @@ public class GameController{
         this.session.getEndSceneView().getExitLabel().addEventFilter(MouseEvent.MOUSE_CLICKED, this.session.getEndSceneView().getExitEvent());
     }
 
+    public void addCollisionListener() {
+        this.collisionDetected.bind(this.session.getCollisionHndlr().stoneHit);
+
+        this.collisionDetected.addListener((observableValue, aBoolean, t1) -> {
+            if (collisionDetected.getValue()) {
+                startCollision(session.getCollisionHndlr().getCurrentCollidedStone());
+            }
+        });
+    }
+
     public void checkPlayerHealth() {
         // lose-scene
         if(this.session.getPlayer().getHealthPoints() == 0){
@@ -278,7 +295,7 @@ public class GameController{
     }
 
     public void drawImageOnGC(double t) {
-        this.gc.drawImage(this.ducky.getFrame(t), this.ducky.getPositionX(), this.ducky.getPositionY());
+        this.gc.drawImage(this.session.getPlayer().getPlayerSprite().getFrame(t), this.session.getPlayer().getPlayerSprite().getPositionX(), this.session.getPlayer().getPlayerSprite().getPositionY());
     }
 
     public String checkEndOfGame(boolean duckyWin) {

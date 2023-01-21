@@ -12,7 +12,7 @@ public class Stone extends GameObject{
     private String id;
     private boolean isActive = true;
     private boolean isChangingColor = false;
-    private GameColor randomTrumpColorStone;
+    private String randomTrumpColorStone;
     private ImageView stoneImgView;
 
 
@@ -39,14 +39,14 @@ public class Stone extends GameObject{
     public void setActive(boolean active) {
         isActive = active;
     }
-    public void setRandomTrumpColorStone(GameColor randomTrumpColorStone) {
+    public void setRandomTrumpColorStone(String randomTrumpColorStone) {
         this.randomTrumpColorStone = randomTrumpColorStone;
     }
     public void setStoneImgView(ImageView stoneImgView) {
         this.stoneImgView = stoneImgView;
     }
 
-    public GameColor getRandomTrumpColorStone() {
+    public String getRandomTrumpColorStone() {
         return this.randomTrumpColorStone;
     }
     public ImageView getStoneImgView() {

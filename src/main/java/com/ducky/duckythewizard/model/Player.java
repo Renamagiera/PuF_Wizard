@@ -1,6 +1,5 @@
 package com.ducky.duckythewizard.model;
 
-import com.ducky.duckythewizard.controller.CollisionController;
 import com.ducky.duckythewizard.controller.scenes.MenuController;
 import com.ducky.duckythewizard.model.card.Card;
 import com.ducky.duckythewizard.model.config.GameConfig;
@@ -13,7 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Player {
-    private String name = "testname";
+    private String name = "defaultName";
     private ArrayList<Card> handCards;
     private int healthPoints;
     private int playableCards;
@@ -98,8 +97,8 @@ public class Player {
         this.handCards = handCards;
     }
 
-    public void createPlayerSprite(CollisionController collisionController) {
-        this.playerSprite = new AnimatedSprite(collisionController, MenuController.getSpriteSkin(), MenuController.getSpriteSkinColor(), this);
+    public void createPlayerSprite(CollisionHandler collisionHandler) {
+        this.playerSprite = new AnimatedSprite(collisionHandler, MenuController.getSpriteSkin(), MenuController.getSpriteSkinColor(), this);
     }
     public void setSession(Game session){
         this.session = session;

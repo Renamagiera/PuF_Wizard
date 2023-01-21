@@ -29,7 +29,7 @@ public class Fight {
 
     public void setStoneInFight(Stone stoneInFight) { this.stoneInFight = stoneInFight; }
 
-    public void setTrump(Stone stone) { this.trump = stone.getRandomTrumpColorStone().getName(); }
+    public void setTrump(Stone stone) { this.trump = stone.getRandomTrumpColorStone(); }
 
     public Card getDuckyCard() { return this.duckyCard; }
 

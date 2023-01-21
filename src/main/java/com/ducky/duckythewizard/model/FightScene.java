@@ -30,8 +30,8 @@ public class FightScene {
     private String trumpColorHexCode;
     private String trumpColorName;
 
-    private static final Image CARDS_BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_BACK_CARD_FILENAME)));
-    private static final Image CARDS_EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightSceneModel.class.getResourceAsStream(GameConfig.CARDS_EMPTY_CARD_FILENAME)));
+    private static final Image CARDS_BACK_CARD_IMAGE = new Image(Objects.requireNonNull(FightScene.class.getResourceAsStream(GameConfig.CARDS_BACK_CARD_FILENAME)));
+    private static final Image CARDS_EMPTY_CARD_IMAGE = new Image(Objects.requireNonNull(FightScene.class.getResourceAsStream(GameConfig.CARDS_EMPTY_CARD_FILENAME)));
 
 
     public FightScene() {
@@ -60,8 +60,8 @@ public class FightScene {
     public void showFightScene(Fight activeFight) {
         this.fightOverlayVisible.set(true);
         this.activeFight = activeFight;
-        this.trumpColorName = activeFight.getStoneInFight().getRandomTrumpColorStone().getName();
-        this.trumpColorHexCode = activeFight.getStoneInFight().getRandomTrumpColorStone().getHexCode();
+        this.trumpColorName = activeFight.getStoneInFight().getRandomTrumpColorStone();
+        this.trumpColorHexCode = GameColorObject.getHexCodeFromMap(this.trumpColorName);
 
         // property change, changing data in some way -> model
         this.updateImageViews();
