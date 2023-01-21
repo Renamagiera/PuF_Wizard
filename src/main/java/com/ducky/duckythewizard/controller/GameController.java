@@ -19,7 +19,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -88,7 +87,6 @@ public class GameController{
 
     @FXML
     public void initialize() {
-        //System.out.println("*** Game Controller is initialized...");
 
         this.session.setRootAnchorPane(this.rootBox);
         this.session.setFightOverlay(this.fightOverlay);

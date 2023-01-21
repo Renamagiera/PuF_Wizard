@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class WizardServerApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(WizardServerApplication.class, args);
 	}
-
 }

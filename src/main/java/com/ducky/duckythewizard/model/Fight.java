@@ -1,7 +1,6 @@
 package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.card.Card;
-
 import java.util.Random;
 
 /**In this class all objects relevant to the current fight are saved (the stone Ducky is fighting against,
@@ -13,7 +12,6 @@ public class Fight {
     private Stone stoneInFight;
     private Card duckyCard;
     private Card stoneCard;
-
     private String trump;
     private final boolean duckyPlaysFirst;
 
@@ -92,35 +90,28 @@ public class Fight {
         if (duckyWin) {
             //each win earns 20 points
             score += 20;
-            //System.out.println("WIN! Score Calc Start: " + score);
-
             int duckyCardValue = this.duckyCard.getValue() + 1;
 
             if (this.duckyPlaysFirst) {
                 //if you've won without knowing the stone's card you get extra points
                 score += 5;
-                //System.out.println("Won without seeing stone card!: score is now: " + score);
             }
 
             if (this.trump.equals("none")) {
                 //winning a no trump round earns extra points
                 score += 15;
-                //System.out.println("won a no trump round!: score is now: " + score);
             }
 
             //if you've won without a wizard or trump, you can earn more points the closer your card value is to the stone card value
             if ((this.duckyCard.getValue() != 199) && (!this.duckyCard.getColor().getName().equals(this.trump))) {
                 int difference = this.duckyCard.getValue() - this.stoneCard.getValue();
-                //System.out.println("Difference is " + difference);
 
                 if (difference < 4) {
                     score += duckyCardValue * 2;
-                    //System.out.println("Difference is smaller than 4: score is now " + score);
                 }
                 else {
                     if (difference < duckyCardValue) {
                         score += duckyCardValue - difference;
-                        //System.out.println("Difference is bigger than 4: score is now: " + score);
                     }
                 }
             }

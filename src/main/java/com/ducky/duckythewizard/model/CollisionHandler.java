@@ -10,9 +10,7 @@ public class CollisionHandler {
     private GameObject[][] levelObjectGrid;
     private double tileHeight = GameConfig.LEVEL_CELL_HEIGHT;
     private double tileWidth = GameConfig.LEVEL_CELL_WIDTH;
-
     private Stone currentCollidedStone;
-
     public BooleanProperty stoneHit;
 
     public CollisionHandler(GameObject[][] objectGrid) {
@@ -21,13 +19,12 @@ public class CollisionHandler {
     }
 
     public boolean isCollision(Rectangle2D playerBoundaries) {
-        boolean isCollision = false;
 
         for (int row = 0; row < this.levelObjectGrid.length; row++) {
             for (int column = 0; column < this.levelObjectGrid[row].length; column++) {
                 if (this.levelObjectGrid[row][column] != null && playerBoundaries.intersects(getBoundariesOfGameObject(row, column, this.levelObjectGrid[row][column] instanceof Stone))) {
                     if (!this.levelObjectGrid[row][column].getCanPassThrough()) {
-                        return isCollision = true;
+                        return true;
                     } else {
                         isFightCollision(playerBoundaries, row, column);
                     }
@@ -41,7 +38,6 @@ public class CollisionHandler {
 
         Stone stone = (Stone)this.levelObjectGrid[row][column];
         if(stone.isActive() && !stone.getIsChangingColor()) {
-            //this.myGameController.startCollision(stone); //start event here somehow
             this.currentCollidedStone = stone;
             this.stoneHit.set(true);
         }
