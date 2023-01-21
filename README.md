@@ -1,6 +1,6 @@
 # PuF_Wizard
-Ein Spiel über magische Steine und einer heldenhaften Ente oder einer düsteren Fledermaus.\
-Dieses Spiel wurde in einer Gruppenarbeit für das Modul "Patterns & Frameworks" an der BHT Berlin im Studiengang Medieninformatik Online (B.Sc.) entwickelt. Ziel des Moduls und des Projektes war es ein lauffähiges Spiel zu entwickeln. Das Spiel sollte mit dem Framework JavaFX entwickelt werden & verschiedene Anforderungen erfüllen. Herausgekommen ist "Ducky and the Wizard Stones", angelehnt an das zauberhafte Stichspiel "Wizard".
+Ein Spiel über die epischen Kämpfe zwischen magischen Steine und einer heldenhaften Ente (oder tapferen Fledermaus).\
+Dieses Spiel wurde in einer Gruppenarbeit für das Modul "Patterns & Frameworks" an der BHT Berlin im Studiengang Medieninformatik Online (B.Sc.) entwickelt. Ziel des Moduls und des Projekts war es, ein lauffähiges Spiel zu entwickeln. Das Spiel sollte mit dem Framework JavaFX entwickelt werden & verschiedene Anforderungen erfüllen. Herausgekommen ist "Ducky and the Wizard Stones", angelehnt an das zauberhafte Kartenspiel "Wizard".
 
 
 ## Inhaltsverzeichnis
