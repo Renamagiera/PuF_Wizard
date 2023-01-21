@@ -27,7 +27,7 @@ public class CardController extends Controller {
 
     public void cardInit() {
         // init card-deck local variables, add cards to deck
-        this.getSession().getCardDeckModel(). setTrumpColors(this.getSession().getGameColorObject().getTrumpColors());
+        this.getSession().getCardDeckModel().setTrumpColors(this.getSession().getGameColorObject().getTrumpColors());
         this.getSession().getCardDeckModel().setWizard(this.getSession().getGameColorObject().getTrumpColorObject().getWizard());
         this.getSession().getCardDeckModel().setNone(this.getSession().getGameColorObject().getTrumpColorObject().getNone());
         this.getSession().getCardDeckModel().storeCardsInDeckArray();

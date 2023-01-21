@@ -1,6 +1,5 @@
 package com.ducky.duckythewizard.controller;
 
-import com.ducky.duckythewizard.model.AnimatedSprite;
 import com.ducky.duckythewizard.model.Game;
 import com.ducky.duckythewizard.model.MyAnimationTimer;
 import com.ducky.duckythewizard.model.Stone;
@@ -85,7 +84,6 @@ public class GameController{
     @FXML
     private Label timerTextLabel;
     private ArrayList<String> input = new ArrayList<>();
-    private AnimatedSprite ducky;
     private BooleanProperty collisionDetected = new SimpleBooleanProperty(false);
 
     @FXML
@@ -162,10 +160,9 @@ public class GameController{
 
         // initialize Player's sprite
         this.session.getPlayer().createPlayerSprite(this.session.getCollisionHndlr());
-        this.ducky = this.session.getPlayer().getPlayerSprite();
-        this.ducky.setDuration(0.1);
-        this.ducky.setPosition(GameConfig.WINDOW_WIDTH /4 - ducky.getFrame(0).getWidth()/2, 0);
-        this.ducky.setVelocity(0,100);
+        this.session.getPlayer().getPlayerSprite().setDuration(0.1);
+        this.session.getPlayer().getPlayerSprite().setPosition(GameConfig.WINDOW_WIDTH/4 - this.session.getPlayer().getPlayerSprite().getFrame(0).getWidth()/2, 0);
+        this.session.getPlayer().getPlayerSprite().setVelocity(0,100);
 
 
         // binding timerLabel to Ducky's timer
@@ -298,7 +295,7 @@ public class GameController{
     }
 
     public void drawImageOnGC(double t) {
-        this.gc.drawImage(this.ducky.getFrame(t), this.ducky.getPositionX(), this.ducky.getPositionY());
+        this.gc.drawImage(this.session.getPlayer().getPlayerSprite().getFrame(t), this.session.getPlayer().getPlayerSprite().getPositionX(), this.session.getPlayer().getPlayerSprite().getPositionY());
     }
 
     public String checkEndOfGame(boolean duckyWin) {
