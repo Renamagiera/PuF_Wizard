@@ -8,7 +8,6 @@ import java.util.List;
 // CRUD refers Create, Read, Update, Delete
 
 public interface HighScoreRepository extends CrudRepository<HighScore, Integer> {
-
     List<HighScore> findAllByOrderByScoreDesc(Pageable pageable);
     List<HighScore> findAllByUserOrderByScoreDesc(User user);
 }

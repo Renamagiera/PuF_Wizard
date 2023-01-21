@@ -11,14 +11,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-
 import java.util.ArrayList;
 
 public class CardController extends Controller {
     private ArrayList<Card> handCards;
     private CardDeck cardDeck;
     private AnchorPane anchorPaneCards;
-
     private ArrayList<EventHandler<MouseEvent>> clickHandlers = new ArrayList<>();
 
     public CardController(Game game) {

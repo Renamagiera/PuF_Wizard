@@ -1,7 +1,6 @@
 package com.ducky.duckythewizard.model.card;
 
 import com.ducky.duckythewizard.model.color.GameColor;
-
 import java.util.Objects;
 
 public class Card {

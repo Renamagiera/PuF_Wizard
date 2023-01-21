@@ -8,7 +8,6 @@ import com.ducky.duckythewizard.model.color.GameColorObject;
 import com.ducky.duckythewizard.model.config.GameConfig;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
 import java.util.ArrayList;
 
 /**This class constructs a Game object which in turn is the heart of

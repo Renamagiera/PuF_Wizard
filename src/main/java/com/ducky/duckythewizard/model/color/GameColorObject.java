@@ -5,7 +5,6 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

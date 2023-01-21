@@ -20,10 +20,8 @@ public class LoginSceneController extends Controller {
 
     @FXML
     private TextField userTextField;
-
     @FXML
     private Label infoLabel;
-
     private ServerFacade serverFacade;
 
     @FXML

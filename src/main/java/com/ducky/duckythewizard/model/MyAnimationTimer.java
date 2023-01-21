@@ -1,7 +1,6 @@
 package com.ducky.duckythewizard.model;
 
 import javafx.animation.AnimationTimer;
-
 import java.util.ArrayList;
 
 public class MyAnimationTimer extends AnimationTimer
@@ -26,16 +25,12 @@ public class MyAnimationTimer extends AnimationTimer
             this.lastNanoTime.value = currentNanoTime;
 
             AnimatedSprite ducky = this.session.getPlayer().getPlayerSprite();
-
             ducky.translateKeyPressesIntoMovement(this.input);
-
             ducky.checkLevelBoundaryContact(t);
-
             ducky.update(elapsedTime);
 
             // clear prior ducky image
             this.session.getGameCtrl().clearGC();
-
             this.session.getGameCtrl().checkPlayerHealth();
 
             // drawing Ducky frame on Ducky's position
