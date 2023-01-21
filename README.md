@@ -4,14 +4,8 @@ Dieses Spiel wurde in einer Gruppenarbeit für das Modul "Patterns & Frameworks"
 
 
 ## Inhaltsverzeichnis
-1. [Allgemeine Info](#allgemeine-info)
-2. [Technologien](#technologien)
-3. [Installation](#installation)
-
-
-<a name="allgemeine-info"></a>
-## Allgemeine Info
-
+1. [Technologien](#technologien)
+2. [Installation](#installation)
 
 <a name="technologien"></a>
 ## Technologien
@@ -51,5 +45,5 @@ Zuerst das Repository clonen und als Projekt erstellen. Dafür auf den grünen B
               JAVA_HOME=**"JDK-Pfad"**
 5. Build Project (Strg + F9) 
 6. Run Application (WizardMainApplication) (Strg + Umschalt + F10)
-7. Viel Spaß
+7. Viel Spaß haben und HighScores knacken!
 
