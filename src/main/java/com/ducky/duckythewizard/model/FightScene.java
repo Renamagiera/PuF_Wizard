@@ -8,7 +8,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-
 import java.util.Objects;
 
 public class FightScene {
@@ -23,7 +22,6 @@ public class FightScene {
     public SimpleStringProperty fightOverlayStyleProperty;
     public BooleanProperty fightOverlayVisible;
     public BooleanProperty exitFightViewVisible;
-
     private AnchorPane anchorPaneFightOverlay;
     private Fight activeFight;
     private GameColorObject gameColorObject;

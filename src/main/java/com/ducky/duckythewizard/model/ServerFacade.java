@@ -41,7 +41,6 @@ public class ServerFacade {
     // not needed, therefore not implemented
     public List<HighScore> getAllHighScoresFromServer() {
         List<HighScore> highScores = new ArrayList<>();
-
         // get all high scores from server and store them in a hashmap
         return highScores;
     }

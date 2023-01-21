@@ -224,8 +224,6 @@ public class AnimatedSprite extends Sprite
         double xPosition = column * cellWidth;
         double yPosition = row * cellHeight;
         Rectangle2D imageBoundary = new Rectangle2D(xPosition,yPosition,cellWidth,cellHeight);
-
-        //System.out.println("  X: " + i.getX() + ", Y: " + i.getY() + ", Width: " + i.getFitWidth() + ", Height: " + i.getFitHeight());
         return imageBoundary.intersects(this.getBoundary());
     }
 

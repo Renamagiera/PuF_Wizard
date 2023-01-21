@@ -1,7 +1,6 @@
 package com.ducky.duckythewizard.server;
 
 import jakarta.persistence.*;
-
 import java.util.Set;
 
 @Entity

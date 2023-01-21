@@ -1,20 +1,17 @@
 package com.ducky.duckythewizard.model;
 
 import com.ducky.duckythewizard.model.card.Card;
-import com.ducky.duckythewizard.model.color.GameColor;
 import javafx.scene.image.ImageView;
 
 public class Stone extends GameObject{
 
     private Card card;
-
     private static int count;
     private String id;
     private boolean isActive = true;
     private boolean isChangingColor = false;
     private String randomTrumpColorStone;
     private ImageView stoneImgView;
-
 
     public Stone() {
         super(true);
@@ -62,6 +59,5 @@ public class Stone extends GameObject{
     public boolean getIsChangingColor() {
         return this.isChangingColor;
     }
-
 
 }

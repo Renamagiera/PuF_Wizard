@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.util.Objects;
 
 /**Mithilfe der Superklasse Controller sollen alle Controller, die von dieser Klasse erben, die gleichen Methoden nutzen können.**/
@@ -17,10 +16,8 @@ public class Controller {
     private GameConfig config;
     private final String css = Objects.requireNonNull(this.getClass().getResource("/com/ducky/duckythewizard/styles/style.css")).toExternalForm();
 
+    public Controller() {}
 
-    public Controller() {
-
-    }
     public Controller(Game game) {
         this.session = game;
         this.config = game.getGameConfig();
