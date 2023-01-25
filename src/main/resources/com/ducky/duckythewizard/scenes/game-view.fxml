@@ -12,19 +12,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="rootBox" onKeyPressed="#handleOnKeyPressed" onKeyReleased="#handleOnKeyReleased" prefHeight="650.0" prefWidth="800.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.GameController">
+<AnchorPane fx:id="rootBox" onKeyPressed="#handleOnKeyPressed" onKeyReleased="#handleOnKeyReleased" prefHeight="655.0" prefWidth="800.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ducky.duckythewizard.controller.GameController">
     <children>
         <Group fx:id="backgroundImageGroup">
-            <ImageView id="background_img" fitHeight="650.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="background_img" fitHeight="655.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../images/forest/parallax-forest-back-trees_800px.png" />
             </ImageView>
-            <ImageView id="background_img" fitHeight="650.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="background_img" fitHeight="655.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../images/forest/parallax-forest-lights_800px.png" />
             </ImageView>
-            <ImageView id="background_img" fitHeight="650.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="background_img" fitHeight="655.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../images/forest/parallax-forest-middle-trees_800px.png" />
             </ImageView>
-            <ImageView id="background_img" fitHeight="650.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="background_img" fitHeight="655.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../images/forest/parallax-forest-front-trees_800px.png" />
             </ImageView>
         </Group>
@@ -55,7 +55,7 @@
             <String fx:value="outline" />
          </styleClass></Label>
 
-      <GridPane fx:id="levelGrid" prefHeight="650.0" prefWidth="800.0">
+      <GridPane fx:id="levelGrid" prefHeight="650.0" prefWidth="800.0" snapToPixel="false">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0" />
@@ -87,7 +87,7 @@
             <RowConstraints minHeight="50" prefHeight="50.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="50" prefHeight="50.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="50" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="50" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="50" prefHeight="50" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
              <!-- row 0 -->
@@ -352,52 +352,52 @@
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
                 <!-- row 12 -->
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="0" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="1" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="2" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="3" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="4" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="5" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="6" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="7" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="8" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="9" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="9" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="10" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="10" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="11" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="11" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="12" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="12" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="13" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="13" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="14" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="14" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="15" GridPane.rowIndex="12">
+                <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="false" GridPane.columnIndex="15" GridPane.rowIndex="12">
                     <Image url="@../images/forest/earth-tile_earth_only.png" />
                 </ImageView>
 
